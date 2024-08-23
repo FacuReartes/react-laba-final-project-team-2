@@ -1,16 +1,7 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Container, Typography } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
 import heroImg from "../../../public/products-hero-img.png";
 import mockImg from "../../../public/mock-img.png";
-import Product from "@/components/Product";
-import { ProductType } from "@/lib/definitions";
 import Products from "@/components/Products";
 
 type MockUser = {
@@ -29,13 +20,12 @@ export default async function ProductsPage() {
   return (
     <Container
       sx={{
-        border: "1px solid #ff0000",
-        minHeight: "100vh",
         my: 2,
         bgcolor: "#fff",
+        pb: "48px",
       }}
     >
-      <Box sx={{ position: "relative", height: "352px" }}>
+      <Box sx={{ position: "relative" }}>
         <Image
           src={heroImg}
           alt="hero-img"
@@ -47,12 +37,18 @@ export default async function ProductsPage() {
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
+            bottom: "-40%",
             left: "54px",
             display: "flex",
+            alignItems: "center",
           }}
         >
-          <Image alt="mock-img" src={mockUser.img} width={120} height={120} />
+          <Avatar
+            sx={{
+              width: { xs: "60px", md: "120px" },
+              height: { xs: "60px", md: "120px" },
+            }}
+          />
           <Box
             sx={{
               alignSelf: "flex-end",
@@ -60,20 +56,36 @@ export default async function ProductsPage() {
               mb: "15px",
             }}
           >
-            <Typography variant="h5" sx={{ color: "#000", fontWeight: "500" }}>
+            <Typography
+              variant="h5"
+              sx={{
+                color: "#000",
+                fontWeight: "500",
+                fontSize: { xs: "14px", md: "20px" },
+              }}
+            >
               {mockUser.name}
             </Typography>
-            <Typography color={"#5C5C5C"}>
+            <Typography
+              color={"#5C5C5C"}
+              sx={{ fontSize: { xs: "12px", md: "15px" } }}
+            >
               {mockUser.totalPoints} bonus points
             </Typography>
           </Box>
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", mt: "120px" }}
+      >
         <Typography
           variant="h1"
-          sx={{ color: "#000", fontSize: "45px", fontWeight: "500" }}
+          sx={{
+            color: "#000",
+            fontSize: { xs: "30px", md: "45px" },
+            fontWeight: "500",
+          }}
         >
           My products
         </Typography>
@@ -82,6 +94,10 @@ export default async function ProductsPage() {
           disableElevation
           size="large"
           sx={{
+            display: {
+              xs: "none",
+              md: "inline",
+            },
             bgcolor: "secondary.light",
             color: "#fff",
             height: "40px",

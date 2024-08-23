@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Product from "./Product";
 import { ProductType } from "@/lib/definitions";
-import { Container, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 
 export default function Products() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -34,12 +34,26 @@ export default function Products() {
   }, []);
 
   return (
-    <Container sx={{ mt: 6 }}>
-      <Grid container spacing={2}>
+    <Container
+      sx={{
+        mt: 6,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "32px",
+          justifyContent: {
+            xs: "center",
+            md: "normal",
+          },
+        }}
+      >
         {products?.map((product) => (
           <Product key={product.id} product={product} />
         ))}
-      </Grid>
+      </Box>
     </Container>
   );
 }
