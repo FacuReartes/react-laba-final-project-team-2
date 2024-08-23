@@ -1,7 +1,7 @@
 'use client'
 import SignupCard from "@/components/SignupCard";
 import SignupForm from "@/components/SignupForm";
-import SignupLogo from "@/components/SignupLogo";
+import Logo from "@/components/Logo";
 import { Box, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 
@@ -10,7 +10,7 @@ export default function Page() {
   
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <SignupLogo />
+      <Logo />
       <SignupForm />
       
       {isDesktop && <Box sx={{ position: 'relative' }}>
