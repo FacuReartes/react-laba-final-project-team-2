@@ -1,3 +1,4 @@
+"use client"
 import { useMediaQuery } from '@mui/material';
 import Image from 'next/image'
 
