@@ -1,5 +1,5 @@
 "use client";
-import { Roboto } from "next/font/google";
+import { Roboto, Work_Sans } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 
 const roboto = Roboto({
@@ -7,6 +7,8 @@ const roboto = Roboto({
   subsets: ["latin"],
   display: "swap",
 });
+
+const workSans = Work_Sans({ subsets: ["latin"] });
 
 const theme = createTheme({
   palette: {
@@ -18,9 +20,36 @@ const theme = createTheme({
       main: "#6E314A",
       light: "#FE645E",
     },
+    error: {
+      main: "#FE645E",
+    },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    button: {
+      textTransform: "none",
+    },
+    fontFamily: workSans.style.fontFamily,
+    subtitle1: {
+      fontSize: "15px",
+      color: "#5C5C5C",
+    },
+    subtitle2: {
+      fontSize: "12px",
+      color: "#5C5C5C",
+    },
+    h3: {
+      fontSize: "25px",
+      color: "#000",
+      lineHeight: "34px",
+    },
+    h1: {
+      fontSize: "45px",
+      fontWeight: "normal",
+    },
+    h2: {
+      fontSize: "30px",
+      fontWeight: "normal",
+    },
   },
 });
 
