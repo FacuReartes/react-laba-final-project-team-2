@@ -1,9 +1,9 @@
 import React from 'react'
-import { AppBar, Box, Button, IconButton, InputAdornment, TextField, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Divider, IconButton, InputAdornment, TextField, Toolbar, Typography } from "@mui/material";
 
 const Header = () => {
   return (
-    <AppBar position='static' sx={{ bgcolor: '#FFF', height: { xs: '64px', md: '120px' }}}>
+    <AppBar position='static' sx={{ bgcolor: '#FFF', height: { xs: '64px', md: '120px' }, boxShadow: 0 }}>
       <Toolbar sx={{ height: '100%' }}>
 
         <Box sx={{ ml: {xs: '4px' , md: '16px'} }} component='img' alt='logo' src='/logo.svg'/>
@@ -40,6 +40,7 @@ const Header = () => {
         </IconButton>
 
       </Toolbar>
+      <Divider/>
     </AppBar>
   )
 }
