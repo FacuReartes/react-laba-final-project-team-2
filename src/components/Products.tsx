@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import Product from "./Product";
 import { ProductType } from "@/lib/definitions";
-import { Box, Container, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function Products() {
   const [products, setProducts] = useState<ProductType[]>([]);
 
   const fetchProducts = async () => {
     try {
-      const req = await fetch("api/products");
+      const req = await fetch("/api/products");
       if (!req.ok) {
         throw new Error("Something went wrong!");
       }
@@ -34,7 +34,7 @@ export default function Products() {
   }, []);
 
   return (
-    <Container
+    <Box
       sx={{
         mt: 6,
       }}
@@ -54,6 +54,6 @@ export default function Products() {
           <Product key={product.id} product={product} />
         ))}
       </Box>
-    </Container>
+    </Box>
   );
 }

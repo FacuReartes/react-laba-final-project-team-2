@@ -1,5 +1,6 @@
-import { Avatar, Box, Button, Container, Typography } from "@mui/material";
-import Image, { StaticImageData } from "next/image";
+"use client";
+import { Avatar, Box, Button, Typography, useMediaQuery } from "@mui/material";
+import Image from "next/image";
 import Products from "@/components/Products";
 
 type MockUser = {
@@ -12,11 +13,11 @@ const mockUser: MockUser = {
   totalPoints: 1374,
 };
 
-export default async function ProductsPage() {
+export default function ProductsPage() {
+  const isDesktop = useMediaQuery("(min-width: 700px)");
   return (
-    <Container
+    <Box
       sx={{
-        my: 2,
         bgcolor: "#fff",
         pb: "48px",
       }}
@@ -26,14 +27,14 @@ export default async function ProductsPage() {
           src={"/products-hero-img.png"}
           alt="hero-img"
           width={700}
-          height={262}
+          height={isDesktop ? 262 : 132}
           sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
+          style={{ width: "100%" }}
         />
         <Box
           sx={{
             position: "absolute",
-            bottom: "-40%",
+            bottom: { xs: "-35%", md: "-25%" },
             left: "54px",
             display: "flex",
             alignItems: "center",
@@ -81,6 +82,7 @@ export default async function ProductsPage() {
             color: "#000",
             fontSize: { xs: "30px", md: "45px" },
             fontWeight: "500",
+            pl: { xs: "20px", md: "0" },
           }}
         >
           My products
@@ -107,6 +109,6 @@ export default async function ProductsPage() {
         </Button>
       </Box>
       <Products />
-    </Container>
+    </Box>
   );
 }
