@@ -26,21 +26,21 @@ const theme = createTheme({
   },
   typography: {
     button: {
-      textTransform: "none",
+      textTransform: 'none'
     },
     fontFamily: workSans.style.fontFamily,
     subtitle1: {
       fontSize: "15px",
-      color: "#5C5C5C",
+      color: '#5C5C5C'
     },
     subtitle2: {
       fontSize: "12px",
-      color: "#5C5C5C",
+      color: '#5C5C5C'
     },
     h3: {
       fontSize: "25px",
-      color: "#000",
-      lineHeight: "34px",
+      color: '#000',
+      lineHeight: '34px',
     },
     h1: {
       fontSize: "45px",
