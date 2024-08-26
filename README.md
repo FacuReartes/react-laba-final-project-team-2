@@ -1,7 +1,4 @@
-
 # Solvd Final Project Team 2
-
-A brief description of what this project does and who it's for
 
 ## Description
 The Solvd Laba Final Project Shop Page is a dynamic and responsive e-commerce platform designed to showcase and sell unique clothing items. The page is built with a focus on providing a seamless shopping experience, incorporating modern design principles and user-friendly navigation.
@@ -20,9 +17,10 @@ The Solvd Laba Final Project Shop Page is a dynamic and responsive e-commerce pl
 - Error 500: This page should display when there is an error with the server.
 
 - My products: This page allows users to view and manage their own products. It should display all products associated with the user's account and allow for editing and deleting of products.
-Settings: This page lets users view and edit their account settings. It should include input fields for name, email, phone number, and avatar. 
-Add product: This page allows users to add a new product to their account. It should include input fields for product name, description, price, and an upload field for an image.
 
+- Settings: This page lets users view and edit their account settings. It should include input fields for name, email, phone number, and avatar. 
+
+- Add product: This page allows users to add a new product to their account. It should include input fields for product name, description, price, and an upload field for an image.
 
 - Products page: This page displays all available products. It should include search functionality. Clicking on a product should redirect to a product detail page.
 
