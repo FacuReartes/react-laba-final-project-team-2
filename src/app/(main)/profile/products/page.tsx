@@ -1,19 +1,15 @@
 import { Avatar, Box, Button, Container, Typography } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
-import heroImg from "../../../public/products-hero-img.png";
-import mockImg from "../../../public/mock-img.png";
 import Products from "@/components/Products";
 
 type MockUser = {
   name: string;
   totalPoints: number;
-  img: StaticImageData;
 };
 
 const mockUser: MockUser = {
   name: "Jane Meldrum",
   totalPoints: 1374,
-  img: mockImg,
 };
 
 export default async function ProductsPage() {
@@ -27,7 +23,7 @@ export default async function ProductsPage() {
     >
       <Box sx={{ position: "relative" }}>
         <Image
-          src={heroImg}
+          src={"/products-hero-img.png"}
           alt="hero-img"
           width={700}
           height={262}
