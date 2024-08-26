@@ -1,3 +1,4 @@
+'use client'
 import { Box, Button, TextField, Typography, useMediaQuery } from "@mui/material"
 import Link from "next/link"
 
