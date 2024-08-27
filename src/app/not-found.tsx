@@ -1,58 +1,73 @@
-"use client";
-import { Box, Button, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
+const pageText = {
+  error: "Error 404",
+  paragraph:
+    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modisoluta obcaecati sunt.",
+};
+
 export default function NotFoundPage() {
-  const isDesktop = useMediaQuery("(min-width: 700px)");
-  return isDesktop ? (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        height: "100vh",
-        width: "100%",
-        overflowY: "hidden",
-      }}
-    >
+  return (
+    <Box>
+      {/* mobile design */}
       <Box
         sx={{
-          flexGrow: 4,
-          display: "flex",
+          height: "100vh",
+          display: { xs: "flex", md: "none" },
           flexDirection: "column",
-          pl: "250px",
+          alignItems: "center",
         }}
       >
-        <Typography
-          variant="h2"
-          sx={{ fontWeight: "500", textAlign: "left", fontSize: "45px" }}
-        >
-          Error 404
-        </Typography>
-        <Typography
-          sx={{
-            color: "#5C5C5C",
-            textAlign: "left",
-            pt: "12px",
-            fontSize: "20px",
-            width: "538px",
-          }}
-        >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam atque
-        </Typography>
         <Box
           sx={{
+            width: "100%",
+            pt: "32px",
+            bgcolor: "#E5E5E7",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h2">{pageText.error}</Typography>
+          <Typography
+            sx={{
+              width: "320px",
+              textAlign: "center",
+              mt: "10px",
+              color: "#5C5C5C",
+            }}
+          >
+            {pageText.paragraph}
+          </Typography>
+        </Box>
+        <Box sx={{ height: "65%" }}>
+          <Image
+            src={"/404-img.svg"}
+            alt="404-img"
+            width={360}
+            height={460}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </Box>
+
+        {/* Buttons */}
+
+        <Box
+          sx={{
+            height: "15%",
+            width: "320px",
             display: "flex",
             gap: "16px",
-            mt: "25px",
-            width: "320px",
+            alignItems: "center",
           }}
         >
           <Button
             variant="outlined"
             sx={{
-              color: "secondary.light",
               borderColor: "secondary.light",
+              color: "secondary.light",
               ":hover": { borderColor: "secondary.light" },
               flexGrow: 1,
             }}
@@ -63,86 +78,93 @@ export default function NotFoundPage() {
             variant="contained"
             sx={{
               bgcolor: "secondary.light",
-              ":hover": { bgcolor: "secondary.light", opacity: ".9" },
               flexGrow: 1,
+              ":hover": { bgcolor: "secondary.light" },
             }}
           >
-            <Link href={"/"} style={{ textDecoration: "none", color: "#fff" }}>
+            <Link href={"/"} style={{ color: "#FFF", textDecoration: "none" }}>
               Home
             </Link>
           </Button>
         </Box>
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
-        <Image
-          src={"/404-img.svg"}
-          alt="404-img"
-          width={960}
-          height={992}
-          style={{ width: "100%", height: "auto" }}
-        />
-      </Box>
-    </Box>
-  ) : (
-    <Box>
+
+      {/* desktop design */}
+
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          bgcolor: "#E5E5E7",
-          borderRadius: "0 0 32px 32px",
-          pt: "32px",
+          display: { xs: "none", md: "flex" },
+          overflow: "hidden",
+          height: "100vh",
         }}
       >
-        <Typography variant="h2" sx={{ fontWeight: "500" }}>
-          Error 404
-        </Typography>
-        <Typography
+        <Box
           sx={{
-            color: "#5C5C5C",
-            textAlign: "center",
-            pt: "12px",
-            px: "28px",
-            fontSize: "12px",
+            width: "50%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            pt: "320px",
           }}
         >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam atque
-        </Typography>
-        <Image src={"/404-img.svg"} alt="404-img" width={360} height={459} />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "16px",
-          mt: "25px",
-          px: "20px",
-        }}
-      >
-        <Button
-          variant="outlined"
-          sx={{
-            color: "secondary.light",
-            borderColor: "secondary.light",
-            flexGrow: 1,
-            ":hover": { borderColor: "secondary.light" },
-          }}
-        >
-          Go back
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            bgcolor: "secondary.light",
-            flexGrow: 1,
-            ":hover": { bgcolor: "secondary.light", opacity: ".9" },
-          }}
-        >
-          <Link href={"/"} style={{ textDecoration: "none", color: "#fff" }}>
-            Home
-          </Link>
-        </Button>
+          <Typography variant="h2">{pageText.error}</Typography>
+          <Typography
+            sx={{
+              width: "450px",
+              textAlign: "center",
+              mt: "10px",
+              color: "#5C5C5C",
+            }}
+          >
+            {pageText.paragraph}
+          </Typography>
+          <Box
+            sx={{
+              width: "320px",
+              display: "flex",
+              justifyContent: "center",
+              gap: "16px",
+              mt: "16px",
+            }}
+          >
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: "secondary.light",
+                color: "secondary.light",
+                ":hover": { borderColor: "secondary.light" },
+                flexGrow: 1,
+              }}
+            >
+              Go back
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "secondary.light",
+                flexGrow: 1,
+                ":hover": { bgcolor: "secondary.light" },
+              }}
+            >
+              <Link
+                href={"/"}
+                style={{ color: "#FFF", textDecoration: "none" }}
+              >
+                Home
+              </Link>
+            </Button>
+          </Box>
+        </Box>
+
+        <Box sx={{ width: "50%" }}>
+          <Image
+            src={"/404-img.svg"}
+            alt="404-img"
+            width={960}
+            height={960}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </Box>
       </Box>
     </Box>
   );
