@@ -1,5 +1,5 @@
-import styles from "./page.module.css";
-import { Button } from "@mui/material";
+import styles from './page.module.css';
+import { Button } from '@mui/material';
 
 export default function Home() {
   return (
@@ -7,10 +7,10 @@ export default function Home() {
       <Button
         variant="contained"
         sx={{
-          p: "32px",
-          bgcolor: "secondary.main",
-          ":hover": {
-            bgcolor: "secondary.light",
+          p: '32px',
+          bgcolor: 'secondary.main',
+          ':hover': {
+            bgcolor: 'secondary.light',
           },
         }}
       >

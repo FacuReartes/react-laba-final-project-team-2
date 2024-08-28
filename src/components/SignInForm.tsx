@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 
-type Props = {};
+// type Props = {};
 
-const SignupForm = (props: Props) => {
+const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
 
   const containerWidth = isDesktop ? '459px' : '320px';

@@ -1,16 +1,16 @@
-"use client"
-import { Box, Button, TextField, Typography, useMediaQuery } from "@mui/material"
-import Link from "next/link"
+'use client'
+import { Box, Button, TextField, Typography, useMediaQuery } from '@mui/material'
+import Link from 'next/link'
 
-type Props = {}
+// type Props = {}
 
-const ResetPasswordForm = (props: Props) => {
+const ResetPasswordForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
 
   return (
     <Box sx={{ width: isDesktop ? '960px' : '360px', display: 'flex', flexDirection: 'column', alignItems: 'center', pt: isDesktop ? '288px' : '94px', bgcolor: '#fff'}}>
-        <Typography variant={isDesktop ? "h1" : "h2"}>Reset password</Typography>
-        <Typography variant={isDesktop ? "subtitle1" : "subtitle2"} sx={{ mb: '48px', pl: '20px' }}>Please create a new password here</Typography>
+        <Typography variant={isDesktop ? 'h1' : 'h2'}>Reset password</Typography>
+        <Typography variant={isDesktop ? 'subtitle1' : 'subtitle2'} sx={{ mb: '48px', pl: '20px' }}>Please create a new password here</Typography>
 
         <form style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: isDesktop ? '436px' : '320px' }}>
           <TextField id="outlined-basic" label="Password *" variant="outlined" placeholder="at least 8 characters" sx={{ height: '48px' }} />

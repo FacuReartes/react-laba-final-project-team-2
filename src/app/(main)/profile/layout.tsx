@@ -1,5 +1,5 @@
-import ProfileSidebar from "@/components/ProfileSidebar";
-import { Box } from "@mui/material";
+import ProfileSidebar from '@/components/ProfileSidebar';
+import { Box } from '@mui/material';
 
 export default function Layout({ children }:
   Readonly<{ children: React.ReactNode }>) {

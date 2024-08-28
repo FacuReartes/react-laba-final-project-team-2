@@ -1,18 +1,18 @@
-import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 
 export default function Page() {
   return (
     <Container
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         m: 0,
         p: 0,
-        minWidth: "100vw",
-        minHeight: "100vh",
-        position: "relative",
+        minWidth: '100vw',
+        minHeight: '100vh',
+        position: 'relative',
       }}
       disableGutters
     >
@@ -21,23 +21,23 @@ export default function Page() {
         src="./assets/logo.svg"
         alt="Logo"
         sx={{
-          width: "40px",
-          height: "30px",
+          width: '40px',
+          height: '30px',
           p: 0,
-          position: "absolute",
-          left: { md: "40px", xs: "20px" },
-          top: { md: "50px", xs: "18px" },
+          position: 'absolute',
+          left: { md: '40px', xs: '20px' },
+          top: { md: '50px', xs: '18px' },
         }}
       ></Box>
       <Box
         component="form"
         sx={{
-          m: "auto",
-          width: { xs: "100%", md: "50%" },
-          display: "flex",
-          flexDirection: "column",
+          m: 'auto',
+          width: { xs: '100%', md: '50%' },
+          display: 'flex',
+          flexDirection: 'column',
           gap: 2,
-          maxWidth: { md: "436px", xs: "320px" },
+          maxWidth: { md: '436px', xs: '320px' },
         }}
       >
         <Typography variant="h1">Forgot password?</Typography>
@@ -51,18 +51,18 @@ export default function Page() {
           placeholder="Enter your email"
           required
         />
-        <Box maxWidth="436px" sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <Box maxWidth="436px" sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <Button
             type="submit"
             variant="contained"
-            sx={{ p: 2, color: "#ffffff", bgcolor: "secondary.light", fontSize: "16px" }}
+            sx={{ p: 2, color: '#ffffff', bgcolor: 'secondary.light', fontSize: '16px' }}
             color="secondary"
           >
             Reset password
           </Button>
           <Link
             href="/signin"
-            sx={{ m: "auto", textDecoration: "none", color: "#494949", fontSize: "15px" }}
+            sx={{ m: 'auto', textDecoration: 'none', color: '#494949', fontSize: '15px' }}
           >
             Back to log in
           </Link>
@@ -73,11 +73,11 @@ export default function Page() {
         src="./assets/forgotpassword.png"
         alt="Sneakers"
         sx={{
-          width: "50%",
-          height: "100vh",
+          width: '50%',
+          height: '100vh',
           p: 0,
-          display: { xs: "none", md: "block" },
-          objectFit: "cover",
+          display: { xs: 'none', md: 'block' },
+          objectFit: 'cover',
         }}
       ></Box>
     </Container>

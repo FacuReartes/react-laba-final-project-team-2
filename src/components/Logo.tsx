@@ -1,10 +1,10 @@
-"use client"
+'use client'
 import { useMediaQuery } from '@mui/material';
 import Image from 'next/image'
 
-type Props = {}
+// type Props = {}
 
-const SignupLogo = (props: Props) => {
+const SignupLogo = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
 
   return (

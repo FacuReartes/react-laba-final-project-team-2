@@ -4,5 +4,5 @@ export type ProductType = {
   images: string[];
   description: string;
   price: number;
-  gender: "Man" | "Woman" | "Unisex";
+  gender: 'Man' | 'Woman' | 'Unisex';
 };
