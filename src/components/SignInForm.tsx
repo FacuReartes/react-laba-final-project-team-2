@@ -148,7 +148,7 @@ const SignupForm = (props: Props) => {
                 fontWeight: '300',
                 fontSize: isDesktop ? 'inherit' : '10px',
               }}
-              href="/login"
+              href="/forgot-password"
             >
               Forgot password?{' '}
             </Link>
@@ -191,7 +191,7 @@ const SignupForm = (props: Props) => {
                 color: '#FE645E',
                 fontWeight: '600',
               }}
-              href="/login"
+              href="/sign-up"
             >
               Sign up
             </Link>

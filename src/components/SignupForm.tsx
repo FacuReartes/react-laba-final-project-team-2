@@ -20,7 +20,7 @@ const SignupForm = (props: Props) => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', mt: '90px' }}>
             <Button type="submit" variant="contained" color='error' sx={{ color: '#fff', width: '100%', height: '48px' }}>Sign Up</Button>
-            <Typography variant="subtitle1" color={'#000'}>Already have an account? <Link style={{textDecoration: 'none', color: '#FE645E', fontWeight: '500'}} href="/login">Log in</Link></Typography>
+            <Typography variant="subtitle1" color={'#000'}>Already have an account? <Link style={{textDecoration: 'none', color: '#FE645E', fontWeight: '500'}} href="/sign-in">Log in</Link></Typography>
           </Box>
         </form>
       </Box>
