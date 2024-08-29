@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Product from "./Product";
+import Product from "./ProductCard";
 import { ProductType } from "@/lib/definitions";
 import { Box } from "@mui/material";
 

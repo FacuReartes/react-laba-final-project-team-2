@@ -1,7 +1,7 @@
 "use client";
 import { Avatar, Box, Button, Typography, useMediaQuery } from "@mui/material";
 import Image from "next/image";
-import Products from "@/components/Products";
+import Products from "@/components/profile/ProductsContainer";
 
 type MockUser = {
   name: string;

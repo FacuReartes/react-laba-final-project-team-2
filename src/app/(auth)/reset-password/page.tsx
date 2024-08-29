@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import Logo from "@/components/Logo";
-import ResetPasswordForm from "@/components/ResetPasswordForm";
+import Logo from "@/components/common/Logo";
+import ResetPasswordForm from "@/components/auth/resetPassword/ResetPasswordForm";
 import Image from "next/image";
 
 export default function Page() {
