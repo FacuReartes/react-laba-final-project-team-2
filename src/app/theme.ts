@@ -31,7 +31,8 @@ const theme = createTheme({
     fontFamily: workSans.style.fontFamily,
     subtitle1: {
       fontSize: "15px",
-      color: "#5C5C5C",
+      fontWeight: "lighter",
+      color: '#5C5C5C'
     },
     subtitle2: {
       fontSize: "12px",
