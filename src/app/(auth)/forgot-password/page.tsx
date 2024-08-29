@@ -61,8 +61,8 @@ export default function Page() {
             Reset password
           </Button>
           <Link
-            href="/signin"
-            sx={{ m: 'auto', textDecoration: 'none', color: '#494949', fontSize: '15px' }}
+            href="/sign-in"
+            sx={{ m: "auto", textDecoration: "none", color: "#494949", fontSize: "15px" }}
           >
             Back to log in
           </Link>

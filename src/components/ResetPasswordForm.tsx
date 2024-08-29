@@ -18,7 +18,7 @@ const ResetPasswordForm = () => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', mt: '90px' }}>
             <Button type="submit" variant="contained" color='error' sx={{ color: '#fff', width: '100%', height: '48px' }}>Reset password</Button>
-            <Link style={{textDecoration: 'none', color: '#494949', fontWeight: '500'}} href="/login">Back to login</Link>
+            <Link style={{textDecoration: 'none', color: '#494949', fontWeight: '500'}} href="/sign-in">Back to login</Link>
           </Box>
         </form>
       </Box>

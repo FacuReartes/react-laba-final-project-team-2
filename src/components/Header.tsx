@@ -1,5 +1,6 @@
 import React from 'react'
 import { AppBar, Box, Button, Divider, IconButton, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
+import Link from 'next/link';
 
 const Header = () => {
   return (
@@ -10,8 +11,9 @@ const Header = () => {
 
         <Typography sx={{ color: '#000', fontWeight: '500', ml: '44px', flexGrow: 1, visibility: { xs: 'hidden', md: 'visible' }}}>Products</Typography>
 
-        <Button variant='outlined' sx={{ mr: '40px', color: 'secondary.light', borderColor: 'secondary.light', width: '145px', height: '48px', fontSize: '12px', 
-        display: { xs: 'none', md:'flex' }, ':hover': { borderColor: '#fff', color: '#FFF', bgcolor: 'secondary.light' }}}>Sign in</Button>
+        <Button  variant='outlined' sx={{ mr: '40px', color: 'secondary.light', borderColor: 'secondary.light', width: '145px', height: '48px', fontSize: '12px', 
+      light: "#FE645E", display: { xs: 'none', md:'flex' }, ':hover': { borderColor: '#fff', color: '#FFF', bgcolor: 'secondary.light' }}}>
+        <Link style={{textDecoration: 'none', color: 'inherit'}} href='/sign-in'>Sign in</Link></Button>
 
         <TextField label='Search' id='search-field' variant='outlined' size='small' 
         sx={{ input: { color:'#000', height: '30px' }, mr: '40px', width: '320px', display: { xs:'none', md:'flex' }}}
@@ -27,7 +29,7 @@ const Header = () => {
           )
         }}/>
 
-        <IconButton aria-label='bag' sx={{ mr: {xs: '4px', md: '28px' }}}>
+        <IconButton aria-label='bag' sx={{ mr: {xs: '4px', md: '28px' }}} href='/bag'>
           <Box component='img' alt='bag' src='/bag.svg'/>
         </IconButton>
 
