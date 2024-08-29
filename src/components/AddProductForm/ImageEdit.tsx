@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Box, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { relative } from "path";
 import { useEffect, useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 
