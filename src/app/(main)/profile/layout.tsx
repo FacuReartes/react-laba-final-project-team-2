@@ -1,4 +1,4 @@
-import ProfileSidebar from "@/components/ProfileSidebar";
+import ProfileSidebar from "@/components/profile/ProfileSidebar";
 import { Box } from "@mui/material";
 
 export default function Layout({ children }:

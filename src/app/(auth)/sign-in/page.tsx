@@ -1,7 +1,7 @@
 'use client';
 import { Box, useMediaQuery } from '@mui/material';
-import Logo from '@/components/Logo';
-import SignInForm from '@/components/SignInForm';
+import Logo from '@/components/common/Logo';
+import SignInForm from '@/components/auth/signIn/SignInForm';
 import Image from 'next/image';
 
 export default function Page() {
