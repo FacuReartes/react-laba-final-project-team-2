@@ -1,4 +1,9 @@
-import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
+"use client";
+import { Box, Container } from "@mui/material";
+import Image from "next/image";
+import Logo from "@/components/Logo";
+
+import ForgotPasswordForm from "@/components/ForgotPasswordForm";
 
 export default function Page() {
   return (
@@ -16,6 +21,8 @@ export default function Page() {
       }}
       disableGutters
     >
+      <Logo />
+      <ForgotPasswordForm />
       <Box
         component="img"
         src="./assets/logo.svg"
@@ -77,9 +84,11 @@ export default function Page() {
           height: "100vh",
           p: 0,
           display: { xs: "none", md: "block" },
-          objectFit: "cover",
+          position: "relative",
         }}
-      ></Box>
+      >
+        <Image src="/assets/forgot-password.png" alt="Sneakers" layout="fill" objectFit="cover" />
+      </Box>
     </Container>
   );
 }
