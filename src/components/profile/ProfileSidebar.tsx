@@ -2,6 +2,7 @@
 import React from 'react'
 import { Avatar, Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const ProfileSidebar = () => {
   const router = useRouter()
@@ -24,8 +25,10 @@ const ProfileSidebar = () => {
         <List sx={{ ml: '8px', mt: '7.6px' }}>
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton onClick={() => router.push('/profile/products')}>
-              <ListItemIcon style={pathName === '/profile/products' ?  {color: '#FE645E'} : {}} sx={{ my: '0px'}} >
-                <Box component='img' alt='bag-tick' src='/bag-tick.svg'/>
+              <ListItemIcon sx={{ my: '0px'}} >
+                {pathName === '/profile/products' ? 
+                <Image src='/sidebar-icons/bag-tick-red.svg' alt='bag-tick-red' width={20} height={21}/> : 
+                <Image src='/sidebar-icons/bag-tick.svg' alt='bag-tick' width={20} height={21}/>}
               </ListItemIcon>
               <ListItemText style={pathName === '/profile/products' ?  {color: '#FE645E'} : {}} sx={{ my: '0px'}} primaryTypographyProps={{ fontSize: '16px', lineHeight: '18.77px', fontWeight: 500 }} primary='My products'/>
             </ListItemButton>
@@ -33,8 +36,10 @@ const ProfileSidebar = () => {
 
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }} >
             <ListItemButton onClick={() => router.push('/profile/settings')}>
-              <ListItemIcon style={pathName === '/profile/settings' ?  {color: '#FE645E'} : {}} sx={{ my: '0px'}}>
-                <Box component='img' alt='settings' src='/settings.svg'/>
+              <ListItemIcon sx={{ my: '0px'}}>
+                {pathName === '/profile/settings' ? 
+                <Image src='/sidebar-icons/settings-red.svg' alt='settings-red' width={20} height={21}/> : 
+                <Image src='/sidebar-icons/settings.svg' alt='settings' width={20} height={21}/>}
               </ListItemIcon>
               <ListItemText style={pathName === '/profile/settings' ?  {color: '#FE645E'} : {}} sx={{ my: '0px'}} primaryTypographyProps={{ fontSize: '16px', lineHeight: '18.77px', fontWeight: 500 }} primary='Settings'/>
             </ListItemButton>
@@ -42,8 +47,8 @@ const ProfileSidebar = () => {
 
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton>
-              <ListItemIcon sx={{ minWidth: '39px' }}>
-                <Box component='img' alt='logout' src='/logout.svg'/>
+              <ListItemIcon sx={{ my: '0px' }}>
+                <Image src='/sidebar-icons/logout.svg' alt='logout' width={20} height={21}/>
               </ListItemIcon>
               <ListItemText sx={{ my: '0px' }} primaryTypographyProps={{ fontSize: '16px', lineHeight: '18.77px', fontWeight: 500 }} primary='Log out'/>
             </ListItemButton>

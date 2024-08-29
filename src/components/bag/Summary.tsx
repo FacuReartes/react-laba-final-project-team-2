@@ -5,36 +5,60 @@ function Summary() {
   return (
     <Box sx={{ width: { xs: 'auto', xl: '399px' }, ml: { xs: '0px', md: '30px', lg: '100px', xl: '166px' }, height: { xs: 'auto', md: '0%' } }}> 
       <Divider sx={{ display: { xs: 'block', md: 'none' }}}/>
-      <Typography sx={{ mt: { xs: '12px', md: '0px' }, mb: { xs: '12px', md: '50px' }, ml: { xs: '20px', sm: '125px', md: '0px' }, fontWeight: 500, lineHeight: { xs: '35.19px', md: '52.79px' }, fontSize: { xs: '30px', md: '45px' } }}>Summary</Typography>
+      <Typography sx={{ mt: { xs: '12px', md: '0px' }, mb: { xs: '12px', md: '50px' }, ml: { xs: '20px', sm: '125px', md: '0px' }, 
+      fontWeight: 500, lineHeight: { xs: '35.19px', md: '52.79px' }, fontSize: { xs: '30px', md: '45px' } }}>
+        Summary
+      </Typography>
       <Divider sx={{ display: { xs: 'block', md: 'none' }}}/>
       
       <Box sx={{ px: { xs: '20px', sm: '125px', md: '0px' }, mt: { xs: '32px', md: '0px' }}}>
-        <Typography sx={{ lineHeight: { xs: '18.77px', md: '23.46px' }, fontSize: { xs: '16px', md: '20px' }}}>Do you have a promo code? ˅</Typography>
+        <Typography sx={{ lineHeight: { xs: '18.77px', md: '23.46px' }, fontSize: { xs: '16px', md: '20px' }}}>
+          Do you have a promo code? ˅
+        </Typography>
 
         <Box sx={{ mt: { xs: '32px', md: '36px' }, mb: { xs: '28px', md: '45px' }, display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>Subtotal</Typography>
-            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>$410</Typography>
+            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>
+              Subtotal
+            </Typography>
+            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>
+              $410
+            </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>Shipping</Typography>
-            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>$20</Typography>
+            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>
+              Shipping
+            </Typography>
+            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>
+              $20
+            </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>Tax</Typography>
-            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>$0</Typography>
+            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>
+              Tax
+            </Typography>
+            <Typography sx={{ lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' }}}>
+              $0
+            </Typography>
           </Box>
         </Box>
 
         <Divider/>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', my: '19px' }}>
-          <Typography sx={{ fontWeight: 600, lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' } }}>Total</Typography>
-          <Typography sx={{ fontWeight: 600, lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' } }}>$430</Typography>
+          <Typography sx={{ fontWeight: 600, lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' } }}>
+            Total
+          </Typography>
+          <Typography sx={{ fontWeight: 600, lineHeight: { xs: '23.46px', md: '35.19px' }, fontSize: { xs: '20px', md: '30px' } }}>
+            $430
+          </Typography>
         </Box>
 
 
         <Divider/>
-        <Button sx={{ mb: {sm: '30px', md: '0px'}, mt: { xs: '83px', md: '100px' }, width: '100%', bgcolor: 'secondary.light', lineHeight: '18.77px', fontSize: '16px', py: '10px', ':hover': { bgcolor: '#d6302a' } }} variant="contained">Checkout</Button>
+        <Button sx={{ mb: {sm: '30px', md: '0px'}, mt: { xs: '83px', md: '100px' }, width: '100%', bgcolor: 'secondary.light', 
+        lineHeight: '18.77px', fontSize: '16px', py: '10px', ':hover': { bgcolor: '#d6302a' } }} variant='contained'>
+          Checkout
+        </Button>
       
       </Box>
     </Box>
