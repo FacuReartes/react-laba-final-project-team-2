@@ -1,5 +1,5 @@
 "use client";
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 import Image from "next/image";
 import Logo from "@/components/common/Logo";
 
@@ -9,15 +9,15 @@ export default function Page() {
   return (
     <Container
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         m: 0,
         p: 0,
-        minWidth: "100vw",
-        minHeight: "100vh",
-        position: "relative",
+        minWidth: '100vw',
+        minHeight: '100vh',
+        position: 'relative',
       }}
       disableGutters
     >
@@ -25,8 +25,8 @@ export default function Page() {
       <ForgotPasswordForm />
       <Box
         sx={{
-          width: "50%",
-          height: "100vh",
+          width: '50%',
+          height: '100vh',
           p: 0,
           display: { xs: "none", md: "block" },
           position: "relative",

@@ -20,6 +20,7 @@ const mockData: IProduct[] = [
 
 export default function Page() {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ shoeList, setShoeList ] = useState<IProduct[]>(mockData)
 
   const renderList = shoeList.map((x: IProduct, index: number) => {

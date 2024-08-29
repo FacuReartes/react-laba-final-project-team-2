@@ -1,27 +1,27 @@
-"use client";
-import { Roboto, Work_Sans } from "next/font/google";
-import { createTheme } from "@mui/material/styles";
+'use client';
+import { Work_Sans } from 'next/font/google';
+import { createTheme } from '@mui/material/styles';
 
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
+// const roboto = Roboto({
+//   weight: ['300', '400', '500', '700'],
+//   subsets: ['latin'],
+//   display: 'swap',
+// });
 
-const workSans = Work_Sans({ subsets: ["latin"] });
+const workSans = Work_Sans({ subsets: ['latin'] });
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#0A1047",
-      light: "#141E7A",
+      main: '#0A1047',
+      light: '#141E7A',
     },
     secondary: {
-      main: "#6E314A",
-      light: "#FE645E",
+      main: '#6E314A',
+      light: '#FE645E',
     },
     error: {
-      main: "#FE645E",
+      main: '#FE645E',
     },
   },
   typography: {
@@ -30,8 +30,8 @@ const theme = createTheme({
     },
     fontFamily: workSans.style.fontFamily,
     subtitle1: {
-      fontSize: "15px",
-      fontWeight: "lighter",
+      fontSize: '15px',
+      fontWeight: 'lighter',
       color: '#5C5C5C'
     },
     subtitle2: {
@@ -39,8 +39,8 @@ const theme = createTheme({
       color: "#5C5C5C",
     },
     h1: {
-      fontSize: "45px",
-      fontWeight: "normal",
+      fontSize: '45px',
+      fontWeight: 'normal',
     },
     h2: {
       fontSize: "30px",

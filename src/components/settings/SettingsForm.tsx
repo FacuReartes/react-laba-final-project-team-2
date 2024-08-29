@@ -1,17 +1,17 @@
 'use client'
-import { Box, Button, TextField, Typography, useMediaQuery } from "@mui/material"
-import SettingsCard from "./SettingsCard"
+import { Box, Button, TextField, Typography, useMediaQuery } from '@mui/material'
+import SettingsCard from './SettingsCard'
 
-type Props = {}
+// type Props = {}
 
-const SettingsForm = (props: Props) => {
+const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
 
   return (
     <Box sx={{ width: isDesktop ? '436px' : '360px', display: 'flex', flexDirection: 'column', alignItems: 'center', pt: isDesktop ? '52px' : '24px', pb: '91px', bgcolor: '#fff'}}>
-        <Typography variant={isDesktop ? "h1" : "h2"} sx={{alignSelf: 'flex-start', ml: {xs: '34px', md: '29px'}}}>My Profile</Typography>
+        <Typography variant={isDesktop ? 'h1' : 'h2'} sx={{alignSelf: 'flex-start', ml: {xs: '34px', md: '29px'}}}>My Profile</Typography>
         <SettingsCard />
-        <Typography variant={isDesktop ? "subtitle1" : "subtitle2"} sx={{ mb: '48px', px: {xs: '20px', md: '0'} }}>Welcome back! Please enter your details to log into your account.</Typography>
+        <Typography variant={isDesktop ? 'subtitle1' : 'subtitle2'} sx={{ mb: '48px', px: {xs: '20px', md: '0'} }}>Welcome back! Please enter your details to log into your account.</Typography>
 
         <form style={{ display: 'flex', flexDirection: 'column', gap: '50px', width: isDesktop ? '436px' : '320px' }}>
           <TextField type="text" id="outlined-basic" label="Name" variant="outlined" placeholder="Jane" sx={{ height: '48px' }} />

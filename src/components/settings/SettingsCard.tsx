@@ -1,8 +1,8 @@
-import { Avatar, Box, Button } from "@mui/material"
+import { Avatar, Box, Button } from '@mui/material'
 
-type Props = {}
+// type Props = {}
 
-const SettingsCard = (props: Props) => {
+const SettingsCard = () => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '76px', mt: '35px', mb: '49px' }}>
       <Avatar alt='profileAvatar' src='/avatar.svg' sx={{ width: {xs: '100px', md: '150px'}, height: {xs: '100px', md: '150px'} }}/>
