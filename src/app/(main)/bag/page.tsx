@@ -1,8 +1,8 @@
-"use client"
-import Product from "@/components/bag/Product";
-import Summary from "@/components/bag/Summary";
-import { Box, Divider, List, ListItem, Typography } from "@mui/material";
-import { useState } from "react";
+'use client'
+import Product from '@/components/bag/Product';
+import Summary from '@/components/bag/Summary';
+import { Box, Divider, List, ListItem, Typography } from '@mui/material';
+import { useState } from 'react';
 
 interface IProduct {
   id: number
@@ -38,7 +38,10 @@ export default function Page() {
     <Box sx={{ pt: { xs: '0px', md: '50px' }, px: { xs: '0px', md: '20px', lg: '50px' , xl: '196px' }, display: 'flex', flexDirection: { xs: 'column', md: 'row' }}}>
       
       <Box sx={{ flexGrow: 1 }}>
-        <Typography sx={{ fontWeight: 500, lineHeight: { xs: '35.19px', md: '52.79px' }, fontSize: { xs: '30px', md: '45px' }, my: { xs: '12px', md: '0px' }, ml: { xs: '20px', sm: '125px', md: '0px' }}}>Chart</Typography>
+        <Typography sx={{ fontWeight: 500, lineHeight: { xs: '35.19px', md: '52.79px' }, fontSize: { xs: '30px', md: '45px' }, 
+        my: { xs: '12px', md: '0px' }, ml: { xs: '20px', sm: '125px', md: '0px' }}}>
+          Chart
+        </Typography>
         <List sx={{ p: 0, overflowY: { xs: 'hidden', md: 'auto' } , maxHeight: { xs: 'none', md: '650px' }, pr: { xs: '0px', md: '20px' }}}>
           {renderList}
         </List>
