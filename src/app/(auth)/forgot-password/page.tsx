@@ -62,7 +62,7 @@ export default function Page() {
           </Button>
           <Link
             href="/sign-in"
-            sx={{ m: "auto", textDecoration: "none", color: "#494949", fontSize: "15px" }}
+            sx={{ m: 'auto', textDecoration: 'none', color: '#494949', fontSize: '15px' }}
           >
             Back to log in
           </Link>

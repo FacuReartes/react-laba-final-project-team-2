@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
-import Image from "next/image";
+import { Box, Button, Divider, IconButton, Typography } from '@mui/material';
+import Image from 'next/image';
 import { AddCircle, Delete, RemoveCircle } from '@mui/icons-material';
 
 interface IProduct {

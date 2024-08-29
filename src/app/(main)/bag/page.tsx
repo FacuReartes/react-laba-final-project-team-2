@@ -1,8 +1,8 @@
-"use client"
-import Product from "@/components/bag/Product";
-import Summary from "@/components/bag/Summary";
-import { Box, Divider, List, ListItem, Typography } from "@mui/material";
-import { useState } from "react";
+'use client'
+import Product from '@/components/bag/Product';
+import Summary from '@/components/bag/Summary';
+import { Box, Divider, List, ListItem, Typography } from '@mui/material';
+import { useState } from 'react';
 
 interface IProduct {
   id: number
@@ -20,6 +20,7 @@ const mockData: IProduct[] = [
 
 export default function Page() {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ shoeList, setShoeList ] = useState<IProduct[]>(mockData)
 
   const renderList = shoeList.map((x: IProduct, index: number) => {
