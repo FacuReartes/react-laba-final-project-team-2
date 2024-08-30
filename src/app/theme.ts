@@ -2,12 +2,6 @@
 import { Work_Sans } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
 
-// const roboto = Roboto({
-//   weight: ['300', '400', '500', '700'],
-//   subsets: ['latin'],
-//   display: 'swap',
-// });
-
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 const theme = createTheme({
@@ -26,34 +20,33 @@ const theme = createTheme({
   },
   typography: {
     button: {
-      textTransform: "none",
+      textTransform: 'none',
     },
     fontFamily: workSans.style.fontFamily,
     subtitle1: {
       fontSize: '15px',
-      fontWeight: 'lighter',
-      color: '#5C5C5C'
+      color: '#5C5C5C',
     },
     subtitle2: {
-      fontSize: "12px",
-      color: "#5C5C5C",
+      fontSize: '12px',
+      color: '#5C5C5C',
     },
     h1: {
       fontSize: '45px',
       fontWeight: 'normal',
     },
     h2: {
-      fontSize: "30px",
-      fontWeight: "normal",
+      fontSize: '30px',
+      fontWeight: 'normal',
     },
     h3: {
-      fontSize: "25px",
-      color: "#000",
-      lineHeight: "34px",
+      fontSize: '25px',
+      color: '#000',
+      lineHeight: '34px',
     },
     h4: {
-      fontSize: "15px",
-      color: "#494949",
+      fontSize: '15px',
+      color: '#494949',
     },
   },
 });
