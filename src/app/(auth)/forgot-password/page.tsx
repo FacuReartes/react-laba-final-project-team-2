@@ -1,5 +1,5 @@
 'use client';
-import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Image from 'next/image';
 import Logo from '@/components/common/Logo';
 
@@ -32,7 +32,12 @@ export default function Page() {
           position: 'relative',
         }}
       >
-        <Image src="/assets/forgot-password.png" alt="Sneakers" layout="fill" objectFit="cover" />
+        <Image
+          src="/assets/forgot-password.png"
+          alt="Sneakers"
+          layout="fill"
+          objectFit="cover"
+        />
       </Box>
     </Container>
   );

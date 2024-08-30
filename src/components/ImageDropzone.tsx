@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDropzone, FileRejection, DropEvent } from 'react-dropzone';
+import { useDropzone, FileRejection } from 'react-dropzone';
 import { Box, Typography } from '@mui/material';
 
 interface ImageDropzoneProps {
@@ -7,9 +7,12 @@ interface ImageDropzoneProps {
   onFileRejected?: (fileRejections: FileRejection[]) => void;
 }
 
-const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRejected }) => {
+const ImageDropzone: React.FC<ImageDropzoneProps> = ({
+  onFileAccepted,
+  onFileRejected,
+}) => {
   const onDrop = useCallback(
-    (acceptedFiles: File[], fileRejections: FileRejection[], event: DropEvent) => {
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (onFileAccepted) {
         onFileAccepted(acceptedFiles);
       }
@@ -45,7 +48,9 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRej
       {isDragActive ? (
         <Typography variant="subtitle1">Drop the images here ...</Typography>
       ) : (
-        <Typography variant="subtitle1">Drop your image here, or select click to browse</Typography>
+        <Typography variant="subtitle1">
+          Drop your image here, or select click to browse
+        </Typography>
       )}
     </Box>
   );

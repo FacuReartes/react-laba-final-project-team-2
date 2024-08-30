@@ -16,8 +16,12 @@ export default function Products() {
       }
       const res = await req.json();
       return res;
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log('An error occurred');
+      }
     }
   };
 

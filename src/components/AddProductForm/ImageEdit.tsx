@@ -30,7 +30,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
     if (actionDialog) {
       onDelete();
     }
-  }, [actionDialog]);
+  }, [actionDialog, onDelete]);
 
   return (
     <Box

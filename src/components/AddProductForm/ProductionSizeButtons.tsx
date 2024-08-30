@@ -9,7 +9,7 @@ export interface ProductSizeButtonsProps {
 
 export default function ProductSizesButtons({
   productSizes,
-  sizeOptions,
+  // sizeOptions,
   onProductSizesButtonsChange,
 }: ProductSizeButtonsProps) {
   const handleToggleSize = (size: string) => {

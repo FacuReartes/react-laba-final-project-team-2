@@ -17,7 +17,7 @@ export interface RejectFilesDialogProps {
 }
 
 export default function RejectFilesDialog(props: RejectFilesDialogProps) {
-  const { onClose, selectedValue, open } = props;
+  const { onClose, open } = props;
 
   const handleClose = () => {
     onClose(false);

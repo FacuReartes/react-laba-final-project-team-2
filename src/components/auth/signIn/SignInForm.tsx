@@ -1,3 +1,5 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
@@ -8,10 +10,15 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import Link from 'next/link';
+import { signInSchema } from '@/lib/schemas/authSchemas';
+
+interface SignInFormInputs {
+  email: string;
+}
 
 // type Props = {};
 
-const SignupForm = () => {
+const SignInForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
 
   const containerWidth = isDesktop ? '459px' : '320px';
@@ -37,6 +44,20 @@ const SignupForm = () => {
   const formLabelStyles = {
     fontWeight: '500',
     fontSize: isDesktop ? 'inherit' : '12px',
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormInputs>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit: SubmitHandler<SignInFormInputs> = (data: {
+    email: string;
+  }) => {
+    console.log(data);
   };
 
   return (
@@ -71,6 +92,7 @@ const SignupForm = () => {
       </Typography>
 
       <form
+        onSubmit={handleSubmit(onSubmit)}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -93,6 +115,10 @@ const SignupForm = () => {
             variant="outlined"
             placeholder="example@mail.com"
             sx={textFieldStyles}
+            autoFocus={true}
+            {...register('email')}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message as string}
           />
         </Box>
 
@@ -202,4 +228,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignInForm;
