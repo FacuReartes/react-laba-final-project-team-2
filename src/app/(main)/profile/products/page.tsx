@@ -1,8 +1,8 @@
-"use client";
-import { Avatar, Box, Button, Typography, useMediaQuery } from "@mui/material";
-import Image from "next/image";
-import Products from "@/components/profile/ProductsContainer";
-import { useRouter } from "next/navigation";
+'use client';
+import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
+import Image from 'next/image';
+import Products from '@/components/profile/ProductsContainer';
+import { useRouter } from 'next/navigation';
 
 type MockUser = {
   name: string;
@@ -17,7 +17,7 @@ const mockUser: MockUser = {
 export default function ProductsPage() {
 
   const router = useRouter()
-  const isDesktop = useMediaQuery("(min-width: 700px)");
+  const isDesktop = useMediaQuery('(min-width: 700px)');
   return (
     <Box
       sx={{

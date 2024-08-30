@@ -1,8 +1,8 @@
-import { Box, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import ImageDropzone from "../ImageDropzone";
-import { FileRejection } from "react-dropzone";
-import ImageEdit from "./ImageEdit";
+import { Box, Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import ImageDropzone from '../ImageDropzone';
+import { FileRejection } from 'react-dropzone';
+import ImageEdit from './ImageEdit';
 
 interface Props {
   gallery: File[];
@@ -25,7 +25,7 @@ function PreviewImages({ gallery, onFileAccepted, onFileRejected, onDelete }: Pr
 
   return (
     <Box sx={{}}>
-      <Grid container spacing={{ lg: "54px", xs: "20px" }}>
+      <Grid container spacing={{ lg: '54px', xs: '20px' }}>
         {tempImgUrls.map((url, index) => (
           <Grid item key={`key-${index}-${url}`}>
             <ImageEdit

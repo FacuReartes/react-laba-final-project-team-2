@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Product from "./ProductCard";
-import { ProductType } from "@/lib/definitions";
-import { Box } from "@mui/material";
+import { useEffect, useState } from 'react';
+import Product from './ProductCard';
+import { ProductType } from '@/lib/definitions';
+import { Box } from '@mui/material';
 
 export default function Products() {
   const [products, setProducts] = useState<ProductType[]>([]);
 
   const fetchProducts = async () => {
     try {
-      const req = await fetch("/api/products");
+      const req = await fetch('/api/products');
       if (!req.ok) {
-        throw new Error("Something went wrong!");
+        throw new Error('Something went wrong!');
       }
       const res = await req.json();
       return res;
@@ -41,12 +41,12 @@ export default function Products() {
     >
       <Box
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "32px",
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '32px',
           justifyContent: {
-            xs: "center",
-            md: "normal",
+            xs: 'center',
+            md: 'normal',
           },
         }}
       >
