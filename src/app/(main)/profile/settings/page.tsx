@@ -1,10 +1,5 @@
-import SettingsForm from "@/components/settings/SettingsForm";
-import { Box } from "@mui/material";
+import SettingsForm from '@/components/settings/SettingsForm';
 
 export default function Page() {
-  return (
-    <Box>
-      <SettingsForm />
-    </Box>
-  )
+  return <SettingsForm />;
 }
