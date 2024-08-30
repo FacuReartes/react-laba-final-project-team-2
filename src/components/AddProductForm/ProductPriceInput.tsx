@@ -1,5 +1,5 @@
-import { Box, InputLabel, OutlinedInput, InputAdornment } from "@mui/material";
-import React from "react";
+import { Box, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
+import React from 'react';
 
 export interface ProductPriceInputProps {
   productPrice: number | string;
@@ -7,15 +7,15 @@ export interface ProductPriceInputProps {
 }
 
 const priceStylling = {
-  "& input[type=number]": {
-    MozAppearance: "textfield",
-    fontSize: "15px",
+  '& input[type=number]': {
+    MozAppearance: 'textfield',
+    fontSize: '15px',
   },
-  "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button":
+  '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button':
     {
-      WebkitAppearance: "none",
+      WebkitAppearance: 'none',
       margin: 0,
-      fontSize: "15px",
+      fontSize: '15px',
     },
 };
 
@@ -37,7 +37,7 @@ export default function ProductPriceInput({
         value={productPrice}
         onChange={onProductPriceChange}
         sx={priceStylling}
-        inputProps={{ min: 0, onWheel: (event) => event.currentTarget.blur(), step: "any" }}
+        inputProps={{ min: 0, onWheel: (event) => event.currentTarget.blur(), step: 'any' }}
         fullWidth
       />
     </Box>

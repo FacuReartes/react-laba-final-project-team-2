@@ -1,5 +1,5 @@
-import { Box, InputLabel, OutlinedInput } from "@mui/material";
-import React from "react";
+import { Box, InputLabel, OutlinedInput } from '@mui/material';
+import React from 'react';
 
 export interface ProductDescriptionInputProps {
   productDescription: string;

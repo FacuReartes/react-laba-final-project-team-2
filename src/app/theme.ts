@@ -26,7 +26,7 @@ const theme = createTheme({
   },
   typography: {
     button: {
-      textTransform: "none",
+      textTransform: 'none',
     },
     fontFamily: workSans.style.fontFamily,
     subtitle1: {
@@ -35,25 +35,25 @@ const theme = createTheme({
       color: '#5C5C5C'
     },
     subtitle2: {
-      fontSize: "12px",
-      color: "#5C5C5C",
+      fontSize: '12px',
+      color: '#5C5C5C',
     },
     h1: {
       fontSize: '45px',
       fontWeight: 'normal',
     },
     h2: {
-      fontSize: "30px",
-      fontWeight: "normal",
+      fontSize: '30px',
+      fontWeight: 'normal',
     },
     h3: {
-      fontSize: "25px",
-      color: "#000",
-      lineHeight: "34px",
+      fontSize: '25px',
+      color: '#000',
+      lineHeight: '34px',
     },
     h4: {
-      fontSize: "15px",
-      color: "#494949",
+      fontSize: '15px',
+      color: '#494949',
     },
   },
 });

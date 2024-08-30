@@ -1,9 +1,9 @@
-"use client";
-import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
-import Image from "next/image";
-import Logo from "@/components/common/Logo";
+'use client';
+import { Box, Container } from '@mui/material';
+import Image from 'next/image';
+import Logo from '@/components/common/Logo';
 
-import ForgotPasswordForm from "@/components/ForgotPasswordForm";
+import ForgotPasswordForm from '@/components/ForgotPasswordForm';
 
 export default function Page() {
   return (
@@ -28,8 +28,8 @@ export default function Page() {
           width: '50%',
           height: '100vh',
           p: 0,
-          display: { xs: "none", md: "block" },
-          position: "relative",
+          display: { xs: 'none', md: 'block' },
+          position: 'relative',
         }}
       >
         <Image src="/assets/forgot-password.png" alt="Sneakers" layout="fill" objectFit="cover" />
