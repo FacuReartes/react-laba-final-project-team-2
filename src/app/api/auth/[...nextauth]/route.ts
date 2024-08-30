@@ -12,14 +12,14 @@ const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: 'Username', type: 'text' },
+        email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         // we receive the user data, with this data we can make the API call
-        const { username, password } = credentials as any;
+        const { email, password } = credentials!;
         // Mock user
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+        const user = { id: '1', email: email, password: password }
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
