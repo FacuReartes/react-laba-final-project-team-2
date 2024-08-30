@@ -1,5 +1,5 @@
-import { Box, Typography, ToggleButton } from "@mui/material";
-import React from "react";
+import { Box, Typography, ToggleButton } from '@mui/material';
+import React from 'react';
 
 export interface ProductSizeButtonsProps {
   productSizes: { size: string; status: boolean }[];
@@ -9,7 +9,7 @@ export interface ProductSizeButtonsProps {
 
 export default function ProductSizesButtons({
   productSizes,
-  sizeOptions,
+  // sizeOptions,
   onProductSizesButtonsChange,
 }: ProductSizeButtonsProps) {
   const handleToggleSize = (size: string) => {
@@ -24,7 +24,7 @@ export default function ProductSizesButtons({
       <Typography variant="h4" sx={{ mb: 1 }}>
         Add size
       </Typography>
-      <Box sx={{ display: "flex", gap: { lg: "16px" }, justifyContent: { xs: "space-between" } }}>
+      <Box sx={{ display: 'flex', gap: { lg: '16px' }, justifyContent: { xs: 'space-between' } }}>
         {productSizes.map((selected) => (
           <ToggleButton
             id={`id-products-size-${selected.size}`}
@@ -34,9 +34,9 @@ export default function ProductSizesButtons({
             selected={selected.status}
             onChange={() => handleToggleSize(selected.size)}
             sx={{
-              width: { lg: "74px", xs: "56px" },
-              fontSize: { lg: "15px", xs: "10px" },
-              height: { lg: "48px", xs: "34px" },
+              width: { lg: '74px', xs: '56px' },
+              fontSize: { lg: '15px', xs: '10px' },
+              height: { lg: '48px', xs: '34px' },
             }}
             color="secondary"
           >

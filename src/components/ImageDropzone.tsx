@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
-import { useDropzone, FileRejection, DropEvent } from "react-dropzone";
-import { Box, Typography } from "@mui/material";
+import React, { useCallback } from 'react';
+import { useDropzone, FileRejection } from 'react-dropzone';
+import { Box, Typography } from '@mui/material';
 
 interface ImageDropzoneProps {
   onFileAccepted?: (acceptedFiles: File[]) => void;
@@ -9,7 +9,7 @@ interface ImageDropzoneProps {
 
 const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRejected }) => {
   const onDrop = useCallback(
-    (acceptedFiles: File[], fileRejections: FileRejection[], event: DropEvent) => {
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (onFileAccepted) {
         onFileAccepted(acceptedFiles);
       }
@@ -23,7 +23,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRej
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
+      'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
     },
   });
 
@@ -31,13 +31,13 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRej
     <Box
       {...getRootProps()}
       sx={{
-        width: { lg: "238px", xs: "calc(100% - 42px)" },
-        height: "298px",
-        padding: "40px",
-        border: "1px dashed #5C5C5C",
-        borderRadius: "8px",
-        textAlign: "center",
-        cursor: "pointer",
+        width: { lg: '238px', xs: 'calc(100% - 42px)' },
+        height: '298px',
+        padding: '40px',
+        border: '1px dashed #5C5C5C',
+        borderRadius: '8px',
+        textAlign: 'center',
+        cursor: 'pointer',
         m: 0,
       }}
     >

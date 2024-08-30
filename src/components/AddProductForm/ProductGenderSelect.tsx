@@ -1,5 +1,5 @@
-import { Box, Typography, Select, SelectChangeEvent, MenuItem } from "@mui/material";
-import React from "react";
+import { Box, Typography, Select, SelectChangeEvent, MenuItem } from '@mui/material';
+import React from 'react';
 
 export interface ProductGenderSelectProps {
   productGender: string;
@@ -11,7 +11,7 @@ export default function ProductGenderSelect({
   onProductGenderChange,
 }: ProductGenderSelectProps) {
   return (
-    <Box sx={{ width: "50%" }}>
+    <Box sx={{ width: '50%' }}>
       <Typography variant="h4" sx={{ mb: 1 }}>
         Gender
       </Typography>
@@ -21,7 +21,7 @@ export default function ProductGenderSelect({
         placeholder="Select gender"
         value={productGender}
         onChange={onProductGenderChange}
-        sx={{ width: "100%", fontSize: "15px" }}
+        sx={{ width: '100%', fontSize: '15px' }}
       >
         <MenuItem value="male">Male</MenuItem>
         <MenuItem value="female">Female</MenuItem>

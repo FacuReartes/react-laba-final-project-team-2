@@ -1,5 +1,5 @@
-import { Box, InputLabel, OutlinedInput } from "@mui/material";
-import React from "react";
+import { Box, InputLabel, OutlinedInput } from '@mui/material';
+import React from 'react';
 
 export interface ProductNameInputProps {
   productName: string;
@@ -22,7 +22,7 @@ export default function ProductNameInput({
         placeholder="Insert product name"
         value={productName}
         onChange={onProductNameChange}
-        sx={{ fontSize: "15px" }}
+        sx={{ fontSize: '15px' }}
         fullWidth
       />
     </Box>
