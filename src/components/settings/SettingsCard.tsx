@@ -1,6 +1,24 @@
 import { Avatar, Box, Button } from '@mui/material';
+import { useState } from 'react';
 
 const SettingsCard = () => {
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const handleChangePhoto = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e: any) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const avatarUrl = event.target.result;
+        setAvatar(avatarUrl);
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
+
   return (
     <Box
       sx={{
@@ -14,7 +32,7 @@ const SettingsCard = () => {
     >
       <Avatar
         alt="profileAvatar"
-        src="/avatar.svg"
+        src={avatar || '/avatar.svg'}
         sx={{
           width: { xs: '100px', md: '150px' },
           height: { xs: '100px', md: '150px' },
@@ -22,7 +40,7 @@ const SettingsCard = () => {
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <Button
-          type="submit"
+          type="button"
           variant="outlined"
           color="error"
           sx={{
@@ -30,11 +48,12 @@ const SettingsCard = () => {
             height: { xs: '31px', md: '40px' },
             fontSize: { xs: '12px', md: '16px' },
           }}
+          onClick={handleChangePhoto}
         >
           Change photo
         </Button>
         <Button
-          type="submit"
+          type="button"
           variant="contained"
           color="error"
           sx={{
