@@ -17,7 +17,7 @@ const Product: FC<IProduct> = (props) => {
       <Box sx={{ width: { xs: '105px', md: '223px' }, height: { xs: '100px', md: '214px' }, position: 'relative' }}>
         <Image src={props.imageUrl}
           alt={props.name}
-          layout='fill' objectFit='cover'/> 
+          fill priority/> 
       </Box>
 
       <Box sx={{ flexGrow: 1, ml: { xs: '15px', md: '46px' }, mb: { xs: '0px', md: '16px' }, display: 'flex', flexDirection: 'column' }}>
