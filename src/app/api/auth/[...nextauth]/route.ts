@@ -4,6 +4,15 @@ import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 const authOptions: NextAuthOptions = {
+
+  pages: {
+    signIn: '/sign-in'
+  },
+
+  session: {
+    strategy: 'jwt'
+  },
+
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
@@ -12,27 +21,42 @@ const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email', type: 'text' },
+        identifier: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        // we receive the user data, with this data we can make the API call
-        const { email, password } = credentials!;
-        // Mock user
-        const user = { id: '1', email: email, password: password }
 
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
+        const res = await fetch('https://shoes-shop-strapi.herokuapp.com/api/auth/local', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ credentials })
+        });
+
+        const user = await res.json();
+
+        if (res.ok && user) {
           return user
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       }
     })
-  ],
+  ], 
+
+  callbacks: {
+    async jwt({ token, user }) {
+      return {...token, ...user}
+    },
+
+    async session({ session, token}) {
+      session.user = token
+      return session
+    }
+  },
+
+  secret: process.env.NEXTAUTH_SECRET
 };
 
 const handler = NextAuth(authOptions);
