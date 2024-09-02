@@ -5,6 +5,7 @@ import './globals.css';
 import theme from '@/theme/theme';
 import { ThemeProvider } from '@mui/material';
 import ReactQueryProvider from '@/utils/provider/ReactQueryProvider';
+import SessionWrapper from '@/components/auth/SessionWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </AppRouterCacheProvider>
-        </ReactQueryProvider>
+        <SessionWrapper>
+          <ReactQueryProvider>
+            <AppRouterCacheProvider>
+              <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            </AppRouterCacheProvider>
+          </ReactQueryProvider>
+        </SessionWrapper>
       </body>
     </html>
   );
