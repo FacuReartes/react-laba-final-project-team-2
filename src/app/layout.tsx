@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import './globals.css';
-import theme from './theme';
+import theme from '@/theme/theme';
 import { ThemeProvider } from '@mui/material';
 import ReactQueryProvider from '@/utils/provider/ReactQueryProvider';
 

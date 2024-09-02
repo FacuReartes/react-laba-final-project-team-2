@@ -17,15 +17,16 @@ export default function AddProductPage() {
         Add a product
       </Typography>
       <Typography
-        variant="subtitle1"
+        variant="subtitle3"
         sx={{
           mb: { lg: '40px', xs: '24px' },
           mt: { lg: '35px', xs: '12px' },
         }}
       >
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti eveniet quia illum vel
-        velit atque. Quibusdam cumque doloremque eveniet laboriosam dignissimos eligendi cupiditate
-        molestias modi! Labore excepturi autem doloribus deleniti!
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti
+        eveniet quia illum vel velit atque. Quibusdam cumque doloremque eveniet
+        laboriosam dignissimos eligendi cupiditate molestias modi! Labore
+        excepturi autem doloribus deleniti!
       </Typography>
       <AddProductForm />
     </Box>
