@@ -1,9 +1,7 @@
-# [SPT2-<number>] Pull Request Title
-
-## Description
+# Description
 <!-- Provide a brief description of the changes introduced by this pull request. Include any relevant context or background information. -->
 
-### Changes
+## Changes
 <!-- List the key changes made in this pull request. For example: -->
 - Updated the `ComponentName` to handle edge cases.
 - Refactored the `FunctionName` for improved readability.

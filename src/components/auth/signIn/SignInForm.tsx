@@ -14,6 +14,7 @@ import { signInSchema } from '@/lib/schemas/authSchemas';
 
 interface SignInFormInputs {
   email: string;
+  password: string;
 }
 
 // type Props = {};
@@ -112,6 +113,7 @@ const SignInForm = () => {
           </label>
           <TextField
             id="Email"
+            type='email'
             variant="outlined"
             placeholder="example@mail.com"
             sx={textFieldStyles}
@@ -134,9 +136,13 @@ const SignInForm = () => {
           </label>
           <TextField
             id="Password"
+            type='password'
             variant="outlined"
             placeholder="at least 8 characters"
             sx={textFieldStyles}
+            {...register('password')}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message as string}
           />
         </Box>
 
