@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  TypographyVariants,
-  TypographyVariantsOptions,
+  TypographyVariants, // eslint-disable-line @typescript-eslint/no-unused-vars
+  TypographyVariantsOptions, // eslint-disable-line @typescript-eslint/no-unused-vars
 } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
