@@ -62,49 +62,43 @@ const SignupForm = () => {
           label="Name *"
           variant="outlined"
           placeholder="Hayman Andrews"
-          sx={{ height: '48px' }}
           {...register('name')}
+          error={Boolean(errors.name)}
+          helperText={errors.name ? errors.name.message : ''}
+          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
         />
-        {errors.name && (
-          <Typography sx={{ color: 'red' }}>{errors.name.message}</Typography>
-        )}
         <TextField
           id="outlined-basic"
           label="Email *"
           variant="outlined"
           placeholder="example@mail.com"
-          sx={{ height: '48px' }}
+          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
           {...register('email')}
+          error={Boolean(errors.email)}
+          helperText={errors.email ? errors.email.message : ''}
         />
-        {errors.email && (
-          <Typography sx={{ color: 'red' }}>{errors.email.message}</Typography>
-        )}
         <TextField
           id="outlined-basic"
+          type="password"
           label="Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={{ height: '48px' }}
+          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
           {...register('password')}
+          error={Boolean(errors.password)}
+          helperText={errors.password ? errors.password.message : ''}
         />
-        {errors.password && (
-          <Typography sx={{ color: 'red' }}>
-            {errors.password.message}
-          </Typography>
-        )}
         <TextField
           id="outlined-basic"
+          type="password"
           label="Confirm Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={{ height: '48px' }}
+          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
           {...register('confirmPassword')}
+          error={Boolean(errors.confirmPassword)}
+          helperText={errors.confirmPassword ? errors.confirmPassword.message : ''}
         />
-        {errors.confirmPassword && (
-          <Typography sx={{ color: 'red' }}>
-            {errors.confirmPassword.message}
-          </Typography>
-        )}
 
         <Box
           sx={{
@@ -131,7 +125,7 @@ const SignupForm = () => {
                 color: '#FE645E',
                 fontWeight: '500',
               }}
-              href="/sign-in"
+              href="/auth/sign-in"
             >
               Log in
             </Link>

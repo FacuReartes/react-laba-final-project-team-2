@@ -113,7 +113,7 @@ const SignInForm = () => {
           </label>
           <TextField
             id="Email"
-            type='email'
+            // type='email'
             variant="outlined"
             placeholder="example@mail.com"
             sx={textFieldStyles}
@@ -180,7 +180,7 @@ const SignInForm = () => {
                 fontWeight: '300',
                 fontSize: isDesktop ? 'inherit' : '10px',
               }}
-              href="/forgot-password"
+              href="/auth/forgot-password"
             >
               Forgot password?{' '}
             </Link>
@@ -223,7 +223,7 @@ const SignInForm = () => {
                 color: '#FE645E',
                 fontWeight: '600',
               }}
-              href="/sign-up"
+              href="/auth/sign-up"
             >
               Sign up
             </Link>
