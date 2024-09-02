@@ -6,7 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 const authOptions: NextAuthOptions = {
 
   pages: {
-    signIn: '/sign-in'
+    signIn: '/auth/sign-in'
   },
 
   session: {

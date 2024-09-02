@@ -1,4 +1,7 @@
 'use client';
+import { SignUpFormData } from '@/lib/definitions';
+import schema from '@/lib/schemas/signUpSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
@@ -7,11 +10,22 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import Link from 'next/link';
-
-// type Props = {}
+import { useForm } from 'react-hook-form';
 
 const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const submitData = (data: SignUpFormData) => {
+    console.log(data);
+  };
 
   return (
     <Box
@@ -41,34 +55,67 @@ const SignupForm = () => {
           gap: '24px',
           width: isDesktop ? '436px' : '320px',
         }}
+        onSubmit={handleSubmit(submitData)}
       >
         <TextField
           id="outlined-basic"
           label="Name *"
           variant="outlined"
           placeholder="Hayman Andrews"
-          sx={{ height: '48px' }}
+          {...register('name')}
+          error={Boolean(errors.name)}
+          helperText={errors.name ? errors.name.message : ''}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
         />
         <TextField
           id="outlined-basic"
           label="Email *"
           variant="outlined"
           placeholder="example@mail.com"
-          sx={{ height: '48px' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
+          {...register('email')}
+          error={Boolean(errors.email)}
+          helperText={errors.email ? errors.email.message : ''}
         />
         <TextField
           id="outlined-basic"
+          type="password"
           label="Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={{ height: '48px' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
+          {...register('password')}
+          error={Boolean(errors.password)}
+          helperText={errors.password ? errors.password.message : ''}
         />
         <TextField
           id="outlined-basic"
+          type="password"
           label="Confirm Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={{ height: '48px' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
+          {...register('confirmPassword')}
+          error={Boolean(errors.confirmPassword)}
+          helperText={
+            errors.confirmPassword ? errors.confirmPassword.message : ''
+          }
         />
 
         <Box
@@ -96,7 +143,7 @@ const SignupForm = () => {
                 color: '#FE645E',
                 fontWeight: '500',
               }}
-              href="/sign-in"
+              href="/auth/sign-in"
             >
               Log in
             </Link>

@@ -73,7 +73,7 @@ const ForgotPasswordForm = () => {
             Reset password
           </Button>
           <Link
-            href="/sign-in"
+            href="/auth/sign-in"
             style={{
               margin: 'auto',
               textDecoration: 'none',
