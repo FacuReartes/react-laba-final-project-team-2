@@ -32,7 +32,12 @@ export default function Page() {
           position: 'relative',
         }}
       >
-        <Image src="/assets/forgot-password.png" alt="Sneakers" layout="fill" objectFit="cover" />
+        <Image
+          src="/assets/forgot-password.png"
+          alt="Sneakers"
+          layout="fill"
+          objectFit="cover"
+        />
       </Box>
     </Container>
   );

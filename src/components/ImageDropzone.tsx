@@ -7,7 +7,10 @@ interface ImageDropzoneProps {
   onFileRejected?: (fileRejections: FileRejection[]) => void;
 }
 
-const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRejected }) => {
+const ImageDropzone: React.FC<ImageDropzoneProps> = ({
+  onFileAccepted,
+  onFileRejected,
+}) => {
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (onFileAccepted) {
@@ -45,7 +48,9 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onFileAccepted, onFileRej
       {isDragActive ? (
         <Typography variant="subtitle1">Drop the images here ...</Typography>
       ) : (
-        <Typography variant="subtitle1">Drop your image here, or select click to browse</Typography>
+        <Typography variant="subtitle1">
+          Drop your image here, or select click to browse
+        </Typography>
       )}
     </Box>
   );
