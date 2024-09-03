@@ -85,7 +85,6 @@ const SignupForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          id="outlined-basic"
           label="Name *"
           variant="outlined"
           placeholder="Hayman Andrews"
@@ -94,7 +93,6 @@ const SignupForm = () => {
           helperText={errors.username && errors.username.message}
         />
         <TextField
-          id="outlined-basic"
           label="Email *"
           variant="outlined"
           placeholder="example@mail.com"
@@ -103,7 +101,6 @@ const SignupForm = () => {
           helperText={errors.email && errors.email.message}
         />
         <TextField
-          id="outlined-basic"
           type="password"
           label="Password *"
           variant="outlined"
@@ -113,7 +110,6 @@ const SignupForm = () => {
           helperText={errors.password && errors.password.message}
         />
         <TextField
-          id="outlined-basic"
           type="password"
           label="Confirm Password *"
           variant="outlined"
