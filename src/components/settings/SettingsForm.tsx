@@ -63,55 +63,37 @@ const SettingsForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          type="text"
-          id="outlined-basic"
           label="Name"
           variant="outlined"
           placeholder="Jane"
-          sx={{ height: '48px' }}
           {...register('name')}
+          error={Boolean(errors.name)}
+          helperText={errors.name?.message}
         />
-        {errors.name && (
-          <Typography sx={{ color: 'red' }}>{errors.name.message}</Typography>
-        )}
         <TextField
-          type="text"
-          id="outlined-basic"
           label="Surname"
           variant="outlined"
           placeholder="Meldrum"
-          sx={{ height: '48px' }}
           {...register('surname')}
+          error={Boolean(errors.surname)}
+          helperText={errors.surname?.message}
         />
-        {errors.surname && (
-          <Typography sx={{ color: 'red' }}>
-            {errors.surname.message}
-          </Typography>
-        )}
         <TextField
-          type="email"
-          id="outlined-basic"
           label="Email"
           variant="outlined"
           placeholder="example@mail.com"
-          sx={{ height: '48px' }}
           {...register('email')}
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
         />
-        {errors.email && (
-          <Typography sx={{ color: 'red' }}>{errors.email.message}</Typography>
-        )}
         <TextField
-          type="tel"
-          id="outlined-basic"
           label="Phone number"
           variant="outlined"
           placeholder="(949) 354-2574"
-          sx={{ height: '48px' }}
           {...register('phone')}
+          error={Boolean(errors.phone)}
+          helperText={errors.phone?.message}
         />
-        {errors.phone && (
-          <Typography sx={{ color: 'red' }}>{errors.phone.message}</Typography>
-        )}
 
         <Button
           type="submit"
