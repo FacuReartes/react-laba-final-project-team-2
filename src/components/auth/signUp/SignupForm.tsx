@@ -9,11 +9,15 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
+  const router = useRouter();
 
   const {
     register,
@@ -23,8 +27,31 @@ const SignupForm = () => {
     resolver: zodResolver(schema),
   });
 
+  const { mutate } = useMutation({
+    mutationFn: (data: SignUpFormData) => {
+      return axios.post(
+        'https://shoes-shop-strapi.herokuapp.com/api/auth/local/register',
+        data
+      );
+    },
+  });
+
   const submitData = (data: SignUpFormData) => {
-    console.log(data);
+    mutate(data, {
+      onSuccess: response => {
+        console.log('User registered successfully', response);
+        router.push('/auth/sign-in');
+      },
+      onError: error => {
+        if (axios.isAxiosError(error)) {
+          console.error(
+            error?.response?.data.error?.message || 'Something went wrong'
+          );
+        } else {
+          console.error('Error:', error.message || 'Something went wrong');
+        }
+      },
+    });
   };
 
   return (
@@ -34,7 +61,7 @@ const SignupForm = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        pt: isDesktop ? '288px' : '94px',
+        pt: isDesktop ? '208px' : '94px',
         bgcolor: '#fff',
       }}
     >
@@ -58,64 +85,38 @@ const SignupForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          id="outlined-basic"
           label="Name *"
           variant="outlined"
           placeholder="Hayman Andrews"
-          {...register('name')}
-          error={Boolean(errors.name)}
-          helperText={errors.name ? errors.name.message : ''}
-          sx={
-            errors.name
-              ? { height: '48px', mb: '16px' }
-              : { height: '48px', mb: '0' }
-          }
+          {...register('username')}
+          error={Boolean(errors.username)}
+          helperText={errors.username && errors.username.message}
         />
         <TextField
-          id="outlined-basic"
           label="Email *"
           variant="outlined"
           placeholder="example@mail.com"
-          sx={
-            errors.name
-              ? { height: '48px', mb: '16px' }
-              : { height: '48px', mb: '0' }
-          }
           {...register('email')}
           error={Boolean(errors.email)}
-          helperText={errors.email ? errors.email.message : ''}
+          helperText={errors.email && errors.email.message}
         />
         <TextField
-          id="outlined-basic"
           type="password"
           label="Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={
-            errors.name
-              ? { height: '48px', mb: '16px' }
-              : { height: '48px', mb: '0' }
-          }
           {...register('password')}
           error={Boolean(errors.password)}
-          helperText={errors.password ? errors.password.message : ''}
+          helperText={errors.password && errors.password.message}
         />
         <TextField
-          id="outlined-basic"
           type="password"
           label="Confirm Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={
-            errors.name
-              ? { height: '48px', mb: '16px' }
-              : { height: '48px', mb: '0' }
-          }
           {...register('confirmPassword')}
           error={Boolean(errors.confirmPassword)}
-          helperText={
-            errors.confirmPassword ? errors.confirmPassword.message : ''
-          }
+          helperText={errors.confirmPassword && errors.confirmPassword.message}
         />
 
         <Box
