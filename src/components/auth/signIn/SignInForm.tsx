@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { signInSchema } from '@/lib/schemas/authSchemas';
+import { signIn } from 'next-auth/react';
 
 interface SignInFormInputs {
   email: string;
@@ -56,9 +57,16 @@ const SignInForm = () => {
   });
 
   const onSubmit: SubmitHandler<SignInFormInputs> = (data: {
-    email: string;
+    email: string,
+    password: string
   }) => {
-    console.log(data);
+
+    signIn('credentials', { 
+      identifier: data.email, 
+      password: data.password, 
+      redirect: true, 
+      callbackUrl:'/bag' 
+    })
   };
 
   return (
