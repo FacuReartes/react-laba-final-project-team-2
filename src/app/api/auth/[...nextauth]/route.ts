@@ -21,7 +21,7 @@ const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        identifier: { label: 'Username', type: 'text' },
+        identifier: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
@@ -31,7 +31,10 @@ const authOptions: NextAuthOptions = {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ credentials })
+          body: JSON.stringify({ 
+            identifier: credentials?.identifier,
+            password: credentials?.password
+          })
         });
 
         const user = await res.json();
