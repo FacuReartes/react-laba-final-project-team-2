@@ -9,11 +9,15 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
+  const router = useRouter();
 
   const {
     register,
@@ -23,8 +27,31 @@ const SignupForm = () => {
     resolver: zodResolver(schema),
   });
 
+  const { mutate } = useMutation({
+    mutationFn: (data: SignUpFormData) => {
+      return axios.post(
+        'https://shoes-shop-strapi.herokuapp.com/api/auth/local/register',
+        data
+      );
+    },
+  });
+
   const submitData = (data: SignUpFormData) => {
-    console.log(data);
+    mutate(data, {
+      onSuccess: response => {
+        console.log('User registered successfully', response);
+        router.push('/auth/sign-in');
+      },
+      onError: error => {
+        if (axios.isAxiosError(error)) {
+          console.error(
+            error?.response?.data.error?.message || 'Something went wrong'
+          );
+        } else {
+          console.error('Error:', error.message || 'Something went wrong');
+        }
+      },
+    });
   };
 
   return (
@@ -62,9 +89,9 @@ const SignupForm = () => {
           label="Name *"
           variant="outlined"
           placeholder="Hayman Andrews"
-          {...register('name')}
-          error={Boolean(errors.name)}
-          helperText={errors.name && errors.name.message}
+          {...register('username')}
+          error={Boolean(errors.username)}
+          helperText={errors.username && errors.username.message}
         />
         <TextField
           id="outlined-basic"
