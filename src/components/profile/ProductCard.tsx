@@ -1,20 +1,53 @@
+'use client';
 import { ProductType } from '@/lib/definitions';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
+import ProductsModal from './ProductsModal';
+import { useRef, useState } from 'react';
+import useOutSideClick from './useOutsideClick';
 
 interface PProps {
   product: ProductType;
 }
 
 export default function Product({ product }: PProps) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef();
+  useOutSideClick(ref, () => setOpen(false));
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', color: '#000' }}>
-      <Image
-        src={product.images[0]}
-        alt={product.name}
-        width={320}
-        height={380}
-      />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        color: '#000',
+        position: 'relative',
+      }}
+    >
+      <Box sx={{ position: 'relative', width: '320px' }}>
+        <Image
+          src={product.images[0]}
+          alt={product.name}
+          width={320}
+          height={380}
+        />
+        <Button
+          sx={{
+            position: 'absolute',
+            top: '0',
+            right: '0',
+            color: '#292D32',
+            px: 1,
+            fontSize: '24px',
+          }}
+          onClick={() => setOpen(true)}
+        >
+          ...
+        </Button>
+        <Box ref={ref}>
+          <ProductsModal open={open} />
+        </Box>
+      </Box>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', mt: '12px' }}
       >
@@ -39,9 +72,9 @@ export default function Product({ product }: PProps) {
         {product.gender === 'Man'
           ? 'Men'
           : product.gender === 'Woman'
-          ? 'Women'
-          : 'Unisex'}
-        {'\''}s Shoes
+            ? 'Women'
+            : 'Unisex'}
+        {"'"}s Shoes
       </Typography>
     </Box>
   );
