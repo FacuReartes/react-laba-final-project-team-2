@@ -65,14 +65,22 @@ const SignupForm = () => {
           {...register('name')}
           error={Boolean(errors.name)}
           helperText={errors.name ? errors.name.message : ''}
-          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
         />
         <TextField
           id="outlined-basic"
           label="Email *"
           variant="outlined"
           placeholder="example@mail.com"
-          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
           {...register('email')}
           error={Boolean(errors.email)}
           helperText={errors.email ? errors.email.message : ''}
@@ -83,7 +91,11 @@ const SignupForm = () => {
           label="Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
           {...register('password')}
           error={Boolean(errors.password)}
           helperText={errors.password ? errors.password.message : ''}
@@ -94,10 +106,16 @@ const SignupForm = () => {
           label="Confirm Password *"
           variant="outlined"
           placeholder="at least 8 characters"
-          sx={errors.name ? { height: '48px', mb: '16px' } : { height: '48px', mb: '0' }}
+          sx={
+            errors.name
+              ? { height: '48px', mb: '16px' }
+              : { height: '48px', mb: '0' }
+          }
           {...register('confirmPassword')}
           error={Boolean(errors.confirmPassword)}
-          helperText={errors.confirmPassword ? errors.confirmPassword.message : ''}
+          helperText={
+            errors.confirmPassword ? errors.confirmPassword.message : ''
+          }
         />
 
         <Box
