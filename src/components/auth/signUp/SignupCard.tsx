@@ -15,7 +15,6 @@ const SignupCard = () => {
         backgroundImage:
           'linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, #FFFFFF 100%)',
         borderRadius: '16px',
-        right: '%',
         left: '50%',
         top: '50%',
         transform: 'translate(-50%, -50%)',
