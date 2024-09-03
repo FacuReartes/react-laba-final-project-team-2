@@ -64,7 +64,7 @@ const SignupForm = () => {
           placeholder="Hayman Andrews"
           {...register('name')}
           error={Boolean(errors.name)}
-          helperText={errors.name ? errors.name.message : ''}
+          helperText={errors.name && errors.name.message}
         />
         <TextField
           id="outlined-basic"
@@ -73,7 +73,7 @@ const SignupForm = () => {
           placeholder="example@mail.com"
           {...register('email')}
           error={Boolean(errors.email)}
-          helperText={errors.email ? errors.email.message : ''}
+          helperText={errors.email && errors.email.message}
         />
         <TextField
           id="outlined-basic"
@@ -83,7 +83,7 @@ const SignupForm = () => {
           placeholder="at least 8 characters"
           {...register('password')}
           error={Boolean(errors.password)}
-          helperText={errors.password ? errors.password.message : ''}
+          helperText={errors.password && errors.password.message}
         />
         <TextField
           id="outlined-basic"
@@ -93,9 +93,7 @@ const SignupForm = () => {
           placeholder="at least 8 characters"
           {...register('confirmPassword')}
           error={Boolean(errors.confirmPassword)}
-          helperText={
-            errors.confirmPassword ? errors.confirmPassword.message : ''
-          }
+          helperText={errors.confirmPassword && errors.confirmPassword.message}
         />
 
         <Box
