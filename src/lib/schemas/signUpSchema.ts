@@ -4,7 +4,7 @@ import { emailSchema, passwordSchema } from './commonSchemas';
 
 const schema: ZodType<SignUpFormData> = z
   .object({
-    name: z.string().min(2, 'Name is required').max(20),
+    username: z.string().min(2, 'Name is required').max(20),
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: passwordSchema,
