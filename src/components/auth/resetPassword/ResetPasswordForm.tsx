@@ -35,7 +35,7 @@ interface APIErrorResponse {
     status: number;
     name: string;
     message: string;
-    details: any;
+    details: unknown;
   };
 }
 
@@ -60,11 +60,13 @@ const resetPassword = async ({
       }
     );
     return (await response).data as APISuccessResponse;
-  } catch (error: any) {
-    throw new Error(
-      (error.response.data as APIErrorResponse).error.message ||
-        'Failed to reset password'
-    );
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response) {
+      const apiError = error.response.data as APIErrorResponse;
+      throw new Error(apiError.error.message || 'Failed to send reset email');
+    } else {
+      throw new Error('Something went wrong! Failed to send reset email');
+    }
   }
 };
 
