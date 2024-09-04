@@ -11,7 +11,7 @@ export type SettingsFormData = {
   name: string;
   surname: string;
   email: string;
-  phone: string;
+  phone: number | string;
 };
 
 export type SignUpFormData = {
