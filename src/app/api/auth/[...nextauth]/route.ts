@@ -2,6 +2,9 @@ import { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const authOptions: NextAuthOptions = {
 
@@ -22,7 +25,8 @@ const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         identifier: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' }
+        password: { label: 'Password', type: 'password' },
+        rememberMe: { label: 'RememberMe', type: 'checkbox' }
       },
       async authorize(credentials) {
 
@@ -40,6 +44,9 @@ const authOptions: NextAuthOptions = {
         const user = await res.json();
 
         if (res.ok && user) {
+
+          cookies().set('remember-me', credentials?.rememberMe === 'true' ? 'true' : 'false')
+
           return user
         } else {
           return null
@@ -62,6 +69,15 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET
 };
 
-const handler = NextAuth(authOptions);
+const handler = async (req: NextRequest, res: NextResponse) => {
+  const remember = cookies().get('remember-me')
+
+  const maxAge = remember?.value === 'true' ? (60 * 60 * 24 * 30) : (60 * 60 * 12);
+
+  return NextAuth(req as unknown as NextApiRequest, res as unknown as NextApiResponse, {
+    ...authOptions,
+    session: { maxAge: maxAge }
+  })
+}
 
 export { handler as GET, handler as POST }

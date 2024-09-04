@@ -16,7 +16,7 @@ interface IUser {
 
 declare module 'next-auth' {
   interface Session {
-    test: {
+    user: {
       jwt: string,
       user: IUser,
     }
