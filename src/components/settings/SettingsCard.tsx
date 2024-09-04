@@ -34,7 +34,7 @@ const SettingsCard = () => {
     >
       <Avatar
         alt="profileAvatar"
-        src={avatar || '/avatar.svg'}
+        src={avatar || '/profile-circle.svg'}
         sx={{
           width: { xs: '100px', md: '150px' },
           height: { xs: '100px', md: '150px' },
