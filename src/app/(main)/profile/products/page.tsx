@@ -15,17 +15,20 @@ const mockUser: MockUser = {
 };
 
 export default function ProductsPage() {
-
-  const router = useRouter()
+  const router = useRouter();
   const isDesktop = useMediaQuery('(min-width: 700px)');
   return (
     <Box
       sx={{
         bgcolor: '#fff',
         pb: '48px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
       }}
     >
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: 'relative', width: '100%' }}>
         <Image
           src={'/products-hero-img.png'}
           alt="hero-img"
@@ -77,7 +80,13 @@ export default function ProductsPage() {
       </Box>
 
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', mt: '120px' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: 1,
+          mt: '120px',
+        }}
       >
         <Typography
           variant="h1"
@@ -85,7 +94,7 @@ export default function ProductsPage() {
             color: '#000',
             fontSize: { xs: '30px', md: '45px' },
             fontWeight: '500',
-            pl: { xs: '20px', md: '0' },
+            pl: { xs: '20px' },
           }}
         >
           My products
@@ -98,7 +107,7 @@ export default function ProductsPage() {
           sx={{
             display: {
               xs: 'none',
-              md: 'inline',
+              md: 'block',
             },
             bgcolor: 'secondary.light',
             color: '#fff',
@@ -107,6 +116,7 @@ export default function ProductsPage() {
             transition: 'opacity .2s ease',
             ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
             borderRadius: 2,
+            mr: { md: '20px' },
           }}
         >
           Add product
