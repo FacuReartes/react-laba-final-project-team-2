@@ -11,21 +11,43 @@ import { useForm } from 'react-hook-form';
 import { SettingsFormData } from '@/lib/definitions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import schema from '@/lib/schemas/settingsSchema';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
+  const { data: session, status } = useSession();
+  const user = session?.user.user;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<SettingsFormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      name: '',
+      surname: '',
+      email: '',
+      phone: '',
+    },
   });
 
   const submitData = (data: SettingsFormData) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        name: user.firstName || '',
+        surname: user.lastName || '',
+        email: user.email || '',
+        phone: user.phoneNumber || '',
+      });
+    }
+  }, [user, reset, status]);
 
   return (
     <Box
