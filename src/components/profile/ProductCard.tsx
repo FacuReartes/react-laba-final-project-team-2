@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import ProductsModal from './ProductsModal';
 import { useRef, useState } from 'react';
-import useOutSideClick from './useOutsideClick';
+import useOutSideClick from '../../hooks/useOutsideClick';
 
 interface PProps {
   product: ProductType;
