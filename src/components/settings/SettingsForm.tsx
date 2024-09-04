@@ -12,10 +12,11 @@ import { SettingsFormData } from '@/lib/definitions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import schema from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
+  const [avatar, setAvatar] = useState<string | null>(null);
   const { data: session, status } = useSession();
   const user = session?.user.user;
 
@@ -35,7 +36,11 @@ const SettingsForm = () => {
   });
 
   const submitData = (data: SettingsFormData) => {
-    console.log(data);
+    const formData = {
+      ...data,
+      avatar,
+    };
+    console.log(formData);
   };
 
   useEffect(() => {
@@ -67,7 +72,7 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard />
+      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
