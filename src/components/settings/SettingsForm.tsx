@@ -7,89 +7,34 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SettingsCard from './SettingsCard';
-import { useForm } from 'react-hook-form';
 import { SettingsFormData } from '@/lib/definitions';
-import { zodResolver } from '@hookform/resolvers/zod';
-import schema from '@/lib/schemas/settingsSchema';
+import {
+  useInitializeForm,
+  useSettingsForm,
+} from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { useState } from 'react';
+import { useUserData } from '@/hooks/useUserData';
+import { useUpdateUser } from '@/hooks/useUpdateUser';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
   const [avatar, setAvatar] = useState<string | null>(null);
-  const { data: session, status } = useSession();
-  const { data: userData } = useQuery({
-    queryKey: ['user'],
-    queryFn: () => {
-      return axios.get('https://shoes-shop-strapi.herokuapp.com/api/users/me', {
-        headers: {
-          Authorization: `Bearer ${session?.user.jwt}`,
-        },
-      });
-    },
-    enabled: status === 'authenticated',
-  });
-
+  const { data: session } = useSession();
+  const { data: userData } = useUserData(session?.user.jwt);
   const user = userData?.data;
-  const queryClient = useQueryClient();
-
+  const { mutate: updateUser } = useUpdateUser(user?.id, session?.user.jwt);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<SettingsFormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-    },
-  });
-
-  const { mutate } = useMutation({
-    mutationFn: (data: SettingsFormData) => {
-      return axios.put(
-        `https://shoes-shop-strapi.herokuapp.com/api/users/${user?.id}`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.user.jwt}`,
-          },
-        }
-      );
-    },
-  });
+  } = useSettingsForm(user);
+  useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    mutate(data, {
-      onSuccess: response => {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-        console.log('User updated successfully', response);
-      },
-      onError: error => {
-        if (axios.isAxiosError(error)) {
-          console.error(error?.response?.data || 'Something went wrong');
-        } else {
-          console.error('Error:', error.message || 'Something went wrong');
-        }
-      },
-    });
+    updateUser(data);
   };
-
-  useEffect(() => {
-    if (user) {
-      reset({
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        email: user.email || '',
-        phoneNumber: user.phoneNumber || '',
-      });
-    }
-  }, [user, reset, status]);
 
   return (
     <Box
