@@ -16,14 +16,18 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
   const [avatar, setAvatar] = useState<string | null>(null);
   const { data: session } = useSession();
-  const { data: userData } = useUserData(session?.user.jwt);
+  const jwt = session?.user.jwt;
+  const { data: userData } = useUserData(jwt);
   const user = userData?.data;
-  const { mutate: updateUser } = useUpdateUser(user?.id, session?.user.jwt);
+  const { mutate: updateUser } = useUpdateUser(user?.id, jwt);
+  const {mutate: uploadAvatar} = useUploadAvatar(jwt);
+
   const {
     register,
     handleSubmit,
@@ -54,7 +58,7 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} />
+      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} uploadAvatar={uploadAvatar} />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}

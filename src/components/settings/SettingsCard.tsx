@@ -3,11 +3,13 @@ import { Avatar, Box, Button } from '@mui/material';
 type SettingsCardProps = {
   onAvatarChange: (avatar: string | null) => void;
   avatar: string | null;
+  uploadAvatar: (file: File) => void;
 };
 
 const SettingsCard: React.FC<SettingsCardProps> = ({
   onAvatarChange,
   avatar,
+  uploadAvatar,
 }) => {
   const handleChangePhoto = () => {
     const input = document.createElement('input');
@@ -22,6 +24,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
           onAvatarChange(avatarUrl);
         };
         reader.readAsDataURL(file);
+        uploadAvatar(file);
       }
     };
     input.click();
