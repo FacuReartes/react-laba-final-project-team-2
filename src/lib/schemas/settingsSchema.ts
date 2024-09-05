@@ -3,10 +3,10 @@ import { z, ZodType } from 'zod';
 import { emailSchema, phoneSchema } from './commonSchemas';
 
 const schema: ZodType<SettingsFormData> = z.object({
-  name: z.string().min(2, 'Name is required').max(20),
-  surname: z.string().min(2, 'Surname is required').max(20),
+  firstName: z.string().min(2, 'Name is required').max(20),
+  lastName: z.string().min(2, 'Surname is required').max(20),
   email: emailSchema,
-  phone: phoneSchema,
+  phoneNumber: phoneSchema,
 });
 
 export default schema;
