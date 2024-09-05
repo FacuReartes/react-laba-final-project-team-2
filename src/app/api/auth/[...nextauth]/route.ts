@@ -1,5 +1,8 @@
 import { authOptions } from '@/lib/authOptions';
 import NextAuth from 'next-auth/next';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next/types';
 
 const handler = async (req: NextRequest, res: NextResponse) => {
   const remember = cookies().get('remember-me')
