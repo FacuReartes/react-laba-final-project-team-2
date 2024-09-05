@@ -13,12 +13,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import schema from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
   const [avatar, setAvatar] = useState<string | null>(null);
   const { data: session, status } = useSession();
-  const user = session?.user.user;
+  const { data: userData } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => {
+      return axios.get('https://shoes-shop-strapi.herokuapp.com/api/users/me', {
+        headers: {
+          Authorization: `Bearer ${session?.user.jwt}`,
+        },
+      });
+    },
+    enabled: status === 'authenticated',
+  });
+
+  const user = userData?.data;
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -28,28 +43,50 @@ const SettingsForm = () => {
   } = useForm<SettingsFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: '',
-      surname: '',
+      firstName: '',
+      lastName: '',
       email: '',
-      phone: '',
+      phoneNumber: '',
+    },
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: (data: SettingsFormData) => {
+      return axios.put(
+        `https://shoes-shop-strapi.herokuapp.com/api/users/${user?.id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.jwt}`,
+          },
+        }
+      );
     },
   });
 
   const submitData = (data: SettingsFormData) => {
-    const formData = {
-      ...data,
-      avatar,
-    };
-    console.log(formData);
+    mutate(data, {
+      onSuccess: response => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+        console.log('User updated successfully', response);
+      },
+      onError: error => {
+        if (axios.isAxiosError(error)) {
+          console.error(error?.response?.data || 'Something went wrong');
+        } else {
+          console.error('Error:', error.message || 'Something went wrong');
+        }
+      },
+    });
   };
 
   useEffect(() => {
     if (user) {
       reset({
-        name: user.firstName || '',
-        surname: user.lastName || '',
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
         email: user.email || '',
-        phone: user.phoneNumber || '',
+        phoneNumber: user.phoneNumber || '',
       });
     }
   }, [user, reset, status]);
@@ -90,23 +127,20 @@ const SettingsForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          label="Name"
           variant="outlined"
-          placeholder="Jane"
-          {...register('name')}
-          error={Boolean(errors.name)}
-          helperText={errors.name?.message}
+          placeholder="Name"
+          {...register('firstName')}
+          error={Boolean(errors.firstName)}
+          helperText={errors.firstName?.message}
         />
         <TextField
-          label="Surname"
           variant="outlined"
-          placeholder="Meldrum"
-          {...register('surname')}
-          error={Boolean(errors.surname)}
-          helperText={errors.surname?.message}
+          placeholder="Surname"
+          {...register('lastName')}
+          error={Boolean(errors.lastName)}
+          helperText={errors.lastName?.message}
         />
         <TextField
-          label="Email"
           variant="outlined"
           placeholder="example@mail.com"
           {...register('email')}
@@ -114,12 +148,11 @@ const SettingsForm = () => {
           helperText={errors.email?.message}
         />
         <TextField
-          label="Phone number"
           variant="outlined"
           placeholder="(949) 354-2574"
-          {...register('phone')}
-          error={Boolean(errors.phone)}
-          helperText={errors.phone?.message}
+          {...register('phoneNumber')}
+          error={Boolean(errors.phoneNumber)}
+          helperText={errors.phoneNumber?.message}
         />
 
         <Button
