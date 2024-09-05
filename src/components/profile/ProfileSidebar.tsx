@@ -3,6 +3,7 @@ import React from 'react'
 import { Avatar, Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { signOut } from 'next-auth/react';
 
 const ProfileSidebar = () => {
   const router = useRouter()
@@ -46,7 +47,7 @@ const ProfileSidebar = () => {
           </ListItem>
 
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
-            <ListItemButton>
+            <ListItemButton onClick={() => signOut({ callbackUrl: '/', redirect: true })}>
               <ListItemIcon sx={{ my: '0px' }}>
                 <Image src='/sidebar-icons/logout.svg' alt='logout' width={20} height={21}/>
               </ListItemIcon>
