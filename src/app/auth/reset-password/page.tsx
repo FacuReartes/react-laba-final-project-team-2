@@ -1,39 +1,31 @@
+'use client';
 import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
-import ResetPasswordForm from '@/components/auth/resetPassword/ResetPasswordForm';
 import Image from 'next/image';
+import { Suspense } from 'react';
+import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPasswordFormContainer';
 
 export default function Page() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        width: { md: '100%' },
-        height: { md: '100vh' },
-        overflow: 'hidden',
-      }}
-    >
-      <Box sx={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
+    <Suspense fallback={''}>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Logo />
-        <ResetPasswordForm />
-      </Box>
+        <ResetPasswordFormContainer />
 
-      <Box
-        sx={{
-          position: { md: 'relative' },
-          display: { md: 'flex', xs: 'none' },
-          flex: 1,
-        }}
-      >
-        <Image
-          src="/sneakers-reset-password.svg"
-          alt="Sneakers"
-          width={961}
-          height={962}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
+        <Box
+          sx={{
+            position: { md: 'relative' },
+            display: { md: 'flex', xs: 'none' },
+          }}
+        >
+          <Image
+            src="/sneakers-reset-password.svg"
+            alt="Sneakers"
+            width={961}
+            height={962}
+          />
+        </Box>
       </Box>
-    </Box>
+    </Suspense>
   );
 }
