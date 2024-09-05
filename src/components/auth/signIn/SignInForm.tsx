@@ -1,21 +1,14 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  useMediaQuery,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material';
+import { Box, Button, TextField, Typography, useMediaQuery, Checkbox, FormControlLabel} from '@mui/material';
 import Link from 'next/link';
 import { signInSchema } from '@/lib/schemas/authSchemas';
 import { signIn } from 'next-auth/react';
 
 interface SignInFormInputs {
-  email: string;
-  password: string;
+  email: string,
+  password: string,
+  rememberMe: boolean
 }
 
 // type Props = {};
@@ -58,15 +51,17 @@ const SignInForm = () => {
 
   const onSubmit: SubmitHandler<SignInFormInputs> = (data: {
     email: string,
-    password: string
+    password: string,
+    rememberMe: boolean,
   }) => {
 
     signIn('credentials', { 
       identifier: data.email, 
       password: data.password, 
+      rememberMe: data.rememberMe,
       redirect: true, 
-      callbackUrl:'/bag' 
-    })
+      callbackUrl:'/bag'
+    }) 
   };
 
   return (
@@ -169,6 +164,7 @@ const SignInForm = () => {
           <FormControlLabel
             control={
               <Checkbox
+                {...register('rememberMe')} 
                 sx={{ '& .MuiSvgIcon-root': { fontSize: isDesktop ? 16 : 12 } }}
               />
             }
