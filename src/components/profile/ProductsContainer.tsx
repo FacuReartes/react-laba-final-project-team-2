@@ -41,6 +41,8 @@ export default function Products() {
     <Box
       sx={{
         mt: 6,
+        maxWidth: '1400px',
+        mx: 'auto',
       }}
     >
       <Box
@@ -54,7 +56,7 @@ export default function Products() {
           },
         }}
       >
-        {products?.map((product) => (
+        {products?.map(product => (
           <Product key={product.id} product={product} />
         ))}
       </Box>

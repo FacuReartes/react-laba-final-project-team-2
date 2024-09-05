@@ -7,24 +7,37 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SettingsCard from './SettingsCard';
-import { useForm } from 'react-hook-form';
 import { SettingsFormData } from '@/lib/definitions';
-import { zodResolver } from '@hookform/resolvers/zod';
-import schema from '@/lib/schemas/settingsSchema';
+import {
+  useInitializeForm,
+  useSettingsForm,
+} from '@/lib/schemas/settingsSchema';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { useUserData } from '@/hooks/useUserData';
+import { useUpdateUser } from '@/hooks/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const jwt = session?.user.jwt;
+  const { data: userData } = useUserData(jwt);
+  const user = userData?.data;
+  const { mutate: updateUser } = useUpdateUser(user?.id, jwt);
+  const {mutate: uploadAvatar} = useUploadAvatar(jwt);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SettingsFormData>({
-    resolver: zodResolver(schema),
-  });
+    reset,
+  } = useSettingsForm(user);
+  useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    console.log(data);
+    updateUser(data);
   };
 
   return (
@@ -45,7 +58,7 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard />
+      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} uploadAvatar={uploadAvatar} />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
@@ -63,55 +76,33 @@ const SettingsForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          type="text"
-          id="outlined-basic"
-          label="Name"
           variant="outlined"
-          placeholder="Jane"
-          sx={{ height: '48px' }}
-          {...register('name')}
+          placeholder="Name"
+          {...register('firstName')}
+          error={Boolean(errors.firstName)}
+          helperText={errors.firstName?.message}
         />
-        {errors.name && (
-          <Typography sx={{ color: 'red' }}>{errors.name.message}</Typography>
-        )}
         <TextField
-          type="text"
-          id="outlined-basic"
-          label="Surname"
           variant="outlined"
-          placeholder="Meldrum"
-          sx={{ height: '48px' }}
-          {...register('surname')}
+          placeholder="Surname"
+          {...register('lastName')}
+          error={Boolean(errors.lastName)}
+          helperText={errors.lastName?.message}
         />
-        {errors.surname && (
-          <Typography sx={{ color: 'red' }}>
-            {errors.surname.message}
-          </Typography>
-        )}
         <TextField
-          type="email"
-          id="outlined-basic"
-          label="Email"
           variant="outlined"
           placeholder="example@mail.com"
-          sx={{ height: '48px' }}
           {...register('email')}
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
         />
-        {errors.email && (
-          <Typography sx={{ color: 'red' }}>{errors.email.message}</Typography>
-        )}
         <TextField
-          type="tel"
-          id="outlined-basic"
-          label="Phone number"
           variant="outlined"
           placeholder="(949) 354-2574"
-          sx={{ height: '48px' }}
-          {...register('phone')}
+          {...register('phoneNumber')}
+          error={Boolean(errors.phoneNumber)}
+          helperText={errors.phoneNumber?.message}
         />
-        {errors.phone && (
-          <Typography sx={{ color: 'red' }}>{errors.phone.message}</Typography>
-        )}
 
         <Button
           type="submit"

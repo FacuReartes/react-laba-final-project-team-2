@@ -8,10 +8,10 @@ export type ProductType = {
 };
 
 export type SettingsFormData = {
-  name: string;
-  surname: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  phone: string;
+  phoneNumber: number | string;
 };
 
 export type SignUpFormData = {
