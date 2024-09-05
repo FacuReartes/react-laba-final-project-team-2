@@ -7,47 +7,38 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SettingsCard from './SettingsCard';
-import { useForm } from 'react-hook-form';
 import { SettingsFormData } from '@/lib/definitions';
-import { zodResolver } from '@hookform/resolvers/zod';
-import schema from '@/lib/schemas/settingsSchema';
+import {
+  useInitializeForm,
+  useSettingsForm,
+} from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import { useUserData } from '@/hooks/useUserData';
+import { useUpdateUser } from '@/hooks/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
-  const { data: session, status } = useSession();
-  const user = session?.user.user;
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const jwt = session?.user.jwt;
+  const { data: userData } = useUserData(jwt);
+  const user = userData?.data;
+  const { mutate: updateUser } = useUpdateUser(user?.id, jwt);
+  const {mutate: uploadAvatar} = useUploadAvatar(jwt);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<SettingsFormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      name: '',
-      surname: '',
-      email: '',
-      phone: '',
-    },
-  });
+  } = useSettingsForm(user);
+  useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    console.log(data);
+    updateUser(data);
   };
-
-  useEffect(() => {
-    if (user) {
-      reset({
-        name: user.firstName || '',
-        surname: user.lastName || '',
-        email: user.email || '',
-        phone: user.phoneNumber || '',
-      });
-    }
-  }, [user, reset, status]);
 
   return (
     <Box
@@ -67,7 +58,7 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard />
+      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} uploadAvatar={uploadAvatar} />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
@@ -85,23 +76,20 @@ const SettingsForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          label="Name"
           variant="outlined"
-          placeholder="Jane"
-          {...register('name')}
-          error={Boolean(errors.name)}
-          helperText={errors.name?.message}
+          placeholder="Name"
+          {...register('firstName')}
+          error={Boolean(errors.firstName)}
+          helperText={errors.firstName?.message}
         />
         <TextField
-          label="Surname"
           variant="outlined"
-          placeholder="Meldrum"
-          {...register('surname')}
-          error={Boolean(errors.surname)}
-          helperText={errors.surname?.message}
+          placeholder="Surname"
+          {...register('lastName')}
+          error={Boolean(errors.lastName)}
+          helperText={errors.lastName?.message}
         />
         <TextField
-          label="Email"
           variant="outlined"
           placeholder="example@mail.com"
           {...register('email')}
@@ -109,12 +97,11 @@ const SettingsForm = () => {
           helperText={errors.email?.message}
         />
         <TextField
-          label="Phone number"
           variant="outlined"
           placeholder="(949) 354-2574"
-          {...register('phone')}
-          error={Boolean(errors.phone)}
-          helperText={errors.phone?.message}
+          {...register('phoneNumber')}
+          error={Boolean(errors.phoneNumber)}
+          helperText={errors.phoneNumber?.message}
         />
 
         <Button
