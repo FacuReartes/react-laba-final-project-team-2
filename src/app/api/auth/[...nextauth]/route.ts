@@ -1,64 +1,18 @@
-import { NextAuthOptions } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 import NextAuth from 'next-auth/next';
-import GithubProvider from 'next-auth/providers/github';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next/types';
 
-const authOptions: NextAuthOptions = {
+const handler = async (req: NextRequest, res: NextResponse) => {
+  const remember = cookies().get('remember-me')
 
-  pages: {
-    signIn: '/auth/sign-in'
-  },
+  const maxAge = remember?.value === 'true' ? (60 * 60 * 24 * 30) : (60 * 60 * 12);
 
-  session: {
-    strategy: 'jwt'
-  },
-
-  providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID ?? '',
-      clientSecret: process.env.GITHUB_SECRET ?? ''
-    }),
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        identifier: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' }
-      },
-      async authorize(credentials) {
-
-        const res = await fetch('https://shoes-shop-strapi.herokuapp.com/api/auth/local', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ credentials })
-        });
-
-        const user = await res.json();
-
-        if (res.ok && user) {
-          return user
-        } else {
-          return null
-        }
-      }
-    })
-  ], 
-
-  callbacks: {
-    async jwt({ token, user }) {
-      return {...token, ...user}
-    },
-
-    async session({ session, token}) {
-      session.user = token
-      return session
-    }
-  },
-
-  secret: process.env.NEXTAUTH_SECRET
-};
-
-const handler = NextAuth(authOptions);
+  return NextAuth(req as unknown as NextApiRequest, res as unknown as NextApiResponse, {
+    ...authOptions,
+    session: { maxAge: maxAge }
+  })
+}
 
 export { handler as GET, handler as POST }
