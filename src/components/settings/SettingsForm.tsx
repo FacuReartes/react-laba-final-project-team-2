@@ -13,20 +13,18 @@ import {
   useSettingsForm,
 } from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
 import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
-  const [avatar, setAvatar] = useState<string | null>(null);
   const { data: session } = useSession();
   const jwt = session?.user.jwt;
   const { data: userData } = useUserData(jwt);
   const user = userData?.data;
   const { mutate: updateUser } = useUpdateUser(user?.id, jwt);
-  const {mutate: uploadAvatar} = useUploadAvatar(jwt);
+  const { mutate: uploadAvatar, avatarData } = useUploadAvatar(jwt);
 
   const {
     register,
@@ -37,7 +35,7 @@ const SettingsForm = () => {
   useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    updateUser(data);
+    updateUser({ ...data, avatar: avatarData });
   };
 
   return (
@@ -58,7 +56,7 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} uploadAvatar={uploadAvatar} />
+      <SettingsCard uploadAvatar={uploadAvatar} avatarUrl={user?.avatar.url} />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
