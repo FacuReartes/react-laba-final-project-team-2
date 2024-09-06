@@ -4,7 +4,9 @@ import axios from 'axios';
 
 export const useUpdateUser = (
   userId: string | undefined,
-  jwt: string | undefined
+  jwt: string | undefined,
+  onSuccessCb: () => void,
+  onErrorCb: () => void
 ) => {
   const queryClient = useQueryClient();
 
@@ -22,6 +24,10 @@ export const useUpdateUser = (
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
+      if (onSuccessCb) onSuccessCb();
+    },
+    onError: () => {
+      if (onErrorCb) onErrorCb();
     },
   });
 };

@@ -1,8 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { useState } from 'react';
 
 export const useUploadAvatar = (jwt: string | undefined) => {
-  return useMutation({
+  const [avatarData, setAvatarData] = useState<object | null>(null);
+
+  const { mutate, ...rest } = useMutation({
     mutationFn: (file: File) => {
       const formData = new FormData();
       formData.append('files', file);
@@ -13,12 +16,23 @@ export const useUploadAvatar = (jwt: string | undefined) => {
         {
           headers: {
             Authorization: `Bearer ${jwt}`,
-            // 'Content-Type': 'multipart/form-data',
           },
         }
       );
     },
-    onSuccess: () => console.log('Avatar uploaded successfully'),
-    onError: error => console.error(error),
+    onSuccess: data => {
+      setAvatarData(data.data[0]);
+    },
+    onError: error => {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          error?.response?.data.error?.message || 'Something went wrong'
+        );
+      } else {
+        console.error('Error:', error.message || 'Something went wrong');
+      }
+    },
   });
+
+  return { avatarData, mutate, ...rest };
 };

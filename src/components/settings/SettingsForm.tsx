@@ -13,31 +13,44 @@ import {
   useSettingsForm,
 } from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
 import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
+import Popup from '../common/Popup';
+import { useState } from 'react';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
-  const [avatar, setAvatar] = useState<string | null>(null);
   const { data: session } = useSession();
   const jwt = session?.user.jwt;
   const { data: userData } = useUserData(jwt);
   const user = userData?.data;
-  const { mutate: updateUser } = useUpdateUser(user?.id, jwt);
-  const {mutate: uploadAvatar} = useUploadAvatar(jwt);
+  const { mutate: updateUser } = useUpdateUser(
+    user?.id,
+    jwt,
+    () => {
+      setOpenDialog(true);
+      setMessage('Your profile has been updated successfully!');
+    },
+    () => {
+      setOpenDialog(true);
+      setMessage('Something went wrong, please try again later');
+    }
+  );
+  const { mutate: uploadAvatar, avatarData } = useUploadAvatar(jwt);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     reset,
   } = useSettingsForm(user);
   useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    updateUser(data);
+    updateUser({ ...data, avatar: avatarData });
   };
 
   return (
@@ -58,14 +71,13 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard onAvatarChange={setAvatar} avatar={avatar} uploadAvatar={uploadAvatar} />
+      <SettingsCard uploadAvatar={uploadAvatar} avatarUrl={user?.avatar?.url} />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
       >
         Welcome back! Please enter your details to log into your account.
       </Typography>
-
       <form
         style={{
           display: 'flex',
@@ -95,6 +107,7 @@ const SettingsForm = () => {
           {...register('email')}
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
+          disabled
         />
         <TextField
           variant="outlined"
@@ -115,10 +128,25 @@ const SettingsForm = () => {
             mt: '56px',
             alignSelf: 'flex-end',
           }}
+          disabled={!isDirty && !avatarData}
         >
           Save changes
         </Button>
       </form>
+      <Popup
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        title={message}
+        actions={
+          <Button
+            variant="contained"
+            color={'info'}
+            onClick={() => setOpenDialog(false)}
+          >
+            Ok
+          </Button>
+        }
+      ></Popup>
     </Box>
   );
 };

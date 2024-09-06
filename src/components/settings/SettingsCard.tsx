@@ -1,16 +1,17 @@
 import { Avatar, Box, Button } from '@mui/material';
+import { useState } from 'react';
 
 type SettingsCardProps = {
-  onAvatarChange: (avatar: string | null) => void;
-  avatar: string | null;
   uploadAvatar: (file: File) => void;
+  avatarUrl: string | null;
 };
 
 const SettingsCard: React.FC<SettingsCardProps> = ({
-  onAvatarChange,
-  avatar,
   uploadAvatar,
+  avatarUrl,
 }) => {
+  const [avatar, setAvatar] = useState<string | null>(null);
+
   const handleChangePhoto = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -21,7 +22,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
           const avatarUrl = event.target?.result as string;
-          onAvatarChange(avatarUrl);
+          setAvatar(avatarUrl);
         };
         reader.readAsDataURL(file);
         uploadAvatar(file);
@@ -43,7 +44,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
     >
       <Avatar
         alt="profileAvatar"
-        src={avatar || '/profile-circle.svg'}
+        src={avatar ? avatar : avatarUrl || '/profile-circle.svg'}
         sx={{
           width: { xs: '100px', md: '150px' },
           height: { xs: '100px', md: '150px' },
