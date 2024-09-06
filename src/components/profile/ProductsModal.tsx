@@ -25,13 +25,18 @@ export default function ProductsModal({
             padding: '8px',
           }}
         >
-          <Typography>
-            <Link href={`/profile/products/${id}`}>View</Link>
+          <Typography sx={{ py: 0.5 }}>
+            <Link
+              href={`/profile/products/${id}`}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              View
+            </Link>
           </Typography>
           <Divider></Divider>
-          <Typography>Edit</Typography>
+          <Typography sx={{ py: 0.5, cursor: 'pointer' }}>Edit</Typography>
           <Divider></Divider>
-          <Typography>Delete</Typography>
+          <Typography sx={{ py: 0.5, cursor: 'pointer' }}>Delete</Typography>
         </Box>
       )}
     </>
