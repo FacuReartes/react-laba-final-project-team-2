@@ -12,7 +12,7 @@ export interface PopupProps {
   title: string;
   open: boolean;
   onClose: (value: boolean) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   actions?: React.ReactNode;
 }
 
