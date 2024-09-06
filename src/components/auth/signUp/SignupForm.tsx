@@ -2,8 +2,7 @@
 import Popup from '@/components/common/Popup';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { SignUpFormData } from '@/lib/definitions';
-import schema from '@/lib/schemas/signUpSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useSignupForm } from '@/lib/schemas/signUpSchema';
 import {
   Box,
   Button,
@@ -13,19 +12,15 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 
 const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(schema),
-  });
+  } = useSignupForm();
 
   const { mutate, setOpenDialog, openDialog, message, isPending } =
     useRegisterUser();
