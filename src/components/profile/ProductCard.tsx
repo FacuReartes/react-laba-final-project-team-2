@@ -10,7 +10,7 @@ interface PProps {
   product: ProductType;
 }
 
-export default function Product({ product }: PProps) {
+export default function ProductCard({ product }: PProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef();
   useOutSideClick(ref, () => setOpen(false));
@@ -22,6 +22,7 @@ export default function Product({ product }: PProps) {
         flexDirection: 'column',
         color: '#000',
         position: 'relative',
+        width: 'auto',
       }}
     >
       <Box sx={{ position: 'relative', width: '320px' }}>
@@ -52,7 +53,11 @@ export default function Product({ product }: PProps) {
         sx={{ display: 'flex', justifyContent: 'space-between', mt: '12px' }}
       >
         <Typography
-          sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
+          sx={{
+            fontSize: { xs: '10px', md: '22px' },
+            fontWeight: '500',
+            width: '220px',
+          }}
         >
           {product.name}
         </Typography>

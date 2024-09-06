@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Product from './ProductCard';
 import { ProductType } from '@/lib/definitions';
 import { Box } from '@mui/material';
+import ProductCard from './ProductCard';
 
 export default function Products() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -41,23 +41,19 @@ export default function Products() {
     <Box
       sx={{
         mt: 6,
-        maxWidth: '1400px',
-        mx: 'auto',
+        width: 1,
       }}
     >
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '32px',
-          justifyContent: {
-            xs: 'center',
-            md: 'normal',
-          },
+          justifyContent: 'space-around',
+          rowGap: 4,
         }}
       >
         {products?.map(product => (
-          <Product key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </Box>
     </Box>
