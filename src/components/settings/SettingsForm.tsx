@@ -93,6 +93,7 @@ const SettingsForm = () => {
           {...register('email')}
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
+          disabled
         />
         <TextField
           variant="outlined"
