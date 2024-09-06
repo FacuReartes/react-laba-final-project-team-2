@@ -45,7 +45,7 @@ export default function Product({ product }: PProps) {
           ...
         </Button>
         <Box ref={ref}>
-          <ProductsModal open={open} />
+          <ProductsModal open={open} id={product.id} />
         </Box>
       </Box>
       <Box
