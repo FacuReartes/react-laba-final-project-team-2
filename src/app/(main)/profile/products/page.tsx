@@ -35,7 +35,7 @@ export default function ProductsPage() {
           width={700}
           height={isDesktop ? 262 : 132}
           sizes="100vw"
-          style={{ width: '100%' }}
+          style={{ width: '100%', objectFit: 'cover' }}
         />
         <Box
           sx={{
