@@ -22,7 +22,13 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
           const avatarUrl = event.target?.result as string;
-          setAvatar(avatarUrl);
+
+          if (file.type.startsWith('image/')) {
+            setAvatar(avatarUrl);
+          } else {
+            setAvatar(null);
+            console.error('File is not an image');
+          }
         };
         reader.readAsDataURL(file);
         uploadAvatar(file);
