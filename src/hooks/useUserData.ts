@@ -5,11 +5,14 @@ export const useUserData = (jwt: string | undefined) => {
   return useQuery({
     queryKey: ['user'],
     queryFn: () => {
-      return axios.get('https://shoes-shop-strapi.herokuapp.com/api/users/me', {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
+      return axios.get(
+        'https://shoes-shop-strapi.herokuapp.com/api/users/me?populate=*',
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
     },
   });
 };
