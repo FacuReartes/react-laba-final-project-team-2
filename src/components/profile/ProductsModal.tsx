@@ -28,7 +28,11 @@ export default function ProductsModal({
           <Typography sx={{ py: 0.5 }}>
             <Link
               href={`/profile/products/${id}`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
+              style={{
+                display: 'block',
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
             >
               View
             </Link>

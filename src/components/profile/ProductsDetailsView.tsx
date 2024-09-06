@@ -26,7 +26,6 @@ export default function ProductDetailsView({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        flexGrow: 1,
       }}
     >
       <Box

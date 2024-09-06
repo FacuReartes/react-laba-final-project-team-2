@@ -1,8 +1,12 @@
-import { Box } from '@mui/material';
+'use client';
+import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
+import { useRouter } from 'next/navigation';
 
 export default function ProductDetail({ id }: { id: string | number }) {
+  const router = useRouter();
+
   const productDetail = {
     title: 'Nike Air Max 270',
     price: '160',
@@ -22,18 +26,35 @@ export default function ProductDetail({ id }: { id: string | number }) {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: { xs: 'column', lg: 'row' },
-        px: { xs: 2, lg: '0' },
-        justifyContent: 'center',
-        gap: 8,
-      }}
-    >
-      <ProductDetailsImageSlider imageUrls={productDetail.imageUrls} />
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', xl: 'row' },
+          px: { xs: 2, lg: '0' },
+          pr: { lg: 1 },
+          justifyContent: 'center',
+          gap: 8,
+        }}
+      >
+        <ProductDetailsImageSlider imageUrls={productDetail.imageUrls} />
 
-      <ProductDetailsView id={id} {...productDetail} />
+        <ProductDetailsView id={id} {...productDetail} />
+      </Box>
+      <Button
+        onClick={() => router.push('/profile/products')}
+        variant="contained"
+        sx={{
+          display: 'block',
+          mx: 'auto',
+          my: 4,
+          color: '#FFF',
+          bgcolor: 'secondary.light',
+          ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+        }}
+      >
+        Back to My Products
+      </Button>
     </Box>
   );
 }
