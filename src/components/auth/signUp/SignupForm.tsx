@@ -1,4 +1,5 @@
 'use client';
+import Popup from '@/components/common/Popup';
 import { SignUpFormData } from '@/lib/definitions';
 import schema from '@/lib/schemas/signUpSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,11 +14,14 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
   const router = useRouter();
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
   const {
     register,
@@ -40,14 +44,19 @@ const SignupForm = () => {
     mutate(data, {
       onSuccess: response => {
         console.log('User registered successfully', response);
-        router.push('/auth/sign-in');
+        setOpenDialog(true);
+        setMessage('User registered successfully');
       },
       onError: error => {
         if (axios.isAxiosError(error)) {
+          setOpenDialog(true);
+          setMessage(error?.response?.data.error?.message);
           console.error(
             error?.response?.data.error?.message || 'Something went wrong'
           );
         } else {
+          setOpenDialog(true);
+          setMessage('Something went wrong');
           console.error('Error:', error.message || 'Something went wrong');
         }
       },
@@ -151,6 +160,24 @@ const SignupForm = () => {
           </Typography>
         </Box>
       </form>
+
+      <Popup
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        title={message}
+        actions={
+          <Button
+            variant="contained"
+            color={'info'}
+            onClick={() => {
+              setOpenDialog(false);
+              router.push('/auth/sign-in');
+            }}
+          >
+            Ok
+          </Button>
+        }
+      ></Popup>
     </Box>
   );
 };
