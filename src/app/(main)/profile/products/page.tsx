@@ -30,7 +30,7 @@ export default function ProductsPage() {
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
         <Image
-          src={'/products-hero-img.png'}
+          src={'/products-hero-img.svg'}
           alt="hero-img"
           width={700}
           height={isDesktop ? 262 : 132}
