@@ -32,7 +32,13 @@ const SettingsForm = () => {
     message,
   } = useUpdateUser(user?.id, jwt);
 
-  const { mutate: uploadAvatar, avatarData } = useUploadAvatar(jwt);
+  const {
+    mutate: uploadAvatar,
+    avatarData,
+    setOpenDialog: setUploadDialog,
+    message: uploadMessage,
+    openDialog: uploadOpenDialog,
+  } = useUploadAvatar(jwt);
 
   const {
     register,
@@ -132,14 +138,20 @@ const SettingsForm = () => {
         </Button>
       </form>
       <Popup
-        open={openDialog}
-        onClose={() => setOpenDialog(false)}
-        title={message}
+        open={openDialog || uploadOpenDialog}
+        onClose={() => {
+          setOpenDialog(false);
+          setUploadDialog(false);
+        }}
+        title={message || uploadMessage}
         actions={
           <Button
             variant="contained"
             color={'info'}
-            onClick={() => setOpenDialog(false)}
+            onClick={() => {
+              setOpenDialog(false);
+              setUploadDialog(false);
+            }}
           >
             Ok
           </Button>

@@ -4,9 +4,14 @@ import { useState } from 'react';
 
 export const useUploadAvatar = (jwt: string | undefined) => {
   const [avatarData, setAvatarData] = useState<object | null>(null);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
   const { mutate, ...rest } = useMutation({
     mutationFn: (file: File) => {
+      if (!file.type.startsWith('image/')) {
+        throw new Error('Error: File must be an image.');
+      }
       const formData = new FormData();
       formData.append('files', file);
 
@@ -22,17 +27,24 @@ export const useUploadAvatar = (jwt: string | undefined) => {
     },
     onSuccess: data => {
       setAvatarData(data.data[0]);
+      setOpenDialog(true);
+      setMessage('Avatar updated. Click Save changes button to apply changes');
     },
     onError: error => {
-      if (axios.isAxiosError(error)) {
-        console.error(
+      if (error.message === 'Error: File must be an image.') {
+        setOpenDialog(true);
+        setMessage('Only images are allowed. Pick an image file.');
+      } else if (axios.isAxiosError(error)) {
+        setOpenDialog(true);
+        setMessage(
           error?.response?.data.error?.message || 'Something went wrong'
         );
       } else {
-        console.error('Error:', error.message || 'Something went wrong');
+        setOpenDialog(true);
+        setMessage('Something went wrong');
       }
     },
   });
 
-  return { avatarData, mutate, ...rest };
+  return { avatarData, mutate, openDialog, message, setOpenDialog, ...rest };
 };
