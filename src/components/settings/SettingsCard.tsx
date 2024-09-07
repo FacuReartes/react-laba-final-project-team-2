@@ -4,11 +4,13 @@ import { useState } from 'react';
 type SettingsCardProps = {
   uploadAvatar: (file: File) => void;
   avatarUrl: string | null;
+  isPending: boolean;
 };
 
 const SettingsCard: React.FC<SettingsCardProps> = ({
   uploadAvatar,
   avatarUrl,
+  isPending,
 }) => {
   const [avatar, setAvatar] = useState<string | null>(null);
 
@@ -67,6 +69,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
             fontSize: { xs: '12px', md: '16px' },
           }}
           onClick={handleChangePhoto}
+          disabled={isPending}
         >
           Change photo
         </Button>

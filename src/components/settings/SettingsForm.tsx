@@ -38,6 +38,7 @@ const SettingsForm = () => {
     setOpenDialog: setUploadDialog,
     message: uploadMessage,
     openDialog: uploadOpenDialog,
+    isPending,
   } = useUploadAvatar(jwt);
 
   const {
@@ -75,7 +76,11 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard uploadAvatar={uploadAvatar} avatarUrl={user?.avatar?.url} />
+      <SettingsCard
+        uploadAvatar={uploadAvatar}
+        avatarUrl={user?.avatar?.url}
+        isPending={isPending}
+      />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
