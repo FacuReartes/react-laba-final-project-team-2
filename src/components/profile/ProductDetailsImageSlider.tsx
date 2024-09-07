@@ -20,9 +20,9 @@ export default function ProductDetailsImageSlider({
       >
         {imageUrls.map(img => (
           <Image
-            src={img}
+            src={img.attributes.url}
             alt={'product-img'}
-            key={img}
+            key={img.attributes.name}
             width={76}
             height={76}
             style={{ flexGrow: 1, objectFit: 'cover', height: '100%' }}
@@ -30,8 +30,8 @@ export default function ProductDetailsImageSlider({
         ))}
       </Box>
       <Image
-        src={imageUrls[0]}
-        alt="product-img"
+        src={imageUrls[0].attributes.url}
+        alt={imageUrls[0].attributes.name}
         width={588}
         height={628}
         style={{ maxWidth: '588px', objectFit: 'cover', height: '100%' }}
