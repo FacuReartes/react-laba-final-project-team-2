@@ -16,7 +16,9 @@ export const useRegisterUser = () => {
     },
     onSuccess: () => {
       setOpenDialog(true);
-      setMessage('User registered successfully');
+      setMessage(
+        'User registered successfully. Confirm your email address and then login'
+      );
     },
     onError: error => {
       if (axios.isAxiosError(error)) {
