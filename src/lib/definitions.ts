@@ -1,7 +1,7 @@
 export type ProductType = {
-  id: number;
+  id: string;
   name: string;
-  images: string[];
+  images: string;
   description: string;
   price: number;
   gender: 'Man' | 'Woman' | 'Unisex';

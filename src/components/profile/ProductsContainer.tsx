@@ -1,41 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { ProductType } from '@/lib/definitions';
 import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 export default function Products() {
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const products = useQuery({
+    queryKey: ['products'],
+    queryFn: getProducts,
+  });
 
-  const fetchProducts = async () => {
-    try {
-      const req = await fetch('/api/products');
-      if (!req.ok) {
-        throw new Error('Something went wrong!');
-      }
-      const res = await req.json();
-      return res;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      } else {
-        console.log('An error occurred');
-      }
-    }
-  };
+  async function getProducts() {
+    const req = axios(
+      'https://shoes-shop-strapi.herokuapp.com/api/products?populate=*'
+    );
+    const res = (await req).data.data.filter(
+      item => item.attributes.teamName === 'team-2'
+    );
+    return res;
+  }
 
-  const loaderProducts = async () => {
-    const products = await fetchProducts();
-    if (products.length > 0) {
-      setProducts(products);
-    }
-  };
-
-  useEffect(() => {
-    loaderProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log(products.data);
 
   return (
     <Box
@@ -52,8 +38,8 @@ export default function Products() {
           rowGap: 4,
         }}
       >
-        {products?.map(product => (
-          <ProductCard key={product.id} product={product} />
+        {products.data?.map(product => (
+          <ProductCard key={product.id} product={{ ...product }} />
         ))}
       </Box>
     </Box>

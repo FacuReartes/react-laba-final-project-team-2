@@ -3,27 +3,32 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "cdn-images.farfetch-contents.com",
-        port: "",
+        protocol: 'https',
+        hostname: 'cdn-images.farfetch-contents.com',
+        port: '',
       },
       {
-        protocol: "https",
-        hostname: "assets.adidas.com",
-        port: "",
+        protocol: 'https',
+        hostname: 'assets.adidas.com',
+        port: '',
       },
       {
-        protocol: "https",
-        hostname: "nikearprod.vtexassets.com",
-        port: "",
+        protocol: 'https',
+        hostname: 'nikearprod.vtexassets.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
       },
     ],
   },
   async redirects() {
     return [
       {
-        source: "/",
-        destination: "/auth/sign-in",
+        source: '/',
+        destination: '/auth/sign-in',
         permanent: true,
       },
     ];

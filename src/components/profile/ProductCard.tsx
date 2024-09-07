@@ -26,12 +26,14 @@ export default function ProductCard({ product }: PProps) {
       }}
     >
       <Box sx={{ position: 'relative', width: '320px' }}>
-        <Image
-          src={product.images[0]}
-          alt={product.name}
-          width={320}
-          height={380}
-        />
+        {
+          <Image
+            src={product?.attributes.images.data[0].attributes.url}
+            alt={product.attributes?.name}
+            width={320}
+            height={380}
+          />
+        }
         <Button
           sx={{
             position: 'absolute',
@@ -59,7 +61,7 @@ export default function ProductCard({ product }: PProps) {
             width: '220px',
           }}
         >
-          {product.name}
+          {product.attributes.name}
         </Typography>
         <Typography
           sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
