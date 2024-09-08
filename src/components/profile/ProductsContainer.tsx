@@ -3,29 +3,14 @@
 import { Box, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import useGetProducts from '@/hooks/useGetProducts';
 
 export default function Products() {
+  const { filterProducts } = useGetProducts();
   const products = useQuery({
     queryKey: ['products'],
     queryFn: filterProducts,
   });
-
-  async function getProducts() {
-    const req = axios(
-      'https://shoes-shop-strapi.herokuapp.com/api/products?populate=*'
-    );
-    const res = (await req).data.data;
-    return res;
-  }
-
-  async function filterProducts() {
-    const result = await getProducts();
-    return result.filter(
-      (item: { id: string; attributes: { teamName: string } }) =>
-        item.attributes.teamName === 'team-2'
-    );
-  }
 
   if (products.isLoading)
     return <Typography variant="h1">Loading products...please wait</Typography>;
