@@ -1,6 +1,6 @@
 'use client';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -8,20 +8,29 @@ import axios from 'axios';
 export default function Products() {
   const products = useQuery({
     queryKey: ['products'],
-    queryFn: getProducts,
+    queryFn: filterProducts,
   });
 
   async function getProducts() {
     const req = axios(
       'https://shoes-shop-strapi.herokuapp.com/api/products?populate=*'
     );
-    const res = (await req).data.data.filter(
-      item => item.attributes.teamName === 'team-2'
-    );
+    const res = (await req).data.data;
     return res;
   }
 
-  console.log(products.data);
+  async function filterProducts() {
+    const result = await getProducts();
+    return result.filter(
+      (item: { id: string; attributes: { teamName: string } }) =>
+        item.attributes.teamName === 'team-2'
+    );
+  }
+
+  if (products.isLoading)
+    return <Typography variant="h1">Loading products...please wait</Typography>;
+  if (products.isError)
+    return <Typography>{JSON.stringify(products.error, null, 2)}</Typography>;
 
   return (
     <Box
@@ -38,9 +47,10 @@ export default function Products() {
           rowGap: 4,
         }}
       >
-        {products.data?.map(product => (
-          <ProductCard key={product.id} product={{ ...product }} />
-        ))}
+        {products.data &&
+          products.data?.map(product => (
+            <ProductCard key={product.id} product={{ ...product }} />
+          ))}
       </Box>
     </Box>
   );
