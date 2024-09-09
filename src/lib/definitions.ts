@@ -26,3 +26,9 @@ export type ResetPasswordFormData = {
   password: string;
   confirmPassword: string;
 };
+
+export type SignInFormInputs = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
