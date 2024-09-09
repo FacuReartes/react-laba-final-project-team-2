@@ -1,11 +1,10 @@
 'use client';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect } from 'react';
 
 type IdType = string | number;
 
