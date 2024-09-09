@@ -1,6 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
 
 export const authOptions: NextAuthOptions = {
 
@@ -21,8 +22,10 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         identifier: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' }
+        password: { label: 'Password', type: 'password' },
+        rememberMe: { label: 'RememberMe', type: 'checkbox' }
       },
+
       async authorize(credentials) {
 
         const res = await fetch('https://shoes-shop-strapi.herokuapp.com/api/auth/local', {
@@ -39,6 +42,9 @@ export const authOptions: NextAuthOptions = {
         const user = await res.json();
 
         if (res.ok && user) {
+
+          cookies().set('remember-me', credentials?.rememberMe === 'true' ? 'true' : 'false')
+
           return user
         } else {
           return null
