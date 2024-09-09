@@ -30,6 +30,7 @@ export default function Product({ product }: PProps) {
           alt={product.name}
           width={320}
           height={380}
+          priority
         />
         <Button
           sx={{
