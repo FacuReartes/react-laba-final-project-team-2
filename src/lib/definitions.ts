@@ -1,9 +1,32 @@
+type ImageType = {
+  id: number;
+  attributes: {
+    name: string;
+    url: string;
+  };
+};
+
+type Gender = {
+  id: number;
+  attributes: {
+    name: string;
+  };
+};
+
 export type ProductType = {
-  name: string;
-  images: string;
-  description: string;
-  price: number;
-  gender: 'Man' | 'Woman' | 'Unisex';
+  id: number;
+  attributes: {
+    name: string;
+    images: {
+      data: ImageType[];
+    };
+    description: string;
+    price: number;
+    teamName: 'team-1' | 'team-2' | 'team-3' | 'team-5';
+    gender: {
+      data: Gender;
+    };
+  };
 };
 
 export type SettingsFormData = {
