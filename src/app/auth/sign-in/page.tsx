@@ -1,44 +1,47 @@
 'use client';
-import { Box, useMediaQuery } from '@mui/material';
+import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
 import SignInForm from '@/components/auth/signIn/SignInForm';
 import Image from 'next/image';
 
 export default function Page() {
-  const isDesktop = useMediaQuery('(min-width: 700px)');
-
   return (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: isDesktop ? 'row' : 'column',
         justifyContent: 'center',
-        width: '100%',
-        height: '100vh',
+        height: { md: '100vh' },
+        overflow: 'hidden',
       }}
     >
       <Box
         sx={{
           flex: 1,
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
         <Logo />
         <SignInForm />
       </Box>
 
-      {isDesktop && (
-        <Box sx={{ position: 'relative', flex: 1 }}>
-          <Image
-            src="/sneakers-signin.svg"
-            alt="Sign in image"
-            layout="fill"
-            objectFit="cover"
-            style={{ width: '100%', height: '100%' }}
-          />
-        </Box>
-      )}
+      <Box
+        sx={{
+          position: { md: 'relative' },
+          display: { xl: 'flex', xs: 'none' },
+          flex: 1,
+        }}
+      >
+        <Image
+          src="/sneakers-signin.svg"
+          alt="Sign in image"
+          width={961}
+          height={962}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          priority
+        />
+      </Box>
     </Box>
   );
 }
