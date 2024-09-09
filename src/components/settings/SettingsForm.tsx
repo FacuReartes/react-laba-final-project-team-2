@@ -17,7 +17,6 @@ import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
-import { useState } from 'react';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
@@ -25,21 +24,22 @@ const SettingsForm = () => {
   const jwt = session?.user.jwt;
   const { data: userData } = useUserData(jwt);
   const user = userData?.data;
-  const { mutate: updateUser } = useUpdateUser(
-    user?.id,
-    jwt,
-    () => {
-      setOpenDialog(true);
-      setMessage('Your profile has been updated successfully!');
-    },
-    () => {
-      setOpenDialog(true);
-      setMessage('Something went wrong, please try again later');
-    }
-  );
-  const { mutate: uploadAvatar, avatarData } = useUploadAvatar(jwt);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+
+  const {
+    mutate: updateUser,
+    openDialog,
+    setOpenDialog,
+    message,
+  } = useUpdateUser(user?.id, jwt);
+
+  const {
+    mutate: uploadAvatar,
+    avatarData,
+    setOpenDialog: setUploadDialog,
+    message: uploadMessage,
+    openDialog: uploadOpenDialog,
+    isPending,
+  } = useUploadAvatar(jwt);
 
   const {
     register,
@@ -47,10 +47,15 @@ const SettingsForm = () => {
     formState: { errors, isDirty },
     reset,
   } = useSettingsForm(user);
+
   useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    updateUser({ ...data, avatar: avatarData });
+    const updatedData = { ...data };
+    if (avatarData) {
+      updatedData.avatar = avatarData;
+    }
+    updateUser(updatedData);
   };
 
   return (
@@ -71,7 +76,11 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard uploadAvatar={uploadAvatar} avatarUrl={user?.avatar?.url} />
+      <SettingsCard
+        uploadAvatar={uploadAvatar}
+        avatarUrl={user?.avatar?.url}
+        isPending={isPending}
+      />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
@@ -134,14 +143,20 @@ const SettingsForm = () => {
         </Button>
       </form>
       <Popup
-        open={openDialog}
-        onClose={() => setOpenDialog(false)}
-        title={message}
+        open={openDialog || uploadOpenDialog}
+        onClose={() => {
+          setOpenDialog(false);
+          setUploadDialog(false);
+        }}
+        title={message || uploadMessage}
         actions={
           <Button
             variant="contained"
             color={'info'}
-            onClick={() => setOpenDialog(false)}
+            onClick={() => {
+              setOpenDialog(false);
+              setUploadDialog(false);
+            }}
           >
             Ok
           </Button>
