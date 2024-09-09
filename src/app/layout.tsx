@@ -6,6 +6,7 @@ import theme from '@/theme/theme';
 import { ThemeProvider } from '@mui/material';
 import ReactQueryProvider from '@/utils/provider/ReactQueryProvider';
 import SessionWrapper from '@/components/auth/SessionWrapper';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionWrapper>
           <ReactQueryProvider>
+            <ReactQueryDevtools />
             <AppRouterCacheProvider>
               <ThemeProvider theme={theme}>{children}</ThemeProvider>
             </AppRouterCacheProvider>
