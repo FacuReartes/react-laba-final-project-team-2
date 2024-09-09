@@ -14,5 +14,6 @@ export const useUserData = (jwt: string | undefined) => {
         }
       );
     },
+    staleTime: 1000 * 60 * 5,
   });
 };
