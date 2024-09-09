@@ -4,6 +4,8 @@ import { Box, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
 import { useQuery } from '@tanstack/react-query';
 import useGetProducts from '@/hooks/useGetProducts';
+import { ProductType } from '@/lib/definitions';
+import ProductsEmptyState from './ProductsEmptyState';
 
 export default function Products() {
   const { filterProducts } = useGetProducts();
@@ -30,12 +32,16 @@ export default function Products() {
           flexWrap: 'wrap',
           justifyContent: 'space-around',
           rowGap: 4,
+          columnGap: 1,
         }}
       >
-        {products.data &&
-          products.data?.map(product => (
+        {products.data && products.data?.length > 0 ? (
+          products.data?.map((product: ProductType) => (
             <ProductCard key={product.id} product={{ ...product }} />
-          ))}
+          ))
+        ) : (
+          <ProductsEmptyState />
+        )}
       </Box>
     </Box>
   );
