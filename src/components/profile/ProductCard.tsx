@@ -67,7 +67,7 @@ export default function ProductCard({ product }: PProps) {
         <Typography
           sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
         >
-          ${product.price}
+          ${product.attributes.price}
         </Typography>
       </Box>
       <Typography
@@ -77,9 +77,9 @@ export default function ProductCard({ product }: PProps) {
           color: '#5C5C5C',
         }}
       >
-        {product.gender === 'Man'
+        {product.attributes.gender.data.attributes.name === 'Men'
           ? 'Men'
-          : product.gender === 'Woman'
+          : product.attributes.gender.data.attributes.name === 'Women'
             ? 'Women'
             : 'Unisex'}
         {"'"}s Shoes
