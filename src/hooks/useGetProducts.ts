@@ -1,7 +1,13 @@
 import { ProductType } from '@/lib/definitions';
 import axios, { AxiosError } from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 export default function useGetProducts() {
+  const products = useQuery({
+    queryKey: ['products'],
+    queryFn: filterProducts,
+  });
+
   async function getProducts() {
     try {
       const req = axios(
@@ -27,5 +33,9 @@ export default function useGetProducts() {
     // );
   }
 
-  return { filterProducts };
+  return {
+    products: products.data,
+    loading: products.isPending,
+    error: { isError: products.isError, error: products.error },
+  };
 }
