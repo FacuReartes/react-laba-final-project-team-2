@@ -15,10 +15,11 @@ import {
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
+import HeaderMenu from './HeaderMenu';
 
 const Header = () => {
-  const session = useSession();
-  const user = useUserData(session.data?.user.jwt);
+  const { data: session } = useSession();
+  const user = useUserData(session?.user.jwt);
   const userData = user.data?.data;
 
   return (
@@ -135,7 +136,7 @@ const Header = () => {
             >
               <Avatar
                 alt="profileAvatar"
-                src={userData?.avatar.url}
+                src={userData?.avatar?.url}
                 sx={{ width: '24px', height: '24px' }}
               />
             </IconButton>
@@ -144,15 +145,8 @@ const Header = () => {
           ''
         )}
 
-        <IconButton
-          aria-label="hamburger"
-          sx={{
-            mr: { xs: '0px', md: '28px' },
-            display: { xs: 'flex', md: 'none' },
-          }}
-        >
-          <Box component="img" alt="hamburger" src="/hamburger.svg" />
-        </IconButton>
+        <HeaderMenu/>
+
       </Toolbar>
       <Divider />
     </AppBar>
