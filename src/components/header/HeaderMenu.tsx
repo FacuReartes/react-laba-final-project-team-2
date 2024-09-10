@@ -9,12 +9,12 @@ const StyledMenu = styled((props: MenuProps) => (
   <Menu
     {...props}
   />
-))(({ theme }) => ({
+))(() => ({
   '& .MuiMenu-list': {
     padding: '80px 0px 0px 32px'
   },
-  "& > .MuiBackdrop-root" : {
-    backdropFilter: "blur(2px)"
+  '& > .MuiBackdrop-root' : {
+    backdropFilter: 'blur(2px)'
   }
 }))
 
