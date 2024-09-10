@@ -1,4 +1,3 @@
-'use client';
 import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
 import SignInForm from '@/components/auth/signIn/SignInForm';
