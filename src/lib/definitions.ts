@@ -13,6 +13,13 @@ type Gender = {
   };
 };
 
+type Sizes = {
+  id: number;
+  attributes: {
+    value: number;
+  };
+};
+
 export type ProductType = {
   id: number;
   attributes: {
@@ -25,6 +32,9 @@ export type ProductType = {
     teamName: 'team-1' | 'team-2' | 'team-3' | 'team-5';
     gender: {
       data: Gender;
+    };
+    sizes: {
+      data: Sizes[];
     };
   };
 };
