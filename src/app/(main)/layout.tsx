@@ -1,5 +1,5 @@
 'use client';
-import Header from '@/components/common/Header/Header';
+import Header from '@/components/common/header/Header';
 
 export default function Layout({
   children,

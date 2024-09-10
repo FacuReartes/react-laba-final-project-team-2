@@ -15,7 +15,7 @@ import {
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
-import HeaderMenu from './HeaderMenu';
+import HeaderMenu from '../common/header/HeaderMenu';
 
 const Header = () => {
   const { data: session } = useSession();

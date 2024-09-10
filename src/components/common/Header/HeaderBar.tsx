@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   Divider,
@@ -13,6 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
 import { useState } from 'react';
 import { searchSchema } from '@/lib/schemas/commonSchemas';
+import { useSession } from 'next-auth/react';
+import { useUserData } from '@/hooks/useUserData';
+import HeaderMenu from './HeaderMenu';
 
 interface HeaderBarProps {
   search?: string;
@@ -25,6 +29,11 @@ const HeaderBar = ({
   setOpenResults,
   search,
 }: HeaderBarProps) => {
+
+  const { data: session } = useSession();
+  const user = useUserData(session?.user.jwt);
+  const userData = user.data?.data;
+
   const [isTyping, setIsTyping] = useState(false);
   const [showInputSearch, setShowInputSearch] = useState(false);
 
@@ -83,34 +92,38 @@ const HeaderBar = ({
           Products
         </Typography>
 
-        <Button
-          variant="outlined"
-          sx={{
-            mr: '40px',
-            color: 'secondary.light',
-            borderColor: 'secondary.light',
-            width: '145px',
-            height: '48px',
-            fontSize: '12px',
-            light: '#FE645E',
-            display: { md: isTyping ? 'none' : 'flex', xs: 'none' },
-            ':hover': {
-              borderColor: '#fff',
-              color: '#FFF',
-              bgcolor: 'secondary.light',
-            },
-          }}
-        >
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: 'inherit',
+        {session ? (
+          ''
+        ) : (
+          <Button
+            variant="outlined"
+            sx={{
+              mr: '40px',
+              color: 'secondary.light',
+              borderColor: 'secondary.light',
+              width: '145px',
+              height: '48px',
+              fontSize: '12px',
+              light: '#FE645E',
+              display: { md: isTyping ? 'none' : 'flex', xs: 'none' },
+              ':hover': {
+                borderColor: '#fff',
+                color: '#FFF',
+                bgcolor: 'secondary.light',
+              },
             }}
-            href="/sign-in"
           >
-            Sign in
-          </Link>
-        </Button>
+            <Link
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+              href="/auth/sign-in"
+            >
+              Sign in
+            </Link>
+          </Button>
+        )}
 
         <Box
           sx={{
@@ -128,7 +141,7 @@ const HeaderBar = ({
             sx={{
               input: { color: '#000', height: '30px' },
               m: {
-                md: isTyping ? '0 auto' : '0 40px 0 0',
+                md: isTyping ? '0 auto' : '0 32px 0 0',
                 xs: '0 20px 0 28px',
               },
               width: '100%',
@@ -157,8 +170,8 @@ const HeaderBar = ({
           <IconButton
             aria-label="bag"
             sx={{
-              mr: { xs: '4px', md: '28px' },
-              display: isTyping || showInputSearch ? 'none' : 'block',
+              mr: { xs: '4px', md: '0px' },
+              display: isTyping || showInputSearch ? 'none' : 'flex',
             }}
             href="/bag"
           >
@@ -181,15 +194,25 @@ const HeaderBar = ({
             />
           </IconButton>
 
-          <IconButton
-            aria-label="hamburger"
-            sx={{
-              mr: { xs: '0px', md: '28px' },
-              display: showInputSearch ? 'none' : { xs: 'flex', md: 'none' },
-            }}
-          >
-            <Box component="img" alt="hamburger" src="/hamburger.svg" />
-          </IconButton>
+          {session ? (
+            <Link href="/profile/products">
+              <IconButton
+                aria-label="avatar"
+                sx={{ display: isTyping ? 'none' : { xs: 'none', md: 'block' }, mr: '28px' }}
+              >
+                <Avatar
+                  alt="profileAvatar"
+                  src={userData?.avatar?.url}
+                  sx={{ width: '24px', height: '24px' }}
+                />
+              </IconButton>
+            </Link>
+          ) : (
+            ''
+          )}
+
+          <HeaderMenu showInputSearch={showInputSearch}/>
+
           <IconButton
             aria-label="close-search"
             sx={{

@@ -18,7 +18,7 @@ const StyledMenu = styled((props: MenuProps) => (
   }
 }))
 
-const HeaderMenu = () => {
+const HeaderMenu = (props: any) => {
 
   const { data: session } = useSession()
   const router = useRouter()
@@ -45,7 +45,7 @@ const HeaderMenu = () => {
     <>
       <IconButton 
         aria-label='hamburger' 
-        sx={{ mr: {xs: '0px', md: '28px' }, display: { xs: 'flex', md:'none' } }}
+        sx={{ mr: {xs: '0px', md: '28px' }, display: props.showInputSearch ? 'none' : { xs: 'flex', md:'none' } }}
         aria-controls={open ? 'header-menu' : undefined}
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
