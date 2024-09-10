@@ -1,12 +1,11 @@
+import { ImageType } from '@/lib/definitions';
 import { Box } from '@mui/material';
 import Image from 'next/image';
-
-type ImageT = string;
 
 export default function ProductDetailsImageSlider({
   imageUrls,
 }: {
-  imageUrls: ImageT[];
+  imageUrls: ImageType[];
 }) {
   return (
     <Box sx={{ display: 'flex', gap: 1, height: '628px', width: '60%' }}>

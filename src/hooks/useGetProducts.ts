@@ -17,8 +17,10 @@ export default function useGetProducts() {
       return res;
     } catch (error: unknown) {
       const knownError = error as AxiosError;
-      if (knownError.response) console.log(knownError.response.status);
-      else if (knownError.request) console.log(knownError.request);
+      if (knownError.response)
+        console.log('response error', knownError.response.status);
+      else if (knownError.request)
+        console.log('request error', knownError.request);
       else console.log('Error', knownError.message);
     }
   }

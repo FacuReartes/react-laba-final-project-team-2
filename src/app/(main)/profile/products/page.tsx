@@ -112,7 +112,7 @@ export default function ProductsPage() {
           sx={{
             display: {
               xs: 'none',
-              md: products.length > 0 ? 'block' : 'none',
+              md: products?.length > 0 ? 'block' : 'none',
             },
             bgcolor: 'secondary.light',
             color: '#fff',

@@ -1,4 +1,4 @@
-type ImageType = {
+export type ImageType = {
   id: number;
   attributes: {
     name: string;
