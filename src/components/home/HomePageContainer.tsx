@@ -1,6 +1,6 @@
 'use client';
 import { Box, IconButton, useMediaQuery } from '@mui/material';
-import Header from '@/components/common/header/Header';
+import Header from '@/components/common/Header/Header';
 import { FilterSideBar } from '@/components/common/FilterSideBar/FilterSideBar';
 import { useEffect, useState } from 'react';
 import useFilter from '@/hooks/useFilter';
