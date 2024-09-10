@@ -7,12 +7,10 @@ import { ProductType } from '@/lib/definitions';
 import ProductsEmptyState from './ProductsEmptyState';
 
 export default function Products() {
-  const { products, loading, error } = useGetProducts();
+  const { products, loading } = useGetProducts();
 
   if (loading)
     return <Typography variant="h1">Loading products...please wait</Typography>;
-  if (error.isError)
-    return <Typography>{JSON.stringify(error.error, null, 2)}</Typography>;
 
   return (
     <Box
