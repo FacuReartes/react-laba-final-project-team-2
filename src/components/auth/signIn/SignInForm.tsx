@@ -1,21 +1,21 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, TextField, Typography, useMediaQuery, Checkbox, FormControlLabel} from '@mui/material';
+'use client';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  useMediaQuery,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material';
 import Link from 'next/link';
-import { signInSchema } from '@/lib/schemas/authSchemas';
-import { signIn } from 'next-auth/react';
-
-interface SignInFormInputs {
-  email: string,
-  password: string,
-  rememberMe: boolean
-}
-
-// type Props = {};
+import { useSignInForm } from '@/lib/schemas/authSchemas';
+import { SignInFormInputs } from '@/lib/definitions';
+import Popup from '@/components/common/Popup';
+import { useSignIn } from '@/hooks/useSignIn';
 
 const SignInForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
-
   const containerWidth = isDesktop ? '459px' : '320px';
   const inputWidth = isDesktop ? '436px' : '320px';
   const marginTop = isDesktop ? '289px' : '94px';
@@ -45,23 +45,13 @@ const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormInputs>({
-    resolver: zodResolver(signInSchema),
-  });
+  } = useSignInForm();
 
-  const onSubmit: SubmitHandler<SignInFormInputs> = (data: {
-    email: string,
-    password: string,
-    rememberMe: boolean,
-  }) => {
+  const { handleSignIn, openDialog, closeDialog, message, isLoading } =
+    useSignIn();
 
-    signIn('credentials', { 
-      identifier: data.email, 
-      password: data.password, 
-      rememberMe: data.rememberMe,
-      redirect: true, 
-      callbackUrl:'/bag'
-    }) 
+  const submitData = async (data: SignInFormInputs) => {
+    await handleSignIn(data);
   };
 
   return (
@@ -96,7 +86,7 @@ const SignInForm = () => {
       </Typography>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitData)}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -115,8 +105,6 @@ const SignInForm = () => {
             Email<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
           </label>
           <TextField
-            id="Email"
-            // type='email'
             variant="outlined"
             placeholder="example@mail.com"
             sx={textFieldStyles}
@@ -138,9 +126,8 @@ const SignInForm = () => {
             Password<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
           </label>
           <TextField
-            id="Password"
-            type='password'
             variant="outlined"
+            type="password"
             placeholder="at least 8 characters"
             sx={textFieldStyles}
             {...register('password')}
@@ -164,7 +151,7 @@ const SignInForm = () => {
           <FormControlLabel
             control={
               <Checkbox
-                {...register('rememberMe')} 
+                {...register('rememberMe')}
                 sx={{ '& .MuiSvgIcon-root': { fontSize: isDesktop ? 16 : 12 } }}
               />
             }
@@ -211,6 +198,7 @@ const SignInForm = () => {
               fontSize: isDesktop ? 'inherit' : '11px',
               alignSelf: 'flex-start',
             }}
+            disabled={isLoading}
           >
             Sign in
           </Button>
@@ -234,6 +222,16 @@ const SignInForm = () => {
           </Typography>
         </Box>
       </form>
+      <Popup
+        open={openDialog}
+        onClose={closeDialog}
+        title={message}
+        actions={
+          <Button variant="contained" color={'info'} onClick={closeDialog}>
+            Ok
+          </Button>
+        }
+      ></Popup>
     </Box>
   );
 };
