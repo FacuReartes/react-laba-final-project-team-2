@@ -17,6 +17,7 @@ const Header = ({ setSearch, productsList, search }: HeaderProps) => {
   const searchTermDebounce = useDebounce(searchTerm, 500);
   const [openResults, setOpenResults] = useState(false);
 
+  /* eslint-disable */
   useEffect(() => {
     if (setSearch) {
       if (searchTermDebounce.length > 0) {
