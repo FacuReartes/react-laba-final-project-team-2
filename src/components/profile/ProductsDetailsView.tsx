@@ -1,6 +1,5 @@
 import { ProductType } from '@/lib/definitions';
 import { Box, Button, Typography } from '@mui/material';
-import Image from 'next/image';
 
 export default function ProductDetailsView({ attributes }: ProductType) {
   return (
@@ -8,6 +7,9 @@ export default function ProductDetailsView({ attributes }: ProductType) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        mt: { xs: 4, md: 0 },
+        width: { xs: 1, lg: '600px' },
+        maxWidth: { xs: 'none', lg: '600px' },
       }}
     >
       <Box
@@ -19,7 +21,9 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         <Typography variant="h3" sx={{ fontSize: '45px' }}>
           {attributes?.name}
         </Typography>
-        <Typography sx={{ fontWeight: 500, alignContent: 'end' }}>
+        <Typography
+          sx={{ fontWeight: 500, alignContent: 'end', fontSize: '24px' }}
+        >
           ${attributes?.price}
         </Typography>
       </Box>
@@ -28,25 +32,25 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         {attributes?.gender?.data?.attributes?.name}&apos;s shoes
       </Typography>
 
-      <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-        {attributes?.images?.data?.map(img => (
-          <Image
-            src={img.attributes.url}
-            alt={img.attributes.name}
-            key={img.id}
-            width={80}
-            height={80}
-            style={{ borderRadius: '8px' }}
-          />
-        ))}
-      </Box>
-      <Typography sx={{ fontWeight: 500, my: 2 }}>Select Size</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          my: 2,
+          width: '80px',
+          height: '80px',
+          border: '4px solid #000',
+          borderRadius: 4,
+          backgroundColor: attributes?.color?.data?.attributes?.name,
+        }}
+      ></Box>
+
+      <Typography sx={{ fontWeight: 500, my: 2 }}>Size Availables</Typography>
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           gap: '24px',
-          maxWidth: '550px',
         }}
       >
         {attributes?.sizes?.data?.map(size => (
@@ -66,7 +70,14 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         ))}
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 2, mt: 4 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          mt: 4,
+          justifyContent: { xs: 'center', lg: 'normal' },
+        }}
+      >
         <Button
           variant="outlined"
           sx={{
@@ -91,7 +102,9 @@ export default function ProductDetailsView({ attributes }: ProductType) {
       </Box>
 
       <Typography sx={{ fontWeight: 500, mt: 4 }}>Description</Typography>
-      <Box sx={{ width: '522px', mt: 1 }}>{attributes?.description}</Box>
+      <Box sx={{ width: { xs: 1, lg: '522px' }, mt: 1 }}>
+        {attributes?.description}
+      </Box>
     </Box>
   );
 }
