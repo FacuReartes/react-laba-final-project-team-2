@@ -1,21 +1,20 @@
-import styles from './page.module.css';
-import { Button } from '@mui/material';
+'use client';
+import HomePageContainer from '@/components/home/HomePageContainer';
+import { ProductsProvider } from '@/context/ProductsContext';
 
-export default function Home() {
+interface HomeProps {
+  searchParams: {
+    search?: string;
+  };
+}
+
+export default function Home({ searchParams }: HomeProps) {
+  const searchQuery = searchParams.search || '';
+  console.log('searchQuery:', searchQuery);
+
   return (
-    <main className={styles.main}>
-      <Button
-        variant="contained"
-        sx={{
-          p: '32px',
-          bgcolor: 'secondary.main',
-          ':hover': {
-            bgcolor: 'secondary.light',
-          },
-        }}
-      >
-        Hello World
-      </Button>
-    </main>
+    <ProductsProvider>
+      <HomePageContainer initialSearchTerm={searchQuery} />
+    </ProductsProvider>
   );
 }

@@ -29,3 +29,9 @@ export const phoneSchema = z
   .regex(/^\(\d{3}\) \d{3}-\d{4}$/, {
     message: 'Phone number must be in the format: (949) 354-2574',
   });
+
+export const searchSchema = z
+  .string()
+  .trim()
+  .min(1, { message: 'Search term must to be at least 1 characters long' })
+  .max(20, { message: 'Search term must be less than 20 characters long' });
