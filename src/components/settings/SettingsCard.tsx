@@ -4,11 +4,13 @@ import { useState } from 'react';
 type SettingsCardProps = {
   uploadAvatar: (file: File) => void;
   avatarUrl: string | null;
+  isPending: boolean;
 };
 
 const SettingsCard: React.FC<SettingsCardProps> = ({
   uploadAvatar,
   avatarUrl,
+  isPending,
 }) => {
   const [avatar, setAvatar] = useState<string | null>(null);
 
@@ -22,7 +24,13 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
           const avatarUrl = event.target?.result as string;
-          setAvatar(avatarUrl);
+
+          if (file.type.startsWith('image/')) {
+            setAvatar(avatarUrl);
+          } else {
+            setAvatar(null);
+            console.error('File is not an image');
+          }
         };
         reader.readAsDataURL(file);
         uploadAvatar(file);
@@ -61,6 +69,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
             fontSize: { xs: '12px', md: '16px' },
           }}
           onClick={handleChangePhoto}
+          disabled={isPending}
         >
           Change photo
         </Button>
