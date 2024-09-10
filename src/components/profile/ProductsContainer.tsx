@@ -1,64 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Product from './ProductCard';
+import { Box, Typography } from '@mui/material';
+import ProductCard from './ProductCard';
+import useGetProducts from '@/hooks/useGetProducts';
 import { ProductType } from '@/lib/definitions';
-import { Box } from '@mui/material';
+import ProductsEmptyState from './ProductsEmptyState';
 
 export default function Products() {
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const { products, loading } = useGetProducts();
 
-  const fetchProducts = async () => {
-    try {
-      const req = await fetch('/api/products');
-      if (!req.ok) {
-        throw new Error('Something went wrong!');
-      }
-      const res = await req.json();
-      return res;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      } else {
-        console.log('An error occurred');
-      }
-    }
-  };
-
-  const loaderProducts = async () => {
-    const products = await fetchProducts();
-    if (products.length > 0) {
-      setProducts(products);
-    }
-  };
-
-  useEffect(() => {
-    loaderProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (loading)
+    return <Typography variant="h1">Loading products...please wait</Typography>;
 
   return (
     <Box
       sx={{
         mt: 6,
-        maxWidth: '1400px',
-        mx: 'auto',
+        width: 1,
       }}
     >
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '32px',
-          justifyContent: {
-            xs: 'center',
-            md: 'normal',
-          },
+          justifyContent: 'space-around',
+          rowGap: 4,
+          columnGap: 1,
         }}
       >
-        {products?.map(product => (
-          <Product key={product.id} product={product} />
-        ))}
+        {products && products?.length > 0 ? (
+          products.map((product: ProductType) => (
+            <ProductCard key={product.id} product={{ ...product }} />
+          ))
+        ) : (
+          <ProductsEmptyState />
+        )}
       </Box>
     </Box>
   );

@@ -10,7 +10,7 @@ interface PProps {
   product: ProductType;
 }
 
-export default function Product({ product }: PProps) {
+export default function ProductCard({ product }: PProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef();
   useOutSideClick(ref, () => setOpen(false));
@@ -22,16 +22,19 @@ export default function Product({ product }: PProps) {
         flexDirection: 'column',
         color: '#000',
         position: 'relative',
+        width: 'auto',
       }}
     >
       <Box sx={{ position: 'relative', width: '320px' }}>
-        <Image
-          src={product.images[0]}
-          alt={product.name}
-          width={320}
-          height={380}
-          priority
-        />
+        {
+          <Image
+            src={product?.attributes.images.data[0].attributes.url}
+            alt={product.attributes?.name}
+            width={320}
+            height={380}
+            style={{ objectFit: 'cover' }}
+          />
+        }
         <Button
           sx={{
             position: 'absolute',
@@ -53,14 +56,18 @@ export default function Product({ product }: PProps) {
         sx={{ display: 'flex', justifyContent: 'space-between', mt: '12px' }}
       >
         <Typography
-          sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
+          sx={{
+            fontSize: { xs: '10px', md: '22px' },
+            fontWeight: '500',
+            width: '220px',
+          }}
         >
-          {product.name}
+          {product.attributes.name}
         </Typography>
         <Typography
           sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
         >
-          ${product.price}
+          ${product.attributes.price}
         </Typography>
       </Box>
       <Typography
@@ -70,9 +77,9 @@ export default function Product({ product }: PProps) {
           color: '#5C5C5C',
         }}
       >
-        {product.gender === 'Man'
+        {product.attributes.gender.data.attributes.name === 'Men'
           ? 'Men'
-          : product.gender === 'Woman'
+          : product.attributes.gender.data.attributes.name === 'Women'
             ? 'Women'
             : 'Unisex'}
         {"'"}s Shoes

@@ -3,6 +3,7 @@ import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Products from '@/components/profile/ProductsContainer';
 import { useRouter } from 'next/navigation';
+import useGetProducts from '@/hooks/useGetProducts';
 import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
 
@@ -15,6 +16,7 @@ const mockUser: MockUser = {
 };
 
 export default function ProductsPage() {
+  const { products } = useGetProducts();
   const session = useSession();
   const user = useUserData(session.data?.user.jwt);
   const userData = user.data?.data;
@@ -39,6 +41,7 @@ export default function ProductsPage() {
           height={isDesktop ? 262 : 132}
           sizes="100vw"
           style={{ width: '100%', objectFit: 'cover' }}
+          priority
         />
         <Box
           sx={{
@@ -103,6 +106,7 @@ export default function ProductsPage() {
         >
           My products
         </Typography>
+
         <Button
           onClick={() => router.push('/profile/products/add-product')}
           variant="contained"
@@ -111,7 +115,7 @@ export default function ProductsPage() {
           sx={{
             display: {
               xs: 'none',
-              md: 'block',
+              md: products?.length > 0 ? 'block' : 'none',
             },
             bgcolor: 'secondary.light',
             color: '#fff',
