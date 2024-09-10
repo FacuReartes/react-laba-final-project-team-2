@@ -42,7 +42,7 @@ const ProfileSidebar = () => {
       >
         <Avatar
           alt="profileAvatar"
-          src={userData?.avatar.url}
+          src={userData?.avatar?.url}
           sx={{ width: '64px', height: '64px' }}
         />
         <Box sx={{ pl: '16px', py: '12px' }}>

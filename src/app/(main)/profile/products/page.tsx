@@ -54,7 +54,7 @@ export default function ProductsPage() {
               width: { xs: '60px', md: '120px' },
               height: { xs: '60px', md: '120px' },
             }}
-            src={userData?.avatar.url}
+            src={userData?.avatar?.url}
           />
           <Box
             sx={{
