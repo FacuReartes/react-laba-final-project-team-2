@@ -3,30 +3,11 @@ import { Box } from '@mui/material';
 import Image from 'next/image';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { useState } from 'react';
+import useImageSlider from '@/hooks/useImageSlider';
 
 export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  function handlePrev() {
-    if (currentSlide === 0) {
-      setCurrentSlide(imageUrls.length - 1);
-    } else {
-      setCurrentSlide(currentSlide - 1);
-    }
-  }
-
-  function handleNext() {
-    if (currentSlide === imageUrls.length - 1) {
-      setCurrentSlide(0);
-    } else {
-      setCurrentSlide(currentSlide + 1);
-    }
-  }
-
-  function handleCurrentSlide(getCurrentIndex: number) {
-    setCurrentSlide(getCurrentIndex);
-  }
+  const { currentSlide, handleCurrentSlide, handleNext, handlePrev } =
+    useImageSlider(imageUrls);
 
   return (
     <>
