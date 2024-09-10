@@ -6,17 +6,24 @@ export type ImageType = {
   };
 };
 
-type Gender = {
+export type Gender = {
   id: number;
   attributes: {
     name: string;
   };
 };
 
-type Sizes = {
+export type Sizes = {
   id: number;
   attributes: {
     value: number;
+  };
+};
+
+export type Color = {
+  id: number;
+  attributes: {
+    name: string;
   };
 };
 
@@ -35,6 +42,9 @@ export type ProductType = {
     };
     sizes: {
       data: Sizes[];
+    };
+    color: {
+      data: Color;
     };
   };
 };
