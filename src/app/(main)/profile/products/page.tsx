@@ -3,7 +3,6 @@ import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Products from '@/components/profile/ProductsContainer';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 import useGetProducts from '@/hooks/useGetProducts';
 
 type MockUser = {
@@ -17,11 +16,8 @@ const mockUser: MockUser = {
 };
 
 export default function ProductsPage() {
-  const { filterProducts } = useGetProducts();
-  const products = useQuery({
-    queryKey: ['products'],
-    queryFn: filterProducts,
-  });
+  const { products } = useGetProducts();
+
   const router = useRouter();
   const isDesktop = useMediaQuery('(min-width: 700px)');
   return (
@@ -116,7 +112,7 @@ export default function ProductsPage() {
           sx={{
             display: {
               xs: 'none',
-              md: products.data?.length > 0 ? 'block' : 'none',
+              md: products.length > 0 ? 'block' : 'none',
             },
             bgcolor: 'secondary.light',
             color: '#fff',

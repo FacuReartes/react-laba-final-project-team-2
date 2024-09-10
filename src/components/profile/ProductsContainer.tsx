@@ -2,22 +2,17 @@
 
 import { Box, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
-import { useQuery } from '@tanstack/react-query';
 import useGetProducts from '@/hooks/useGetProducts';
 import { ProductType } from '@/lib/definitions';
 import ProductsEmptyState from './ProductsEmptyState';
 
 export default function Products() {
-  const { filterProducts } = useGetProducts();
-  const products = useQuery({
-    queryKey: ['products'],
-    queryFn: filterProducts,
-  });
+  const { products, loading, error } = useGetProducts();
 
-  if (products.isLoading)
+  if (loading)
     return <Typography variant="h1">Loading products...please wait</Typography>;
-  if (products.isError)
-    return <Typography>{JSON.stringify(products.error, null, 2)}</Typography>;
+  if (error.isError)
+    return <Typography>{JSON.stringify(error.error, null, 2)}</Typography>;
 
   return (
     <Box
@@ -35,8 +30,8 @@ export default function Products() {
           columnGap: 1,
         }}
       >
-        {products.data && products.data?.length > 0 ? (
-          products.data?.map((product: ProductType) => (
+        {products && products?.length > 0 ? (
+          products.map((product: ProductType) => (
             <ProductCard key={product.id} product={{ ...product }} />
           ))
         ) : (
