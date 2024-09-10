@@ -1,26 +1,8 @@
+import { ProductType } from '@/lib/definitions';
 import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 
-type SizeT = number;
-type ImagesT = string;
-
-export default function ProductDetailsView({
-  id,
-  sizes,
-  title,
-  price,
-  genre,
-  imageUrls,
-  description,
-}: {
-  id: string | number;
-  sizes: SizeT[];
-  title: string;
-  price: string;
-  genre: string;
-  imageUrls: ImagesT[];
-  description: string;
-}) {
+export default function ProductDetailsView({ attributes }: ProductType) {
   return (
     <Box
       sx={{
@@ -35,23 +17,23 @@ export default function ProductDetailsView({
         }}
       >
         <Typography variant="h3" sx={{ fontSize: '45px' }}>
-          {title} - (id #{id})
+          {attributes?.name}
         </Typography>
         <Typography sx={{ fontWeight: 500, alignContent: 'end' }}>
-          ${price}
+          ${attributes?.price}
         </Typography>
       </Box>
 
       <Typography sx={{ mt: 2, fontWeight: 500 }}>
-        {genre}&apos;s shoes
+        {attributes?.gender?.data?.attributes?.name}&apos;s shoes
       </Typography>
 
       <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-        {imageUrls.map(img => (
+        {attributes?.images?.data?.map(img => (
           <Image
-            src={img}
-            alt="product-img"
-            key={img}
+            src={img.attributes.url}
+            alt={img.attributes.name}
+            key={img.id}
             width={80}
             height={80}
             style={{ borderRadius: '8px' }}
@@ -67,9 +49,9 @@ export default function ProductDetailsView({
           maxWidth: '550px',
         }}
       >
-        {sizes.map(size => (
+        {attributes?.sizes?.data?.map(size => (
           <Box
-            key={size}
+            key={size?.attributes?.value}
             sx={{
               width: '85px',
               height: '55px',
@@ -79,7 +61,7 @@ export default function ProductDetailsView({
               alignContent: 'center',
             }}
           >
-            EU-{size}
+            EU-{size?.attributes?.value}
           </Box>
         ))}
       </Box>
@@ -109,7 +91,7 @@ export default function ProductDetailsView({
       </Box>
 
       <Typography sx={{ fontWeight: 500, mt: 4 }}>Description</Typography>
-      <Box sx={{ width: '522px', mt: 1 }}>{description}</Box>
+      <Box sx={{ width: '522px', mt: 1 }}>{attributes?.description}</Box>
     </Box>
   );
 }
