@@ -18,7 +18,7 @@ const StyledMenu = styled((props: MenuProps) => (
   }
 }))
 
-const HeaderMenu = (props: any) => {
+const HeaderMenu = (props: { showInputSearch: boolean }) => {
 
   const { data: session } = useSession()
   const router = useRouter()
