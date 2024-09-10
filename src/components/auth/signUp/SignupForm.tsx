@@ -1,7 +1,8 @@
 'use client';
+import Popup from '@/components/common/Popup';
+import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { SignUpFormData } from '@/lib/definitions';
-import schema from '@/lib/schemas/signUpSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useSignupForm } from '@/lib/schemas/signUpSchema';
 import {
   Box,
   Button,
@@ -9,49 +10,23 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 
 const SignupForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(schema),
-  });
+  } = useSignupForm();
 
-  const { mutate } = useMutation({
-    mutationFn: (data: SignUpFormData) => {
-      return axios.post(
-        'https://shoes-shop-strapi.herokuapp.com/api/auth/local/register',
-        data
-      );
-    },
-  });
+  const { mutate, setOpenDialog, openDialog, message, isPending } =
+    useRegisterUser();
 
   const submitData = (data: SignUpFormData) => {
-    mutate(data, {
-      onSuccess: response => {
-        console.log('User registered successfully', response);
-        router.push('/auth/sign-in');
-      },
-      onError: error => {
-        if (axios.isAxiosError(error)) {
-          console.error(
-            error?.response?.data.error?.message || 'Something went wrong'
-          );
-        } else {
-          console.error('Error:', error.message || 'Something went wrong');
-        }
-      },
-    });
+    mutate(data);
   };
 
   return (
@@ -133,6 +108,7 @@ const SignupForm = () => {
             variant="contained"
             color="error"
             sx={{ color: '#fff', width: '100%', height: '48px' }}
+            disabled={isPending}
           >
             Sign Up
           </Button>
@@ -151,6 +127,24 @@ const SignupForm = () => {
           </Typography>
         </Box>
       </form>
+
+      <Popup
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        title={message}
+        actions={
+          <Button
+            variant="contained"
+            color={'info'}
+            onClick={() => {
+              setOpenDialog(false);
+              router.push('/auth/sign-in');
+            }}
+          >
+            Ok
+          </Button>
+        }
+      ></Popup>
     </Box>
   );
 };

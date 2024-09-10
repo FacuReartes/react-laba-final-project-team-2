@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material';
 import Image from 'next/image';
 import Logo from '@/components/common/Logo';
 
-import ForgotPasswordForm from '@/components/ForgotPasswordForm';
+import ForgotPasswordForm from '@/components/auth/forgotPassword/ForgotPasswordForm';
 
 export default function Page() {
   return (

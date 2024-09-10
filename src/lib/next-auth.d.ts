@@ -12,6 +12,8 @@ interface IUser {
   provider: string;
   updatedAt: string;
   username: string;
+  avatar?: object | string | null;
+  products?: string[] | null;
 }
 
 declare module 'next-auth' {

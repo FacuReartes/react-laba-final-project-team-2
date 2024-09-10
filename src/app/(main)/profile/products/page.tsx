@@ -3,18 +3,23 @@ import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Products from '@/components/profile/ProductsContainer';
 import { useRouter } from 'next/navigation';
+import useGetProducts from '@/hooks/useGetProducts';
+import { useSession } from 'next-auth/react';
+import { useUserData } from '@/hooks/useUserData';
 
 type MockUser = {
-  name: string;
   totalPoints: number;
 };
 
 const mockUser: MockUser = {
-  name: 'Jane Meldrum',
   totalPoints: 1374,
 };
 
 export default function ProductsPage() {
+  const { products } = useGetProducts();
+  const session = useSession();
+  const user = useUserData(session.data?.user.jwt);
+  const userData = user.data?.data;
   const router = useRouter();
   const isDesktop = useMediaQuery('(min-width: 700px)');
   return (
@@ -30,12 +35,13 @@ export default function ProductsPage() {
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
         <Image
-          src={'/products-hero-img.png'}
+          src={'/products-hero-img.svg'}
           alt="hero-img"
           width={700}
           height={isDesktop ? 262 : 132}
           sizes="100vw"
-          style={{ width: '100%' }}
+          style={{ width: '100%', objectFit: 'cover' }}
+          priority
         />
         <Box
           sx={{
@@ -51,6 +57,7 @@ export default function ProductsPage() {
               width: { xs: '60px', md: '120px' },
               height: { xs: '60px', md: '120px' },
             }}
+            src={userData?.avatar?.url}
           />
           <Box
             sx={{
@@ -67,7 +74,7 @@ export default function ProductsPage() {
                 fontSize: { xs: '14px', md: '20px' },
               }}
             >
-              {mockUser.name}
+              {userData?.firstName} {userData?.lastName}
             </Typography>
             <Typography
               color={'#5C5C5C'}
@@ -99,6 +106,7 @@ export default function ProductsPage() {
         >
           My products
         </Typography>
+
         <Button
           onClick={() => router.push('/profile/products/add-product')}
           variant="contained"
@@ -107,7 +115,7 @@ export default function ProductsPage() {
           sx={{
             display: {
               xs: 'none',
-              md: 'block',
+              md: products?.length > 0 ? 'block' : 'none',
             },
             bgcolor: 'secondary.light',
             color: '#fff',

@@ -1,8 +1,19 @@
 import { Avatar, Box, Button } from '@mui/material';
 import { useState } from 'react';
 
-const SettingsCard = () => {
+type SettingsCardProps = {
+  uploadAvatar: (file: File) => void;
+  avatarUrl: string | null;
+  isPending: boolean;
+};
+
+const SettingsCard: React.FC<SettingsCardProps> = ({
+  uploadAvatar,
+  avatarUrl,
+  isPending,
+}) => {
   const [avatar, setAvatar] = useState<string | null>(null);
+
   const handleChangePhoto = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -13,9 +24,16 @@ const SettingsCard = () => {
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
           const avatarUrl = event.target?.result as string;
-          setAvatar(avatarUrl);
+
+          if (file.type.startsWith('image/')) {
+            setAvatar(avatarUrl);
+          } else {
+            setAvatar(null);
+            console.error('File is not an image');
+          }
         };
         reader.readAsDataURL(file);
+        uploadAvatar(file);
       }
     };
     input.click();
@@ -34,7 +52,7 @@ const SettingsCard = () => {
     >
       <Avatar
         alt="profileAvatar"
-        src={avatar || '/avatar.svg'}
+        src={avatar ? avatar : avatarUrl || '/profile-circle.svg'}
         sx={{
           width: { xs: '100px', md: '150px' },
           height: { xs: '100px', md: '150px' },
@@ -51,6 +69,7 @@ const SettingsCard = () => {
             fontSize: { xs: '12px', md: '16px' },
           }}
           onClick={handleChangePhoto}
+          disabled={isPending}
         >
           Change photo
         </Button>

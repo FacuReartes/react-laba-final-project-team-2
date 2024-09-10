@@ -1,8 +1,15 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
+import Link from 'next/link';
 
-export default function ProductsModal({ open }: { open: boolean }) {
+export default function ProductsModal({
+  open,
+  id,
+}: {
+  open: boolean;
+  id: string | number;
+}) {
   return (
     <>
       {open && (
@@ -18,11 +25,22 @@ export default function ProductsModal({ open }: { open: boolean }) {
             padding: '8px',
           }}
         >
-          <Typography>View</Typography>
+          <Typography sx={{ py: 0.5 }}>
+            <Link
+              href={`/profile/products/${id}`}
+              style={{
+                display: 'block',
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+            >
+              View
+            </Link>
+          </Typography>
           <Divider></Divider>
-          <Typography>Edit</Typography>
+          <Typography sx={{ py: 0.5, cursor: 'pointer' }}>Edit</Typography>
           <Divider></Divider>
-          <Typography>Delete</Typography>
+          <Typography sx={{ py: 0.5, cursor: 'pointer' }}>Delete</Typography>
         </Box>
       )}
     </>

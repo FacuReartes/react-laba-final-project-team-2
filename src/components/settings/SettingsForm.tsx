@@ -7,47 +7,56 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SettingsCard from './SettingsCard';
-import { useForm } from 'react-hook-form';
 import { SettingsFormData } from '@/lib/definitions';
-import { zodResolver } from '@hookform/resolvers/zod';
-import schema from '@/lib/schemas/settingsSchema';
+import {
+  useInitializeForm,
+  useSettingsForm,
+} from '@/lib/schemas/settingsSchema';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useUserData } from '@/hooks/useUserData';
+import { useUpdateUser } from '@/hooks/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/useUploadAvatar';
+import Popup from '../common/Popup';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
-  const { data: session, status } = useSession();
-  const user = session?.user.user;
+  const { data: session } = useSession();
+  const jwt = session?.user.jwt;
+  const { data: userData } = useUserData(jwt);
+  const user = userData?.data;
+
+  const {
+    mutate: updateUser,
+    openDialog,
+    setOpenDialog,
+    message,
+  } = useUpdateUser(user?.id, jwt);
+
+  const {
+    mutate: uploadAvatar,
+    avatarData,
+    setOpenDialog: setUploadDialog,
+    message: uploadMessage,
+    openDialog: uploadOpenDialog,
+    isPending,
+  } = useUploadAvatar(jwt);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     reset,
-  } = useForm<SettingsFormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      name: '',
-      surname: '',
-      email: '',
-      phone: '',
-    },
-  });
+  } = useSettingsForm(user);
+
+  useInitializeForm(user, reset);
 
   const submitData = (data: SettingsFormData) => {
-    console.log(data);
-  };
-
-  useEffect(() => {
-    if (user) {
-      reset({
-        name: user.firstName || '',
-        surname: user.lastName || '',
-        email: user.email || '',
-        phone: user.phoneNumber || '',
-      });
+    const updatedData = { ...data };
+    if (avatarData) {
+      updatedData.avatar = avatarData;
     }
-  }, [user, reset, status]);
+    updateUser(updatedData);
+  };
 
   return (
     <Box
@@ -67,14 +76,17 @@ const SettingsForm = () => {
       >
         My Profile
       </Typography>
-      <SettingsCard />
+      <SettingsCard
+        uploadAvatar={uploadAvatar}
+        avatarUrl={user?.avatar?.url}
+        isPending={isPending}
+      />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
         sx={{ mb: '48px', px: { xs: '20px', md: '0' } }}
       >
         Welcome back! Please enter your details to log into your account.
       </Typography>
-
       <form
         style={{
           display: 'flex',
@@ -85,36 +97,33 @@ const SettingsForm = () => {
         onSubmit={handleSubmit(submitData)}
       >
         <TextField
-          label="Name"
           variant="outlined"
-          placeholder="Jane"
-          {...register('name')}
-          error={Boolean(errors.name)}
-          helperText={errors.name?.message}
+          placeholder="Name"
+          {...register('firstName')}
+          error={Boolean(errors.firstName)}
+          helperText={errors.firstName?.message}
         />
         <TextField
-          label="Surname"
           variant="outlined"
-          placeholder="Meldrum"
-          {...register('surname')}
-          error={Boolean(errors.surname)}
-          helperText={errors.surname?.message}
+          placeholder="Surname"
+          {...register('lastName')}
+          error={Boolean(errors.lastName)}
+          helperText={errors.lastName?.message}
         />
         <TextField
-          label="Email"
           variant="outlined"
           placeholder="example@mail.com"
           {...register('email')}
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
+          disabled
         />
         <TextField
-          label="Phone number"
           variant="outlined"
           placeholder="(949) 354-2574"
-          {...register('phone')}
-          error={Boolean(errors.phone)}
-          helperText={errors.phone?.message}
+          {...register('phoneNumber')}
+          error={Boolean(errors.phoneNumber)}
+          helperText={errors.phoneNumber?.message}
         />
 
         <Button
@@ -128,10 +137,31 @@ const SettingsForm = () => {
             mt: '56px',
             alignSelf: 'flex-end',
           }}
+          disabled={!isDirty && !avatarData}
         >
           Save changes
         </Button>
       </form>
+      <Popup
+        open={openDialog || uploadOpenDialog}
+        onClose={() => {
+          setOpenDialog(false);
+          setUploadDialog(false);
+        }}
+        title={message || uploadMessage}
+        actions={
+          <Button
+            variant="contained"
+            color={'info'}
+            onClick={() => {
+              setOpenDialog(false);
+              setUploadDialog(false);
+            }}
+          >
+            Ok
+          </Button>
+        }
+      ></Popup>
     </Box>
   );
 };

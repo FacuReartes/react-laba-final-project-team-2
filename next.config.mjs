@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         port: '',
       },
+      {
+        source: '/',
+        destination: '/auth/sign-in',
+        permanent: true,
+      },
     ],
   },
 };
