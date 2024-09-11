@@ -11,8 +11,8 @@ export default function ProductDetailsImageSlider({
     <Box
       sx={{
         display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
         gap: 1,
-        height: '628px',
       }}
     >
       <ImageSlider imageUrls={imageUrls} />
