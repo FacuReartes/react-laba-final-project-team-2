@@ -1,16 +1,17 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
 import useGetProducts from '@/hooks/useGetProducts';
 import { ProductType } from '@/lib/definitions';
 import ProductsEmptyState from './ProductsEmptyState';
+import Loading from '@/components/common/Loading';
 
 export default function Products() {
   const { products, loading } = useGetProducts();
 
   if (loading)
-    return <Typography variant="h1">Loading products...please wait</Typography>;
+    return <Loading message="Loading products...please wait" overlay />;
 
   return (
     <Box

@@ -3,6 +3,7 @@ import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRouter } from 'next/navigation';
+import Loading from '../common/Loading';
 import useGetProductDetail from '@/hooks/useGetProductDetail';
 import { ProductType } from '@/lib/definitions';
 
@@ -12,7 +13,7 @@ export default function ProductDetail({ id }: { id: number }) {
 
   const router = useRouter();
 
-  if (loading) return <h1>Loading..please wait</h1>;
+  if (loading) return <Loading message="Loading..please wait" overlay />;
 
   if (product) {
     return (
