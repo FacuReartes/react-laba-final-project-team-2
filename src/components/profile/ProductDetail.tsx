@@ -24,7 +24,7 @@ export default function ProductDetail({ id }: { id: number }) {
             px: { xs: 2, lg: '0' },
             pt: 2,
             pr: { lg: 1 },
-            gap: { xs: 6, lg: 12 },
+            gap: { xs: 1, md: 8 },
           }}
         >
           <ProductDetailsImageSlider
