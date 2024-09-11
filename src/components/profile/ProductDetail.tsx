@@ -3,16 +3,10 @@ import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRouter } from 'next/navigation';
-import useGetProductDetail from '@/hooks/useGetProductDetail';
 import { ProductType } from '@/lib/definitions';
 
-export default function ProductDetail({ id }: { id: number }) {
-  const { product, loading }: { product: ProductType; loading: boolean } =
-    useGetProductDetail(id);
-
+export default function ProductDetail({ product }: { product: ProductType }) {
   const router = useRouter();
-
-  if (loading) return <h1>Loading..please wait</h1>;
 
   if (product) {
     return (

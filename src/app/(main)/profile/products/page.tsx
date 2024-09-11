@@ -16,7 +16,7 @@ const mockUser: MockUser = {
 };
 
 export default function ProductsPage() {
-  const { products } = useGetProducts();
+  const { products, loading } = useGetProducts();
   const session = useSession();
   const user = useUserData(session.data?.user.jwt);
   const userData = user.data?.data;
@@ -130,7 +130,7 @@ export default function ProductsPage() {
           Add product
         </Button>
       </Box>
-      <Products />
+      <Products products={products} loading={loading} />
     </Box>
   );
 }

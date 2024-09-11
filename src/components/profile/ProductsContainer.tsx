@@ -2,13 +2,16 @@
 
 import { Box, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
-import useGetProducts from '@/hooks/useGetProducts';
 import { ProductType } from '@/lib/definitions';
 import ProductsEmptyState from './ProductsEmptyState';
 
-export default function Products() {
-  const { products, loading } = useGetProducts();
-
+export default function Products({
+  loading,
+  products,
+}: {
+  loading: boolean;
+  products: ProductType[];
+}) {
   if (loading)
     return <Typography variant="h1">Loading products...please wait</Typography>;
 
