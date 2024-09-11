@@ -7,7 +7,6 @@ import { ProductType } from '@/lib/definitions';
 
 export default function ProductDetail({ product }: { product: ProductType }) {
   const router = useRouter();
-
   if (product) {
     return (
       <Box>
