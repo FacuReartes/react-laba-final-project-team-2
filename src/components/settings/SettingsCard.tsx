@@ -5,12 +5,16 @@ type SettingsCardProps = {
   uploadAvatar: (file: File) => void;
   avatarUrl: string | null;
   isPending: boolean;
+  deleteAvatar: () => void;
+  deleteIsPending: boolean;
 };
 
 const SettingsCard: React.FC<SettingsCardProps> = ({
   uploadAvatar,
   avatarUrl,
   isPending,
+  deleteAvatar,
+  deleteIsPending,
 }) => {
   const [avatar, setAvatar] = useState<string | null>(null);
 
@@ -83,6 +87,8 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
             height: { xs: '31px', md: '40px' },
             fontSize: { xs: '12px', md: '16px' },
           }}
+          onClick={deleteAvatar}
+          disabled={deleteIsPending}
         >
           Delete
         </Button>

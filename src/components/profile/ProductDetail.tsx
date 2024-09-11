@@ -3,17 +3,14 @@ import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Loading from '../common/Loading';
+import useGetProductDetail from '@/hooks/useGetProductDetail';
+import { ProductType } from '@/lib/definitions';
 
-type IdType = string | number;
 
-export default function ProductDetail({ id }: { id: IdType }) {
-  const product = useQuery({
-    queryKey: ['product', id],
-    queryFn: () => getProduct(id),
-  });
+export default function ProductDetail({ id }: { id: number }) {
+  const { product, loading }: { product: ProductType; loading: boolean } =
+    useGetProductDetail(id);
 
   const router = useRouter();
 
@@ -47,9 +44,7 @@ export default function ProductDetail({ id }: { id: IdType }) {
     return <Loading message="Loading..please wait" overlay />;
   if (product.isError) return <p>{JSON.stringify(product.error, null, 2)}</p>;
 
-  console.log(product.data);
-
-  if (product.data) {
+  if (product) {
     return (
       <Box>
         <Box
@@ -57,16 +52,16 @@ export default function ProductDetail({ id }: { id: IdType }) {
             display: 'flex',
             flexDirection: { xs: 'column', xl: 'row' },
             px: { xs: 2, lg: '0' },
+            pt: 2,
             pr: { lg: 1 },
-            justifyContent: 'center',
-            gap: 8,
+            gap: { xs: 1, md: 8 },
           }}
         >
           <ProductDetailsImageSlider
-            imageUrls={product.data.attributes?.images?.data}
+            imageUrls={product.attributes?.images?.data}
           />
 
-          <ProductDetailsView id={id} {...productDetail} />
+          <ProductDetailsView {...product} />
         </Box>
         <Button
           onClick={() => router.push('/profile/products')}
