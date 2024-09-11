@@ -1,5 +1,5 @@
 import { ImageType } from '@/lib/definitions';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -9,13 +9,15 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
   const { currentSlide, handleCurrentSlide, handleNext, handlePrev } =
     useImageSlider(imageUrls);
 
+  const isDesktop = useMediaQuery('(min-width: 700px)');
+
   return (
     <>
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'column',
-          height: '76px',
+          flexDirection: { xs: 'row', md: 'column' },
+          flexWrap: 'wrap',
           gap: 2,
         }}
       >
@@ -28,7 +30,6 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
             height={76}
             style={{
               objectFit: 'cover',
-              height: '100%',
               cursor: 'pointer',
               border: `${index === currentSlide ? '3px solid #f1c40f' : ''}`,
             }}
@@ -40,18 +41,31 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
         {imageUrls?.map(
           (img, index) =>
             index === currentSlide && (
-              <Image
-                key={img?.id}
-                src={img?.attributes?.url}
-                alt={img?.attributes?.name}
-                width={588}
-                height={628}
-                style={{
-                  maxWidth: '588px',
-                  objectFit: 'cover',
-                  height: '100%',
-                }}
-              />
+              <>
+                <Image
+                  key={img?.id}
+                  src={img?.attributes?.url}
+                  alt={img?.attributes?.name}
+                  width={588}
+                  height={628}
+                  style={{
+                    objectFit: 'cover',
+                    display: isDesktop ? 'block' : 'none',
+                  }}
+                />
+                <Image
+                  key={img?.id}
+                  src={img?.attributes?.url}
+                  alt={img?.attributes?.name}
+                  width={340}
+                  height={360}
+                  style={{
+                    width: '100%',
+                    objectFit: 'cover',
+                    display: isDesktop ? 'none' : 'block',
+                  }}
+                />
+              </>
             )
         )}
         <Box
