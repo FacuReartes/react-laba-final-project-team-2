@@ -10,7 +10,6 @@ interface HomeProps {
 
 export default function Home({ searchParams }: HomeProps) {
   const searchQuery = searchParams.search || '';
-  console.log('searchQuery:', searchQuery);
 
   return (
     <ProductsProvider>
