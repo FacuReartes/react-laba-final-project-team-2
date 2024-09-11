@@ -18,11 +18,15 @@ export default function ProductDetailsView({ attributes }: ProductType) {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h3" sx={{ fontSize: '45px' }}>
+        <Typography variant="h3" sx={{ fontSize: { xs: '24px', md: '45px' } }}>
           {attributes?.name}
         </Typography>
         <Typography
-          sx={{ fontWeight: 500, alignContent: 'end', fontSize: '24px' }}
+          sx={{
+            fontWeight: 500,
+            alignContent: 'end',
+            fontSize: { xs: '12px', md: '24px' },
+          }}
         >
           ${attributes?.price}
         </Typography>
