@@ -17,6 +17,7 @@ import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
+import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 
 const SettingsForm = () => {
   const isDesktop = useMediaQuery('(min-width: 700px)');
@@ -40,6 +41,14 @@ const SettingsForm = () => {
     openDialog: uploadOpenDialog,
     isPending,
   } = useUploadAvatar(jwt);
+
+  const {
+    mutate: deleteAvatar,
+    openDialog: deleteOpenDialog,
+    message: deleteMessage,
+    isPending: deleteIsPending,
+    setOpenDialog: setDeleteDialog,
+  } = useDeleteAvatar(jwt, user?.avatar?.id);
 
   const {
     register,
@@ -80,6 +89,8 @@ const SettingsForm = () => {
         uploadAvatar={uploadAvatar}
         avatarUrl={user?.avatar?.url}
         isPending={isPending}
+        deleteAvatar={deleteAvatar}
+        deleteIsPending={deleteIsPending}
       />
       <Typography
         variant={isDesktop ? 'subtitle1' : 'subtitle2'}
@@ -143,12 +154,13 @@ const SettingsForm = () => {
         </Button>
       </form>
       <Popup
-        open={openDialog || uploadOpenDialog}
+        open={openDialog || uploadOpenDialog || deleteOpenDialog}
         onClose={() => {
           setOpenDialog(false);
           setUploadDialog(false);
+          setDeleteDialog(false);
         }}
-        title={message || uploadMessage}
+        title={message || uploadMessage || deleteMessage}
         actions={
           <Button
             variant="contained"
@@ -156,6 +168,7 @@ const SettingsForm = () => {
             onClick={() => {
               setOpenDialog(false);
               setUploadDialog(false);
+              setDeleteDialog(false);
             }}
           >
             Ok
