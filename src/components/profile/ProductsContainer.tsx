@@ -2,17 +2,10 @@
 
 import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
-import useGetProducts from '@/hooks/useGetProducts';
 import { ProductType } from '@/lib/definitions';
 import ProductsEmptyState from './ProductsEmptyState';
-import Loading from '@/components/common/Loading';
 
-export default function Products() {
-  const { products, loading } = useGetProducts();
-
-  if (loading)
-    return <Loading message="Loading products...please wait" overlay />;
-
+export default function Products({ products }: { products: ProductType[] }) {
   return (
     <Box
       sx={{

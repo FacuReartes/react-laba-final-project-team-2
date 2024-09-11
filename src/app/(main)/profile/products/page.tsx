@@ -130,7 +130,7 @@ export default function ProductsPage() {
           Add product
         </Button>
       </Box>
-      <Products />
+      <Products products={products} />
     </Box>
   );
 }

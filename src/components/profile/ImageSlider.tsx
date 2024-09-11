@@ -4,6 +4,7 @@ import Image from 'next/image';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import useImageSlider from '@/hooks/useImageSlider';
+import { Fragment } from 'react';
 
 export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
   const { currentSlide, handleCurrentSlide, handleNext, handlePrev } =
@@ -41,9 +42,8 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
         {imageUrls?.map(
           (img, index) =>
             index === currentSlide && (
-              <>
+              <Fragment key={img?.id}>
                 <Image
-                  key={img?.id}
                   src={img?.attributes?.url}
                   alt={img?.attributes?.name}
                   width={588}
@@ -54,7 +54,6 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                   }}
                 />
                 <Image
-                  key={img?.id}
                   src={img?.attributes?.url}
                   alt={img?.attributes?.name}
                   width={340}
@@ -65,7 +64,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                     display: isDesktop ? 'none' : 'block',
                   }}
                 />
-              </>
+              </Fragment>
             )
         )}
         <Box
