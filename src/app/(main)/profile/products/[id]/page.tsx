@@ -1,3 +1,4 @@
+'use client'
 import ProductDetail from '@/components/profile/ProductDetail';
 import useGetProductDetail from '@/hooks/useGetProductDetail';
 import { Box } from '@mui/material';
