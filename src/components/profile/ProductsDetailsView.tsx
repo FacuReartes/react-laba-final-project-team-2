@@ -25,7 +25,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
           sx={{
             fontWeight: 500,
             alignContent: 'end',
-            fontSize: { xs: '12px', md: '24px' },
+            fontSize: { xs: '18px', md: '24px' },
           }}
         >
           ${attributes?.price}
@@ -85,7 +85,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         <Button
           variant="outlined"
           sx={{
-            width: '248px',
+            width: { xs: '120px', md: '248px' },
             borderColor: 'secondary.light',
             color: 'secondary.light',
             ':hover': { borderColor: 'inherit' },
@@ -96,7 +96,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         <Button
           variant="contained"
           sx={{
-            width: '248px',
+            width: { xs: '120px', md: '248px' },
             bgcolor: 'secondary.light',
             ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
           }}
