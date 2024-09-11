@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import {
   Avatar,
   Box,
@@ -13,8 +12,10 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
+import Popup from '../common/Popup';
+import { useLogOut } from '@/hooks/useLogOut';
 
 const ProfileSidebar = () => {
   const router = useRouter();
@@ -22,6 +23,8 @@ const ProfileSidebar = () => {
   const session = useSession();
   const user = useUserData(session.data?.user.jwt);
   const userData = user.data?.data;
+  const { openDialog, setOpenDialog, message, isLoading, handleLogOut } =
+    useLogOut();
 
   return (
     <Box
@@ -132,9 +135,7 @@ const ProfileSidebar = () => {
           </ListItem>
 
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
-            <ListItemButton
-              onClick={() => signOut({ callbackUrl: '/', redirect: true })}
-            >
+            <ListItemButton onClick={handleLogOut} disabled={isLoading}>
               <ListItemIcon sx={{ my: '0px' }}>
                 <Image
                   src="/sidebar-icons/logout.svg"
@@ -156,6 +157,7 @@ const ProfileSidebar = () => {
           </ListItem>
         </List>
       </nav>
+      <Popup open={openDialog} onClose={setOpenDialog} title={message} />
     </Box>
   );
 };
