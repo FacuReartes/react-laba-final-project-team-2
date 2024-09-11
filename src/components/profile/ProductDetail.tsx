@@ -5,6 +5,7 @@ import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import Loading from '../common/Loading';
 
 type IdType = string | number;
 
@@ -42,7 +43,8 @@ export default function ProductDetail({ id }: { id: IdType }) {
     sizes: [36, 37, 38, 39, 40, 42, 44, 46, 48, 50],
   };
 
-  if (product.isLoading) return <h1>Loading..please wait</h1>;
+  if (product.isLoading)
+    return <Loading message="Loading..please wait" overlay />;
   if (product.isError) return <p>{JSON.stringify(product.error, null, 2)}</p>;
 
   console.log(product.data);
