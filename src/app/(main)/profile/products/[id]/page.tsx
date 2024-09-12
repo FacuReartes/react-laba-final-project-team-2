@@ -1,21 +1,27 @@
-'use client'
 import ProductDetail from '@/components/profile/ProductDetail';
 import useGetProductDetail from '@/hooks/useGetProductDetail';
 import { Box } from '@mui/material';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
-export default function Page({ params }: { params: { id: number } }) {
-  const { product } = useGetProductDetail(params.id);
-
+export default async function Page({ params }: { params: { id: number } }) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(useGetProductDetail(params.id));
   return (
-    <Box
-      sx={{
-        pb: 4,
-        display: 'flex',
-        ml: 1,
-        width: 1,
-      }}
-    >
-      <ProductDetail product={product} />
-    </Box>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Box
+        sx={{
+          pb: 4,
+          display: 'flex',
+          ml: 1,
+          width: 1,
+        }}
+      >
+        <ProductDetail params={params.id} />
+      </Box>
+    </HydrationBoundary>
   );
 }
