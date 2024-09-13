@@ -1,26 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-
 export default function useGetProductDetail(id: number) {
-  const product = useQuery({
-    queryKey: ['product', id],
-    queryFn: () => getProduct(id),
-  });
+  const queryKey = ['product'];
 
-  async function getProduct(id: number) {
-    const req = await axios(
+  const queryFn = async () => {
+    const req = await fetch(
       `https://shoes-shop-strapi.herokuapp.com/api/products/${id}?populate=*`
     );
-    const res = await req.data.data;
-    return res;
-  }
+    const res = await req.json();
+    return res.data;
+  };
 
   return {
-    product: product.data,
-    loading: product.isLoading,
-    error: {
-      isError: product.isError,
-      error: product.error,
-    },
+    queryKey,
+    queryFn,
   };
 }

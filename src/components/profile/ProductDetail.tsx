@@ -3,10 +3,13 @@ import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRouter } from 'next/navigation';
-import { ProductType } from '@/lib/definitions';
+import { useQuery } from '@tanstack/react-query';
+import useGetProductDetail from '@/hooks/useGetProductDetail';
 
-export default function ProductDetail({ product }: { product: ProductType }) {
+export default function ProductDetail({ params }: { params: number }) {
   const router = useRouter();
+
+  const { data: product } = useQuery(useGetProductDetail(params));
 
   if (product) {
     return (
