@@ -3,9 +3,20 @@ import Popup from '@/components/common/Popup';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { SignUpFormData } from '@/lib/definitions';
 import { useSignupForm } from '@/lib/schemas/signUpSchema';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useShowPassword } from '@/hooks/useShowPassword';
+import { Visibility } from '@mui/icons-material';
 
 const SignupForm = () => {
   const router = useRouter();
@@ -17,6 +28,13 @@ const SignupForm = () => {
 
   const { mutate, setOpenDialog, openDialog, message, isPending } =
     useRegisterUser();
+
+  const {
+    handleClickShowPassword,
+    handleClickShowConfirmPassword,
+    showPassword,
+    showConfirmPassword,
+  } = useShowPassword();
 
   const submitData = (data: SignUpFormData) => {
     mutate(data);
@@ -72,16 +90,29 @@ const SignupForm = () => {
             helperText={errors.email && errors.email.message}
           />
           <TextField
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             label="Password *"
             variant="outlined"
             placeholder="at least 8 characters"
             {...register('password')}
             error={Boolean(errors.password)}
             helperText={errors.password && errors.password.message}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             label="Confirm Password *"
             variant="outlined"
             placeholder="at least 8 characters"
@@ -90,6 +121,19 @@ const SignupForm = () => {
             helperText={
               errors.confirmPassword && errors.confirmPassword.message
             }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowConfirmPassword}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <Box

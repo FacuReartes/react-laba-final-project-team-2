@@ -1,9 +1,9 @@
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export const useLogOut = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -11,13 +11,13 @@ export const useLogOut = () => {
   const handleLogOut = async () => {
     try {
       setIsLoading(true);
-      await signOut({ callbackUrl: '/auth/sign-in', redirect: false });
-      setOpenDialog(true);
-      setMessage('User logged out successfully');
+      await signOut({ callbackUrl: '/', redirect: true });
+      // setOpenDialog(true);
+      // setMessage('User logged out successfully');
 
-      setTimeout(() => {
-        router.push('/auth/sign-in');
-      }, 2000);
+      // setTimeout(() => {
+      //   router.push('/auth/sign-in');
+      // }, 2000);
     } catch (error) {
       console.error(error);
       setOpenDialog(true);

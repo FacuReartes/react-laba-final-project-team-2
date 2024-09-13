@@ -7,12 +7,17 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import Link from 'next/link';
 import { useSignInForm } from '@/lib/schemas/authSchemas';
 import { SignInFormInputs } from '@/lib/definitions';
 import Popup from '@/components/common/Popup';
 import { useSignIn } from '@/hooks/useSignIn';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useShowPassword } from '@/hooks/useShowPassword';
 
 const SignInForm = () => {
   const containerWidth = { md: '459px', xs: '320px' };
@@ -49,6 +54,8 @@ const SignInForm = () => {
 
   const { handleSignIn, openDialog, closeDialog, message, isLoading } =
     useSignIn();
+
+  const { handleClickShowPassword, showPassword } = useShowPassword();
 
   const submitData = async (data: SignInFormInputs) => {
     await handleSignIn(data);
@@ -135,12 +142,25 @@ const SignInForm = () => {
             <TextField
               id="id-password"
               variant="outlined"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="at least 8 characters"
               sx={textFieldStyles}
               {...register('password')}
               error={Boolean(errors.password)}
               helperText={errors.password?.message as string}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Box>
 
