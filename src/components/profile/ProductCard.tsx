@@ -28,8 +28,8 @@ export default function ProductCard({ product }: PProps) {
       <Box sx={{ position: 'relative', width: '320px' }}>
         {
           <Image
-            src={product?.attributes.images.data[0].attributes.url}
-            alt={product.attributes?.name}
+            src={product?.attributes?.images?.data[0]?.attributes?.url}
+            alt={product?.attributes?.name}
             width={320}
             height={380}
             style={{ objectFit: 'cover' }}
@@ -62,12 +62,12 @@ export default function ProductCard({ product }: PProps) {
             width: '220px',
           }}
         >
-          {product.attributes.name}
+          {product?.attributes?.name}
         </Typography>
         <Typography
           sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
         >
-          ${product.attributes.price}
+          ${product?.attributes?.price}
         </Typography>
       </Box>
       <Typography
@@ -77,9 +77,9 @@ export default function ProductCard({ product }: PProps) {
           color: '#5C5C5C',
         }}
       >
-        {product.attributes.gender.data.attributes.name === 'Men'
+        {product?.attributes?.gender?.data?.attributes?.name === 'Men'
           ? 'Men'
-          : product.attributes.gender.data.attributes.name === 'Women'
+          : product?.attributes?.gender?.data?.attributes?.name === 'Women'
             ? 'Women'
             : 'Unisex'}
         {"'"}s Shoes
