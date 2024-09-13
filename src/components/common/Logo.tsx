@@ -1,15 +1,19 @@
-'use client'
-import { useMediaQuery } from '@mui/material';
-import Image from 'next/image'
-
-// type Props = {}
+'use client';
+import { Box } from '@mui/material';
+import Image from 'next/image';
 
 const SignupLogo = () => {
-  const isDesktop = useMediaQuery('(min-width: 700px)');
-
   return (
-    <Image src="/logo.svg" alt="logo" priority width={40} height={30} style={{ position: 'absolute', left: isDesktop ? '40px' : '20px', top: isDesktop ? '50px' : '18px' }}/>
-  )
-}
+    <Box
+      sx={{
+        position: 'absolute',
+        left: { md: '40px', xs: '20px' },
+        top: { md: '50px', xs: '18px' },
+      }}
+    >
+      <Image src="/logo.svg" alt="logo" priority width={40} height={30} />
+    </Box>
+  );
+};
 
-export default SignupLogo
+export default SignupLogo;

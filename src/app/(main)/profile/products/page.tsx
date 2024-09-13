@@ -1,5 +1,5 @@
 'use client';
-import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import Products from '@/components/profile/ProductsContainer';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,6 @@ export default function ProductsPage() {
   const user = useUserData(session.data?.user.jwt);
   const userData = user.data?.data;
   const router = useRouter();
-  const isDesktop = useMediaQuery('(min-width: 700px)');
   return (
     <Box
       sx={{
@@ -33,12 +32,17 @@ export default function ProductsPage() {
         width: '100%',
       }}
     >
-      <Box sx={{ position: 'relative', width: '100%' }}>
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: { md: '262px', xs: '132px' },
+        }}
+      >
         <Image
           src={'/products-hero-img.svg'}
           alt="hero-img"
-          width={700}
-          height={isDesktop ? 262 : 132}
+          fill
           sizes="100vw"
           style={{ width: '100%', objectFit: 'cover' }}
           priority
