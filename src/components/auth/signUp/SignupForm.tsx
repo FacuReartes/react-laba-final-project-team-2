@@ -10,7 +10,6 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
