@@ -53,6 +53,7 @@ export default function ProductsContainer({ filter }: ProductsContainerProps) {
         display: 'flex',
         justifyContent: 'center',
         flexWrap: 'wrap',
+        gap: { xs: '16px', md: '0' },
       }}
     >
       {products.length > 0

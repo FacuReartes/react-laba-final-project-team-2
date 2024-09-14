@@ -15,8 +15,8 @@ export default function ProductCard({ product }: PProps) {
   return (
     <Box
       sx={{
-        width: { md: '320px', xs: '152px' },
-        margin: { md: '0 30px 60px', xs: '0 8px 16px' },
+        width: { md: '320px', xs: 'calc(50% - 8px)' },
+        margin: { md: '0 30px 60px', xs: '0 0 16px' },
         display: 'flex',
         flexDirection: 'column',
         color: '#000',
@@ -25,7 +25,7 @@ export default function ProductCard({ product }: PProps) {
       <Box
         sx={{
           position: 'relative',
-          width: { md: '320px', xs: '152px' },
+          width: { md: '320px', xs: '100%' },
           height: { md: '380px', xs: '180px' },
         }}
         onMouseEnter={() => setOnHover(true)}
@@ -35,7 +35,7 @@ export default function ProductCard({ product }: PProps) {
           sx={{
             display: onHover ? 'flex' : 'none',
             position: 'absolute',
-            width: { md: '320px', xs: '152px' },
+            width: { md: '320px', xs: '100%' },
             height: { md: '380px', xs: '180px' },
             top: '0',
             left: '0',
