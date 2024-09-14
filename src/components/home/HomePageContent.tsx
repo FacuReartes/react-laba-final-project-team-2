@@ -21,8 +21,8 @@ export default function HomePageContent({
   return (
     <Box
       sx={{
-        display: showFilters ? { xs: 'none', md: 'block' } : {},
-        flex: 1,
+        display: showFilters ? { xs: 'none', md: 'flex' } : { md: 'flex' },
+        flexDirection: 'column',
         p: { md: '60px', xs: '30px' },
         pl: showFilters ? '20px' : '60px',
         position: 'relative',

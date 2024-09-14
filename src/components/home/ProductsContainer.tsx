@@ -51,9 +51,8 @@ export default function ProductsContainer({ filter }: ProductsContainerProps) {
       sx={{
         width: 'fit-content',
         display: 'flex',
-        justifyContent: { xs: 'center', md: 'flex-start' },
+        justifyContent: 'center',
         flexWrap: 'wrap',
-        gap: { md: '67px', xs: '16px' },
       }}
     >
       {products.length > 0

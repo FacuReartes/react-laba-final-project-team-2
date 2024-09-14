@@ -16,6 +16,7 @@ export default function ProductCard({ product }: PProps) {
     <Box
       sx={{
         width: { md: '320px', xs: '152px' },
+        margin: { md: '0 30px 60px', xs: '0 8px 16px' },
         display: 'flex',
         flexDirection: 'column',
         color: '#000',
@@ -34,8 +35,8 @@ export default function ProductCard({ product }: PProps) {
           sx={{
             display: onHover ? 'flex' : 'none',
             position: 'absolute',
-            width: '320px',
-            height: '380px',
+            width: { md: '320px', xs: '152px' },
+            height: { md: '380px', xs: '180px' },
             top: '0',
             left: '0',
             zIndex: 10,
