@@ -33,7 +33,7 @@ export default function Page() {
         }}
       >
         <Image
-          src="/sneakers-signin.svg"
+          src="/sneakers-signin.webp"
           alt="Sign in image"
           width={961}
           height={962}

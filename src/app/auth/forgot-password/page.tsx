@@ -33,10 +33,11 @@ export default function Page() {
         }}
       >
         <Image
-          src="/assets/forgot-password.png"
+          src="/assets/forgot-password.webp"
           alt="Sneakers"
           fill
           objectFit="cover"
+          priority
         />
       </Box>
     </Container>

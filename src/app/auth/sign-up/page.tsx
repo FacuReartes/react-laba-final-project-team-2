@@ -34,11 +34,12 @@ export default function Page() {
         }}
       >
         <Image
-          src="/sneakers-signup.svg"
+          src="/sneakers-signup.webp"
           alt="Sneakers"
           width={961}
           height={962}
           style={{ width: '100%', objectFit: 'cover', height: '100%' }}
+          priority
         />
         <SignupCard />
       </Box>

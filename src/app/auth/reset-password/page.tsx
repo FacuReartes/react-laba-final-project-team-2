@@ -1,4 +1,3 @@
-'use client';
 import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
 import Image from 'next/image';
@@ -30,10 +29,11 @@ export default function Page() {
           }}
         >
           <Image
-            src="/sneakers-reset-password.svg"
+            src="/sneakers-reset-password.webp"
             alt="Sneakers"
             fill
             objectFit="cover"
+            priority
           />
         </Box>
       </Box>
