@@ -1,9 +1,9 @@
-export default function useGetProducts() {
-  const queryKey = ['products'];
+export default function useGetProductDetail(id: number) {
+  const queryKey = ['product'];
 
   const queryFn = async () => {
     const req = await fetch(
-      'https://shoes-shop-strapi.herokuapp.com/api/products?filters[teamName]=team-2&populate=*'
+      `https://shoes-shop-strapi.herokuapp.com/api/products/${id}?populate=*`
     );
     const res = await req.json();
     return res.data;

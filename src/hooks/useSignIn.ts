@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import axios from 'axios';
 import { SignInFormInputs } from '@/lib/definitions';
 import { useRouter } from 'next/navigation';
 
@@ -12,22 +13,40 @@ export const useSignIn = () => {
 
   const handleSignIn = async (data: SignInFormInputs) => {
     setIsLoading(true);
-    const result = await signIn('credentials', {
-      redirect: false,
-      identifier: data.email,
-      password: data.password,
-      rememberMe: data.rememberMe,
-    });
-    setOpenDialog(true);
-    if (result?.error) {
-      setIsLoginOk(false);
-      setMessage('Invalid email or password');
-    } else {
-      setIsLoginOk(true);
-      setMessage('User logged in successfully');
-    }
+    try {
+      await axios.post(
+        'https://shoes-shop-strapi.herokuapp.com/api/auth/local',
+        {
+          identifier: data.email,
+          password: data.password,
+        }
+      );
 
-    setIsLoading(false);
+      await signIn('credentials', {
+        redirect: true,
+        callbackUrl: '/profile/products',
+        identifier: data.email,
+        password: data.password,
+        rememberMe: data.rememberMe,
+      });
+
+      setIsLoginOk(true);
+      // setOpenDialog(true);
+      // setMessage('User logged in successfully');
+    } catch (error) {
+      setOpenDialog(true);
+      setIsLoginOk(false);
+
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage =
+          error.response.data.error.message || 'An error occurred';
+        setMessage(errorMessage);
+      } else {
+        setMessage('An unexpected error occurred');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const closeDialog = () => {

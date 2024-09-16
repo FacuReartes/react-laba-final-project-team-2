@@ -8,21 +8,32 @@ import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPas
 export default function Page() {
   return (
     <Suspense fallback={''}>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          minWidth: '100vw',
+          minHeight: '100vh',
+        }}
+      >
         <Logo />
         <ResetPasswordFormContainer />
 
         <Box
           sx={{
-            position: { md: 'relative' },
-            display: { md: 'flex', xs: 'none' },
+            width: '50%',
+            height: '100vh',
+            m: 0,
+            p: 0,
+            display: { xs: 'none', md: 'block' },
+            position: 'relative',
           }}
         >
           <Image
             src="/sneakers-reset-password.svg"
             alt="Sneakers"
-            width={961}
-            height={962}
+            fill
+            objectFit="cover"
           />
         </Box>
       </Box>

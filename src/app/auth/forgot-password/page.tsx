@@ -35,7 +35,7 @@ export default function Page() {
         <Image
           src="/assets/forgot-password.png"
           alt="Sneakers"
-          layout="fill"
+          fill
           objectFit="cover"
         />
       </Box>
