@@ -1,4 +1,3 @@
-'use client';
 import AddProductForm from '@/components/AddProductForm/AddProductForm';
 import { Box, Typography } from '@mui/material';
 
