@@ -1,5 +1,12 @@
 'use client';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import SettingsCard from './SettingsCard';
 import { SettingsFormData } from '@/lib/definitions';
 import {
@@ -60,6 +67,18 @@ const SettingsForm = () => {
     updateUser(updatedData);
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'lg'));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const getLeftMargin = () => {
+    if (isSmallScreen) return '0px';
+    if (isMediumScreen) return '10%';
+    if (isLargeScreen) return '20%';
+    return '0px';
+  };
+
   return (
     <Box
       sx={{
@@ -70,6 +89,8 @@ const SettingsForm = () => {
         pt: { md: '52px', xs: '24px' },
         pb: '91px',
         bgcolor: '#fff',
+        ml: getLeftMargin(),
+        transition: 'margin-left 0.3s ease-in-out',
       }}
     >
       <Typography
