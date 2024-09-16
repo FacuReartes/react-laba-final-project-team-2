@@ -1,17 +1,16 @@
-import { ProductType } from '@/lib/definitions';
 import axios, { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
 export default function useGetProducts() {
   const products = useQuery({
     queryKey: ['products'],
-    queryFn: filterProducts,
+    queryFn: getProducts,
   });
 
   async function getProducts() {
     try {
       const req = axios(
-        'https://shoes-shop-strapi.herokuapp.com/api/products?populate=*'
+        'https://shoes-shop-strapi.herokuapp.com/api/products?filters[teamName]=team-2&populate=*'
       );
       const res = (await req).data.data;
       return res;
@@ -25,6 +24,7 @@ export default function useGetProducts() {
     }
   }
 
+  /*
   async function filterProducts() {
     const result = await getProducts();
     return result.filter(
@@ -34,6 +34,7 @@ export default function useGetProducts() {
     //   (item: ProductType) => item.attributes.name === 'team-5'
     // );
   }
+    */
 
   return {
     products: products.data,
