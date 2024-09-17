@@ -1,11 +1,12 @@
+import { IUser } from '@/lib/next-auth';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 export const useUserData = (jwt: string | undefined) => {
-  return useQuery({
+  return useQuery<IUser>({
     queryKey: ['user'],
-    queryFn: () => {
-      return axios.get(
+    queryFn: async () => {
+      const response = await axios.get<IUser>(
         'https://shoes-shop-strapi.herokuapp.com/api/users/me?populate=*',
         {
           headers: {
@@ -13,6 +14,7 @@ export const useUserData = (jwt: string | undefined) => {
           },
         }
       );
+      return response.data;
     },
     staleTime: 1000 * 60 * 5,
   });
