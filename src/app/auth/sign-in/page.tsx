@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
 import SignInForm from '@/components/auth/signIn/SignInForm';
 import Image from 'next/image';
+import sneakersSignin from '@/images/sneakers-signin.webp';
 
 export default function Page() {
   return (
@@ -33,12 +34,13 @@ export default function Page() {
         }}
       >
         <Image
-          src="/sneakers-signin.webp"
+          src={sneakersSignin}
           alt="Sign in image"
           width={961}
           height={962}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           priority
+          placeholder="blur"
         />
       </Box>
     </Box>

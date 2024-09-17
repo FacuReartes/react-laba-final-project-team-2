@@ -3,6 +3,7 @@ import Logo from '@/components/common/Logo';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPasswordFormContainer';
+import sneakersResetPassword from '@/images/sneakers-reset-password.webp';
 
 export default function Page() {
   return (
@@ -29,11 +30,12 @@ export default function Page() {
           }}
         >
           <Image
-            src="/sneakers-reset-password.webp"
+            src={sneakersResetPassword}
             alt="Sneakers"
             fill
             objectFit="cover"
             priority
+            placeholder="blur"
           />
         </Box>
       </Box>

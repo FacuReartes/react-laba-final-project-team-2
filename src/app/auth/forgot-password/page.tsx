@@ -1,9 +1,8 @@
-'use client';
 import { Box, Container } from '@mui/material';
 import Image from 'next/image';
 import Logo from '@/components/common/Logo';
-
 import ForgotPasswordForm from '@/components/auth/forgotPassword/ForgotPasswordForm';
+import sneakersForgotPassword from '@/images/forgot-password.webp';
 
 export default function Page() {
   return (
@@ -33,11 +32,12 @@ export default function Page() {
         }}
       >
         <Image
-          src="/assets/forgot-password.webp"
+          src={sneakersForgotPassword}
           alt="Sneakers"
           fill
           objectFit="cover"
           priority
+          placeholder="blur"
         />
       </Box>
     </Container>

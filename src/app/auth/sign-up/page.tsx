@@ -3,6 +3,7 @@ import SignupForm from '@/components/auth/signUp/SignupForm';
 import Logo from '@/components/common/Logo';
 import { Box } from '@mui/material';
 import Image from 'next/image';
+import sneakerSignup from '@/images/sneakers-signup.webp';
 
 export default function Page() {
   return (
@@ -34,12 +35,13 @@ export default function Page() {
         }}
       >
         <Image
-          src="/sneakers-signup.webp"
+          src={sneakerSignup}
           alt="Sneakers"
           width={961}
           height={962}
           style={{ width: '100%', objectFit: 'cover', height: '100%' }}
           priority
+          placeholder="blur"
         />
         <SignupCard />
       </Box>
