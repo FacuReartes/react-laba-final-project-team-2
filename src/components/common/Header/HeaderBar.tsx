@@ -29,7 +29,6 @@ const HeaderBar = ({
   setOpenResults,
   search,
 }: HeaderBarProps) => {
-
   const { data: session } = useSession();
   const user = useUserData(session?.user.jwt);
   const userData = user.data?.data;
@@ -173,7 +172,7 @@ const HeaderBar = ({
               mr: { xs: '4px', md: '0px' },
               display: isTyping || showInputSearch ? 'none' : 'flex',
             }}
-            href="/bag"
+            href="/cart"
           >
             <Box component="img" alt="bag" src="/bag.svg" />
           </IconButton>
@@ -198,7 +197,10 @@ const HeaderBar = ({
             <Link href="/profile/products">
               <IconButton
                 aria-label="avatar"
-                sx={{ display: isTyping ? 'none' : { xs: 'none', md: 'block' }, mr: '28px' }}
+                sx={{
+                  display: isTyping ? 'none' : { xs: 'none', md: 'block' },
+                  mr: '28px',
+                }}
               >
                 <Avatar
                   alt="profileAvatar"
@@ -211,7 +213,7 @@ const HeaderBar = ({
             ''
           )}
 
-          <HeaderMenu showInputSearch={showInputSearch}/>
+          <HeaderMenu showInputSearch={showInputSearch} />
 
           <IconButton
             aria-label="close-search"
