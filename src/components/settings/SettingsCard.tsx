@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 type SettingsCardProps = {
   uploadAvatar: (file: File) => void;
-  avatarUrl: string | null;
+  avatarUrl: string | undefined;
   isPending: boolean;
   deleteAvatar: () => void;
   deleteIsPending: boolean;
