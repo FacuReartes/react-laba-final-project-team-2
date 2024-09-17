@@ -60,7 +60,7 @@ const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
           <Typography
             sx={{ fontSize: '16px', fontWeight: 500, lineHeight: '18.77px' }}
           >
-            {userData?.firstName} {userData?.lastName}
+            {userData?.firstName || userData?.username} {userData?.lastName}
           </Typography>
         </Box>
       </Box>
