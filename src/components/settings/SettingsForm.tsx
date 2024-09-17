@@ -20,21 +20,12 @@ import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import { IUser } from '@/lib/next-auth';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 
 const SettingsForm = ({ initialUserData }: { initialUserData: IUser }) => {
   const session = useSession();
   const jwt = session.data?.user.jwt;
-  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (initialUserData) {
-      queryClient.setQueryData(['user'], initialUserData);
-    }
-  }, [initialUserData, queryClient]);
-
-  const { data: userData } = useUserData(jwt);
+  const { data: userData } = useUserData(jwt, initialUserData);
 
   const {
     mutate: updateUser,

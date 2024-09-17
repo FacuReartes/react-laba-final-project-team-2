@@ -10,8 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function Products() {
   const session = useSession();
-  const user = useUserData(session.data?.user.jwt);
-  const userData = user.data?.data;
+  const { data: userData } = useUserData(session.data?.user.jwt);
   const router = useRouter();
 
   const { data: products } = useQuery(useGetProducts());

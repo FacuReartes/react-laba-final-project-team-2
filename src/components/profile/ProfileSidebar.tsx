@@ -17,23 +17,15 @@ import { useUserData } from '@/hooks/useUserData';
 import Popup from '../common/Popup';
 import { useLogOut } from '@/hooks/useLogOut';
 import { IUser } from '@/lib/next-auth';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 
 const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
   const router = useRouter();
   const pathName = usePathname();
   const session = useSession();
   const jwt = session.data?.user.jwt;
-  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (initialUserData) {
-      queryClient.setQueryData(['user'], initialUserData);
-    }
-  }, [initialUserData, queryClient]);
+  const { data: userData } = useUserData(jwt, initialUserData);
 
-  const { data: userData } = useUserData(jwt);
   const { openDialog, setOpenDialog, message, isLoading, handleLogOut } =
     useLogOut();
 

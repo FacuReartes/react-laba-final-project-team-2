@@ -30,8 +30,7 @@ const HeaderBar = ({
   search,
 }: HeaderBarProps) => {
   const { data: session } = useSession();
-  const user = useUserData(session?.user.jwt);
-  const userData = user.data?.data;
+  const { data: userData } = useUserData(session?.user.jwt);
 
   const [isTyping, setIsTyping] = useState(false);
   const [showInputSearch, setShowInputSearch] = useState(false);
