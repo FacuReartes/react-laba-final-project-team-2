@@ -19,19 +19,29 @@ import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
+import { IUser } from '@/lib/next-auth';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-const SettingsForm = () => {
-  const { data: session } = useSession();
-  const jwt = session?.user.jwt;
+const SettingsForm = ({ initialUserData }: { initialUserData: IUser }) => {
+  const session = useSession();
+  const jwt = session.data?.user.jwt;
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (initialUserData) {
+      queryClient.setQueryData(['user'], initialUserData);
+    }
+  }, [initialUserData, queryClient]);
+
   const { data: userData } = useUserData(jwt);
-  const user = userData?.data;
 
   const {
     mutate: updateUser,
     openDialog,
     setOpenDialog,
     message,
-  } = useUpdateUser(user?.id, jwt);
+  } = useUpdateUser(userData?.id, jwt);
 
   const {
     mutate: uploadAvatar,
@@ -48,16 +58,16 @@ const SettingsForm = () => {
     message: deleteMessage,
     isPending: deleteIsPending,
     setOpenDialog: setDeleteDialog,
-  } = useDeleteAvatar(jwt, user?.avatar?.id);
+  } = useDeleteAvatar(jwt, userData?.avatar?.id);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
     reset,
-  } = useSettingsForm(user);
+  } = useSettingsForm(userData as SettingsFormData);
 
-  useInitializeForm(user, reset);
+  useInitializeForm(userData as SettingsFormData, reset);
 
   const submitData = (data: SettingsFormData) => {
     const updatedData = { ...data };
@@ -105,7 +115,7 @@ const SettingsForm = () => {
       </Typography>
       <SettingsCard
         uploadAvatar={uploadAvatar}
-        avatarUrl={user?.avatar?.url}
+        avatarUrl={userData?.avatar?.url}
         isPending={isPending}
         deleteAvatar={deleteAvatar}
         deleteIsPending={deleteIsPending}
