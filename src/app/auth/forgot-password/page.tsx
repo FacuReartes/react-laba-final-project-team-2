@@ -35,6 +35,7 @@ export default function Page() {
           src={sneakersForgotPassword}
           alt="Sneakers"
           fill
+          sizes="(100vw - 200px) 100vh"
           objectFit="cover"
           priority
           placeholder="blur"
