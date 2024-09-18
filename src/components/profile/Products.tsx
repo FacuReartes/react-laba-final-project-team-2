@@ -10,20 +10,25 @@ import { useQuery } from '@tanstack/react-query';
 import heroImage from '@/images/products-hero-img.webp';
 
 export default function Products() {
-  const session = useSession();
-  const { data: userData } = useUserData(session.data?.user.jwt);
+  const { data: session } = useSession();
+
+  const token = session?.user.jwt;
+  const userID = session?.user.user.id;
+
+  const { data: userData } = useUserData(token);
+
   const router = useRouter();
 
-  const { data: products } = useQuery(useGetProducts());
+  const { data: products } = useQuery(useGetProducts(token, userID));
 
   const isDesktop = useMediaQuery('(min-width: 700px)');
-  type MockUser = {
-    totalPoints: number;
-  };
+  // type MockUser = {
+  //   totalPoints: number;
+  // };
 
-  const mockUser: MockUser = {
-    totalPoints: 1374,
-  };
+  // const mockUser: MockUser = {
+  //   totalPoints: 1374,
+  // };
 
   return (
     <Box
@@ -80,12 +85,12 @@ export default function Products() {
             >
               {userData?.firstName} {userData?.lastName}
             </Typography>
-            <Typography
+            {/* <Typography
               color={'#5C5C5C'}
               sx={{ fontSize: { xs: '12px', md: '15px' } }}
             >
               {mockUser.totalPoints} bonus points
-            </Typography>
+            </Typography> */}
           </Box>
         </Box>
       </Box>
