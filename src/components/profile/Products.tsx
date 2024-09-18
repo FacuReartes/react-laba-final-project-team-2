@@ -43,7 +43,7 @@ export default function Products() {
           width={700}
           height={isDesktop ? 262 : 132}
           sizes="100vw"
-          style={{ width: '100%', objectFit: 'cover' }}
+          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           priority
           placeholder="blur"
         />
