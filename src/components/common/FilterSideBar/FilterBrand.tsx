@@ -66,7 +66,7 @@ export const FilterBrand = ({ brands, onBrandChange }: Props) => {
             fullWidth
             sx={{
               input: {
-                color: '#000',
+                color: 'common.black',
                 height: '33px',
                 boxSizing: 'border-box',
                 fontSize: '12px',
@@ -77,10 +77,11 @@ export const FilterBrand = ({ brands, onBrandChange }: Props) => {
               mt: '8px',
             }}
             InputLabelProps={{
-              style: { color: '#5C5C5C' },
+              sx: { color: 'grey.100' },
             }}
             InputProps={{
-              style: { borderRadius: '50px', color: '#000' },
+              sx: { color: 'grey.100' },
+              style: { borderRadius: '50px' },
               startAdornment: (
                 <InputAdornment position="start">
                   <Box component="img" alt="search" src="/search.svg" />

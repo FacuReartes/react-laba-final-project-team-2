@@ -56,16 +56,20 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
             onClick={handleDeleteImage}
             size="large"
             sx={{
-              color: '#494949',
-              bgcolor: '#ffffff',
-              ':hover': { color: '#ffffff', bgcolor: '#FE645E' },
+              color: 'grey.200',
+              bgcolor: 'common.white',
+              ':hover': { color: 'common.white', bgcolor: 'secondary.light' },
             }}
           >
             <DeleteIcon />
           </IconButton>
         </Box>
       )}
-      <DeleteDialog selectedValue={actionDialog} open={openDialog} onClose={handleDialogOnClose} />
+      <DeleteDialog
+        selectedValue={actionDialog}
+        open={openDialog}
+        onClose={handleDialogOnClose}
+      />
     </Box>
   );
 };

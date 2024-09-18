@@ -205,11 +205,12 @@ const SignInForm = () => {
               <Link
                 style={{
                   textDecoration: 'none',
-                  color: '#FE645E',
                 }}
                 href="/auth/forgot-password"
               >
-                Forgot password?{' '}
+                <Typography sx={{ color: 'secondary.light' }}>
+                  Forgot password?{' '}
+                </Typography>
               </Link>
             </Typography>
           </Box>
@@ -228,7 +229,7 @@ const SignInForm = () => {
               variant="contained"
               color="error"
               sx={{
-                color: '#fff',
+                color: 'common.white',
                 width: inputWidth,
                 height: { md: '48px', xs: '33px' },
                 fontSize: { md: 'inherit', xs: '11px' },
@@ -240,7 +241,7 @@ const SignInForm = () => {
             </Button>
             <Typography
               variant="subtitle1"
-              color={'#000'}
+              sx={{ color: 'common.black' }}
               fontWeight={500}
               fontSize={{ md: '15px', xs: '10px' }}
             >
@@ -248,12 +249,15 @@ const SignInForm = () => {
               <Link
                 style={{
                   textDecoration: 'none',
-                  color: '#FE645E',
                   fontWeight: '600',
                 }}
                 href="/auth/sign-up"
               >
-                Sign up
+                <Typography
+                  sx={{ color: 'secondary.light', display: 'inline' }}
+                >
+                  Sign up
+                </Typography>
               </Link>
             </Typography>
           </Box>
