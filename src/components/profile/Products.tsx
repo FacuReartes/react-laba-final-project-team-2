@@ -22,13 +22,13 @@ export default function Products() {
   const { data: products } = useQuery(useGetProducts(token, userID));
 
   const isDesktop = useMediaQuery('(min-width: 700px)');
-  type MockUser = {
-    totalPoints: number;
-  };
+  // type MockUser = {
+  //   totalPoints: number;
+  // };
 
-  const mockUser: MockUser = {
-    totalPoints: 1374,
-  };
+  // const mockUser: MockUser = {
+  //   totalPoints: 1374,
+  // };
 
   return (
     <Box
@@ -85,12 +85,12 @@ export default function Products() {
             >
               {userData?.firstName} {userData?.lastName}
             </Typography>
-            <Typography
+            {/* <Typography
               color={'#5C5C5C'}
               sx={{ fontSize: { xs: '12px', md: '15px' } }}
             >
               {mockUser.totalPoints} bonus points
-            </Typography>
+            </Typography> */}
           </Box>
         </Box>
       </Box>
