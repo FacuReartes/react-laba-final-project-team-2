@@ -21,10 +21,13 @@ import {
 } from '@/lib/schemas/addProductSchemas';
 import { FormProvider } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ProductCategorySelect from './ProductCategorySelect';
+import useGetGenders from '@/hooks/useGetGenders';
+import useGetBrands from '@/hooks/useGetBrands';
+import useGetColors from '@/hooks/useGetColors';
 
 interface ICompletedProduct {
   teamName: string,
@@ -32,10 +35,10 @@ interface ICompletedProduct {
   name: string,
   images?: number[],
   description: string,
-  brand: number,
-  categories: number[],
-  color: number,
-  gender: number,
+  brand: number | string,
+  categories: number[] | string[],
+  color: number | string,
+  gender: number | string,
   sizes: number[],
   price: string,
 }
@@ -60,6 +63,8 @@ const AddProductForm = () => {
   const token = session?.user.jwt
   
   const methods = useAddProductForm();
+
+  const queryClient = useQueryClient()
 
   const submitData = (data: IProducts) => {
 
@@ -109,7 +114,10 @@ const AddProductForm = () => {
           )
         })
     },
-    onSuccess: () => router.push('/profile/products'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+      router.push('/profile/products')
+    },
     onError: (error) => console.log(error)
   })
 
@@ -178,18 +186,20 @@ const AddProductForm = () => {
               <ProductPriceInput />
 
               <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                <ProductSelect name='gender'/>
-                <ProductSelect name='brand'/>
+                <ProductSelect queryObj={useGetGenders()}/>
+                <ProductSelect queryObj={useGetBrands()}/>
               </Box>
 
               <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
                 <ProductCategorySelect/>
-                <ProductSelect name='color'/>
+                <ProductSelect queryObj={useGetColors()}/>
               </Box>
 
               <ProductDescriptionInput />
 
               <ProductSizesButtons />
+
+              <button onClick={() => console.log(methods.getValues())}>asd</button>
 
             </Box>
                 

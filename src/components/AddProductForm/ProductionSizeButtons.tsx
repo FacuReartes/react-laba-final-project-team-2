@@ -1,3 +1,4 @@
+import useGetSizes from '@/hooks/useGetSizes';
 import { 
   Box, 
   Typography, 
@@ -5,7 +6,6 @@ import {
   ToggleButtonGroup 
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React from 'react';
 import { 
   Controller, 
@@ -14,25 +14,9 @@ import {
 
 export default function ProductSizesButtons() {
 
-  const {  data, isPending, isError, error } = useQuery({
-    queryKey: ['sizes'],
-    queryFn: () => {
-      return axios.get(
-        'https://shoes-shop-strapi.herokuapp.com/api/sizes',
-      );
-    },
-    staleTime: 1000 * 60 * 5,
-  })
+  const {  data: sizes } = useQuery(useGetSizes())
 
   const { control, setValue } = useFormContext()
-
-  if (isPending) {
-    return <span>Loading...</span>
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>
-  }
 
   return (
     <Box>
@@ -62,10 +46,10 @@ export default function ProductSizesButtons() {
                 border: errors.sizes && '1px solid #FE645E !important' 
               }}
             >
-              {data.data.data.map((x: { id: number, attributes: { value: number } }) => (
+              {sizes.map((size: { id: number, attributes: { value: number } }) => (
                 <ToggleButton
-                  key={x.id}
-                  value={x.id}
+                  key={size.id}
+                  value={size.id}
                   sx={{
                     width: '100%',
                     fontSize: { sm: '15px' },
@@ -75,7 +59,7 @@ export default function ProductSizesButtons() {
                   }}
                   color="secondary"
                   >
-                  {x.attributes.value}
+                  {size.attributes.value}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
