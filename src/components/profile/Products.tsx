@@ -7,11 +7,11 @@ import { useUserData } from '@/hooks/useUserData';
 import { useRouter } from 'next/navigation';
 import useGetProducts from '@/hooks/useGetProducts';
 import { useQuery } from '@tanstack/react-query';
+import heroImage from '@/images/products-hero-img.webp';
 
 export default function Products() {
   const session = useSession();
-  const user = useUserData(session.data?.user.jwt);
-  const userData = user.data?.data;
+  const { data: userData } = useUserData(session.data?.user.jwt);
   const router = useRouter();
 
   const { data: products } = useQuery(useGetProducts());
@@ -38,13 +38,14 @@ export default function Products() {
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
         <Image
-          src={'/products-hero-img.svg'}
+          src={heroImage}
           alt="hero-img"
           width={700}
           height={isDesktop ? 262 : 132}
           sizes="100vw"
-          style={{ width: '100%', objectFit: 'cover' }}
+          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           priority
+          placeholder="blur"
         />
         <Box
           sx={{

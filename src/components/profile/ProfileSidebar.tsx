@@ -16,13 +16,16 @@ import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
 import Popup from '../common/Popup';
 import { useLogOut } from '@/hooks/useLogOut';
+import { IUser } from '@/lib/next-auth';
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
   const router = useRouter();
   const pathName = usePathname();
   const session = useSession();
-  const user = useUserData(session.data?.user.jwt);
-  const userData = user.data?.data;
+  const jwt = session.data?.user.jwt;
+
+  const { data: userData } = useUserData(jwt, initialUserData);
+
   const { openDialog, setOpenDialog, message, isLoading, handleLogOut } =
     useLogOut();
 
@@ -57,7 +60,7 @@ const ProfileSidebar = () => {
           <Typography
             sx={{ fontSize: '16px', fontWeight: 500, lineHeight: '18.77px' }}
           >
-            {userData?.firstName} {userData?.lastName}
+            {userData?.firstName || userData?.username} {userData?.lastName}
           </Typography>
         </Box>
       </Box>

@@ -1,5 +1,42 @@
 import NextAuth from 'next-auth'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
+interface IAvatarFormat {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+}
+
+interface IAvatar {
+  id: number;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    thumbnail?: IAvatarFormat;
+    small?: IAvatarFormat;
+    medium?: IAvatarFormat;
+    large?: IAvatarFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: Record<string, any>;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface IUser {
   blocked: boolean;
   confirmed: boolean;
@@ -12,7 +49,7 @@ interface IUser {
   provider: string;
   updatedAt: string;
   username: string;
-  avatar?: object | string | null;
+  avatar?: IAvatar | null;
   products?: string[] | null;
 }
 

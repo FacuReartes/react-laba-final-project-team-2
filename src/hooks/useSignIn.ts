@@ -52,7 +52,7 @@ export const useSignIn = () => {
   const closeDialog = () => {
     setOpenDialog(false);
     if (isLoginOk) {
-      router.push('/bag');
+      router.push('/cart');
     }
   };
 

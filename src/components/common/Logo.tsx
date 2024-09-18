@@ -1,4 +1,3 @@
-'use client';
 import { Box } from '@mui/material';
 import Image from 'next/image';
 
@@ -11,7 +10,7 @@ const SignupLogo = () => {
         top: { md: '50px', xs: '18px' },
       }}
     >
-      <Image src="/logo.svg" alt="logo" priority width={40} height={30} />
+      <Image src="/logo.webp" alt="logo" priority width={40} height={30} />
     </Box>
   );
 };

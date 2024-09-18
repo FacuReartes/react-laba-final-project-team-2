@@ -1,5 +1,12 @@
 'use client';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import SettingsCard from './SettingsCard';
 import { SettingsFormData } from '@/lib/definitions';
 import {
@@ -12,19 +19,20 @@ import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
+import { IUser } from '@/lib/next-auth';
 
-const SettingsForm = () => {
-  const { data: session } = useSession();
-  const jwt = session?.user.jwt;
-  const { data: userData } = useUserData(jwt);
-  const user = userData?.data;
+const SettingsForm = ({ initialUserData }: { initialUserData: IUser }) => {
+  const session = useSession();
+  const jwt = session.data?.user.jwt;
+
+  const { data: userData } = useUserData(jwt, initialUserData);
 
   const {
     mutate: updateUser,
     openDialog,
     setOpenDialog,
     message,
-  } = useUpdateUser(user?.id, jwt);
+  } = useUpdateUser(userData?.id, jwt);
 
   const {
     mutate: uploadAvatar,
@@ -41,16 +49,16 @@ const SettingsForm = () => {
     message: deleteMessage,
     isPending: deleteIsPending,
     setOpenDialog: setDeleteDialog,
-  } = useDeleteAvatar(jwt, user?.avatar?.id);
+  } = useDeleteAvatar(jwt, userData?.avatar?.id);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
     reset,
-  } = useSettingsForm(user);
+  } = useSettingsForm(userData as SettingsFormData);
 
-  useInitializeForm(user, reset);
+  useInitializeForm(userData as SettingsFormData, reset);
 
   const submitData = (data: SettingsFormData) => {
     const updatedData = { ...data };
@@ -58,6 +66,18 @@ const SettingsForm = () => {
       updatedData.avatar = avatarData;
     }
     updateUser(updatedData);
+  };
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'lg'));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const getLeftMargin = () => {
+    if (isSmallScreen) return '0px';
+    if (isMediumScreen) return '10%';
+    if (isLargeScreen) return '20%';
+    return '0px';
   };
 
   return (
@@ -70,6 +90,8 @@ const SettingsForm = () => {
         pt: { md: '52px', xs: '24px' },
         pb: '91px',
         bgcolor: '#fff',
+        ml: getLeftMargin(),
+        transition: 'margin-left 0.3s ease-in-out',
       }}
     >
       <Typography
@@ -84,7 +106,7 @@ const SettingsForm = () => {
       </Typography>
       <SettingsCard
         uploadAvatar={uploadAvatar}
-        avatarUrl={user?.avatar?.url}
+        avatarUrl={userData?.avatar?.url}
         isPending={isPending}
         deleteAvatar={deleteAvatar}
         deleteIsPending={deleteIsPending}

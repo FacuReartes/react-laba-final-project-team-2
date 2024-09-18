@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import image404 from '@/images/404-img.webp';
 
 const pageText = {
   error: 'Error 404',
@@ -44,11 +45,13 @@ export default function NotFoundPage() {
         </Box>
         <Box sx={{ height: '65%' }}>
           <Image
-            src={'/404-img.svg'}
+            src={image404}
             alt="404-img"
             width={360}
             height={460}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            placeholder="blur"
+            priority
           />
         </Box>
 
@@ -158,11 +161,13 @@ export default function NotFoundPage() {
 
         <Box sx={{ width: '50%' }}>
           <Image
-            src={'/404-img.svg'}
+            src={image404}
             alt="404-img"
             width={960}
             height={960}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            placeholder="blur"
+            priority
           />
         </Box>
       </Box>

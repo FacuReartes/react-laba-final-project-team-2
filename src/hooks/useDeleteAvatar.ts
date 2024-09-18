@@ -2,7 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 
-export const useDeleteAvatar = (jwt: string | undefined, id: string) => {
+export const useDeleteAvatar = (
+  jwt: string | undefined,
+  id: number | undefined
+) => {
   const [avatarData, setAvatarData] = useState<object | null>(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
