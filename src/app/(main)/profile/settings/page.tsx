@@ -1,7 +1,5 @@
-// import SettingsFormServer from '@/components/settings/SettingsFormServer';
-import SettingsFormSSR from '@/components/settings/SettingsFormSSR';
+import SettingsFormServer from '@/components/settings/SettingsFormServer';
 
 export default function Page() {
-  // return <SettingsFormServer />;
-  return <SettingsFormSSR />;
+  return <SettingsFormServer />;
 }
