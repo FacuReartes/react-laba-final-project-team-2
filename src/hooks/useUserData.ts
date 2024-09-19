@@ -16,6 +16,7 @@ export const useUserData = (jwt: string | undefined, initialData?: IUser) => {
       );
       return response.data;
     },
+    enabled: Boolean(jwt),
     staleTime: 1000 * 60 * 5,
     initialData: initialData,
   });
