@@ -8,8 +8,9 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         display: 'flex',
         flexDirection: 'column',
         mt: { xs: 4, md: 0 },
-        width: { xs: 1, lg: '600px' },
-        maxWidth: { xs: 'none', lg: '600px' },
+        width: { xs: 1 },
+        maxWidth: { xs: 'none', md: '600px' },
+        mx: { md: 'auto' },
       }}
     >
       <Box
@@ -36,7 +37,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         {attributes?.gender?.data?.attributes?.name}&apos;s shoes
       </Typography>
 
-      <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap' }}>
+      <Box sx={{ mt: 2, mb: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
         {attributes?.categories?.data?.map(cat => (
           <Typography
             key={cat.id}
@@ -97,13 +98,13 @@ export default function ProductDetailsView({ attributes }: ProductType) {
           display: 'flex',
           gap: 2,
           mt: 4,
-          justifyContent: { xs: 'center', lg: 'normal' },
+          justifyContent: { xs: 'center' },
         }}
       >
         <Button
           variant="outlined"
           sx={{
-            width: { xs: '120px', md: '248px' },
+            width: { xs: '120px', sm: '248px' },
             borderColor: 'secondary.light',
             color: 'secondary.light',
             ':hover': { borderColor: 'inherit' },
@@ -114,7 +115,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         <Button
           variant="contained"
           sx={{
-            width: { xs: '120px', md: '248px' },
+            width: { xs: '120px', sm: '248px' },
             bgcolor: 'secondary.light',
             ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
           }}
