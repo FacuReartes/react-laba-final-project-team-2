@@ -13,19 +13,17 @@ import {
   useInitializeForm,
   useSettingsForm,
 } from '@/lib/schemas/settingsSchema';
-import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
-import { IUser } from '@/lib/next-auth';
+import { useSession } from 'next-auth/react';
 
-const SettingsForm = ({ initialUserData }: { initialUserData: IUser }) => {
+const SettingsForm = () => {
   const session = useSession();
-  const jwt = session.data?.user.jwt;
-
-  const { data: userData } = useUserData(jwt, initialUserData);
+  const jwt = session.data?.user?.jwt;
+  const { data: userData } = useUserData(jwt);
 
   const {
     mutate: updateUser,
