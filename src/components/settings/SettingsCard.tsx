@@ -56,7 +56,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
     >
       <Avatar
         alt="profileAvatar"
-        src={avatar ? avatar : avatarUrl || '/profile-circle.svg'}
+        src={avatar ? avatar : avatarUrl || ''}
         sx={{
           width: { xs: '100px', md: '150px' },
           height: { xs: '100px', md: '150px' },
