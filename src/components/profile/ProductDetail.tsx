@@ -13,10 +13,18 @@ export default function ProductDetail({ params }: { params: number }) {
 
   if (product) {
     return (
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: 1,
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
+            justifyContent: 'center',
             flexDirection: { xs: 'column', xl: 'row' },
             px: { xs: 2, lg: '0' },
             pt: 2,
