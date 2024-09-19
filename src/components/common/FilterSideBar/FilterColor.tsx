@@ -70,7 +70,7 @@ export const FilterColor = ({ colors, onColorChange }: Props) => {
             fullWidth
             sx={{
               input: {
-                color: '#000',
+                color: 'color.black',
                 height: '33px',
                 boxSizing: 'border-box',
                 fontSize: '12px',
@@ -81,10 +81,11 @@ export const FilterColor = ({ colors, onColorChange }: Props) => {
               mt: '8px',
             }}
             InputLabelProps={{
-              style: { color: '#5C5C5C' },
+              sx: { color: 'grey.100' },
             }}
             InputProps={{
-              style: { borderRadius: '50px', color: '#000' },
+              style: { borderRadius: '50px' },
+              sx: { color: 'common.black' },
               startAdornment: (
                 <InputAdornment position="start">
                   <Box component="img" alt="search" src="/search.svg" />

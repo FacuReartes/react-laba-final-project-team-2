@@ -130,7 +130,7 @@ const ForgotPasswordForm = () => {
             variant="contained"
             sx={{
               p: 2,
-              color: '#ffffff',
+              color: 'common.white',
               bgcolor: 'secondary.light',
               fontSize: '16px',
             }}
@@ -143,11 +143,10 @@ const ForgotPasswordForm = () => {
             style={{
               margin: 'auto',
               textDecoration: 'none',
-              color: '#494949',
               fontSize: '15px',
             }}
           >
-            Back to log in
+            <Typography sx={{ color: 'grey.200' }}>Back to log in</Typography>
           </Link>
         </Box>
       </form>
@@ -163,7 +162,7 @@ const ForgotPasswordForm = () => {
               width: '100%',
               height: '100%',
               m: 0,
-              color: '#ffffff',
+              color: 'common.white',
               border: 'none',
               bgcolor: 'secondary.light',
               ':hover': { bgcolor: 'secondary.main', border: 'none' },

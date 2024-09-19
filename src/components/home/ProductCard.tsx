@@ -19,7 +19,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
         width: { md: '320px', xs: '152px' },
         display: 'flex',
         flexDirection: 'column',
-        color: '#000',
+        color: 'common.black',
       }}
     >
       <Box
@@ -76,7 +76,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
       </Box>
       <Link
         href={`/${product.id}`}
-        style={{ textDecoration: 'none', color: '#000000' }}
+        style={{ textDecoration: 'none', color: 'inherit' }}
       >
         <Box
           sx={{ display: 'flex', justifyContent: 'space-between', mt: '12px' }}
@@ -96,7 +96,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
           sx={{
             fontSize: { xs: '9px', md: '18px' },
             fontWeight: '500',
-            color: '#5C5C5C',
+            color: 'grey.100',
           }}
         >
           {`${product.attributes.gender.data.attributes.name}'s Shoes`}

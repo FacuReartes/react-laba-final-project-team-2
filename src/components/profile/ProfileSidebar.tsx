@@ -53,7 +53,7 @@ const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
         />
         <Box sx={{ pl: '16px', py: '12px' }}>
           <Typography
-            sx={{ fontSize: '12px', color: '#98A2B3', fontWeight: 500 }}
+            sx={{ fontSize: '12px', color: 'primary.100', fontWeight: 500 }}
           >
             Welcome
           </Typography>
@@ -89,10 +89,11 @@ const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
                 )}
               </ListItemIcon>
               <ListItemText
-                style={
-                  pathName === '/profile/products' ? { color: '#FE645E' } : {}
-                }
-                sx={{ my: '0px' }}
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/products' ? 'secondary.light' : '',
+                }}
                 primaryTypographyProps={{
                   fontSize: '16px',
                   lineHeight: '18.77px',
@@ -123,10 +124,11 @@ const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
                 )}
               </ListItemIcon>
               <ListItemText
-                style={
-                  pathName === '/profile/settings' ? { color: '#FE645E' } : {}
-                }
-                sx={{ my: '0px' }}
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/settings' ? 'secondary.light' : '',
+                }}
                 primaryTypographyProps={{
                   fontSize: '16px',
                   lineHeight: '18.77px',

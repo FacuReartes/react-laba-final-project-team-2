@@ -89,7 +89,7 @@ const SettingsForm = ({ initialUserData }: { initialUserData: IUser }) => {
         alignItems: 'center',
         pt: { md: '52px', xs: '24px' },
         pb: '91px',
-        bgcolor: '#fff',
+        bgcolor: 'common.white',
         ml: getLeftMargin(),
         transition: 'margin-left 0.3s ease-in-out',
       }}
@@ -165,7 +165,7 @@ const SettingsForm = ({ initialUserData }: { initialUserData: IUser }) => {
             variant="contained"
             color="error"
             sx={{
-              color: '#fff',
+              color: 'common.white',
               width: '152px',
               height: '40px',
               mt: '56px',

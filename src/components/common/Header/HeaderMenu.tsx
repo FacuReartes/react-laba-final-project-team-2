@@ -120,10 +120,9 @@ const HeaderMenu = (props: { showInputSearch: boolean }) => {
                   fontSize: '16px',
                   lineHeight: '18.77px',
                   fontWeight: 500,
+                  color:
+                    pathName === '/profile/products' ? 'secondary.light' : '',
                 }}
-                style={
-                  pathName === '/profile/products' ? { color: '#FE645E' } : {}
-                }
               >
                 My products
               </Typography>
@@ -154,10 +153,9 @@ const HeaderMenu = (props: { showInputSearch: boolean }) => {
                   fontSize: '16px',
                   lineHeight: '18.77px',
                   fontWeight: 500,
+                  color:
+                    pathName === '/profile/settings' ? 'secondary.light' : '',
                 }}
-                style={
-                  pathName === '/profile/settings' ? { color: '#FE645E' } : {}
-                }
               >
                 Settings
               </Typography>

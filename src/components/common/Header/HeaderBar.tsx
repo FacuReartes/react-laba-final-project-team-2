@@ -57,7 +57,7 @@ const HeaderBar = ({
     <AppBar
       position="static"
       sx={{
-        bgcolor: '#FFF',
+        bgcolor: 'common.white',
         height: { xs: '64px', md: '120px' },
         boxShadow: 0,
       }}
@@ -79,7 +79,7 @@ const HeaderBar = ({
 
         <Typography
           sx={{
-            color: '#000',
+            color: 'common.black',
             fontWeight: '500',
             ml: '44px',
             display: { md: isTyping ? 'none' : 'block', xs: 'none' },
@@ -102,11 +102,10 @@ const HeaderBar = ({
               width: '145px',
               height: '48px',
               fontSize: '12px',
-              light: '#FE645E',
               display: { md: isTyping ? 'none' : 'flex', xs: 'none' },
               ':hover': {
-                borderColor: '#fff',
-                color: '#FFF',
+                borderColor: 'transparent',
+                color: 'common.white',
                 bgcolor: 'secondary.light',
               },
             }}
@@ -137,7 +136,7 @@ const HeaderBar = ({
             variant="outlined"
             size="small"
             sx={{
-              input: { color: '#000', height: '30px' },
+              input: { color: 'common.black', height: '30px' },
               m: {
                 md: isTyping ? '0 auto' : '0 32px 0 0',
                 xs: '0 20px 0 28px',
@@ -148,10 +147,11 @@ const HeaderBar = ({
               display: showInputSearch ? 'flex' : { xs: 'none', md: 'flex' },
             }}
             InputLabelProps={{
-              style: { color: '#5C5C5C' },
+              sx: { color: 'grey.100' },
             }}
             InputProps={{
-              style: { borderRadius: '50px', color: '#000' },
+              style: { borderRadius: '50px' },
+              sx: { color: 'common.black' },
               startAdornment: (
                 <InputAdornment position="start">
                   <Box component="img" alt="search" src="/search.svg" />

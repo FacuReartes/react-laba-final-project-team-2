@@ -33,7 +33,7 @@ export default function Products() {
   return (
     <Box
       sx={{
-        bgcolor: '#fff',
+        bgcolor: 'common.white',
         pb: '48px',
         display: 'flex',
         flexDirection: 'column',
@@ -78,7 +78,7 @@ export default function Products() {
             <Typography
               variant="h5"
               sx={{
-                color: '#000',
+                color: 'common.black',
                 fontWeight: '500',
                 fontSize: { xs: '14px', md: '20px' },
               }}
@@ -107,7 +107,7 @@ export default function Products() {
         <Typography
           variant="h1"
           sx={{
-            color: '#000',
+            color: 'common.black',
             fontSize: { xs: '30px', md: '45px' },
             fontWeight: '500',
             pl: { xs: '20px' },
@@ -127,7 +127,7 @@ export default function Products() {
               md: products?.length > 0 ? 'block' : 'none',
             },
             bgcolor: 'secondary.light',
-            color: '#fff',
+            color: 'common.white',
             height: '40px',
             textTransform: 'capitalize',
             transition: 'opacity .2s ease',

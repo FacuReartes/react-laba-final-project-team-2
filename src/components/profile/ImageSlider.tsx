@@ -32,7 +32,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
             style={{
               objectFit: 'cover',
               cursor: 'pointer',
-              border: `${index === currentSlide ? '3px solid #f1c40f' : ''}`,
+              border: `${index === currentSlide ? '3px solid #F1C40F' : ''}`,
             }}
             onClick={() => handleCurrentSlide(index)}
           />
