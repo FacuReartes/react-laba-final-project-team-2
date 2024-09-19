@@ -12,7 +12,10 @@ import ProductSelect from './ProductSelect';
 import { IProducts, useAddProductForm } from '@/lib/schemas/addProductSchemas';
 import { FormProvider } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { 
+  useMutation, 
+  useQueryClient 
+} from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ProductCategorySelect from './ProductCategorySelect';
@@ -82,18 +85,20 @@ const AddProductForm = () => {
       const formData = new FormData();
       newProduct.images.forEach((x: File) => {
         formData.append('files', x);
-      });
+      })
 
-      return axios
-        .post('https://shoes-shop-strapi.herokuapp.com/api/upload', formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(res => {
-          const imagesId = res.data.map((x: { id: number }) => x.id);
-          newProduct.product.data.images = imagesId;
-
+      return axios.post(
+          'https://shoes-shop-strapi.herokuapp.com/api/upload',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ).then(res => {
+          const imagesId = res.data.map((image: {id: number}) => image.id)
+          newProduct.product.data.images = imagesId
+          
           axios.post(
             'https://shoes-shop-strapi.herokuapp.com/api/products',
             newProduct.product,
@@ -189,9 +194,6 @@ const AddProductForm = () => {
 
               <ProductSizesButtons />
 
-              <button onClick={() => console.log(methods.getValues())}>
-                asd
-              </button>
             </Box>
 
             <Box
