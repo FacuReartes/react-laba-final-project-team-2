@@ -1,9 +1,4 @@
-import { 
-  Box, 
-  Typography, 
-  Select, 
-  MenuItem 
-} from '@mui/material';
+import { Box, Typography, Select, MenuItem } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -15,16 +10,18 @@ interface ProductSelectProps {
   };
 }
 
-export default function ProductSelect( { queryObj }: ProductSelectProps) {
-
+export default function ProductSelect({ queryObj }: ProductSelectProps) {
   const { queryKey, queryFn } = queryObj;
 
   const { data: properties } = useQuery({
     queryKey,
-    queryFn
-  })
+    queryFn,
+  });
 
-  const { register, formState: { errors } } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <Box sx={{ width: '50%' }}>
@@ -38,15 +35,13 @@ export default function ProductSelect( { queryObj }: ProductSelectProps) {
         error={Boolean(errors[queryKey[0]])}
         defaultValue={properties[0].id}
       >
-        { properties.map((property: { id: number, attributes: { name: string } }) => (
-          <MenuItem 
-            key={property.id} 
-            value={property.id}
-          >
-            {property.attributes.name}
-          </MenuItem>
-        )) }
-
+        {properties.map(
+          (property: { id: number; attributes: { name: string } }) => (
+            <MenuItem key={property.id} value={property.id}>
+              {property.attributes.name}
+            </MenuItem>
+          )
+        )}
       </Select>
     </Box>
   );

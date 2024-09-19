@@ -4,65 +4,68 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { cookies } from 'next/headers';
 
 export const authOptions: NextAuthOptions = {
-
   pages: {
-    signIn: '/auth/sign-in'
+    signIn: '/auth/sign-in',
   },
 
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
   },
 
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
-      clientSecret: process.env.GITHUB_SECRET ?? ''
+      clientSecret: process.env.GITHUB_SECRET ?? '',
     }),
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
         identifier: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
-        rememberMe: { label: 'RememberMe', type: 'checkbox' }
+        rememberMe: { label: 'RememberMe', type: 'checkbox' },
       },
 
       async authorize(credentials) {
-
-        const res = await fetch('https://shoes-shop-strapi.herokuapp.com/api/auth/local', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            identifier: credentials?.identifier,
-            password: credentials?.password
-          })
-        });
+        const res = await fetch(
+          'https://shoes-shop-strapi.herokuapp.com/api/auth/local',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              identifier: credentials?.identifier,
+              password: credentials?.password,
+            }),
+          }
+        );
 
         const user = await res.json();
 
         if (res.ok && user) {
+          cookies().set(
+            'remember-me',
+            credentials?.rememberMe === 'true' ? 'true' : 'false'
+          );
 
-          cookies().set('remember-me', credentials?.rememberMe === 'true' ? 'true' : 'false')
-
-          return user
+          return user;
         } else {
-          return null
+          return null;
         }
-      }
-    })
-  ], 
+      },
+    }),
+  ],
 
   callbacks: {
     async jwt({ token, user }) {
-      return {...token, ...user}
+      return { ...token, ...user };
     },
 
-    async session({ session, token}) {
-      session.user = token
-      return session
-    }
+    async session({ session, token }) {
+      session.user = token;
+      return session;
+    },
   },
 
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
 };

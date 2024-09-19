@@ -1,22 +1,16 @@
 import useGetCategories from '@/hooks/useGetCategories';
-import { 
-  Box, 
-  Typography, 
-  Select, 
-  MenuItem 
-} from '@mui/material';
+import { Box, Typography, Select, MenuItem } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { 
-  Controller, 
-  useFormContext 
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 export default function ProductCategorySelect() {
-
   const { data: categories } = useQuery(useGetCategories());
 
-  const { formState: { errors }, control } = useFormContext()
+  const {
+    formState: { errors },
+    control,
+  } = useFormContext();
 
   return (
     <Box sx={{ width: '50%' }}>
@@ -24,7 +18,7 @@ export default function ProductCategorySelect() {
         Categories
       </Typography>
       <Controller
-        name='categories'
+        name="categories"
         control={control}
         defaultValue={[categories[0].id]}
         render={({ field }) => (
@@ -36,13 +30,13 @@ export default function ProductCategorySelect() {
             defaultValue={[categories[0].id]}
             multiple
           >
-            { categories.map((category: { id: number, attributes: { name: string }}) => (
-            <MenuItem 
-              key={category.id} 
-              value={category.id}>
-              {category.attributes.name}
-            </MenuItem>
-            ))}
+            {categories.map(
+              (category: { id: number; attributes: { name: string } }) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.attributes.name}
+                </MenuItem>
+              )
+            )}
           </Select>
         )}
       />

@@ -12,7 +12,7 @@ interface ProductsContainerProps {
 export default function ProductsContainer({ filter }: ProductsContainerProps) {
   const { products } = useProducts();
 
-  const { handleAddToCart } = useCart()
+  const { handleAddToCart } = useCart();
 
   const filterData = (data: APIProductsType[], filters: FilterTypes) => {
     return data.filter(product => {
@@ -62,7 +62,11 @@ export default function ProductsContainer({ filter }: ProductsContainerProps) {
       {products.length > 0
         ? filter !== undefined &&
           filterData(products, filter).map(product => (
-            <ProductCard key={product.id} product={product} handleAddToCart={handleAddToCart} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              handleAddToCart={handleAddToCart}
+            />
           ))
         : 'No products Found'}
     </Box>

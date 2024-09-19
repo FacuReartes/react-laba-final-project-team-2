@@ -1,20 +1,11 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import useCart, {
-  ICartProduct
-} from '@/hooks/useCart';
-import { 
-  Box, 
-  Divider, 
-  List, 
-  ListItem, 
-  Typography 
-} from '@mui/material';
+import useCart, { ICartProduct } from '@/hooks/useCart';
+import { Box, Divider, List, ListItem, Typography } from '@mui/material';
 
 export default function Page() {
-
-  const { cartList, handleQuantity } = useCart()
+  const { cartList, handleQuantity } = useCart();
 
   const renderList = cartList.map((product: ICartProduct, index: number) => {
     const isLast = index === cartList.length - 1;
@@ -64,15 +55,13 @@ export default function Page() {
             pr: { xs: '0px', md: '20px' },
           }}
         >
-          {cartList.length > 0 ? 
-          renderList 
-          : 
-          <Box>
-            <Typography>
-              No products in the cart
-            </Typography>
-          </Box>
-          }
+          {cartList.length > 0 ? (
+            renderList
+          ) : (
+            <Box>
+              <Typography>No products in the cart</Typography>
+            </Box>
+          )}
         </List>
       </Box>
 

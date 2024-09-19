@@ -5,16 +5,19 @@ import useGetColors from '@/hooks/useGetColors';
 import useGetGenders from '@/hooks/useGetGenders';
 import useGetSizes from '@/hooks/useGetSizes';
 import { Box, Typography } from '@mui/material';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
 export default async function AddProductPage() {
-
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(useGetCategories())
-  await queryClient.prefetchQuery(useGetBrands())
-  await queryClient.prefetchQuery(useGetGenders())
-  await queryClient.prefetchQuery(useGetColors())
-  await queryClient.prefetchQuery(useGetSizes())
+  await queryClient.prefetchQuery(useGetCategories());
+  await queryClient.prefetchQuery(useGetBrands());
+  await queryClient.prefetchQuery(useGetGenders());
+  await queryClient.prefetchQuery(useGetColors());
+  await queryClient.prefetchQuery(useGetSizes());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -38,9 +41,9 @@ export default async function AddProductPage() {
           }}
         >
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti
-          eveniet quia illum vel velit atque. Quibusdam cumque doloremque eveniet
-          laboriosam dignissimos eligendi cupiditate molestias modi! Labore
-          excepturi autem doloribus deleniti!
+          eveniet quia illum vel velit atque. Quibusdam cumque doloremque
+          eveniet laboriosam dignissimos eligendi cupiditate molestias modi!
+          Labore excepturi autem doloribus deleniti!
         </Typography>
         <AddProductForm />
       </Box>

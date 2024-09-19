@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 interface PProps {
   product: APIProductsType;
-  handleAddToCart: (product: APIProductsType) => void
+  handleAddToCart: (product: APIProductsType) => void;
 }
 
 export default function ProductCard({ product, handleAddToCart }: PProps) {

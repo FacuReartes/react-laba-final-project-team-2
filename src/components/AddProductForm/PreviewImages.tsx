@@ -11,15 +11,20 @@ interface Props {
   onDelete: (index: number) => void;
 }
 
-function PreviewImages({ gallery, onFileAccepted, onFileRejected, onDelete }: Props) {
+function PreviewImages({
+  gallery,
+  onFileAccepted,
+  onFileRejected,
+  onDelete,
+}: Props) {
   const [tempImgUrls, setTempImgUrls] = useState<string[]>([]);
 
   useEffect(() => {
-    const urls = gallery.map((file) => URL.createObjectURL(file));
+    const urls = gallery.map(file => URL.createObjectURL(file));
     setTempImgUrls(urls);
 
     return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
+      urls.forEach(url => URL.revokeObjectURL(url));
     };
   }, [gallery]);
 
@@ -38,7 +43,10 @@ function PreviewImages({ gallery, onFileAccepted, onFileRejected, onDelete }: Pr
           </Grid>
         ))}
         <Grid item>
-          <ImageDropzone onFileAccepted={onFileAccepted} onFileRejected={onFileRejected} />
+          <ImageDropzone
+            onFileAccepted={onFileAccepted}
+            onFileRejected={onFileRejected}
+          />
         </Grid>
       </Grid>
     </Box>
