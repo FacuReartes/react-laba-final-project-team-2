@@ -1,55 +1,34 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import { Box, Divider, List, ListItem, Typography } from '@mui/material';
-import { useState } from 'react';
-
-interface IProduct {
-  id: number;
-  imageUrl: string;
-  name: string;
-  price: string;
-  genre: "Men's Shoes" | "Women's Shoes";
-}
-
-const mockData: IProduct[] = [
-  {
-    id: 1,
-    imageUrl: '/bag-mock/shoe-1.svg',
-    name: 'Nike Air Max 270',
-    price: '$160',
-    genre: "Women's Shoes",
-  },
-  {
-    id: 2,
-    imageUrl: '/bag-mock/shoe-2.svg',
-    name: 'Nike Air Max 90',
-    price: '$140',
-    genre: "Men's Shoes",
-  },
-  {
-    id: 3,
-    imageUrl: '/bag-mock/shoe-3.svg',
-    name: "Nike Air Force 1 '07 SE",
-    price: '$110',
-    genre: "Women's Shoes",
-  },
-];
+import useCart, {
+  ICartProduct
+} from '@/hooks/useCart';
+import { 
+  Box, 
+  Divider, 
+  List, 
+  ListItem, 
+  Typography 
+} from '@mui/material';
 
 export default function Page() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [shoeList, setShoeList] = useState<IProduct[]>(mockData);
 
-  const renderList = shoeList.map((x: IProduct, index: number) => {
-    const isLast = index === shoeList.length - 1;
+  const { cartList, handleQuantity } = useCart()
+
+  const renderList = cartList.map((product: ICartProduct, index: number) => {
+    const isLast = index === cartList.length - 1;
 
     return (
-      <ListItem key={x.id} sx={{ p: 0, display: 'list-item' }}>
+      <ListItem key={product.id} sx={{ p: 0, display: 'list-item' }}>
         <Product
-          imageUrl={x.imageUrl}
-          name={x.name}
-          price={x.price}
-          genre={x.genre}
+          id={product.id}
+          imageUrl={product.imageUrl}
+          name={product.name}
+          price={product.price}
+          gender={product.gender}
+          handleQuantity={handleQuantity}
+          quantity={product.quantity}
         />
         {!isLast && <Divider sx={{ display: { xs: 'none', md: 'block' } }} />}
       </ListItem>
@@ -85,7 +64,15 @@ export default function Page() {
             pr: { xs: '0px', md: '20px' },
           }}
         >
-          {renderList}
+          {cartList.length > 0 ? 
+          renderList 
+          : 
+          <Box>
+            <Typography>
+              No products in the cart
+            </Typography>
+          </Box>
+          }
         </List>
       </Box>
 

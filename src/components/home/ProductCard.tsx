@@ -7,9 +7,10 @@ import { useState } from 'react';
 
 interface PProps {
   product: APIProductsType;
+  handleAddToCart: (product: APIProductsType) => void
 }
 
-export default function ProductCard({ product }: PProps) {
+export default function ProductCard({ product, handleAddToCart }: PProps) {
   const [onHover, setOnHover] = useState(false);
 
   return (
@@ -57,9 +58,10 @@ export default function ProductCard({ product }: PProps) {
               flexDirection: 'column',
               gap: '9px',
             }}
+            onClick={() => handleAddToCart(product)}
           >
             <img src="./assets/add-shopping-basket.svg" />
-            Add to Chart
+            Add to Cart
           </IconButton>
         </Box>
         {product?.attributes?.images?.data[0]?.attributes?.url && (

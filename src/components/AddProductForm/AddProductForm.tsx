@@ -21,7 +21,10 @@ import {
 } from '@/lib/schemas/addProductSchemas';
 import { FormProvider } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { 
+  useMutation, 
+  useQueryClient 
+} from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ProductCategorySelect from './ProductCategorySelect';
@@ -104,7 +107,7 @@ const AddProductForm = () => {
             },
           }
         ).then(res => {
-          const imagesId = res.data.map((x: {id: number}) => x.id)
+          const imagesId = res.data.map((image: {id: number}) => image.id)
           newProduct.product.data.images = imagesId
           
           axios.post(
@@ -198,8 +201,6 @@ const AddProductForm = () => {
               <ProductDescriptionInput />
 
               <ProductSizesButtons />
-
-              <button onClick={() => console.log(methods.getValues())}>asd</button>
 
             </Box>
                 
