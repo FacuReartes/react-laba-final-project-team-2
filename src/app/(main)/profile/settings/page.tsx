@@ -1,5 +1,5 @@
-import SettingsFormServer from '@/components/settings/SettingsFormServer';
+import SettingsForm from '@/components/settings/SettingsForm';
 
 export default function Page() {
-  return <SettingsFormServer />;
+  return <SettingsForm />;
 }
