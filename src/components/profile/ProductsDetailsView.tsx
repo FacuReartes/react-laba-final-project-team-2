@@ -36,6 +36,24 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         {attributes?.gender?.data?.attributes?.name}&apos;s shoes
       </Typography>
 
+      <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap' }}>
+        {attributes?.categories?.data?.map(cat => (
+          <Typography
+            key={cat.id}
+            sx={{
+              display: 'inline',
+              p: 1,
+              borderRadius: '6px',
+              border: '1px solid',
+              borderColor: 'common.black',
+              color: 'common.black',
+            }}
+          >
+            {cat.attributes?.name}
+          </Typography>
+        ))}
+      </Box>
+
       <Box
         sx={{
           display: 'flex',
