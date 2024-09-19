@@ -1,79 +1,70 @@
-import React, { 
-  FC 
-} from 'react'
-import { 
-  Box, 
-  Button, 
-  Divider, 
-  IconButton, 
-  Typography 
-} from '@mui/material';
+import React, { FC } from 'react';
+import { Box, Button, Divider, IconButton, Typography } from '@mui/material';
 import Image from 'next/image';
-import { 
-  AddCircle, 
-  Delete, 
-  RemoveCircle 
-} from '@mui/icons-material';
+import { AddCircle, Delete, RemoveCircle } from '@mui/icons-material';
 
 enum QuantityAction {
   plus = 'plus',
-  minus = 'minus'
+  minus = 'minus',
 }
 
 interface IProduct {
-  id: number,
-  imageUrl: string,
-  name: string,
-  price: string | number,
-  gender: string | number,
-  quantity: number,
-  handleQuantity: (productID: number, action: QuantityAction) => void
+  id: number;
+  imageUrl: string;
+  name: string;
+  price: string | number;
+  gender: string | number;
+  quantity: number;
+  handleQuantity: (productID: number, action: QuantityAction) => void;
 }
 
 const Product: FC<IProduct> = props => {
   return (
-    <Box 
-      sx={{ display: 'flex', 
-        my: {xs: '32px', md: '60px'}, 
-        px: { xs: '20px', sm: '125px', md: '0px' },  
-        position: 'relative', }}
+    <Box
+      sx={{
+        display: 'flex',
+        my: { xs: '32px', md: '60px' },
+        px: { xs: '20px', sm: '125px', md: '0px' },
+        position: 'relative',
+      }}
     >
-
-      <Box 
-        sx={{ width: { xs: '105px', md: '223px' }, 
-          height: { xs: '100px', md: '214px' }, 
-          position: 'relative' }}
+      <Box
+        sx={{
+          width: { xs: '105px', md: '223px' },
+          height: { xs: '100px', md: '214px' },
+          position: 'relative',
+        }}
       >
-        <Image 
-          src={props.imageUrl}
-          alt={props.name}
-          fill priority
-        /> 
+        <Image src={props.imageUrl} alt={props.name} fill priority />
       </Box>
 
-      <Box 
-        sx={{ flexGrow: 1, 
-          ml: { xs: '15px', md: '46px' }, 
-          mb: { xs: '0px', md: '16px' }, 
-          display: 'flex', 
-          flexDirection: 'column' }}
+      <Box
+        sx={{
+          flexGrow: 1,
+          ml: { xs: '15px', md: '46px' },
+          mb: { xs: '0px', md: '16px' },
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
-        <Box 
-          sx={{ display: 'flex', 
-            justifyContent: 'space-between',
-            mb: '4px'}}
+        <Box
+          sx={{ display: 'flex', justifyContent: 'space-between', mb: '4px' }}
         >
-          <Typography 
-            sx={{ fontWeight: 500, 
-            lineHeight: { xs: '14.08px', md: '35.19px' }, 
-            fontSize: { xs: '12px', md: '30px' }}}
+          <Typography
+            sx={{
+              fontWeight: 500,
+              lineHeight: { xs: '14.08px', md: '35.19px' },
+              fontSize: { xs: '12px', md: '30px' },
+            }}
           >
             {props.name}
           </Typography>
-          <Typography 
-            sx={{ fontWeight: 500, 
-            lineHeight: { xs: '14.08px', md: '35.19px' }, 
-            fontSize: { xs: '12px', md: '30px' }}}
+          <Typography
+            sx={{
+              fontWeight: 500,
+              lineHeight: { xs: '14.08px', md: '35.19px' },
+              fontSize: { xs: '12px', md: '30px' },
+            }}
           >
             {props.price}
           </Typography>
@@ -86,7 +77,7 @@ const Product: FC<IProduct> = props => {
             color: 'grey.100',
           }}
         >
-          {props.genre}
+          {props.gender}
         </Typography>
         <Typography
           sx={{
@@ -125,8 +116,12 @@ const Product: FC<IProduct> = props => {
                 display: { xs: 'none', md: 'flex' },
               }}
             >
-              <IconButton sx={{ padding: 0 }}
-                onClick={() => props.handleQuantity(props.id, QuantityAction.minus)>
+              <IconButton
+                sx={{ padding: 0 }}
+                onClick={() =>
+                  props.handleQuantity(props.id, QuantityAction.minus)
+                }
+              >
                 <RemoveCircle
                   sx={{ width: '32px', height: '32px', color: 'secondary.200' }}
                 />
@@ -140,8 +135,12 @@ const Product: FC<IProduct> = props => {
               >
                 {props.quantity}
               </Typography>
-              <IconButton sx={{ padding: 0 }}
-                onClick={() => props.handleQuantity(props.id, QuantityAction.plus)>
+              <IconButton
+                sx={{ padding: 0 }}
+                onClick={() =>
+                  props.handleQuantity(props.id, QuantityAction.plus)
+                }
+              >
                 <AddCircle
                   sx={{
                     width: '32px',
