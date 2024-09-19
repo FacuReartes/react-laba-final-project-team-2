@@ -27,6 +27,13 @@ export type Color = {
   };
 };
 
+export type Categories = {
+  id: number;
+  attributes: {
+    name: string;
+  };
+};
+
 export type ProductType = {
   id: number;
   attributes: {
@@ -45,6 +52,9 @@ export type ProductType = {
     };
     color: {
       data: Color;
+    };
+    categories: {
+      data: Categories[];
     };
   };
 };
