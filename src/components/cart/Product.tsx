@@ -138,7 +138,7 @@ const Product: FC<IProduct> = props => {
                   color: 'grey.200',
                 }}
               >
-                0
+                {props.quantity}
               </Typography>
               <IconButton sx={{ padding: 0 }}
                 onClick={() => props.handleQuantity(props.id, QuantityAction.plus)>
