@@ -1,4 +1,4 @@
-import ProductDetail from '@/components/profile/ProductDetail';
+import ProductDetail from '@/components/common/ProductDetail/ProductDetail';
 import useGetProductDetail from '@/hooks/useGetProductDetail';
 import { Box } from '@mui/material';
 import {
