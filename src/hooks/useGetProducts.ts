@@ -20,5 +20,6 @@ export default function useGetProducts(
   return {
     queryKey,
     queryFn,
+    enabled: Boolean(token && userID),
   };
 }

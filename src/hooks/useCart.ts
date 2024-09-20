@@ -1,46 +1,42 @@
 import { APIProductsType } from '@/lib/apiDataTypes';
-import { 
-  useEffect, 
-  useState 
-} from 'react';
+import { useEffect, useState } from 'react';
 
 export interface ICartProduct {
-  id: number,
-  name: string,
-  images?: File[],
-  imageUrl: string,
-  description?: string,
-  price: number,
-  gender: number | string,
-  sizes?: number | string,
-  color?: number | string,
-  brand?: number | string,
-  quantity: number
+  id: number;
+  name: string;
+  images?: File[];
+  imageUrl: string;
+  description?: string;
+  price: number;
+  gender: number | string;
+  sizes?: number | string;
+  color?: number | string;
+  brand?: number | string;
+  quantity: number;
 }
 
 enum QuantityAction {
   plus = 'plus',
-  minus = 'minus'
+  minus = 'minus',
 }
 
 const useCart = () => {
-  const [ cartList, setCartList ] = useState<ICartProduct[]>([])
+  const [cartList, setCartList] = useState<ICartProduct[]>([]);
 
   useEffect(() => {
     const storage: string | null = localStorage.getItem('cart-list');
-    if (storage) setCartList(JSON.parse(storage)) 
-  }, [])
+    if (storage) setCartList(JSON.parse(storage));
+  }, []);
 
   const handleAddToCart = (product: APIProductsType): void => {
-
     let newList: ICartProduct[] = [...cartList];
 
-    const existingProduct: ICartProduct | undefined = newList.find((cartProduct: ICartProduct) => (
-      cartProduct.id === product.id
-    ))
+    const existingProduct: ICartProduct | undefined = newList.find(
+      (cartProduct: ICartProduct) => cartProduct.id === product.id
+    );
 
-    if ( existingProduct ) {
-      existingProduct.quantity += 1
+    if (existingProduct) {
+      existingProduct.quantity += 1;
     } else {
       const newProduct: ICartProduct = {
         id: product.id,
@@ -48,38 +44,34 @@ const useCart = () => {
         imageUrl: product.attributes.images.data[0].attributes.url,
         price: product.attributes.price,
         gender: product.attributes.gender.data.attributes.name,
-        quantity: 1
+        quantity: 1,
       };
-    
+
       newList = [...newList, newProduct];
     }
 
-    setCartList(newList)
-  
-    localStorage.setItem('cart-list', JSON.stringify(newList))
-  }
+    setCartList(newList);
 
-  const handleQuantity =  ( productID: number, action: QuantityAction ): void => {
+    localStorage.setItem('cart-list', JSON.stringify(newList));
+  };
 
-    const newList: ICartProduct[] = [...cartList]
+  const handleQuantity = (productID: number, action: QuantityAction): void => {
+    const newList: ICartProduct[] = [...cartList];
 
     newList.forEach((product: ICartProduct) => {
       if (product.id === productID) {
-
-        if ( action === QuantityAction.plus ) {
-          product.quantity += 1
-
+        if (action === QuantityAction.plus) {
+          product.quantity += 1;
         } else {
 
           if (product.quantity !== 1) {
             product.quantity -= 1;
           }
-
         }
       }
-    })
+    });
 
-    setCartList(newList)
+    setCartList(newList);
 
     localStorage.setItem('cart-list', JSON.stringify(newList))
   }
@@ -103,4 +95,4 @@ const useCart = () => {
   }
 }
 
-export default useCart
+export default useCart;

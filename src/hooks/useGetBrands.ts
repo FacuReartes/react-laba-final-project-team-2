@@ -6,11 +6,11 @@ export default function useGetBrands() {
       'https://shoes-shop-strapi.herokuapp.com/api/brands'
     );
     const res = await req.json();
-    return res.data
-  }
+    return res.data;
+  };
 
   return {
     queryKey,
-    queryFn
-  }
-};
+    queryFn,
+  };
+}

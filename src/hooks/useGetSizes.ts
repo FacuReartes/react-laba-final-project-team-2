@@ -6,11 +6,11 @@ export default function useGetSizes() {
       'https://shoes-shop-strapi.herokuapp.com/api/sizes'
     );
     const res = await req.json();
-    return res.data
-  }
+    return res.data;
+  };
 
   return {
     queryKey,
-    queryFn
-  }
-};
+    queryFn,
+  };
+}

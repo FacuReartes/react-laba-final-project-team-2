@@ -1,17 +1,8 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import useCart, {
-  ICartProduct
-} from '@/hooks/useCart';
-import { 
-  Box, 
-  Button, 
-  Divider, 
-  List, 
-  ListItem, 
-  Typography 
-} from '@mui/material';
+import useCart, { ICartProduct } from '@/hooks/useCart';
+import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {

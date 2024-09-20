@@ -6,11 +6,11 @@ export default function useGetColors() {
       'https://shoes-shop-strapi.herokuapp.com/api/colors'
     );
     const res = await req.json();
-    return res.data
-  }
+    return res.data;
+  };
 
   return {
     queryKey,
-    queryFn
-  }
-};
+    queryFn,
+  };
+}

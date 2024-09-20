@@ -21,5 +21,5 @@ export default async function getInitialUserData() {
     }
   }
 
-  return userData;
+  return { userData, jwt: session?.user?.jwt };
 }

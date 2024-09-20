@@ -12,7 +12,6 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
 
   const { handleAddToCart } = useCart()
 
-
   return (
     <Box
       sx={{
