@@ -1,7 +1,15 @@
 import React from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
 
-function Summary() {
+interface SummaryProps {
+  subtotal: number
+}
+
+function Summary({ subtotal }: SummaryProps) {
+
+  const shipping: number = 20;
+  const tax: number = 0;
+
   return (
     <Box
       sx={{
@@ -64,7 +72,7 @@ function Summary() {
                 fontSize: { xs: '20px', md: '30px' },
               }}
             >
-              $410
+              ${subtotal}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -82,7 +90,7 @@ function Summary() {
                 fontSize: { xs: '20px', md: '30px' },
               }}
             >
-              $20
+              ${shipping}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -100,7 +108,7 @@ function Summary() {
                 fontSize: { xs: '20px', md: '30px' },
               }}
             >
-              $0
+              ${tax}
             </Typography>
           </Box>
         </Box>
@@ -125,7 +133,7 @@ function Summary() {
               fontSize: { xs: '20px', md: '30px' },
             }}
           >
-            $430
+            ${subtotal + shipping + tax}
           </Typography>
         </Box>
 

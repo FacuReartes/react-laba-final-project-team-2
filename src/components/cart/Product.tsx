@@ -16,6 +16,7 @@ interface IProduct {
   gender: string | number;
   quantity: number;
   handleQuantity: (productID: number, action: QuantityAction) => void;
+  handleDelete: (productID: number) => void;
 }
 
 const Product: FC<IProduct> = props => {
@@ -66,7 +67,7 @@ const Product: FC<IProduct> = props => {
               fontSize: { xs: '12px', md: '30px' },
             }}
           >
-            {props.price}
+            ${props.price}
           </Typography>
         </Box>
         <Typography
@@ -174,6 +175,7 @@ const Product: FC<IProduct> = props => {
                 color: 'grey.300',
               }}
               startIcon={<Delete sx={{ mr: { xs: '-4px', md: '0px' } }} />}
+              onClick={() => props.handleDelete(props.id)}
             >
               Delete
             </Button>

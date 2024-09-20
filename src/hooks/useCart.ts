@@ -71,9 +71,7 @@ const useCart = () => {
 
         } else {
 
-          if (product.quantity === 1) {
-            newList.splice(newList.indexOf(product), 1);
-          } else {
+          if (product.quantity !== 1) {
             product.quantity -= 1;
           }
 
@@ -86,10 +84,22 @@ const useCart = () => {
     localStorage.setItem('cart-list', JSON.stringify(newList))
   }
 
+  const handleDelete = ( productID: number ): void => {
+
+    const newList: ICartProduct[] = cartList.filter((product: ICartProduct) => (
+      product.id !== productID
+    ))
+
+    setCartList(newList)
+
+    localStorage.setItem('cart-list', JSON.stringify(newList))
+  }
+
   return {
     cartList,
     handleAddToCart,
-    handleQuantity
+    handleQuantity,
+    handleDelete
   }
 }
 
