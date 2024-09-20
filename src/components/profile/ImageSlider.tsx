@@ -38,7 +38,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
           />
         ))}
       </Box>
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: 'relative', maxWidth: '750px' }}>
         {imageUrls?.map(
           (img, index) =>
             index === currentSlide && (
@@ -49,6 +49,8 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                   width={588}
                   height={628}
                   style={{
+                    width: '100%',
+                    height: '628px',
                     objectFit: 'cover',
                     display: isDesktop ? 'block' : 'none',
                   }}
@@ -60,6 +62,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                   height={360}
                   style={{
                     width: '100%',
+                    height: '360px',
                     objectFit: 'cover',
                     display: isDesktop ? 'none' : 'block',
                   }}
