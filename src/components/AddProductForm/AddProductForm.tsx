@@ -1,5 +1,5 @@
 'use client';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Snackbar, Alert } from '@mui/material';
 import React, { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
 import PreviewImages from './PreviewImages';
@@ -71,7 +71,7 @@ const AddProductForm = () => {
     mutate(newProduct);
   };
 
-  const { mutate } = useMutation({
+  const { mutate, isSuccess, reset } = useMutation({
     mutationFn: (newProduct: INewProduct) => {
       const config = {
         headers: {
@@ -103,7 +103,9 @@ const AddProductForm = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      router.push('/profile/products');
+      setTimeout(() => {
+        router.push('/profile/products');
+      }, 3000);
     },
     onError: error => console.log(error),
   });
@@ -215,6 +217,21 @@ const AddProductForm = () => {
         open={openDialog}
         onClose={handleDialogOnClose}
       />
+      <Snackbar
+        open={isSuccess}
+        autoHideDuration={3000}
+        onClose={reset}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={reset}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          New product added successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
