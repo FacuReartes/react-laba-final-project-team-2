@@ -48,13 +48,19 @@ export default function RejectFilesDialog(props: RejectFilesDialogProps) {
       >
         <CloseIcon />
       </IconButton>
-      <DialogTitle variant="h1" sx={{ p: 0, fontSize: { lg: '45px', xs: '30px' } }}>
+      <DialogTitle
+        variant="h1"
+        sx={{ p: 0, fontSize: { lg: '45px', xs: '30px' } }}
+      >
         Wrong file extension
       </DialogTitle>
       <DialogContent sx={{ p: 0 }}>
-        <DialogContentText variant="subtitle1" sx={{ mt: { lg: '56px', xs: '20px' } }}>
-          The file extension of following files are not allowed. Please upload only files with
-          allowed extension: <br />
+        <DialogContentText
+          variant="subtitle1"
+          sx={{ mt: { lg: '56px', xs: '20px' } }}
+        >
+          The file extension of following files are not allowed. Please upload
+          only files with allowed extension: <br />
           .png
           <br />
           .jpeg
@@ -72,7 +78,7 @@ export default function RejectFilesDialog(props: RejectFilesDialogProps) {
             width: '100%',
             height: '100%',
             m: 0,
-            color: '#ffffff',
+            color: 'common.white',
             border: 'none',
             bgcolor: 'secondary.light',
             ':hover': { bgcolor: 'secondary.main', border: 'none' },

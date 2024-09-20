@@ -47,7 +47,7 @@ const SignupForm = () => {
         flexDirection: 'column',
         alignItems: 'center',
         pt: { md: '208px', xs: '94px' },
-        bgcolor: '#fff',
+        bgcolor: 'common.white',
       }}
     >
       <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
@@ -148,22 +148,25 @@ const SignupForm = () => {
               type="submit"
               variant="contained"
               color="error"
-              sx={{ color: '#fff', width: '100%', height: '48px' }}
+              sx={{ color: 'common.white', width: '100%', height: '48px' }}
               disabled={isPending}
             >
               Sign Up
             </Button>
-            <Typography variant="subtitle1" color={'#000'}>
+            <Typography variant="subtitle1" sx={{ color: 'common.black' }}>
               Already have an account?{' '}
               <Link
                 style={{
                   textDecoration: 'none',
-                  color: '#FE645E',
                   fontWeight: '500',
                 }}
                 href="/auth/sign-in"
               >
-                Log in
+                <Typography
+                  sx={{ color: 'secondary.light', display: 'inline' }}
+                >
+                  Log in
+                </Typography>
               </Link>
             </Typography>
           </Box>

@@ -1,60 +1,49 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import { Box, Divider, List, ListItem, Typography } from '@mui/material';
-import { useState } from 'react';
-
-interface IProduct {
-  id: number;
-  imageUrl: string;
-  name: string;
-  price: string;
-  genre: "Men's Shoes" | "Women's Shoes";
-}
-
-const mockData: IProduct[] = [
-  {
-    id: 1,
-    imageUrl: '/bag-mock/shoe-1.svg',
-    name: 'Nike Air Max 270',
-    price: '$160',
-    genre: "Women's Shoes",
-  },
-  {
-    id: 2,
-    imageUrl: '/bag-mock/shoe-2.svg',
-    name: 'Nike Air Max 90',
-    price: '$140',
-    genre: "Men's Shoes",
-  },
-  {
-    id: 3,
-    imageUrl: '/bag-mock/shoe-3.svg',
-    name: "Nike Air Force 1 '07 SE",
-    price: '$110',
-    genre: "Women's Shoes",
-  },
-];
+import useCart, {
+  ICartProduct
+} from '@/hooks/useCart';
+import { 
+  Box, 
+  Button, 
+  Divider, 
+  List, 
+  ListItem, 
+  Typography 
+} from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [shoeList, setShoeList] = useState<IProduct[]>(mockData);
 
-  const renderList = shoeList.map((x: IProduct, index: number) => {
-    const isLast = index === shoeList.length - 1;
+  const { cartList, handleQuantity, handleDelete } = useCart()
+
+  const router = useRouter()
+
+  const renderList = cartList.map((product: ICartProduct, index: number) => {
+    const isLast = index === cartList.length - 1;
 
     return (
-      <ListItem key={x.id} sx={{ p: 0, display: 'list-item' }}>
+      <ListItem key={product.id} sx={{ p: 0, display: 'list-item' }}>
         <Product
-          imageUrl={x.imageUrl}
-          name={x.name}
-          price={x.price}
-          genre={x.genre}
+          id={product.id}
+          imageUrl={product.imageUrl}
+          name={product.name}
+          price={product.price}
+          gender={product.gender}
+          handleQuantity={handleQuantity}
+          quantity={product.quantity}
+          handleDelete={handleDelete}
         />
         {!isLast && <Divider sx={{ display: { xs: 'none', md: 'block' } }} />}
       </ListItem>
     );
   });
+
+  const calculateSubTotal: number = cartList.reduce((acc: number, product: ICartProduct) => {
+    return (acc + (product.price * product.quantity))
+  }, 0
+  )
 
   return (
     <Box
@@ -85,11 +74,72 @@ export default function Page() {
             pr: { xs: '0px', md: '20px' },
           }}
         >
-          {renderList}
+          {cartList.length > 0 ? 
+          renderList 
+          : 
+          <Box
+            sx={{
+              my: '50px',
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 2,
+              px: { xs: '20px', sm: '0px' }
+            }}
+          >
+            <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
+              You don&apos;t have any products in the cart.
+            </Typography>
+            <Button
+              onClick={() => router.push('/')}
+              variant="contained"
+              disableElevation
+              size="large"
+              sx={{
+                bgcolor: 'secondary.light',
+                color: 'common.white',
+                height: '40px',
+                transition: 'opacity .2s ease',
+                ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+                borderRadius: 2,
+              }}
+            >
+              Continue Shopping
+            </Button>
+          </Box>
+          }
         </List>
+        {cartList.length > 0 && 
+          <Box 
+            sx={{
+            mb: '25px',
+            display: 'flex',
+            justifyContent: 'center'
+            }}
+          >
+            <Button
+              onClick={() => router.push('/')}
+              variant="contained"
+              disableElevation
+              size="large"
+              sx={{
+                textAlign: 'center',
+                bgcolor: 'secondary.light',
+                color: 'common.white',
+                height: '40px',
+                transition: 'opacity .2s ease',
+                ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+                borderRadius: 2,
+              }}
+            >
+              Continue Shopping
+            </Button>
+          </Box>
+        }
       </Box>
-
-      <Summary />
+      
+      <Summary subtotal={calculateSubTotal}/>
     </Box>
   );
 }

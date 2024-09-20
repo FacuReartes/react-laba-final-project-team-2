@@ -1,18 +1,7 @@
-import React, { 
-  useCallback 
-} 
-from 'react';
-import Dropzone, { 
-  FileRejection 
-} from 'react-dropzone';
-import { 
-  Box, 
-  Typography 
-} from '@mui/material';
-import { 
-  Controller, 
-  useFormContext 
-} from 'react-hook-form';
+import React, { useCallback } from 'react';
+import Dropzone, { FileRejection } from 'react-dropzone';
+import { Box, Typography } from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
 
 interface ImageDropzoneProps {
   onFileAccepted?: (acceptedFiles: File[]) => void;
@@ -23,8 +12,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
   onFileAccepted,
   onFileRejected,
 }) => {
-
-  const { control } = useFormContext()
+  const { control } = useFormContext();
 
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -42,15 +30,13 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
     <Controller
       control={control}
       name={'images'}
-      render={({ field: { onChange, value }}) => (
-        <Dropzone 
-
+      render={({ field: { onChange, value } }) => (
+        <Dropzone
           onDrop={(acceptedFiles: File[], fileRejections: FileRejection[]) => {
-            onDrop(acceptedFiles, fileRejections)
-            const newFiles = [...acceptedFiles, ...(value || [])]
+            onDrop(acceptedFiles, fileRejections);
+            const newFiles = [...acceptedFiles, ...(value || [])];
             onChange(newFiles);
           }}
-
           accept={{ 'image/*': ['.jpeg', '.jpg', '.png', '.gif'] }}
         >
           {({ getRootProps, getInputProps, isDragActive }) => (
@@ -60,7 +46,8 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
                 width: { lg: '238px', xs: 'calc(100% - 42px)' },
                 height: '298px',
                 padding: '40px',
-                border: '1px dashed #5C5C5C',
+                border: '1px dashed',
+                borderColor: 'grey.100',
                 borderRadius: '8px',
                 textAlign: 'center',
                 cursor: 'pointer',
@@ -69,7 +56,9 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
             >
               <input {...getInputProps()} />
               {isDragActive ? (
-                <Typography variant="subtitle1">Drop the images here ...</Typography>
+                <Typography variant="subtitle1">
+                  Drop the images here ...
+                </Typography>
               ) : (
                 <Typography variant="subtitle1">
                   Drop your image here, or select click to browse

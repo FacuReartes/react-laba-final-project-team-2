@@ -20,7 +20,7 @@ export default function ProductCard({ product }: PProps) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        color: '#000',
+        color: 'common.black',
         position: 'relative',
         width: 'auto',
       }}
@@ -40,7 +40,7 @@ export default function ProductCard({ product }: PProps) {
             position: 'absolute',
             top: '0',
             right: '0',
-            color: '#292D32',
+            color: 'common.black',
             px: 1,
             fontSize: '24px',
           }}
@@ -74,7 +74,7 @@ export default function ProductCard({ product }: PProps) {
         sx={{
           fontSize: { xs: '9px', md: '18px' },
           fontWeight: '500',
-          color: '#5C5C5C',
+          color: 'common.100',
         }}
       >
         {product?.attributes?.gender?.data?.attributes?.name === 'Men'

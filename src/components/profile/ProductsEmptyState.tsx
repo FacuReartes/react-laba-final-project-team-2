@@ -23,7 +23,7 @@ export default function ProductsEmptyState() {
         size="large"
         sx={{
           bgcolor: 'secondary.light',
-          color: '#fff',
+          color: 'common.white',
           height: '40px',
           transition: 'opacity .2s ease',
           ':hover': { bgcolor: 'secondary.light', opacity: '.9' },

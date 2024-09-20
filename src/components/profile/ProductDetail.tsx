@@ -45,7 +45,7 @@ export default function ProductDetail({ params }: { params: number }) {
             display: 'block',
             mx: 'auto',
             my: 4,
-            color: '#FFF',
+            color: 'common.white',
             bgcolor: 'secondary.light',
             ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
           }}

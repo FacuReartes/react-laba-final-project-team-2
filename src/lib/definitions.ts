@@ -6,6 +6,13 @@ export type ImageType = {
   };
 };
 
+export type GenericType = {
+  id: number;
+  attributes: {
+    name: string;
+  };
+};
+
 export type Gender = {
   id: number;
   attributes: {
@@ -13,10 +20,28 @@ export type Gender = {
   };
 };
 
+export type Brands = {
+  id: number;
+  attributes: {
+    name: string;
+  };
+};
+export type Category = {
+  id: number;
+  attributes: {
+    name: string;
+  };
+};
 export type Sizes = {
   id: number;
   attributes: {
     value: number;
+  };
+};
+export type Prices = {
+  id: number;
+  attributes: {
+    price: number;
   };
 };
 
@@ -27,11 +52,23 @@ export type Color = {
   };
 };
 
+
 export type Categories = {
   id: number;
   attributes: {
     name: string;
   };
+
+export type DataType = {
+  id: number;
+  name: string;
+  selected: boolean;
+};
+
+export type SizesDataType = {
+  id: number;
+  value: number;
+  selected: boolean;
 };
 
 export type ProductType = {

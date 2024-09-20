@@ -82,7 +82,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
           variant="contained"
           color="error"
           sx={{
-            color: '#fff',
+            color: 'common.white',
             width: { xs: '117px', md: '152px' },
             height: { xs: '31px', md: '40px' },
             fontSize: { xs: '12px', md: '16px' },

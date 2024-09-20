@@ -121,7 +121,7 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
         flexDirection: 'column',
         alignItems: 'center',
         pt: { md: '288px', xs: '94px' },
-        bgcolor: '#fff',
+        bgcolor: 'common.white',
       }}
     >
       <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
@@ -185,19 +185,18 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
               type="submit"
               variant="contained"
               color="error"
-              sx={{ color: '#fff', width: '100%', height: '48px' }}
+              sx={{ color: 'common.white', width: '100%', height: '48px' }}
             >
               Reset password
             </Button>
             <Link
               style={{
                 textDecoration: 'none',
-                color: '#494949',
                 fontWeight: '500',
               }}
               href="/sign-in"
             >
-              Back to login
+              <Typography sx={{ color: 'grey.200' }}>Back to login</Typography>
             </Link>
           </Box>
         </form>
@@ -214,7 +213,7 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
               width: '100%',
               height: '100%',
               m: 0,
-              color: '#ffffff',
+              color: 'common.white',
               border: 'none',
               bgcolor: 'secondary.light',
               ':hover': { bgcolor: 'secondary.main', border: 'none' },
@@ -243,7 +242,7 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
               width: '100%',
               height: '100%',
               m: 0,
-              color: '#ffffff',
+              color: 'common.white',
               border: 'none',
               bgcolor: 'secondary.light',
               ':hover': { bgcolor: 'secondary.main', border: 'none' },
