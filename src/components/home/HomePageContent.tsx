@@ -1,26 +1,25 @@
 'use client';
 import ProductsContainer from '@/components/home/ProductsContainer';
 import { Box, Typography, Button } from '@mui/material';
-import { FilterTypes } from '@/hooks/useFilter';
-import { useProducts } from '@/context/ProductsContext';
+import { APIProductsType } from '@/lib/apiDataTypes';
 
 interface HomePageContentProps {
-  filter: FilterTypes;
   showFilters: boolean;
   searchTerm: string;
   setShowFilters: () => void;
+  products: APIProductsType[];
 }
 
 export default function HomePageContent({
-  filter,
+  products,
   showFilters,
   setShowFilters,
   searchTerm,
 }: HomePageContentProps) {
-  const { products } = useProducts();
   return (
     <Box
       sx={{
+        width: '100%',
         display: showFilters ? { xs: 'none', md: 'flex' } : { md: 'flex' },
         flexDirection: 'column',
         p: { md: '60px', xs: '30px' },
@@ -68,7 +67,7 @@ export default function HomePageContent({
                 lineHeight: '20px',
               }}
             >
-              {searchTerm ? `${searchTerm} (${products.length})` : ''}
+              {searchTerm ? `${searchTerm} (${products?.length})` : ''}
             </Typography>
           </Box>
           <Button
@@ -94,7 +93,7 @@ export default function HomePageContent({
           </Button>
         </Box>
       </Box>
-      <ProductsContainer filter={filter} />
+      <ProductsContainer products={products} searchTerm={searchTerm} />
     </Box>
   );
 }

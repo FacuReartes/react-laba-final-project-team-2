@@ -1,12 +1,11 @@
-import { useProducts } from '@/context/ProductsContext';
 import { Box, Typography } from '@mui/material';
 
 interface FilterHeadProps {
   searchTerm?: string;
+  matches: number;
 }
 
-export const FilterHead = ({ searchTerm }: FilterHeadProps) => {
-  const { products } = useProducts();
+export const FilterHead = ({ searchTerm, matches }: FilterHeadProps) => {
   return (
     <Box
       sx={{
@@ -23,7 +22,7 @@ export const FilterHead = ({ searchTerm }: FilterHeadProps) => {
         Shoes / {searchTerm ? searchTerm : ''}
       </Typography>
       <Typography variant="h3">
-        {searchTerm ? `${searchTerm} (${products.length})` : ''}
+        {searchTerm ? `${searchTerm} (${matches})` : ''}
       </Typography>
     </Box>
   );

@@ -17,34 +17,37 @@ import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
 import HeaderMenu from './HeaderMenu';
+import { useRouter } from 'next/navigation';
 
 interface HeaderBarProps {
   search?: string;
   setSearchTerm: (value: string) => void;
   setOpenResults: (value: boolean) => void;
+  setEnterKeyPress: (value: boolean) => void;
 }
 
 const HeaderBar = ({
   setSearchTerm,
   setOpenResults,
+  setEnterKeyPress,
   search,
 }: HeaderBarProps) => {
-
   const { data: session } = useSession();
   const user = useUserData(session?.user.jwt);
   const userData = user.data?.data;
+  const router = useRouter();
 
   const [isTyping, setIsTyping] = useState(false);
   const [showInputSearch, setShowInputSearch] = useState(false);
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const validation = searchSchema.safeParse(value);
+    const targetValue = e.target.value;
+    const validation = searchSchema.safeParse(targetValue);
 
-    if (value.trim() === '') {
+    if (targetValue.trim() === '') {
       setSearchTerm('');
     } else if (validation.success) {
-      setSearchTerm(value);
+      setSearchTerm(targetValue);
       setIsTyping(true);
     }
   };
@@ -52,6 +55,9 @@ const HeaderBar = ({
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      router.push('/?search=' + search);
+
+      setEnterKeyPress(true);
     }
   };
 
@@ -198,7 +204,10 @@ const HeaderBar = ({
             <Link href="/profile/products">
               <IconButton
                 aria-label="avatar"
-                sx={{ display: isTyping ? 'none' : { xs: 'none', md: 'block' }, mr: '28px' }}
+                sx={{
+                  display: isTyping ? 'none' : { xs: 'none', md: 'block' },
+                  mr: '28px',
+                }}
               >
                 <Avatar
                   alt="profileAvatar"
@@ -211,7 +220,7 @@ const HeaderBar = ({
             ''
           )}
 
-          <HeaderMenu showInputSearch={showInputSearch}/>
+          <HeaderMenu showInputSearch={showInputSearch} />
 
           <IconButton
             aria-label="close-search"
