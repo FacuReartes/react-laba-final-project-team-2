@@ -1,12 +1,6 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Slider,
-  Typography,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useState } from 'react';
+import { Box, Slider } from '@mui/material';
+import { useEffect, useState } from 'react';
+import FilterField from './FilterField';
 
 interface Props {
   Min: number;
@@ -15,13 +9,8 @@ interface Props {
   onPriceChange: (prices: number[]) => void;
 }
 
-export interface PriceTypes {
-  Min: number;
-  Max: number;
-}
-
 function valuetext(value: number) {
-  return `${value}°C`;
+  return `$${value}`;
 }
 
 export const FilterPrice = ({
@@ -32,33 +21,31 @@ export const FilterPrice = ({
 }: Props) => {
   const [value, setValue] = useState<number[]>(selectedPrice);
 
+  useEffect(() => {
+    setValue(selectedPrice);
+  }, [selectedPrice]);
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
     onPriceChange(newValue as number[]);
   };
 
   return (
-    <Accordion defaultExpanded disableGutters sx={{ m: 0, p: '0 40px' }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ m: 0, p: 0 }}>
-        <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>
-          Price
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails sx={{ m: 0, p: '0 10px', mb: '12px' }}>
+    <FilterField fieldName="Prices">
+      <Box sx={{ p: '0 14px', m: '12px 0' }}>
         <Slider
           getAriaValueText={valuetext}
-          shiftStep={300}
-          step={50}
+          shiftStep={200}
+          step={100}
           marks
           min={Min}
           max={Max}
-          getAriaLabel={() => 'Temperature range'}
+          getAriaLabel={() => 'Price Range'}
           value={value}
           onChange={handleChange}
           valueLabelDisplay="auto"
-          sx={{ m: '12px 0' }}
         />
-      </AccordionDetails>
-    </Accordion>
+      </Box>
+    </FilterField>
   );
 };

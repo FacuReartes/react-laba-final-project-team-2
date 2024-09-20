@@ -1,104 +1,127 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { FilterGender, GenderTypes } from './FilterGender';
-import { FilterKids, KidsStateTypes } from './FilterKids';
-import { BrandType, FilterBrand } from './FilterBrand';
+import { FilterGender } from './FilterGender';
+import { FilterBrand } from './FilterBrand';
 import { FilterPrice } from './FilterPrice';
-import { ColorType, FilterColor } from './FilterColor';
 import { FilterTypes } from '@/hooks/useFilter';
+import { DataType } from '@/lib/definitions';
+import { FilterColor } from './FilterColor';
+import { FilterCategory } from './FilterCategory';
+import { FilterSizes } from './FilterSizes';
 
-const mockBrands = [
-  { name: 'Nike', selected: false },
-  { name: 'Adidas', selected: false },
-  { name: 'Puma', selected: false },
-  { name: 'Reebok', selected: false },
-  { name: 'Under Armour', selected: false },
-  { name: 'New Balance', selected: false },
-];
-const mockColors = [
-  { name: 'Red', selected: false },
-  { name: 'Blue', selected: false },
-  { name: 'Black', selected: false },
-  { name: 'White', selected: false },
-  { name: 'Green', selected: false },
-  { name: 'Yellow', selected: false },
-  { name: 'Gray', selected: false },
-  { name: 'Purple', selected: false },
-];
-const mockPrices = {
-  Min: 0,
-  Max: 600,
+export type SizesType = {
+  id: number;
+  value: number;
+  selected: boolean;
 };
+
+export interface FilterOptionsType {
+  genders: DataType[];
+  brands: DataType[];
+  colors: DataType[];
+  categories: DataType[];
+  sizes: SizesType[];
+  prices: number[];
+}
 
 interface FilterFormProps {
   updateFilter: (filter: FilterTypes) => void;
+  initialFilter: FilterTypes;
+  filterOptions: FilterOptionsType;
 }
-export const FilterForm = ({ updateFilter }: FilterFormProps) => {
-  const [gender, setGender] = useState<GenderTypes>({
-    Men: false,
-    Women: false,
-  });
-  const [kids, setKids] = useState<KidsStateTypes>({
-    Boys: false,
-    Girls: false,
-  });
-  const [brands, setBrands] = useState<BrandType[]>(mockBrands);
-  const [prices, setPrices] = useState<number[]>([
-    mockPrices.Min,
-    mockPrices.Max,
-  ]);
-  const [colors, setColors] = useState<ColorType[]>(mockColors);
-  /* eslint-disable */
+export const FilterForm = ({
+  filterOptions,
+  initialFilter,
+  updateFilter,
+}: FilterFormProps) => {
+  const [genders, setGenders] = useState<DataType[]>([]);
+  const [brands, setBrands] = useState<DataType[]>([]);
+  const [categories, setCategories] = useState<DataType[]>([]);
+  const [sizes, setSizes] = useState<SizesType[]>([]);
+  const [prices, setPrices] = useState<number[]>([0, 1000]);
+  const [colors, setColors] = useState<DataType[]>([]);
+
   useEffect(() => {
-    updateFilter({
-      gender:
-        gender.Men && gender.Women
-          ? undefined
-          : gender.Men
-            ? 'Men'
-            : gender.Women
-              ? 'Women'
-              : undefined,
-      kids:
-        kids.Boys && kids.Girls
-          ? undefined
-          : kids.Boys
-            ? 'Boys'
-            : kids.Girls
-              ? 'Girls'
-              : undefined,
-      brands: brands.filter(brand => brand.selected).map(brand => brand.name),
-      prices: prices,
-      colors: colors.filter(color => color.selected).map(color => color.name),
-    });
-  }, [gender, kids, brands, prices, colors]);
-  const handleOnGenderChange = (selectedGender: keyof GenderTypes) => {
-    setGender(prevState => ({
-      ...prevState,
-      [selectedGender]: !prevState[selectedGender],
-    }));
+    if (
+      filterOptions.brands ||
+      filterOptions.genders ||
+      filterOptions.colors ||
+      filterOptions.categories ||
+      filterOptions.sizes ||
+      filterOptions.prices
+    ) {
+      setBrands(filterOptions.brands);
+      setGenders(filterOptions.genders);
+      setColors(filterOptions.colors);
+      setCategories(filterOptions.categories);
+      setSizes(filterOptions.sizes);
+      setPrices(filterOptions.prices);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (initialFilter) {
+      if (initialFilter.brands) {
+        setBrands(initialFilter.brands);
+      }
+      if (initialFilter.genders) {
+        setGenders(initialFilter.genders);
+      }
+      if (initialFilter.prices && initialFilter.prices.length === 2) {
+        setPrices(initialFilter.prices);
+      }
+      if (initialFilter.colors) {
+        setColors(initialFilter.colors);
+      }
+      if (initialFilter.categories) {
+        setCategories(initialFilter.categories);
+      }
+      if (initialFilter.sizes) {
+        setSizes(initialFilter.sizes);
+      }
+    }
+  }, [initialFilter]);
+
+  useEffect(() => {
+    updateFilter({ genders, brands, prices, colors, sizes, categories });
+  }, [genders, brands, prices, colors, sizes, categories]);
+
+  const handleOnGenderChange = (selectedId: number) => {
+    setGenders(prevGenders =>
+      prevGenders.map(gender =>
+        gender.id === selectedId
+          ? { ...gender, selected: !gender.selected }
+          : gender
+      )
+    );
   };
-  const handleOnKidsChange = (selectedKids: keyof KidsStateTypes) => {
-    setKids(prevState => ({
-      ...prevState,
-      [selectedKids]: !prevState[selectedKids],
-    }));
-  };
-  const handleOnBrandChange = (updatedBrand: BrandType) => {
+
+  const handleOnBrandChange = (selectedId: number) => {
     setBrands(prevBrands =>
       prevBrands.map(brand =>
-        brand.name === updatedBrand.name
-          ? { ...brand, selected: updatedBrand.selected }
+        brand.id === selectedId
+          ? { id: brand.id, name: brand.name, selected: !brand.selected }
           : brand
       )
     );
   };
-  const handleOnColorChange = (updatedColor: ColorType) => {
+
+  const handleOnColorChange = (selectedId: number) => {
     setColors(prevColors =>
       prevColors.map(color =>
-        color.name === updatedColor.name
-          ? { ...color, selected: updatedColor.selected }
+        color.id === selectedId
+          ? { ...color, selected: !color.selected }
           : color
+      )
+    );
+  };
+
+  const handleOnCategoryChange = (selectedId: number) => {
+    setCategories(prevCategories =>
+      prevCategories.map(category =>
+        category.id === selectedId
+          ? { ...category, selected: !category.selected }
+          : category
       )
     );
   };
@@ -106,32 +129,42 @@ export const FilterForm = ({ updateFilter }: FilterFormProps) => {
   const handleOnPricesChange = (prices: number[]) => {
     setPrices(prices);
   };
+
+  const handleOnSizeChange = (selectedId: number) => {
+    setSizes(prevSizes =>
+      prevSizes.map(size =>
+        size.id === selectedId ? { ...size, selected: !size.selected } : size
+      )
+    );
+  };
+
   return (
     <Box
       sx={{
         boxSizing: 'border-box',
         width: '100%',
-        flex: 1,
         display: 'flex',
         justifyContent: 'flex-start',
         flexDirection: 'column',
         border: 'none',
       }}
     >
-      <FilterGender
-        selectedGender={gender}
-        onGenderChange={handleOnGenderChange}
-      />
+      <FilterGender genders={genders} onGenderChange={handleOnGenderChange} />
 
-      <FilterKids selectedKids={kids} onKidsChange={handleOnKidsChange} />
       <FilterBrand brands={brands} onBrandChange={handleOnBrandChange} />
+
       <FilterPrice
-        Min={mockPrices.Min}
-        Max={mockPrices.Max}
+        Min={0}
+        Max={filterOptions.prices[1]}
         selectedPrice={prices}
         onPriceChange={handleOnPricesChange}
       />
       <FilterColor colors={colors} onColorChange={handleOnColorChange} />
+      <FilterCategory
+        categories={categories}
+        onCategoryChange={handleOnCategoryChange}
+      />
+      <FilterSizes sizes={sizes} onSizeChange={handleOnSizeChange} />
     </Box>
   );
 };

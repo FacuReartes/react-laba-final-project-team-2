@@ -1,18 +1,24 @@
 import { Box } from '@mui/material';
 import { FilterHead } from './FilterHead';
-import { FilterForm } from './FilterForm';
+import { FilterForm, FilterOptionsType } from './FilterForm';
 import { FilterTypes } from '@/hooks/useFilter';
 
 interface FilterSideBarProps {
-  searchTerm?: string;
+  searchTerm: string;
   showFilters: boolean;
+  initialFilter: FilterTypes;
   updateFilter: (filter: FilterTypes) => void;
+  filterOptions: FilterOptionsType;
+  matches: number;
 }
 
 export const FilterSideBar = ({
   searchTerm,
   showFilters,
   updateFilter,
+  initialFilter,
+  filterOptions,
+  matches,
 }: FilterSideBarProps) => {
   return (
     <Box
@@ -24,8 +30,12 @@ export const FilterSideBar = ({
         zIndex: '10',
       }}
     >
-      <FilterHead searchTerm={searchTerm} />
-      <FilterForm updateFilter={updateFilter} />
+      <FilterHead searchTerm={searchTerm} matches={matches} />
+      <FilterForm
+        updateFilter={updateFilter}
+        initialFilter={initialFilter}
+        filterOptions={filterOptions}
+      />
     </Box>
   );
 };
