@@ -52,12 +52,12 @@ export type Color = {
   };
 };
 
-
 export type Categories = {
   id: number;
   attributes: {
     name: string;
   };
+};
 
 export type DataType = {
   id: number;
