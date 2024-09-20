@@ -46,7 +46,7 @@ export default function HomePageContainer({
       await fetchFilteredProducts(
         '/products' + fromFiltersToAPI(filter, searchTerm)
       ),
-    enabled: !!filter,
+    enabled: Boolean(filter),
   });
 
   useEffect(() => {

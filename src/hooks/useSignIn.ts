@@ -23,15 +23,16 @@ export const useSignIn = () => {
       );
 
       await signIn('credentials', {
-        redirect: false,
+        redirect: true,
+        callbackUrl: '/profile/products',
         identifier: data.email,
         password: data.password,
         rememberMe: data.rememberMe,
       });
 
-      setOpenDialog(true);
       setIsLoginOk(true);
-      setMessage('User logged in successfully');
+      // setOpenDialog(true);
+      // setMessage('User logged in successfully');
     } catch (error) {
       setOpenDialog(true);
       setIsLoginOk(false);
@@ -51,7 +52,7 @@ export const useSignIn = () => {
   const closeDialog = () => {
     setOpenDialog(false);
     if (isLoginOk) {
-      router.push('/bag');
+      router.push('/cart');
     }
   };
 

@@ -18,7 +18,7 @@ export default function FilterField({ fieldName, children }: Props) {
     <Accordion
       defaultExpanded
       disableGutters
-      sx={{ m: 0, p: '0 40px', boxShadow: 'none' }}
+      sx={{ m: 0, p: '0 40px', boxShadow: 'none', backgroundColor: 'common.white' }}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ m: 0, p: 0 }}>
         <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>

@@ -16,7 +16,7 @@ export default function ProductsModal({
         <Box
           sx={{
             position: 'absolute',
-            backgroundColor: '#FFF',
+            backgroundColor: 'common.white',
             top: '44px',
             right: '24px',
             width: '112px',

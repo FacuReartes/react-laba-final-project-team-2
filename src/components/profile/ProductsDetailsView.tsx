@@ -43,7 +43,8 @@ export default function ProductDetailsView({ attributes }: ProductType) {
           my: 2,
           width: '80px',
           height: '80px',
-          border: '4px solid #000',
+          border: '4px solid',
+          borderColor: 'common.black',
           borderRadius: 4,
           backgroundColor: attributes?.color?.data?.attributes?.name,
         }}
@@ -64,7 +65,8 @@ export default function ProductDetailsView({ attributes }: ProductType) {
               width: '85px',
               height: '55px',
               borderRadius: '8px',
-              border: '1px solid #494949',
+              border: '1px solid',
+              borderColor: 'grey.200',
               textAlign: 'center',
               alignContent: 'center',
             }}

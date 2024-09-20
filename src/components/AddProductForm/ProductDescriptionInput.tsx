@@ -1,15 +1,15 @@
-import { Box, InputLabel, OutlinedInput } from '@mui/material';
+import { 
+  Box, 
+  InputLabel, 
+  OutlinedInput 
+} from '@mui/material';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
-export interface ProductDescriptionInputProps {
-  productDescription: string;
-  onProductDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+export default function ProductDescriptionInput() {
 
-export default function ProductDescriptionInput({
-  productDescription,
-  onProductDescriptionChange,
-}: ProductDescriptionInputProps) {
+  const { register, formState: { errors } } = useFormContext()
+
   return (
     <Box>
       <InputLabel htmlFor="id-product-description" sx={{ mb: 1 }}>
@@ -17,15 +17,14 @@ export default function ProductDescriptionInput({
       </InputLabel>
       <OutlinedInput
         id="id-product-description"
-        name="product-description"
         type="text"
         placeholder="Do not exceed 300 characters."
-        value={productDescription}
-        onChange={onProductDescriptionChange}
         minRows={10}
         inputProps={{ maxLength: 300 }}
         multiline
         fullWidth
+        {...register('description')}
+        error={Boolean(errors.description)}
       />
     </Box>
   );

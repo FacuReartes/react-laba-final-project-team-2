@@ -6,7 +6,6 @@ import {
   Button,
   TextField,
   Typography,
-  useMediaQuery,
   DialogContentText,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
@@ -71,8 +70,6 @@ const resetPassword = async ({
 };
 
 const ResetPasswordForm = ({ code }: { code: string }) => {
-  const isDesktop = useMediaQuery('(min-width: 700px)');
-
   const [openDialog, setOpenDialog] = useState(false);
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [dialogErrorMessage, setDialogErrorMessage] = useState('');
@@ -119,85 +116,91 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
   return (
     <Box
       sx={{
-        width: isDesktop ? '960px' : '360px',
+        width: { md: '50%', xs: '100%' },
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        pt: isDesktop ? '288px' : '94px',
-        bgcolor: '#fff',
+        pt: { md: '288px', xs: '94px' },
+        bgcolor: 'common.white',
       }}
     >
-      <Typography variant={isDesktop ? 'h1' : 'h2'}>Reset password</Typography>
+      <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
+        Reset password
+      </Typography>
       <Typography
-        variant={isDesktop ? 'subtitle1' : 'subtitle2'}
-        sx={{ mb: '48px', pl: '20px' }}
+        variant={'subtitle1'}
+        sx={{ mb: '48px', pl: '20px', fontSize: { md: '15px', xs: '12px' } }}
       >
         Please create a new password here
       </Typography>
 
-      <form
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px',
-          width: isDesktop ? '436px' : '320px',
+      <Box
+        sx={{
+          width: { md: '436px', xs: '320px' },
         }}
-        onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <TextField
-          id="outlined-basic"
-          label="Password *"
-          variant="outlined"
-          placeholder="at least 8 characters"
-          sx={{ height: '48px' }}
-          {...register('password')}
-        />
-        {errors.password && (
-          <Typography color="error">{errors.password.message}</Typography>
-        )}
-        <TextField
-          id="outlined-basic"
-          label="Confirm Password *"
-          variant="outlined"
-          placeholder="at least 8 characters"
-          sx={{ height: '48px' }}
-          {...register('confirmPassword')}
-        />
-        {errors.confirmPassword && (
-          <Typography color="error">
-            {errors.confirmPassword.message}
-          </Typography>
-        )}
-
-        <Box
-          sx={{
+        <form
+          style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px',
-            mt: '90px',
+            gap: '24px',
           }}
+          onSubmit={handleSubmit(onSubmitHandler)}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            color="error"
-            sx={{ color: '#fff', width: '100%', height: '48px' }}
-          >
-            Reset password
-          </Button>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: '#494949',
-              fontWeight: '500',
+          <TextField
+            id="id-password"
+            label="Password *"
+            variant="outlined"
+            placeholder="at least 8 characters"
+            sx={{ height: '48px' }}
+            {...register('password')}
+          />
+          {errors.password && (
+            <Typography color="error">{errors.password.message}</Typography>
+          )}
+          <TextField
+            id="id-confirm-password"
+            label="Confirm Password *"
+            variant="outlined"
+            placeholder="at least 8 characters"
+            sx={{ height: '48px' }}
+            {...register('confirmPassword')}
+          />
+          {errors.confirmPassword && (
+            <Typography color="error">
+              {errors.confirmPassword.message}
+            </Typography>
+          )}
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '16px',
+              mt: '90px',
             }}
-            href="/sign-in"
           >
-            Back to login
-          </Link>
-        </Box>
-      </form>
+            <Button
+              type="submit"
+              variant="contained"
+              color="error"
+              sx={{ color: 'common.white', width: '100%', height: '48px' }}
+            >
+              Reset password
+            </Button>
+            <Link
+              style={{
+                textDecoration: 'none',
+                fontWeight: '500',
+              }}
+              href="/sign-in"
+            >
+              <Typography sx={{ color: 'grey.200' }}>Back to login</Typography>
+            </Link>
+          </Box>
+        </form>
+      </Box>
       <Popup
         open={openDialog}
         onClose={handleDialogOnClose}
@@ -210,7 +213,7 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
               width: '100%',
               height: '100%',
               m: 0,
-              color: '#ffffff',
+              color: 'common.white',
               border: 'none',
               bgcolor: 'secondary.light',
               ':hover': { bgcolor: 'secondary.main', border: 'none' },
@@ -239,7 +242,7 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
               width: '100%',
               height: '100%',
               m: 0,
-              color: '#ffffff',
+              color: 'common.white',
               border: 'none',
               bgcolor: 'secondary.light',
               ':hover': { bgcolor: 'secondary.main', border: 'none' },

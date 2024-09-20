@@ -20,7 +20,7 @@ export default function ProductCard({ product }: PProps) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        color: '#000',
+        color: 'common.black',
         position: 'relative',
         width: 'auto',
       }}
@@ -28,8 +28,8 @@ export default function ProductCard({ product }: PProps) {
       <Box sx={{ position: 'relative', width: '320px' }}>
         {
           <Image
-            src={product?.attributes.images.data[0].attributes.url}
-            alt={product.attributes?.name}
+            src={product?.attributes?.images?.data[0]?.attributes?.url}
+            alt={product?.attributes?.name}
             width={320}
             height={380}
             style={{ objectFit: 'cover' }}
@@ -40,7 +40,7 @@ export default function ProductCard({ product }: PProps) {
             position: 'absolute',
             top: '0',
             right: '0',
-            color: '#292D32',
+            color: 'common.black',
             px: 1,
             fontSize: '24px',
           }}
@@ -62,24 +62,24 @@ export default function ProductCard({ product }: PProps) {
             width: '220px',
           }}
         >
-          {product.attributes.name}
+          {product?.attributes?.name}
         </Typography>
         <Typography
           sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
         >
-          ${product.attributes.price}
+          ${product?.attributes?.price}
         </Typography>
       </Box>
       <Typography
         sx={{
           fontSize: { xs: '9px', md: '18px' },
           fontWeight: '500',
-          color: '#5C5C5C',
+          color: 'common.100',
         }}
       >
-        {product.attributes.gender.data.attributes.name === 'Men'
+        {product?.attributes?.gender?.data?.attributes?.name === 'Men'
           ? 'Men'
-          : product.attributes.gender.data.attributes.name === 'Women'
+          : product?.attributes?.gender?.data?.attributes?.name === 'Women'
             ? 'Women'
             : 'Unisex'}
         {"'"}s Shoes

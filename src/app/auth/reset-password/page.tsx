@@ -1,28 +1,41 @@
-'use client';
 import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPasswordFormContainer';
+import sneakersResetPassword from '@/images/sneakers-reset-password.webp';
 
 export default function Page() {
   return (
     <Suspense fallback={''}>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          minWidth: '100vw',
+          minHeight: '100vh',
+        }}
+      >
         <Logo />
         <ResetPasswordFormContainer />
 
         <Box
           sx={{
-            position: { md: 'relative' },
-            display: { md: 'flex', xs: 'none' },
+            width: '50%',
+            height: '100vh',
+            m: 0,
+            p: 0,
+            display: { xs: 'none', md: 'block' },
+            position: 'relative',
           }}
         >
           <Image
-            src="/sneakers-reset-password.svg"
+            src={sneakersResetPassword}
             alt="Sneakers"
-            width={961}
-            height={962}
+            fill
+            objectFit="cover"
+            priority
+            placeholder="blur"
           />
         </Box>
       </Box>

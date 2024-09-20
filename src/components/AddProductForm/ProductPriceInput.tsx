@@ -1,10 +1,11 @@
-import { Box, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
+import { 
+  Box, 
+  InputLabel, 
+  OutlinedInput, 
+  InputAdornment 
+} from '@mui/material';
 import React from 'react';
-
-export interface ProductPriceInputProps {
-  productPrice: number | string;
-  onProductPriceChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { useFormContext } from 'react-hook-form';
 
 const priceStylling = {
   '& input[type=number]': {
@@ -19,10 +20,10 @@ const priceStylling = {
     },
 };
 
-export default function ProductPriceInput({
-  productPrice,
-  onProductPriceChange,
-}: ProductPriceInputProps) {
+export default function ProductPriceInput() {
+
+  const { register, formState: { errors } } = useFormContext()
+
   return (
     <Box>
       <InputLabel htmlFor="id-product-price" sx={{ mb: 1 }}>
@@ -30,15 +31,14 @@ export default function ProductPriceInput({
       </InputLabel>
       <OutlinedInput
         id="id-product-price"
-        name="product-price"
         startAdornment={<InputAdornment position="start">$</InputAdornment>}
         type="number"
         placeholder="Insert product price"
-        value={productPrice}
-        onChange={onProductPriceChange}
         sx={priceStylling}
         inputProps={{ min: 0, onWheel: (event) => event.currentTarget.blur(), step: 'any' }}
         fullWidth
+        {...register('price')}
+        error={Boolean(errors.price)}
       />
     </Box>
   );

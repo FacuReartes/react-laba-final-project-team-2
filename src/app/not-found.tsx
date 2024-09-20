@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import image404 from '@/images/404-img.webp';
 
 const pageText = {
   error: 'Error 404',
@@ -24,7 +25,7 @@ export default function NotFoundPage() {
           sx={{
             width: '100%',
             pt: '32px',
-            bgcolor: '#E5E5E7',
+            bgcolor: 'grey.50',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -36,7 +37,7 @@ export default function NotFoundPage() {
               width: '320px',
               textAlign: 'center',
               mt: '10px',
-              color: '#5C5C5C',
+              color: 'grey.100',
             }}
           >
             {pageText.paragraph}
@@ -44,11 +45,13 @@ export default function NotFoundPage() {
         </Box>
         <Box sx={{ height: '65%' }}>
           <Image
-            src={'/404-img.svg'}
+            src={image404}
             alt="404-img"
             width={360}
             height={460}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            placeholder="blur"
+            priority
           />
         </Box>
 
@@ -82,8 +85,8 @@ export default function NotFoundPage() {
               ':hover': { bgcolor: 'secondary.light' },
             }}
           >
-            <Link href={'/'} style={{ color: '#FFF', textDecoration: 'none' }}>
-              Home
+            <Link href={'/'} style={{ textDecoration: 'none' }}>
+              <Typography sx={{ color: 'common.white' }}>Home</Typography>
             </Link>
           </Button>
         </Box>
@@ -113,7 +116,7 @@ export default function NotFoundPage() {
               width: '450px',
               textAlign: 'center',
               mt: '10px',
-              color: '#5C5C5C',
+              color: 'grey.100',
             }}
           >
             {pageText.paragraph}
@@ -146,11 +149,8 @@ export default function NotFoundPage() {
                 ':hover': { bgcolor: 'secondary.light' },
               }}
             >
-              <Link
-                href={'/'}
-                style={{ color: '#FFF', textDecoration: 'none' }}
-              >
-                Home
+              <Link href={'/'} style={{ textDecoration: 'none' }}>
+                <Typography sx={{ color: 'common.white' }}>Home</Typography>
               </Link>
             </Button>
           </Box>
@@ -158,11 +158,13 @@ export default function NotFoundPage() {
 
         <Box sx={{ width: '50%' }}>
           <Image
-            src={'/404-img.svg'}
+            src={image404}
             alt="404-img"
             width={960}
             height={960}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            placeholder="blur"
+            priority
           />
         </Box>
       </Box>

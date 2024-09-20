@@ -16,13 +16,16 @@ import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
 import Popup from '../common/Popup';
 import { useLogOut } from '@/hooks/useLogOut';
+import { IUser } from '@/lib/next-auth';
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({ initialUserData }: { initialUserData: IUser }) => {
   const router = useRouter();
   const pathName = usePathname();
   const session = useSession();
-  const user = useUserData(session.data?.user.jwt);
-  const userData = user.data?.data;
+  const jwt = session.data?.user.jwt;
+
+  const { data: userData } = useUserData(jwt, initialUserData);
+
   const { openDialog, setOpenDialog, message, isLoading, handleLogOut } =
     useLogOut();
 
@@ -50,14 +53,14 @@ const ProfileSidebar = () => {
         />
         <Box sx={{ pl: '16px', py: '12px' }}>
           <Typography
-            sx={{ fontSize: '12px', color: '#98A2B3', fontWeight: 500 }}
+            sx={{ fontSize: '12px', color: 'primary.100', fontWeight: 500 }}
           >
             Welcome
           </Typography>
           <Typography
             sx={{ fontSize: '16px', fontWeight: 500, lineHeight: '18.77px' }}
           >
-            {userData?.firstName} {userData?.lastName}
+            {userData?.firstName || userData?.username} {userData?.lastName}
           </Typography>
         </Box>
       </Box>
@@ -86,10 +89,11 @@ const ProfileSidebar = () => {
                 )}
               </ListItemIcon>
               <ListItemText
-                style={
-                  pathName === '/profile/products' ? { color: '#FE645E' } : {}
-                }
-                sx={{ my: '0px' }}
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/products' ? 'secondary.light' : '',
+                }}
                 primaryTypographyProps={{
                   fontSize: '16px',
                   lineHeight: '18.77px',
@@ -120,10 +124,11 @@ const ProfileSidebar = () => {
                 )}
               </ListItemIcon>
               <ListItemText
-                style={
-                  pathName === '/profile/settings' ? { color: '#FE645E' } : {}
-                }
-                sx={{ my: '0px' }}
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/settings' ? 'secondary.light' : '',
+                }}
                 primaryTypographyProps={{
                   fontSize: '16px',
                   lineHeight: '18.77px',

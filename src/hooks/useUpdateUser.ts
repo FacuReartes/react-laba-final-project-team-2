@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 export const useUpdateUser = (
-  userId: string | undefined,
+  userId: number | undefined,
   jwt: string | undefined
 ) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);

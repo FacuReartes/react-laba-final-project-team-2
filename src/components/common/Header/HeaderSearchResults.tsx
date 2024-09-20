@@ -39,7 +39,7 @@ const HeaderSearchResults = ({
     openResults && (
       <Box
         sx={{
-          bgcolor: '#f3f3f3',
+          bgcolor: 'grey.400',
           width: '100%',
           height: '100vh',
           position: 'absolute',
@@ -59,7 +59,7 @@ const HeaderSearchResults = ({
           <Typography
             sx={{
               fontWeight: '500',
-              color: '#5C5C5C',
+              color: 'grey.100',
               fontSize: '20px',
               mb: '12px',
             }}
@@ -75,19 +75,21 @@ const HeaderSearchResults = ({
                     padding: '12px',
                     borderRadius: '20px',
                     ':hover': {
-                      bgcolor: '#b0b0b035',
+                      bgcolor: 'grey.50',
                     },
                   }}
                 >
                   <Link
                     href={'/' + product.id}
                     style={{
-                      color: '#000000',
-                      fontSize: '22px',
                       textDecoration: 'none',
                     }}
                   >
-                    {highlightText(product.attributes.name)}
+                    <Typography
+                      sx={{ color: 'common.black', fontSize: '22px' }}
+                    >
+                      {highlightText(product.attributes.name)}
+                    </Typography>
                   </Link>
                 </Box>
               ))

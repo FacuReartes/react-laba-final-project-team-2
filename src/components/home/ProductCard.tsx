@@ -7,9 +7,10 @@ import { useState } from 'react';
 
 interface PProps {
   product: APIProductsType;
+  handleAddToCart: (product: APIProductsType) => void
 }
 
-export default function ProductCard({ product }: PProps) {
+export default function ProductCard({ product, handleAddToCart }: PProps) {
   const [onHover, setOnHover] = useState(false);
 
   return (
@@ -20,7 +21,7 @@ export default function ProductCard({ product }: PProps) {
           margin: { md: '0 30px 60px', xs: '0 0 16px' },
           display: 'flex',
           flexDirection: 'column',
-          color: '#000',
+          color: 'common.black',
         }}
       >
         <Box
@@ -59,9 +60,10 @@ export default function ProductCard({ product }: PProps) {
                 flexDirection: 'column',
                 gap: '9px',
               }}
+            onClick={() => handleAddToCart(product)}
             >
               <img src="./assets/add-shopping-basket.svg" />
-              Add to Chart
+              Add to Cart
             </IconButton>
           </Box>
           {product?.attributes?.images?.data[0]?.attributes?.url && (
@@ -76,7 +78,7 @@ export default function ProductCard({ product }: PProps) {
         </Box>
         <Link
           href={`/${product.id}`}
-          style={{ textDecoration: 'none', color: '#000000' }}
+          style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box
             sx={{
@@ -100,7 +102,7 @@ export default function ProductCard({ product }: PProps) {
             sx={{
               fontSize: { xs: '9px', md: '18px' },
               fontWeight: '500',
-              color: '#5C5C5C',
+              color: 'grey.100',
             }}
           >
             {`${product.attributes.gender.data.attributes.name}'s Shoes`}
