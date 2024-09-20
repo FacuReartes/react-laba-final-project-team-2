@@ -1,56 +1,16 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Typography,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { DataType } from '@/lib/definitions';
+import CheckboxList from '../SearchCheckboxList/CheckboxList';
+import FilterField from './FilterField';
 
 interface Props {
-  selectedGender: { Men: boolean; Women: boolean };
-  onGenderChange: (gender: 'Men' | 'Women') => void;
+  genders: DataType[];
+  onGenderChange: (id: number) => void;
 }
 
-export interface GenderTypes {
-  Men: boolean;
-  Women: boolean;
-}
-
-export const FilterGender = ({ selectedGender, onGenderChange }: Props) => {
+export const FilterGender = ({ genders, onGenderChange }: Props) => {
   return (
-    <Accordion defaultExpanded disableGutters sx={{ m: 0, p: '0 40px' }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ m: 0, p: 0 }}>
-        <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>
-          Gender
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails sx={{ m: 0, p: 0, mb: '12px' }}>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={selectedGender.Men}
-                onChange={() => onGenderChange('Men')}
-                name="Men"
-              />
-            }
-            label="Men"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={selectedGender.Women}
-                onChange={() => onGenderChange('Women')}
-                name="Women"
-              />
-            }
-            label="Women"
-          />
-        </FormGroup>
-      </AccordionDetails>
-    </Accordion>
+    <FilterField fieldName="Genders">
+      <CheckboxList array={genders} handleToggle={onGenderChange} />
+    </FilterField>
   );
 };

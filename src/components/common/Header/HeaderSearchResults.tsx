@@ -4,13 +4,13 @@ import Link from 'next/link';
 interface HeaderSearchResultsProps {
   searchTerm: string;
   selectedTerm?: string;
-  productsNameList?: string[];
+  productsList?: any[];
   openResults: boolean;
 }
 
 const HeaderSearchResults = ({
   searchTerm,
-  productsNameList,
+  productsList,
   openResults,
 }: HeaderSearchResultsProps) => {
   const highlightText = (text: string) => {
@@ -44,7 +44,7 @@ const HeaderSearchResults = ({
           height: '100vh',
           position: 'absolute',
           top: { xs: '64px', md: '120px' },
-          zIndex: '2',
+          zIndex: '100',
           display: 'flex',
           justifyContent: 'center',
         }}
@@ -66,11 +66,11 @@ const HeaderSearchResults = ({
           >
             Popular Search Terms
           </Typography>
-          {productsNameList &&
-            (productsNameList.length > 0 ? (
-              productsNameList.map(productName => (
+          {productsList &&
+            (productsList.length > 0 ? (
+              productsList.map(product => (
                 <Box
-                  key={'id-search-' + productName}
+                  key={'id-search-' + product.id}
                   sx={{
                     padding: '12px',
                     borderRadius: '20px',
@@ -80,7 +80,7 @@ const HeaderSearchResults = ({
                   }}
                 >
                   <Link
-                    href={'/' + productName}
+                    href={'/' + product.id}
                     style={{
                       textDecoration: 'none',
                     }}
@@ -88,7 +88,7 @@ const HeaderSearchResults = ({
                     <Typography
                       sx={{ color: 'common.black', fontSize: '22px' }}
                     >
-                      {highlightText(productName)}
+                      {highlightText(product.attributes.name)}
                     </Typography>
                   </Link>
                 </Box>

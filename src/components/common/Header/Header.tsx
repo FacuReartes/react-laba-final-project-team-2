@@ -1,33 +1,35 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-
 import HeaderBar from './HeaderBar';
 import { Box } from '@mui/material';
 import HeaderSearchResults from './HeaderSearchResults';
 import useDebounce from '@/hooks/useDebounce';
+import useSearchProducts from '@/hooks/useSearchProducts';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
-  setSearch?: (term: string) => void;
-  productsList?: string[];
   search?: string;
 }
 
-const Header = ({ setSearch, productsList, search }: HeaderProps) => {
+const Header = ({ search }: HeaderProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const searchTermDebounce = useDebounce(searchTerm, 500);
   const [openResults, setOpenResults] = useState(false);
+  const { products, refetch } = useSearchProducts(searchTermDebounce);
+  const [enterKeyPress, setEnterKeyPress] = useState(false);
 
-  /* eslint-disable */
+  const router = useRouter();
+
   useEffect(() => {
-    if (setSearch) {
-      if (searchTermDebounce.length > 0) {
-        setSearch(searchTermDebounce);
-        setOpenResults(true);
-      } else {
-        // setSearch('');
-      }
+    if (searchTermDebounce.length > 0) {
+      refetch();
+      setOpenResults(true);
     }
-  }, [searchTermDebounce]);
+    if (enterKeyPress) {
+      setEnterKeyPress(false);
+      router.replace('/?search=' + searchTermDebounce);
+    }
+  }, [searchTermDebounce, enterKeyPress]);
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -35,10 +37,11 @@ const Header = ({ setSearch, productsList, search }: HeaderProps) => {
         search={search}
         setSearchTerm={setSearchTerm}
         setOpenResults={setOpenResults}
+        setEnterKeyPress={setEnterKeyPress}
       />
       <HeaderSearchResults
         searchTerm={searchTerm}
-        productsNameList={productsList}
+        productsList={products}
         openResults={openResults}
       />
     </Box>
