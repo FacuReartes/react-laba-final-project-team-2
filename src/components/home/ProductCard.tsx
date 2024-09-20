@@ -60,7 +60,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
                 flexDirection: 'column',
                 gap: '9px',
               }}
-            onClick={() => handleAddToCart(product)}
+              onClick={() => handleAddToCart(product)}
             >
               <img src="./assets/add-shopping-basket.svg" />
               Add to Cart
@@ -77,7 +77,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
           )}
         </Box>
         <Link
-          href={`/${product.id}`}
+          href={`product/${product.id}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box
