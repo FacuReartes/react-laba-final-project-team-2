@@ -1,15 +1,24 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import useCart, { ICartProduct } from '@/hooks/useCart';
-import { Box, Button, Divider, List, ListItem, Typography } from '@mui/material';
+import { CartContext, ICartContext, ICartProduct } from '@/context/CartContext';
+import {
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  Typography,
+} from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
 
 export default function Page() {
+  const { cartList, handleQuantity, handleDelete } = useContext(
+    CartContext
+  ) as ICartContext;
 
-  const { cartList, handleQuantity, handleDelete } = useCart()
-
-  const router = useRouter()
+  const router = useRouter();
 
   const renderList = cartList.map((product: ICartProduct, index: number) => {
     const isLast = index === cartList.length - 1;
@@ -31,10 +40,12 @@ export default function Page() {
     );
   });
 
-  const calculateSubTotal: number = cartList.reduce((acc: number, product: ICartProduct) => {
-    return (acc + (product.price * product.quantity))
-  }, 0
-  )
+  const calculateSubTotal: number = cartList.reduce(
+    (acc: number, product: ICartProduct) => {
+      return acc + product.price * product.quantity;
+    },
+    0
+  );
 
   return (
     <Box
@@ -65,48 +76,48 @@ export default function Page() {
             pr: { xs: '0px', md: '20px' },
           }}
         >
-          {cartList.length > 0 ? 
-          renderList 
-          : 
-          <Box
-            sx={{
-              my: '50px',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 2,
-              px: { xs: '20px', sm: '0px' }
-            }}
-          >
-            <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
-              You don&apos;t have any products in the cart.
-            </Typography>
-            <Button
-              onClick={() => router.push('/')}
-              variant="contained"
-              disableElevation
-              size="large"
+          {cartList.length > 0 ? (
+            renderList
+          ) : (
+            <Box
               sx={{
-                bgcolor: 'secondary.light',
-                color: 'common.white',
-                height: '40px',
-                transition: 'opacity .2s ease',
-                ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
-                borderRadius: 2,
+                my: '50px',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 2,
+                px: { xs: '20px', sm: '0px' },
               }}
             >
-              Continue Shopping
-            </Button>
-          </Box>
-          }
+              <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
+                You don&apos;t have any products in the cart.
+              </Typography>
+              <Button
+                onClick={() => router.push('/')}
+                variant="contained"
+                disableElevation
+                size="large"
+                sx={{
+                  bgcolor: 'secondary.light',
+                  color: 'common.white',
+                  height: '40px',
+                  transition: 'opacity .2s ease',
+                  ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+                  borderRadius: 2,
+                }}
+              >
+                Continue Shopping
+              </Button>
+            </Box>
+          )}
         </List>
-        {cartList.length > 0 && 
-          <Box 
+        {cartList.length > 0 && (
+          <Box
             sx={{
-            mb: '25px',
-            display: 'flex',
-            justifyContent: 'center'
+              mb: '25px',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
             <Button
@@ -127,10 +138,10 @@ export default function Page() {
               Continue Shopping
             </Button>
           </Box>
-        }
+        )}
       </Box>
-      
-      <Summary subtotal={calculateSubTotal}/>
+
+      <Summary subtotal={calculateSubTotal} />
     </Box>
   );
 }

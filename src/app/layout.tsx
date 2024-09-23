@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material';
 import ReactQueryProvider from '@/utils/provider/ReactQueryProvider';
 import SessionWrapper from '@/components/auth/SessionWrapper';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import CartProvider from '@/context/CartContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +28,9 @@ export default function RootLayout({
           <ReactQueryProvider>
             <ReactQueryDevtools />
             <AppRouterCacheProvider>
-              <ThemeProvider theme={theme}>{children}</ThemeProvider>
+              <ThemeProvider theme={theme}>
+                <CartProvider>{children}</CartProvider>
+              </ThemeProvider>
             </AppRouterCacheProvider>
           </ReactQueryProvider>
         </SessionWrapper>

@@ -1,16 +1,18 @@
 import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
 import { APIProductsType } from '@/lib/apiDataTypes';
-import useCart from '@/hooks/useCart';
+import { useContext } from 'react';
+import { CartContext, ICartContext } from '@/context/CartContext';
 
 interface ProductsContainerProps {
   searchTerm: string;
   products: APIProductsType[];
 }
 
-export default function ProductsContainer({ products }: ProductsContainerProps) {
-
-  const { handleAddToCart } = useCart()
+export default function ProductsContainer({
+  products,
+}: ProductsContainerProps) {
+  const { handleAddToCart } = useContext(CartContext) as ICartContext;
 
   return (
     <Box
@@ -24,7 +26,11 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
     >
       {Array.isArray(products) && products.length > 0
         ? products.map(product => (
-            <ProductCard key={product.id} product={product} handleAddToCart={handleAddToCart} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              handleAddToCart={handleAddToCart}
+            />
           ))
         : 'No products Found'}
     </Box>
