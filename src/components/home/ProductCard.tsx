@@ -1,6 +1,6 @@
 'use client';
 import { APIProductsType } from '@/lib/apiDataTypes';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -12,12 +12,12 @@ interface PProps {
 
 export default function ProductCard({ product, handleAddToCart }: PProps) {
   const [onHover, setOnHover] = useState(false);
-
+  const isSmallMobile = useMediaQuery('(max-width:379px)');
   return (
     product.attributes.images.data && (
       <Box
         sx={{
-          width: { md: '320px', xs: '152px' },
+          width: isSmallMobile ? '100%' : { md: '320px', xs: '152px' },
           margin: { md: '0 30px 60px', xs: '0 0 16px' },
           display: 'flex',
           flexDirection: 'column',
@@ -60,7 +60,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
                 flexDirection: 'column',
                 gap: '9px',
               }}
-            onClick={() => handleAddToCart(product)}
+              onClick={() => handleAddToCart(product)}
             >
               <img src="./assets/add-shopping-basket.svg" />
               Add to Cart

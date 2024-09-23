@@ -8,9 +8,10 @@ interface ProductsContainerProps {
   products: APIProductsType[];
 }
 
-export default function ProductsContainer({ products }: ProductsContainerProps) {
-
-  const { handleAddToCart } = useCart()
+export default function ProductsContainer({
+  products,
+}: ProductsContainerProps) {
+  const { handleAddToCart } = useCart();
 
   return (
     <Box
@@ -24,7 +25,11 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
     >
       {Array.isArray(products) && products.length > 0
         ? products.map(product => (
-            <ProductCard key={product.id} product={product} handleAddToCart={handleAddToCart} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              handleAddToCart={handleAddToCart}
+            />
           ))
         : 'No products Found'}
     </Box>

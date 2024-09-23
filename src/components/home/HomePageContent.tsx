@@ -20,7 +20,7 @@ export default function HomePageContent({
     <Box
       sx={{
         width: '100%',
-        display: showFilters ? { xs: 'none', md: 'flex' } : { md: 'flex' },
+        display: showFilters ? { xs: 'none', md: 'flex' } : 'flex',
         flexDirection: 'column',
         p: { md: '60px', xs: '30px' },
         pl: showFilters ? '20px' : '60px',
@@ -45,6 +45,7 @@ export default function HomePageContent({
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
+            mt: { xs: '20px' },
           }}
         >
           <Box>
