@@ -16,7 +16,6 @@ import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
-// import { useUserData } from '@/hooks/useUserData';
 import HeaderMenu from './HeaderMenu';
 import { useRouter } from 'next/navigation';
 import { CartContext, ICartContext } from '@/context/CartContext';
