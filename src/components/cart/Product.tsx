@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Box, Button, Divider, IconButton, Typography } from '@mui/material';
 import Image from 'next/image';
 import { AddCircle, Delete, RemoveCircle } from '@mui/icons-material';
+import Link from 'next/link';
 
 enum QuantityAction {
   plus = 'plus',
@@ -58,7 +59,12 @@ const Product: FC<IProduct> = props => {
               fontSize: { xs: '12px', md: '30px' },
             }}
           >
-            {props.name}
+            <Link
+              href={`/product/${props.id}`}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              {props.name}
+            </Link>
           </Typography>
           <Typography
             sx={{

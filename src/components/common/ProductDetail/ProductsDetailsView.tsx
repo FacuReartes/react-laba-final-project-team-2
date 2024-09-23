@@ -1,7 +1,23 @@
-import { ProductType } from '@/lib/definitions';
+import useCart from '@/hooks/useCart';
+import { APIProductsType } from '@/lib/apiDataTypes';
 import { Box, Button, Typography } from '@mui/material';
+import { usePathname } from 'next/navigation';
 
-export default function ProductDetailsView({ attributes }: ProductType) {
+export default function ProductDetailsView({
+  id,
+  attributes,
+}: APIProductsType) {
+  const path = usePathname();
+  const { handleAddToCart } = useCart();
+
+  function handleClick() {
+    const pathName = path.split('/');
+
+    if (pathName.includes('product')) {
+      handleAddToCart({ id, attributes });
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -9,7 +25,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         flexDirection: 'column',
         mt: { xs: 4, md: 0 },
         width: { xs: 1 },
-        maxWidth: { xs: 'none', md: '600px' },
+        maxWidth: { xs: 'none', sm: '600px' },
         mx: { md: 'auto' },
       }}
     >
@@ -98,31 +114,20 @@ export default function ProductDetailsView({ attributes }: ProductType) {
       <Box
         sx={{
           display: 'flex',
-          gap: 2,
           mt: 4,
           justifyContent: { xs: 'center' },
         }}
       >
         <Button
-          variant="outlined"
-          sx={{
-            width: { xs: '120px', sm: '248px' },
-            borderColor: 'secondary.light',
-            color: 'secondary.light',
-            ':hover': { borderColor: 'inherit' },
-          }}
-        >
-          Favorite
-        </Button>
-        <Button
           variant="contained"
           sx={{
-            width: { xs: '120px', sm: '248px' },
+            width: '248px',
             bgcolor: 'secondary.light',
             ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
           }}
+          onClick={handleClick}
         >
-          Add to Bag
+          Add to Cart
         </Button>
       </Box>
 
