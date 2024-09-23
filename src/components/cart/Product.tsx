@@ -36,7 +36,13 @@ const Product: FC<IProduct> = props => {
           position: 'relative',
         }}
       >
-        <Image src={props.imageUrl} alt={props.name} fill priority />
+        <Image
+          src={props.imageUrl}
+          alt={props.name}
+          fill
+          priority
+          style={{ objectFit: 'contain' }}
+        />
       </Box>
 
       <Box

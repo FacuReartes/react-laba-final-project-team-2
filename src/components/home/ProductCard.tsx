@@ -60,7 +60,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
                 flexDirection: 'column',
                 gap: '9px',
               }}
-            onClick={() => handleAddToCart(product)}
+              onClick={() => handleAddToCart(product)}
             >
               <img src="./assets/add-shopping-basket.svg" />
               Add to Cart
@@ -95,7 +95,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             <Typography
               sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
             >
-              ${product.attributes.price.toFixed(2)}
+              ${Number(product.attributes.price.toFixed(2))}
             </Typography>
           </Box>
           <Typography
