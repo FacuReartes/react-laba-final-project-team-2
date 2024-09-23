@@ -1,14 +1,15 @@
-import useCart from '@/hooks/useCart';
+import { CartContext, ICartContext } from '@/context/CartContext';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import { Box, Button, Typography } from '@mui/material';
 import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
 
 export default function ProductDetailsView({
   id,
   attributes,
 }: APIProductsType) {
   const path = usePathname();
-  const { handleAddToCart } = useCart();
+  const { handleAddToCart } = useContext(CartContext) as ICartContext;
 
   function handleClick() {
     const pathName = path.split('/');
