@@ -12,10 +12,8 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-// import { useUserData } from '@/hooks/useUserData';
 import Popup from '../common/Popup';
 import { useLogOut } from '@/hooks/useLogOut';
-// import { IUser } from '@/lib/next-auth';
 import useUserQuery from '@/hooks/useUserQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
