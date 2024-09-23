@@ -22,8 +22,9 @@ export default function HomePageContent({
         width: '100%',
         display: showFilters ? { xs: 'none', md: 'flex' } : 'flex',
         flexDirection: 'column',
-        p: { md: '60px', xs: '30px' },
-        pl: showFilters ? '20px' : '60px',
+        p: showFilters
+          ? { md: '60px 60px 0 20px' }
+          : { md: '60px', xs: '30px' },
         position: 'relative',
       }}
     >
