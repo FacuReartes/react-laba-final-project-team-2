@@ -1,5 +1,12 @@
 'use client';
-import { Box, Typography, Button, Snackbar, Alert } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Snackbar,
+  Alert,
+  useMediaQuery,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
 import PreviewImages from './PreviewImages';
@@ -19,6 +26,7 @@ import ProductCategorySelect from './ProductCategorySelect';
 import useGetGenders from '@/hooks/useGetGenders';
 import useGetBrands from '@/hooks/useGetBrands';
 import useGetColors from '@/hooks/useGetColors';
+import Popup from '../common/Popup';
 
 interface ICompletedProduct {
   teamName: string;
@@ -42,9 +50,11 @@ interface INewProduct {
 }
 
 const AddProductForm = () => {
+  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
   const [productImages, setProductImages] = useState<File[]>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -71,42 +81,53 @@ const AddProductForm = () => {
     mutate(newProduct);
   };
 
-  const { mutate, isSuccess, reset } = useMutation({
-    mutationFn: (newProduct: INewProduct) => {
+  const { mutate, isSuccess, reset, error } = useMutation({
+    mutationFn: async (newProduct: INewProduct) => {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       };
+
       const formData = new FormData();
       newProduct.images.forEach((x: File) => {
         formData.append('files', x);
       });
 
-      return axios
-        .post('https://shoes-shop-strapi.herokuapp.com/api/upload', formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(res => {
-          const imagesId = res.data.map((image: { id: number }) => image.id);
-          newProduct.product.data.images = imagesId;
+      // eslint-disable-next-line no-useless-catch
+      try {
+        const res = await axios.post(
+          'https://shoes-shop-strapi.herokuapp.com/api/upload',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-          axios.post(
-            'https://shoes-shop-strapi.herokuapp.com/api/products',
-            newProduct.product,
-            config
-          );
-        });
+        const imagesId = res.data.map((image: { id: number }) => image.id);
+        newProduct.product.data.images = imagesId;
+
+        await axios.post(
+          'https://shoes-shop-strapi.herokuapp.com/api/products',
+          newProduct.product,
+          config
+        );
+      } catch (err) {
+        throw err;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       methods.reset();
       setProductImages([]);
     },
-    onError: error => console.log(error),
+    onError: error => {
+      setOpenPopup(true);
+      console.log(error);
+    },
   });
 
   const handleAcceptedFiles = (files: File[]) => {
@@ -231,6 +252,40 @@ const AddProductForm = () => {
           New product has been added successfully
         </Alert>
       </Snackbar>
+      <Popup
+        open={openPopup}
+        onClose={() => setOpenPopup(false)}
+        title="Add product error"
+        actions={
+          <>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenPopup(false);
+              }}
+            >
+              Try again
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDialog(false);
+                router.push('/profile/products');
+              }}
+            >
+              Go to my products
+            </Button>
+          </>
+        }
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>
+          {error?.message}
+        </Typography>
+      </Popup>
     </Box>
   );
 };
