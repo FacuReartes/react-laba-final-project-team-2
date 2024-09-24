@@ -84,7 +84,7 @@ export default function ProductDetailsView({
           my: 2,
           width: '80px',
           height: '80px',
-          border: '4px solid',
+          border: '2px solid',
           borderColor: 'common.black',
           borderRadius: 4,
           backgroundColor: attributes?.color?.data?.attributes?.name,
