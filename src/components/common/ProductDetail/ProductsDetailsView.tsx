@@ -18,6 +18,7 @@ export default function ProductDetailsView({
 
     if (pathName.includes('product') && selectedSize) {
       handleAddToCart({ id, attributes }, selectedSize);
+      setSelectedSize('');
     }
   }
 
