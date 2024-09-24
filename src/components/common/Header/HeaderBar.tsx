@@ -16,10 +16,11 @@ import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
-import { useUserData } from '@/hooks/useUserData';
 import HeaderMenu from './HeaderMenu';
 import { useRouter } from 'next/navigation';
 import { CartContext, ICartContext } from '@/context/CartContext';
+import { useQuery } from '@tanstack/react-query';
+import useUserQuery from '@/hooks/useUserQuery';
 
 interface HeaderBarProps {
   search?: string;
@@ -35,7 +36,8 @@ const HeaderBar = ({
   search,
 }: HeaderBarProps) => {
   const { data: session } = useSession();
-  const { data: userData } = useUserData(session?.user.jwt);
+  const token = session?.user?.jwt;
+  const { data: userData } = useQuery(useUserQuery(token));
   const router = useRouter();
 
   const [isTyping, setIsTyping] = useState(false);

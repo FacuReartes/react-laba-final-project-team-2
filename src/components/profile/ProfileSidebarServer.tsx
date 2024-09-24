@@ -1,8 +1,22 @@
+import { getServerSession } from 'next-auth';
 import ProfileSidebar from './ProfileSidebar';
-import getInitialUserData from '@/utils/getInitialUserData';
+import { authOptions } from '@/lib/authOptions';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import useUserQuery from '@/hooks/useUserQuery';
 
 export default async function ProfileSidebarServer() {
-  const { userData, jwt } = await getInitialUserData();
+  const session = await getServerSession(authOptions);
+  const token = session?.user?.jwt;
 
-  return <ProfileSidebar initialUserData={userData} jwt={jwt} />;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(useUserQuery(token));
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ProfileSidebar />
+    </HydrationBoundary>
+  );
 }
