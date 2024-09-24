@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
 import HeaderMenu from './HeaderMenu';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { CartContext, ICartContext } from '@/context/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import useUserQuery from '@/hooks/useUserQuery';
@@ -27,6 +27,28 @@ interface HeaderBarProps {
   setSearchTerm: (value: string) => void;
   setOpenResults: (value: boolean) => void;
   setEnterKeyPress: (value: boolean) => void;
+}
+
+const pathsMap: {[key: string]: string} = {
+  '/': 'Products',
+  '/cart': 'Cart',
+  '/profile/products': 'My Products',
+  '/profile/products/add-product': 'Add Product',
+  '/profile/settings': 'Settings',
+}
+
+const handlePathname = (path: string): string => {
+  const headerText: string = pathsMap[path]
+
+  if (!headerText) {
+    if (/d/.test(path)) {
+      return 'Product'
+    } else {
+      return ''
+    }
+  }  
+
+  return headerText
 }
 
 const HeaderBar = ({
@@ -40,11 +62,15 @@ const HeaderBar = ({
   const { data: userData } = useQuery(useUserQuery(token));
   const router = useRouter();
 
+
+  const pathname: string = usePathname()
+  const headerText: string = handlePathname(pathname)
+ 
   const [isTyping, setIsTyping] = useState(false);
   const [showInputSearch, setShowInputSearch] = useState(false);
-
+  
   const { cartList } = useContext(CartContext) as ICartContext;
-
+ 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     const validation = searchSchema.safeParse(targetValue);
@@ -83,12 +109,15 @@ const HeaderBar = ({
           justifyContent: 'space-between',
         }}
       >
-        <Box
-          sx={{ ml: { xs: '4px', md: '16px' } }}
-          component="img"
-          alt="logo"
-          src="/logo.svg"
-        />
+        <Box sx={{ ml: '12px', mr: '-4px' }}>
+          <Link href='/' style={{ display: 'block', padding: '4px' }}>
+            <Box
+              component="img"
+              alt="logo"
+              src="/logo.svg"
+            />
+          </Link>
+        </Box>
 
         <Typography
           sx={{
@@ -100,7 +129,7 @@ const HeaderBar = ({
             visibility: { xs: 'hidden', md: 'visible' },
           }}
         >
-          Products
+          {headerText}
         </Typography>
 
         {session ? (
@@ -108,6 +137,7 @@ const HeaderBar = ({
         ) : (
           <Button
             variant="outlined"
+            onClick={() => router.push('/auth/sign-in')}
             sx={{
               mr: '40px',
               color: 'secondary.light',
@@ -123,15 +153,7 @@ const HeaderBar = ({
               },
             }}
           >
-            <Link
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-              href="/auth/sign-in"
-            >
-              Sign in
-            </Link>
+            Sign in
           </Button>
         )}
 
@@ -208,21 +230,23 @@ const HeaderBar = ({
           </IconButton>
 
           {session ? (
-            <Link href="/profile/products">
-              <IconButton
-                aria-label="avatar"
-                sx={{
-                  display: isTyping ? 'none' : { xs: 'none', md: 'block' },
-                  mr: '28px',
-                }}
-              >
-                <Avatar
-                  alt="profileAvatar"
-                  src={userData?.avatar?.url}
-                  sx={{ width: '24px', height: '24px' }}
-                />
-              </IconButton>
-            </Link>
+            <Box 
+              sx={{
+                display: isTyping ? 'none' : { xs: 'none', md: 'block' },
+              }}
+            >
+              <Link href="/profile/products" style={{ marginRight: '28px', display: 'block' }}>
+                <IconButton
+                  aria-label="avatar"
+                >
+                  <Avatar
+                    alt="profileAvatar"
+                    src={userData?.avatar?.url}
+                    sx={{ width: '24px', height: '24px' }}
+                  />
+                </IconButton>
+              </Link>
+            </Box>
           ) : (
             ''
           )}
