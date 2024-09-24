@@ -1,5 +1,5 @@
 export default function useGetProductDetail(id: number) {
-  const queryKey = ['product'];
+  const queryKey = ['product', id];
 
   const queryFn = async () => {
     const req = await fetch(
