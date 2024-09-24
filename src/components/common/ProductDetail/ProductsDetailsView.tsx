@@ -1,8 +1,9 @@
+'use client';
 import { CartContext, ICartContext } from '@/context/CartContext';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import { Box, Button, Typography } from '@mui/material';
 import { usePathname } from 'next/navigation';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 export default function ProductDetailsView({
   id,
@@ -10,14 +11,17 @@ export default function ProductDetailsView({
 }: APIProductsType) {
   const path = usePathname();
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
+  const [selectedSize, setSelectedSize] = useState<number | string>('');
 
   function handleClick() {
     const pathName = path.split('/');
 
-    if (pathName.includes('product')) {
-      handleAddToCart({ id, attributes });
+    if (pathName.includes('product') && selectedSize) {
+      handleAddToCart({ id, attributes }, selectedSize);
     }
   }
+
+  console.log(selectedSize);
 
   return (
     <Box
@@ -102,10 +106,15 @@ export default function ProductDetailsView({
               height: '55px',
               borderRadius: '8px',
               border: '1px solid',
-              borderColor: 'grey.200',
+              borderColor:
+                selectedSize === size.attributes.value
+                  ? 'secondary.light'
+                  : 'grey.200',
               textAlign: 'center',
               alignContent: 'center',
+              cursor: 'pointer',
             }}
+            onClick={() => setSelectedSize(size.attributes.value)}
           >
             EU-{size?.attributes?.value}
           </Box>
