@@ -21,6 +21,7 @@ import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import { useSession } from 'next-auth/react';
 
 const SettingsForm = () => {
+  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
   const session = useSession();
   const jwt = session.data?.user?.jwt;
   const { data: userData } = useUserData(jwt);
@@ -182,11 +183,12 @@ const SettingsForm = () => {
           setUploadDialog(false);
           setDeleteDialog(false);
         }}
-        title={message || uploadMessage || deleteMessage}
+        title="Information"
         actions={
           <Button
+            fullWidth
             variant="contained"
-            color={'info'}
+            color="info"
             onClick={() => {
               setOpenDialog(false);
               setUploadDialog(false);
@@ -196,7 +198,11 @@ const SettingsForm = () => {
             Ok
           </Button>
         }
-      ></Popup>
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>
+          {message || uploadMessage || deleteMessage}
+        </Typography>
+      </Popup>
     </Box>
   );
 };
