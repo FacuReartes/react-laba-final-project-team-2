@@ -81,7 +81,7 @@ const AddProductForm = () => {
     mutate(newProduct);
   };
 
-  const { mutate, isSuccess, reset, error } = useMutation({
+  const { mutate, isSuccess, reset, error, isPending } = useMutation({
     mutationFn: async (newProduct: INewProduct) => {
       const config = {
         headers: {
@@ -177,6 +177,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
+                disabled={isPending}
                 sx={{
                   position: 'absolute',
                   top: { lg: '58px', xs: '' },
@@ -283,7 +284,7 @@ const AddProductForm = () => {
         }
       >
         <Typography variant={isMdUp ? 'h6' : 'body1'}>
-          {error?.message}
+          {error?.message || 'Something went wrong!'}
         </Typography>
       </Popup>
     </Box>
