@@ -45,7 +45,7 @@ function Summary({ subtotal }: SummaryProps) {
             fontSize: { xs: '16px', md: '20px' },
           }}
         >
-          Do you have a promo code? ˅
+          Do you have a promo code?
         </Typography>
 
         <Box
