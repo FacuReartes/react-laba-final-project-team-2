@@ -39,6 +39,8 @@ export default function ProductDetailsView({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 2,
         }}
       >
         <Typography variant="h3" sx={{ fontSize: { xs: '24px', md: '45px' } }}>
@@ -46,9 +48,9 @@ export default function ProductDetailsView({
         </Typography>
         <Typography
           sx={{
-            fontWeight: 500,
+            fontWeight: 600,
             alignContent: 'end',
-            fontSize: { xs: '18px', md: '24px' },
+            fontSize: { xs: '18px', md: '36px' },
           }}
         >
           ${attributes?.price}
