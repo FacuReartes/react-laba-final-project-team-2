@@ -103,9 +103,8 @@ const AddProductForm = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      setTimeout(() => {
-        router.push('/profile/products');
-      }, 3000);
+      methods.reset();
+      setProductImages([]);
     },
     onError: error => console.log(error),
   });
@@ -219,9 +218,9 @@ const AddProductForm = () => {
       />
       <Snackbar
         open={isSuccess}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onClose={reset}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert
           onClose={reset}
@@ -229,7 +228,7 @@ const AddProductForm = () => {
           variant="filled"
           sx={{ width: '100%' }}
         >
-          New product added successfully!
+          New product has been added successfully
         </Alert>
       </Snackbar>
     </Box>
