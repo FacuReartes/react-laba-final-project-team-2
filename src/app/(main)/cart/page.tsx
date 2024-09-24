@@ -24,13 +24,17 @@ export default function Page() {
     const isLast = index === cartList.length - 1;
 
     return (
-      <ListItem key={product.id} sx={{ p: 0, display: 'list-item' }}>
+      <ListItem
+        key={`${product.id}-${product.sizes}`}
+        sx={{ p: 0, display: 'list-item' }}
+      >
         <Product
           id={product.id}
           imageUrl={product.imageUrl}
           name={product.name}
           price={product.price}
           gender={product.gender}
+          sizes={product.sizes}
           handleQuantity={handleQuantity}
           quantity={product.quantity}
           handleDelete={handleDelete}
