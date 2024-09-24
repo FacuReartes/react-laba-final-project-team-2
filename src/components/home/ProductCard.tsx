@@ -1,17 +1,52 @@
 'use client';
 import { APIProductsType } from '@/lib/apiDataTypes';
-import { Box, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
 interface PProps {
   product: APIProductsType;
-  handleAddToCart: (product: APIProductsType) => void;
+  handleAddToCart: (
+    product: APIProductsType,
+    selectedSize: number | string
+  ) => void;
 }
 
 export default function ProductCard({ product, handleAddToCart }: PProps) {
   const [onHover, setOnHover] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<number | string>('');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleSizeChange = (event: SelectChangeEvent<number | string>) => {
+    setSelectedSize(event.target.value as string | number);
+  };
+
+  const handleAddToCartClick = () => {
+    handleAddToCart(product, selectedSize);
+    handleClose();
+  };
 
   return (
     product.attributes.images.data && (
@@ -60,7 +95,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
                 flexDirection: 'column',
                 gap: '9px',
               }}
-              onClick={() => handleAddToCart(product)}
+              onClick={handleClickOpen}
             >
               <img src="./assets/add-shopping-basket.svg" />
               Add to Cart
@@ -108,6 +143,33 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             {`${product.attributes.gender.data.attributes.name}'s Shoes`}
           </Typography>
         </Link>
+
+        {/* Modal for size selection */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Select Size for {product.attributes.name}</DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth>
+              <InputLabel id="size-select-label">Size</InputLabel>
+              <Select
+                labelId="size-select-label"
+                value={selectedSize}
+                onChange={handleSizeChange}
+              >
+                {product.attributes.sizes.data.map(size => (
+                  <MenuItem key={size.id} value={size.attributes.value}>
+                    {size.attributes.value}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleAddToCartClick} disabled={!selectedSize}>
+              Add to Cart
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     )
   );
