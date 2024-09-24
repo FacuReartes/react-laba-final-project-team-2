@@ -10,6 +10,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -18,6 +19,7 @@ import { useShowPassword } from '@/hooks/useShowPassword';
 import { Visibility } from '@mui/icons-material';
 
 const SignupForm = () => {
+  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
   const router = useRouter();
   const {
     register,
@@ -175,20 +177,35 @@ const SignupForm = () => {
       <Popup
         open={openDialog}
         onClose={() => setOpenDialog(false)}
-        title={message}
+        title="Sign up error"
         actions={
-          <Button
-            variant="contained"
-            color={'info'}
-            onClick={() => {
-              setOpenDialog(false);
-              router.push('/auth/sign-in');
-            }}
-          >
-            Ok
-          </Button>
+          <>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDialog(false);
+              }}
+            >
+              Try again
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDialog(false);
+                router.push('/auth/sign-in');
+              }}
+            >
+              Go to sign in
+            </Button>
+          </>
         }
-      ></Popup>
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
+      </Popup>
     </Box>
   );
 };
