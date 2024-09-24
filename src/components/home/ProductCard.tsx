@@ -3,10 +3,6 @@ import { APIProductsType } from '@/lib/apiDataTypes';
 import {
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
   IconButton,
   InputLabel,
@@ -18,6 +14,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import Popup from '../common/Popup';
 
 interface PProps {
   product: APIProductsType;
@@ -39,6 +36,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleSizeChange = (event: SelectChangeEvent<number | string>) => {
     setSelectedSize(event.target.value as string | number);
   };
@@ -144,32 +142,34 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
           </Typography>
         </Link>
 
-        {/* Modal for size selection */}
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Select Size for {product.attributes.name}</DialogTitle>
-          <DialogContent>
-            <FormControl fullWidth>
-              <InputLabel id="size-select-label">Size</InputLabel>
-              <Select
-                labelId="size-select-label"
-                value={selectedSize}
-                onChange={handleSizeChange}
-              >
-                {product.attributes.sizes.data.map(size => (
-                  <MenuItem key={size.id} value={size.attributes.value}>
-                    {size.attributes.value}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleAddToCartClick} disabled={!selectedSize}>
-              Add to Cart
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <Popup
+          onClose={handleClose}
+          title={product?.attributes?.name}
+          open={open}
+          actions={
+            <>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleAddToCartClick} disabled={!selectedSize}>
+                Add to Cart
+              </Button>
+            </>
+          }
+        >
+          <FormControl fullWidth>
+            <InputLabel id="size-select-label">Size</InputLabel>
+            <Select
+              labelId="size-select-label"
+              value={selectedSize}
+              onChange={handleSizeChange}
+            >
+              {product?.attributes?.sizes?.data?.map(size => (
+                <MenuItem key={size?.id} value={size?.attributes?.value}>
+                  {size?.attributes?.value}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Popup>
       </Box>
     )
   );
