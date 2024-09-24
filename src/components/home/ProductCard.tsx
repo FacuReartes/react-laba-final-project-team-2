@@ -106,7 +106,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               src={product.attributes.images.data[0].attributes.url}
               alt={product.attributes.name}
               fill
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: 'contain' }}
               sizes="800px"
             />
           )}
