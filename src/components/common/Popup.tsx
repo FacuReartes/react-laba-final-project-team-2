@@ -70,8 +70,7 @@ export default function Popup(props: PopupProps) {
           height: '60px',
           gap: '10px',
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          flexDirection: { md: 'row', xs: 'column' },
         }}
       >
         {actions}
