@@ -1,6 +1,7 @@
 import {
   AppBar,
   Avatar,
+  Badge,
   Box,
   Button,
   Divider,
@@ -12,12 +13,13 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
 import { useUserData } from '@/hooks/useUserData';
 import HeaderMenu from './HeaderMenu';
 import { useRouter } from 'next/navigation';
+import { CartContext, ICartContext } from '@/context/CartContext';
 
 interface HeaderBarProps {
   search?: string;
@@ -38,6 +40,8 @@ const HeaderBar = ({
 
   const [isTyping, setIsTyping] = useState(false);
   const [showInputSearch, setShowInputSearch] = useState(false);
+
+  const { cartList } = useContext(CartContext) as ICartContext;
 
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
@@ -173,14 +177,16 @@ const HeaderBar = ({
 
         <Box sx={{ display: 'flex' }}>
           <IconButton
-            aria-label="bag"
+            aria-label="cart"
             sx={{
               mr: { xs: '4px', md: '0px' },
               display: isTyping || showInputSearch ? 'none' : 'flex',
             }}
             href="/cart"
           >
-            <Box component="img" alt="bag" src="/bag.svg" />
+            <Badge badgeContent={cartList.length} color="primary">
+              <Box component="img" alt="cart" src="/cart.svg" />
+            </Badge>
           </IconButton>
 
           <IconButton

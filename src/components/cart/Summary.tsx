@@ -2,13 +2,13 @@ import React from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
 
 interface SummaryProps {
-  subtotal: number
+  subtotal: number;
 }
 
 function Summary({ subtotal }: SummaryProps) {
-
   const shipping: number = 20;
   const tax: number = 0;
+  const fixedSubtotal: number = Number(subtotal.toFixed(2));
 
   return (
     <Box
@@ -72,7 +72,7 @@ function Summary({ subtotal }: SummaryProps) {
                 fontSize: { xs: '20px', md: '30px' },
               }}
             >
-              ${subtotal}
+              ${fixedSubtotal}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -133,7 +133,7 @@ function Summary({ subtotal }: SummaryProps) {
               fontSize: { xs: '20px', md: '30px' },
             }}
           >
-            ${subtotal + shipping + tax}
+            ${fixedSubtotal + shipping + tax}
           </Typography>
         </Box>
 

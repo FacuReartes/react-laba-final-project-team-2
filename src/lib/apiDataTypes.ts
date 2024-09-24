@@ -34,6 +34,26 @@ export interface APIProductsType {
         },
       ];
     };
+    categories: {
+      data: [
+        {
+          id: number;
+          attributes: {
+            name: string;
+          };
+        },
+      ];
+    };
+    sizes: {
+      data: [
+        {
+          id: number;
+          attributes: {
+            value: number;
+          };
+        },
+      ];
+    };
     brand: {
       data: {
         id: number;
