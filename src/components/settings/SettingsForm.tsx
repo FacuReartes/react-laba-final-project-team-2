@@ -21,7 +21,7 @@ import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import { useSession } from 'next-auth/react';
 
 const SettingsForm = () => {
-  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const session = useSession();
   const jwt = session.data?.user?.jwt;
   const { data: userData } = useUserData(jwt);

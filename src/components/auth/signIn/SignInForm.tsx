@@ -47,7 +47,7 @@ const formLabelStyles = {
 };
 
 const SignInForm = () => {
-  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const {
     register,
     handleSubmit,

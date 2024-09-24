@@ -50,7 +50,7 @@ interface INewProduct {
 }
 
 const AddProductForm = () => {
-  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const [productImages, setProductImages] = useState<File[]>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);

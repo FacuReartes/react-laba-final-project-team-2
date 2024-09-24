@@ -19,7 +19,7 @@ import { useShowPassword } from '@/hooks/useShowPassword';
 import { Visibility } from '@mui/icons-material';
 
 const SignupForm = () => {
-  const isMdUp = useMediaQuery((theme: any) => theme.breakpoints.up('md'));
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const router = useRouter();
   const {
     register,
