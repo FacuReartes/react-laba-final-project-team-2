@@ -81,7 +81,7 @@ const AddProductForm = () => {
     mutate(newProduct);
   };
 
-  const { mutate, isSuccess, reset, error, isPending } = useMutation({
+  const { mutate, isSuccess, reset, isPending } = useMutation({
     mutationFn: async (newProduct: INewProduct) => {
       const config = {
         headers: {
@@ -284,7 +284,7 @@ const AddProductForm = () => {
         }
       >
         <Typography variant={isMdUp ? 'h6' : 'body1'}>
-          {error?.message || 'Something went wrong!'}
+          Something went wrong!
         </Typography>
       </Popup>
     </Box>
