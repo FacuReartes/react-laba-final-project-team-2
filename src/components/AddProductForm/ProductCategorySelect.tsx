@@ -20,7 +20,7 @@ export default function ProductCategorySelect() {
       <Controller
         name="categories"
         control={control}
-        defaultValue={[categories[0].id]}
+        defaultValue={[categories[0]?.id]}
         render={({ field }) => (
           <Select
             {...field}
