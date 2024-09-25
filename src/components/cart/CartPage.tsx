@@ -70,7 +70,7 @@ export default function Page() {
             ml: { xs: '20px', sm: '125px', md: '0px' },
           }}
         >
-          Chart
+          Cart
         </Typography>
         <List
           sx={{
