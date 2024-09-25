@@ -11,8 +11,8 @@ export interface FilterTypes {
   sizes?: SizesDataType[];
 }
 
-const useFilter = () => {
-  const [filter, setFilter] = useState<FilterTypes>({});
+const useFilter = ({ initial }: { initial: FilterTypes }) => {
+  const [filter, setFilter] = useState<FilterTypes>(initial);
   const [initialFilter, setInitialFilter] = useState<FilterTypes>({});
 
   const updateFilter = (newFilter: FilterTypes) => {
@@ -161,7 +161,14 @@ const useFilter = () => {
   ) => {
     let path = '?filters[teamName]=team-2&populate=*';
 
-    if (!filter.brands) {
+    if (
+      !filter.brands ||
+      !filter.categories ||
+      !filter.colors ||
+      !filter.genders ||
+      !filter.prices ||
+      !filter.sizes
+    ) {
       return path;
     }
 
