@@ -62,8 +62,8 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
           color: 'common.black',
           transition: 'transform 0.3s, box-shadow 0.3s',
           boxShadow: onHover
-            ? '0 6px 18px rgba(0,0,0,0.15)'
-            : '0 2px 8px rgba(0,0,0,0.1)',
+            ? '0 0 18px 10px rgba(0,0,0,0.15)'
+            : '0 0 8px rgba(0,0,0,0.1)',
           transform: onHover ? 'scale(1.03)' : 'scale(1)',
         }}
         onMouseEnter={() => setOnHover(true)}
@@ -75,6 +75,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             width: { md: '320px', xs: '100%' },
             height: { md: '380px', xs: '180px' },
             overflow: 'hidden',
+            borderRadius: '8px',
           }}
         >
           <Box
@@ -89,19 +90,19 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               columnGap: 2,
               justifyContent: 'center',
               alignItems: 'center',
-              backdropFilter: 'blur(8px)',
+              backdropFilter: 'brightness(50%)',
             }}
           >
             <IconButton
               sx={{
                 width: '80px',
                 height: '80px',
-                bgcolor: 'rgba(255,255,255,0.75)',
+                bgcolor: 'rgba(255,255,255,0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
                 transition: 'transform 0.3s',
                 ':hover': {
-                  bgcolor: 'rgba(255,255,255,0.75)',
+                  bgcolor: 'rgba(255,255,255,0.9)',
                   transform: 'scale(1.1)',
                 },
                 display: 'flex',
@@ -117,12 +118,12 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               sx={{
                 width: '80px',
                 height: '80px',
-                bgcolor: 'rgba(255,255,255,0.75)',
+                bgcolor: 'rgba(255,255,255, 0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
                 transition: 'transform 0.3s',
                 ':hover': {
-                  bgcolor: 'rgba(255,255,255,0.75)',
+                  bgcolor: 'rgba(255,255,255,0.9)',
                   transform: 'scale(1.1)',
                 },
                 display: 'flex',
@@ -142,8 +143,8 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               fill
               style={{
                 objectFit: 'contain',
-                // transition: 'transform 0.5s ease',
-                // transform: onHover ? 'scale(1.1)' : 'scale(1)',
+                transition: 'transform 0.5s ease',
+                transform: onHover ? 'scale(1.1)' : 'scale(1)',
               }}
               sizes="800px"
             />
