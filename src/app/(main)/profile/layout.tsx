@@ -1,8 +1,17 @@
 import ProfileSidebarServer from '@/components/profile/ProfileSidebarServer';
 import { authOptions } from '@/lib/authOptions';
 import { Box } from '@mui/material';
+import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Profile',
+    template: '%s | Profile',
+  },
+  description: 'Profile page',
+};
 
 export default async function Layout({
   children,

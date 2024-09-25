@@ -6,7 +6,16 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Main',
+    template: '%s | Main',
+  },
+  description: 'Main page',
+};
 
 export default async function Layout({
   children,
