@@ -1,7 +1,7 @@
 import { env } from '../../env';
 
 export default function useGetProductDetail(id: number) {
-  const queryKey = ['product'];
+  const queryKey = ['product', id];
 
   const queryFn = async () => {
     const req = await fetch(`${env.BASE_URL}/products/${id}?populate=*`);

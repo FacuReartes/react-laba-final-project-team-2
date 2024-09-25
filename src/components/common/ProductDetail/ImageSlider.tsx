@@ -37,7 +37,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
             width={76}
             height={76}
             style={{
-              objectFit: 'cover',
+              objectFit: 'contain',
               cursor: 'pointer',
               border: `${index === hoverSlide ? '3px solid #F1C40F' : index === currentSlide ? '3px solid #F1C40F' : '3px solid transparent'}`,
               transition: 'border .3s ease',
@@ -67,7 +67,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
+                    objectFit: 'contain',
                     display: isDesktop ? 'block' : 'none',
                     opacity: 0,
                     transition: 'opacity 0.5s ease',
@@ -82,7 +82,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                   style={{
                     width: '100%',
                     height: '360px',
-                    objectFit: 'cover',
+                    objectFit: 'contain',
                     display: isDesktop ? 'none' : 'block',
                     opacity: 0,
                     transition: 'opacity 0.5s ease',

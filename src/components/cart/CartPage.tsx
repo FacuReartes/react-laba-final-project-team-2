@@ -1,4 +1,6 @@
 'use client';
+import Product from '@/components/cart/Product';
+import Summary from '@/components/cart/Summary';
 import { CartContext, ICartContext, ICartProduct } from '@/context/CartContext';
 import {
   Box,
@@ -10,10 +12,8 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
-import Product from './Product';
-import Summary from './Summary';
 
-export default function CartPage() {
+export default function Page() {
   const { cartList, handleQuantity, handleDelete } = useContext(
     CartContext
   ) as ICartContext;
@@ -24,13 +24,17 @@ export default function CartPage() {
     const isLast = index === cartList.length - 1;
 
     return (
-      <ListItem key={product.id} sx={{ p: 0, display: 'list-item' }}>
+      <ListItem
+        key={`${product.id}-${product.sizes}`}
+        sx={{ p: 0, display: 'list-item' }}
+      >
         <Product
           id={product.id}
           imageUrl={product.imageUrl}
           name={product.name}
           price={product.price}
           gender={product.gender}
+          sizes={product.sizes}
           handleQuantity={handleQuantity}
           quantity={product.quantity}
           handleDelete={handleDelete}
