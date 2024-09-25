@@ -7,7 +7,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
+
+export const metadata: Metadata = {
+  title: 'Products',
+  description: 'Products page',
+};
 
 export default async function ProductsPage() {
   const session = await getServerSession(authOptions);
