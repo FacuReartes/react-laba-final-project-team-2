@@ -10,6 +10,12 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Add product',
+  description: 'Add a product page',
+};
 
 export default async function AddProductPage() {
   const queryClient = new QueryClient();

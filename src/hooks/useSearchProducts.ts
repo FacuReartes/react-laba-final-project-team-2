@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { env } from '../../env';
 
-const URL =
-  'https://shoes-shop-strapi.herokuapp.com/api/products?filters[teamName]=team-2&populate=*';
+const URL = `${env.BASE_URL}/products?filters[teamName]=team-2&populate=*`;
 
 export default function useSearchProducts(searchTerm: string) {
   const products = useQuery({

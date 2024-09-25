@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Popup from '@/components/common/Popup';
 import axios from 'axios';
+import { env } from '../../../../env';
 
 interface APISuccessResponse {
   jwt: string;
@@ -50,14 +51,11 @@ const resetPassword = async ({
   passwordConfirmation,
 }: ResetPasswordVariables) => {
   try {
-    const response = axios.post(
-      'https://shoes-shop-strapi.herokuapp.com/api/auth/reset-password',
-      {
-        code,
-        password,
-        passwordConfirmation,
-      }
-    );
+    const response = axios.post(`${env.BASE_URL}/auth/reset-password`, {
+      code,
+      password,
+      passwordConfirmation,
+    });
     return (await response).data as APISuccessResponse;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {

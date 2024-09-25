@@ -27,6 +27,7 @@ import useGetGenders from '@/hooks/useGetGenders';
 import useGetBrands from '@/hooks/useGetBrands';
 import useGetColors from '@/hooks/useGetColors';
 import Popup from '../common/Popup';
+import { env } from '../../../env';
 
 interface ICompletedProduct {
   teamName: string;
@@ -97,26 +98,18 @@ const AddProductForm = () => {
 
       // eslint-disable-next-line no-useless-catch
       try {
-        const res = await axios.post(
-          'https://shoes-shop-strapi.herokuapp.com/api/upload',
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await axios.post(`${env.BASE_URL}/upload`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const imagesId = res.data.map((image: { id: number }) => image.id);
         newProduct.product.data.images = imagesId;
 
-        await axios.post(
-          'https://shoes-shop-strapi.herokuapp.com/api/products',
-          newProduct.product,
-          config
-        );
-      } catch (err) {
-        throw err;
+        axios.post(`${env.BASE_URL}/products`, newProduct.product, config);
+      } catch (error) {
+        throw error;
       }
     },
     onSuccess: () => {

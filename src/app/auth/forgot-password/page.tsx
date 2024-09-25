@@ -3,6 +3,12 @@ import Image from 'next/image';
 import Logo from '@/components/common/Logo';
 import ForgotPasswordForm from '@/components/auth/forgotPassword/ForgotPasswordForm';
 import sneakersForgotPassword from '@/images/forgot-password.webp';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Forgot password',
+  description: 'Forgot password',
+};
 
 export default function Page() {
   return (

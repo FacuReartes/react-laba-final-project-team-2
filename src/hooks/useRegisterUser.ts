@@ -2,6 +2,7 @@ import { SignUpFormData } from '@/lib/definitions';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
+import { env } from '../../env';
 
 export const useRegisterUser = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -9,10 +10,7 @@ export const useRegisterUser = () => {
 
   const { mutate, ...rest } = useMutation({
     mutationFn: (data: SignUpFormData) => {
-      return axios.post(
-        'https://shoes-shop-strapi.herokuapp.com/api/auth/local/register',
-        data
-      );
+      return axios.post(`${env.BASE_URL}/auth/local/register`, data);
     },
     onSuccess: () => {
       setOpenDialog(true);

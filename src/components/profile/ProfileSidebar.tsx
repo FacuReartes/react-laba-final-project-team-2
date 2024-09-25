@@ -12,21 +12,21 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useUserData } from '@/hooks/useUserData';
 import Popup from '../common/Popup';
 import { useLogOut } from '@/hooks/useLogOut';
-import { IUser } from '@/lib/next-auth';
+import useUserQuery from '@/hooks/useUserQuery';
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 
-const ProfileSidebar = ({
-  initialUserData,
-  jwt,
-}: {
-  initialUserData: IUser;
-  jwt?: string;
-}) => {
+const ProfileSidebar = () => {
   const router = useRouter();
   const pathName = usePathname();
-  const { data: userData } = useUserData(jwt, initialUserData);
+
+  const { data: session } = useSession();
+
+  const token = session?.user?.jwt;
+
+  const { data: userData } = useQuery(useUserQuery(token));
 
   const { openDialog, setOpenDialog, message, isLoading, handleLogOut } =
     useLogOut();
