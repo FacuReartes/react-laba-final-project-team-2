@@ -9,13 +9,14 @@ import HomePageContent from './HomePageContent';
 import { FilterOptionsType } from '../common/FilterSideBar/FilterForm';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { env } from '../../../env';
 
 interface HomePageContainerProps {
   paramsQuery: Record<string, string | string[]>;
   filterOptions: FilterOptionsType;
 }
 
-const URL = 'https://shoes-shop-strapi.herokuapp.com/api';
+const URL = env.BASE_URL;
 
 const fetchFilteredProducts = async (path: string) => {
   const response = await fetch(URL + path);

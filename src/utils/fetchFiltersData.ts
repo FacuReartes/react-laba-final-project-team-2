@@ -1,4 +1,6 @@
-const URL = 'https://shoes-shop-strapi.herokuapp.com/api';
+import { env } from '../../env';
+
+const URL = `${env.BASE_URL}`;
 
 const fetchData = async (path: string) => {
   const response = await fetch(URL + path);
