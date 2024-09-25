@@ -17,6 +17,7 @@ import axios from 'axios';
 import { forgotPasswordSchema } from '@/lib/schemas/authSchemas';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import Popup from '@/components/common/Popup';
+import { env } from '../../../../env';
 
 type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
 
@@ -36,12 +37,9 @@ interface APIErrorResponse {
 
 const forgotPassword = async (email: string): Promise<APISuccessResponse> => {
   try {
-    const response = axios.post(
-      'https://shoes-shop-strapi.herokuapp.com/api/auth/forgot-password/',
-      {
-        email,
-      }
-    );
+    const response = axios.post(`${env.BASE_URL}/auth/forgot-password/`, {
+      email,
+    });
     return (await response).data as APISuccessResponse;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {

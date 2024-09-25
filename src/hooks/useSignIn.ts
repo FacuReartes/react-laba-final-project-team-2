@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react';
 import axios from 'axios';
 import { SignInFormInputs } from '@/lib/definitions';
 import { useRouter } from 'next/navigation';
+import { env } from '../../env';
 
 export const useSignIn = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -14,13 +15,10 @@ export const useSignIn = () => {
   const handleSignIn = async (data: SignInFormInputs) => {
     setIsLoading(true);
     try {
-      await axios.post(
-        'https://shoes-shop-strapi.herokuapp.com/api/auth/local',
-        {
-          identifier: data.email,
-          password: data.password,
-        }
-      );
+      await axios.post(`${env.BASE_URL}/auth/local`, {
+        identifier: data.email,
+        password: data.password,
+      });
 
       await signIn('credentials', {
         redirect: true,

@@ -2,6 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { cookies } from 'next/headers';
+import { env } from '../../env';
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -26,19 +27,16 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        const res = await fetch(
-          'https://shoes-shop-strapi.herokuapp.com/api/auth/local',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              identifier: credentials?.identifier,
-              password: credentials?.password,
-            }),
-          }
-        );
+        const res = await fetch(`${env.BASE_URL}/auth/local`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            identifier: credentials?.identifier,
+            password: credentials?.password,
+          }),
+        });
 
         const user = await res.json();
 
