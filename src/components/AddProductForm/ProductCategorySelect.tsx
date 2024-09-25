@@ -27,7 +27,7 @@ export default function ProductCategorySelect() {
             placeholder={'Select categories'}
             sx={{ width: '100%', fontSize: '15px' }}
             error={Boolean(errors.categories)}
-            defaultValue={[categories[0].id]}
+            defaultValue={[categories[0]?.id]}
             multiple
           >
             {categories.map(

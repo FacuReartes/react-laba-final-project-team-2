@@ -1,3 +1,5 @@
+import { env } from '../../env';
+
 export default function useGetProducts(
   token: string | undefined,
   userID: number | undefined
@@ -6,7 +8,7 @@ export default function useGetProducts(
 
   const queryFn = async () => {
     const req = await fetch(
-      `https://shoes-shop-strapi.herokuapp.com/api/products?filters[teamName]=team-2&filters[userID]=${userID}&populate=*`,
+      `${env.BASE_URL}/products?filters[teamName]=team-2&filters[userID]=${userID}&populate=*`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

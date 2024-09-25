@@ -3,6 +3,12 @@ import Logo from '@/components/common/Logo';
 import SignInForm from '@/components/auth/signIn/SignInForm';
 import Image from 'next/image';
 import sneakersSignin from '@/images/sneakers-signin.webp';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sign in',
+  description: 'Sign in to your account',
+};
 
 export default function Page() {
   return (

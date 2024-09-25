@@ -2,6 +2,7 @@ import { SettingsFormData } from '@/lib/definitions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
+import { env } from '../../env';
 
 export const useUpdateUser = (
   userId: number | undefined,
@@ -13,15 +14,11 @@ export const useUpdateUser = (
 
   const { mutate, ...rest } = useMutation({
     mutationFn: (data: SettingsFormData) => {
-      return axios.put(
-        `https://shoes-shop-strapi.herokuapp.com/api/users/${userId}`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      );
+      return axios.put(`${env.BASE_URL}/users/${userId}`, data, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });

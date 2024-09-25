@@ -19,6 +19,7 @@ import ProductCategorySelect from './ProductCategorySelect';
 import useGetGenders from '@/hooks/useGetGenders';
 import useGetBrands from '@/hooks/useGetBrands';
 import useGetColors from '@/hooks/useGetColors';
+import { env } from '../../../env';
 
 interface ICompletedProduct {
   teamName: string;
@@ -85,7 +86,7 @@ const AddProductForm = () => {
       });
 
       return axios
-        .post('https://shoes-shop-strapi.herokuapp.com/api/upload', formData, {
+        .post(`${env.BASE_URL}/upload`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -94,11 +95,7 @@ const AddProductForm = () => {
           const imagesId = res.data.map((image: { id: number }) => image.id);
           newProduct.product.data.images = imagesId;
 
-          axios.post(
-            'https://shoes-shop-strapi.herokuapp.com/api/products',
-            newProduct.product,
-            config
-          );
+          axios.post(`${env.BASE_URL}/products`, newProduct.product, config);
         });
     },
     onSuccess: () => {
