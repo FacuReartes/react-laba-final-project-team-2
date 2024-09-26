@@ -137,10 +137,7 @@ export default function Products() {
           Add product
         </Button>
       </Box>
-      { isPending ? 
-        <Loading/> 
-        :  
-        <ProductsContainer products={products} />}
+      {isPending ? <Loading /> : <ProductsContainer products={products} />}
       <Button
         onClick={() => router.push('/profile/products/add-product')}
         variant="contained"
@@ -151,6 +148,10 @@ export default function Products() {
           display: {
             xs: products?.length > 0 ? 'block' : 'none',
             md: 'none',
+          },
+          width: {
+            xs: '80%',
+            md: 'fit-content',
           },
           bgcolor: 'secondary.light',
           color: 'common.white',
