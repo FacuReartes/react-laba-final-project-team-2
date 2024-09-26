@@ -26,9 +26,10 @@ const schema: ZodType<IProducts> = z.object({
   categories: z.array(z.string()).or(z.array(z.number())),
 });
 
-export const useAddProductForm = () => {
+export const useAddProductForm = (defaultValues?: Partial<IProducts>) => {
   return useForm<IProducts>({
     resolver: zodResolver(schema),
+    defaultValues,
   });
 };
 

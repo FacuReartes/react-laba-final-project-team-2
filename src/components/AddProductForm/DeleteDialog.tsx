@@ -14,13 +14,13 @@ export interface DeleteDialogProps {
   open: boolean;
   selectedValue: boolean;
   onClose: (value: boolean) => void;
+  message?: string;
 }
 
-export default function DeleteDialog(props: DeleteDialogProps) {
-  const { onClose, open } = props;
+export default function DeleteDialog({ open, onClose, message}: DeleteDialogProps) {
 
-  const handleClose = () => {
-    onClose(false);
+  const handleClose = (value: boolean) => {
+    onClose(value);
   };
 
   const handleDeleteButtonClick = (value: boolean) => {
@@ -29,8 +29,8 @@ export default function DeleteDialog(props: DeleteDialogProps) {
 
   return (
     <Dialog
-      onClose={handleClose}
       open={open}
+      onClose={() => handleClose(false)}
       PaperProps={{
         sx: {
           maxWidth: '592px',
@@ -48,11 +48,8 @@ export default function DeleteDialog(props: DeleteDialogProps) {
       >
         <CloseIcon />
       </IconButton>
-      <DialogTitle
-        variant="h1"
-        sx={{ p: 0, fontSize: { lg: '45px', xs: '30px' } }}
-      >
-        Are you sure to delete product image?
+      <DialogTitle variant="h1" sx={{ p: 0, fontSize: { lg: '45px', xs: '30px' } }}>
+        {message || 'Are you sure to delete product image?'}
       </DialogTitle>
       <DialogContent sx={{ p: 0 }}>
         <DialogContentText

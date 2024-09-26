@@ -51,7 +51,7 @@ export default function ProductSizesButtons() {
                 borderColor: 'secondary.light',
               }}
             >
-              {sizes.map(
+              {sizes && sizes.map(
                 (size: { id: number; attributes: { value: number } }) => (
                   <ToggleButton
                     key={size.id}

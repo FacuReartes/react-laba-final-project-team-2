@@ -49,7 +49,7 @@ export default function ProductCard({ product }: PProps) {
           ...
         </Button>
         <Box ref={ref}>
-          <ProductsModal open={open} id={product.id} />
+          <ProductsModal open={open} id={product.id} product={product}/>
         </Box>
       </Box>
       <Box

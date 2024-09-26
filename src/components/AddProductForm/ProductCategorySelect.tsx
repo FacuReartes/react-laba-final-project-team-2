@@ -20,17 +20,17 @@ export default function ProductCategorySelect() {
       <Controller
         name="categories"
         control={control}
-        defaultValue={[categories[0].id]}
+        defaultValue={categories ? [categories[0].id] : []}
         render={({ field }) => (
           <Select
             {...field}
             placeholder={'Select categories'}
             sx={{ width: '100%', fontSize: '15px' }}
             error={Boolean(errors.categories)}
-            defaultValue={[categories[0].id]}
+            defaultValue={categories ? categories[0].id : ''}
             multiple
           >
-            {categories.map(
+            {categories && categories.map(
               (category: { id: number; attributes: { name: string } }) => (
                 <MenuItem key={category.id} value={category.id}>
                   {category.attributes.name}

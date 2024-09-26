@@ -1,15 +1,24 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Divider } from '@mui/material';
+import { Divider, Button } from '@mui/material';
 import Link from 'next/link';
+import EditProductForm from '../AddProductForm/EditProductForm';
+import { ProductType } from '@/lib/definitions';
+
+interface ProductsModalProps {
+  open: boolean;
+  id: string | number;
+  product: ProductType;
+}
 
 export default function ProductsModal({
   open,
   id,
-}: {
-  open: boolean;
-  id: string | number;
-}) {
+  product
+}: ProductsModalProps) {
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleEditOpen = () => setIsEditOpen(true);
   return (
     <>
       {open && (
@@ -25,24 +34,22 @@ export default function ProductsModal({
             padding: '8px',
           }}
         >
-          <Typography sx={{ py: 0.5 }}>
+          <Button sx={{ py: 0.5, width: '100%' }}>
             <Link
               href={`/profile/products/${id}`}
-              style={{
-                display: 'block',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
+              passHref
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               View
             </Link>
-          </Typography>
-          <Divider></Divider>
-          <Typography sx={{ py: 0.5, cursor: 'pointer' }}>Edit</Typography>
-          <Divider></Divider>
-          <Typography sx={{ py: 0.5, cursor: 'pointer' }}>Delete</Typography>
-        </Box>
+          </Button>
+          <Divider />
+          <Button onClick={handleEditOpen} sx={{ py: 0.5, cursor: 'pointer', width: '100%' }}>Edit</Button>
+          <Divider />
+          <Button sx={{ py: 0.5, cursor: 'pointer', width: '100%' }}>Delete</Button>
+        </Box>  
       )}
+      {isEditOpen && <EditProductForm product={product} open={isEditOpen} onClose={() => setIsEditOpen(false)} />}
     </>
   );
 }
