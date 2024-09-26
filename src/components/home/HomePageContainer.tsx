@@ -10,10 +10,14 @@ import { FilterOptionsType } from '../common/FilterSideBar/FilterForm';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useRouter } from 'next/navigation';
+
 import {
   fetchFilteredProducts,
   getFromFiltersToAPIParams,
 } from '@/utils/prefetchingProducts';
+
+import { env } from '../../../env';
+
 
 interface HomePageContainerProps {
   paramsQuery: Record<string, string | string[]>;

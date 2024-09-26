@@ -1,10 +1,10 @@
+import { env } from '../../env';
+
 export default function useGetSizes() {
   const queryKey = ['sizes'];
 
   const queryFn = async () => {
-    const req = await fetch(
-      'https://shoes-shop-strapi.herokuapp.com/api/sizes'
-    );
+    const req = await fetch(`${env.BASE_URL}/sizes`);
     const res = await req.json();
     return res.data;
   };

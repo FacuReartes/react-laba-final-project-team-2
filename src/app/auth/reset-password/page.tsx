@@ -4,6 +4,12 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPasswordFormContainer';
 import sneakersResetPassword from '@/images/sneakers-reset-password.webp';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Reset password',
+  description: 'Reset password',
+};
 
 export default function Page() {
   return (

@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
 import { APIProductsType } from '@/lib/apiDataTypes';
-import useCart from '@/hooks/useCart';
+import { useContext } from 'react';
+import { CartContext, ICartContext } from '@/context/CartContext';
 
 interface ProductsContainerProps {
   searchTerm: string;
@@ -11,7 +12,9 @@ interface ProductsContainerProps {
 export default function ProductsContainer({
   products,
 }: ProductsContainerProps) {
-  const { handleAddToCart } = useCart();
+
+  const { handleAddToCart } = useContext(CartContext) as ICartContext;
+
 
   return (
     <Box

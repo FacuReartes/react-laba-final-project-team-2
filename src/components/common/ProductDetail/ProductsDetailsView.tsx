@@ -1,7 +1,29 @@
-import { ProductType } from '@/lib/definitions';
+'use client';
+import { CartContext, ICartContext } from '@/context/CartContext';
+import { APIProductsType } from '@/lib/apiDataTypes';
 import { Box, Button, Typography } from '@mui/material';
+import { usePathname } from 'next/navigation';
+import { useContext, useState } from 'react';
 
-export default function ProductDetailsView({ attributes }: ProductType) {
+export default function ProductDetailsView({
+  id,
+  attributes,
+}: APIProductsType) {
+  const path = usePathname();
+  const { handleAddToCart } = useContext(CartContext) as ICartContext;
+  const [selectedSize, setSelectedSize] = useState<number | string>('');
+
+  function handleClick() {
+    const pathName = path.split('/');
+
+    if (pathName.includes('product') && selectedSize) {
+      handleAddToCart({ id, attributes }, selectedSize);
+      setSelectedSize('');
+    }
+  }
+
+  console.log(selectedSize);
+
   return (
     <Box
       sx={{
@@ -9,7 +31,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         flexDirection: 'column',
         mt: { xs: 4, md: 0 },
         width: { xs: 1 },
-        maxWidth: { xs: 'none', md: '600px' },
+        maxWidth: { xs: 'none', sm: '600px' },
         mx: { md: 'auto' },
       }}
     >
@@ -17,6 +39,8 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 2,
         }}
       >
         <Typography variant="h3" sx={{ fontSize: { xs: '24px', md: '45px' } }}>
@@ -24,9 +48,9 @@ export default function ProductDetailsView({ attributes }: ProductType) {
         </Typography>
         <Typography
           sx={{
-            fontWeight: 500,
+            fontWeight: 600,
             alignContent: 'end',
-            fontSize: { xs: '18px', md: '24px' },
+            fontSize: { xs: '18px', md: '36px' },
           }}
         >
           ${attributes?.price}
@@ -62,7 +86,7 @@ export default function ProductDetailsView({ attributes }: ProductType) {
           my: 2,
           width: '80px',
           height: '80px',
-          border: '4px solid',
+          border: '2px solid',
           borderColor: 'common.black',
           borderRadius: 4,
           backgroundColor: attributes?.color?.data?.attributes?.name,
@@ -85,10 +109,15 @@ export default function ProductDetailsView({ attributes }: ProductType) {
               height: '55px',
               borderRadius: '8px',
               border: '1px solid',
-              borderColor: 'grey.200',
+              borderColor:
+                selectedSize === size.attributes.value
+                  ? 'secondary.light'
+                  : 'grey.200',
               textAlign: 'center',
               alignContent: 'center',
+              cursor: 'pointer',
             }}
+            onClick={() => setSelectedSize(size.attributes.value)}
           >
             EU-{size?.attributes?.value}
           </Box>
@@ -98,31 +127,20 @@ export default function ProductDetailsView({ attributes }: ProductType) {
       <Box
         sx={{
           display: 'flex',
-          gap: 2,
           mt: 4,
           justifyContent: { xs: 'center' },
         }}
       >
         <Button
-          variant="outlined"
-          sx={{
-            width: { xs: '120px', sm: '248px' },
-            borderColor: 'secondary.light',
-            color: 'secondary.light',
-            ':hover': { borderColor: 'inherit' },
-          }}
-        >
-          Favorite
-        </Button>
-        <Button
           variant="contained"
           sx={{
-            width: { xs: '120px', sm: '248px' },
+            width: '248px',
             bgcolor: 'secondary.light',
             ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
           }}
+          onClick={handleClick}
         >
-          Add to Bag
+          Add to Cart
         </Button>
       </Box>
 

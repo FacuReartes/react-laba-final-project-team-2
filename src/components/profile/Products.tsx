@@ -3,11 +3,11 @@ import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import ProductsContainer from '@/components/profile/ProductsContainer';
 import { useSession } from 'next-auth/react';
-import { useUserData } from '@/hooks/useUserData';
 import { useRouter } from 'next/navigation';
-import useGetProducts from '@/hooks/useGetProducts';
 import { useQuery } from '@tanstack/react-query';
 import heroImage from '@/images/products-hero-img.webp';
+import useGetProducts from '@/hooks/useGetProducts';
+import useUserQuery from '@/hooks/useUserQuery';
 
 export default function Products() {
   const { data: session } = useSession();
@@ -15,12 +15,11 @@ export default function Products() {
   const token = session?.user.jwt;
   const userID = session?.user.user.id;
 
-  const { data: userData } = useUserData(token);
-
-  const router = useRouter();
+  const { data: userData } = useQuery(useUserQuery(token));
 
   const { data: products } = useQuery(useGetProducts(token, userID));
 
+  const router = useRouter();
   const isDesktop = useMediaQuery('(min-width: 700px)');
   // type MockUser = {
   //   totalPoints: number;
