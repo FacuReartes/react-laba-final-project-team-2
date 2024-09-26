@@ -1,5 +1,5 @@
 'use client';
-import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import ProductsContainer from '@/components/profile/ProductsContainer';
 import { useSession } from 'next-auth/react';
@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import heroImage from '@/images/products-hero-img.webp';
 import useGetProducts from '@/hooks/useGetProducts';
 import useUserQuery from '@/hooks/useUserQuery';
+import Loading from '../common/Loading';
 
 export default function Products() {
   const { data: session } = useSession();
@@ -17,10 +18,9 @@ export default function Products() {
 
   const { data: userData } = useQuery(useUserQuery(token));
 
-  const { data: products } = useQuery(useGetProducts(token, userID));
+  const { data: products, isPending } = useQuery(useGetProducts(token, userID));
 
   const router = useRouter();
-  const isDesktop = useMediaQuery('(min-width: 700px)');
   // type MockUser = {
   //   totalPoints: number;
   // };
@@ -45,7 +45,6 @@ export default function Products() {
           src={heroImage}
           alt="hero-img"
           width={700}
-          height={isDesktop ? 262 : 132}
           sizes="100vw"
           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           priority
@@ -138,7 +137,33 @@ export default function Products() {
           Add product
         </Button>
       </Box>
-      <ProductsContainer products={products} />
+      { isPending ? 
+        <Loading/> 
+        :  
+        <ProductsContainer products={products} />}
+      <Button
+        onClick={() => router.push('/profile/products/add-product')}
+        variant="contained"
+        disableElevation
+        size="large"
+        sx={{
+          mt: '60px',
+          display: {
+            xs: products?.length > 0 ? 'block' : 'none',
+            md: 'none',
+          },
+          bgcolor: 'secondary.light',
+          color: 'common.white',
+          height: '40px',
+          textTransform: 'capitalize',
+          transition: 'opacity .2s ease',
+          ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+          borderRadius: 2,
+          mr: { md: '20px' },
+        }}
+      >
+        Add product
+      </Button>
     </Box>
   );
 }

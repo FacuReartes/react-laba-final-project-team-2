@@ -32,7 +32,7 @@ export default function ProductCard({ product }: PProps) {
             alt={product?.attributes?.name}
             width={320}
             height={380}
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'contain' }}
           />
         }
         <Button

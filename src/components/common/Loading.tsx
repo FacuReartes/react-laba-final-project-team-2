@@ -24,6 +24,7 @@ export default function Loading({
       justifyContent="center"
       alignItems="center"
       bgcolor={overlay ? 'rgba(255, 255, 255, 0.75)' : 'transparent'}
+      my={5}
     >
       <Box textAlign="center">
         <CircularProgress size={size} />

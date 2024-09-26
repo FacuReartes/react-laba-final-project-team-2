@@ -4,7 +4,6 @@ import {
   Category,
   Color,
   Gender,
-  GenericType,
   Prices,
   Sizes,
 } from '@/lib/definitions';
@@ -17,60 +16,57 @@ import {
   fetchSizes,
 } from '@/utils/fetchFiltersData';
 import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+  getFromAPItoGenericFormat,
+  getFromAPItoSizesFormat,
+} from '@/utils/getFromAPIToFilterFormat';
+import { getQueryClient } from '@/utils/getQueryClient';
+import {
+  fetchFilteredProducts,
+  getFromFiltersToAPIParams,
+} from '@/utils/prefetchingProducts';
+import { setFilterFromParams } from '@/utils/setFilterFromParams';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 interface HomeProps {
   searchParams: Record<string, string | string[]>;
 }
 
-function fromAPItoFilterFormat(object: { data: GenericType[] } | undefined) {
-  if (!object || !object.data) {
-    return [];
-  }
-  return object?.data.map((element: any) => ({
-    id: element.id,
-    name: element.attributes.name,
-    selected: false,
-  }));
-}
-
 export default async function Home({ searchParams }: HomeProps) {
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { staleTime: 60 * 1000 } },
-  });
+  const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ['genders'],
-    queryFn: fetchGenders,
-  });
+  try {
+    await queryClient.prefetchQuery({
+      queryKey: ['genders'],
+      queryFn: fetchGenders,
+    });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['brands'],
-    queryFn: fetchBrands,
-  });
+    await queryClient.prefetchQuery({
+      queryKey: ['brands'],
+      queryFn: fetchBrands,
+    });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['categories'],
-    queryFn: fetchCategories,
-  });
+    await queryClient.prefetchQuery({
+      queryKey: ['categories'],
+      queryFn: fetchCategories,
+    });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['colors'],
-    queryFn: fetchColors,
-  });
+    await queryClient.prefetchQuery({
+      queryKey: ['colors'],
+      queryFn: fetchColors,
+    });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['sizes'],
-    queryFn: fetchSizes,
-  });
+    await queryClient.prefetchQuery({
+      queryKey: ['sizes'],
+      queryFn: fetchSizes,
+    });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['prices'],
-    queryFn: fetchPrices,
-  });
+    await queryClient.prefetchQuery({
+      queryKey: ['prices'],
+      queryFn: fetchPrices,
+    });
+  } catch (err) {
+    console.error('Error fetching filter options: ', err);
+  }
 
   const genders = queryClient.getQueryData<{ data: Gender[] }>(['genders']);
   const brands = queryClient.getQueryData<{ data: Brands[] }>(['brands']);
@@ -81,31 +77,53 @@ export default async function Home({ searchParams }: HomeProps) {
   const sizes = queryClient.getQueryData<{ data: Sizes[] }>(['sizes']);
   const prices = queryClient.getQueryData<{ data: Prices[] }>(['prices']);
 
-  if (!genders || !brands || !categories || !colors || !sizes || !prices) {
+  if (
+    !genders?.data ||
+    !brands?.data ||
+    !categories?.data ||
+    !colors?.data ||
+    !sizes?.data ||
+    !prices?.data
+  ) {
     return 'Loading';
   }
-
-  const sizesFetched = sizes.data.map((element: any) => ({
-    id: element.id,
-    value: element.attributes.value,
-    selected: false,
-  }));
 
   const pricesFetched: number[] = [0, prices.data[0].attributes.price];
 
   const filterOptions = {
-    genders: fromAPItoFilterFormat(genders),
-    brands: fromAPItoFilterFormat(brands),
-    categories: fromAPItoFilterFormat(categories),
-    colors: fromAPItoFilterFormat(colors),
-    sizes: sizesFetched,
+    genders: getFromAPItoGenericFormat(genders),
+    brands: getFromAPItoGenericFormat(brands),
+    categories: getFromAPItoGenericFormat(categories),
+    colors: getFromAPItoGenericFormat(colors),
+    sizes: getFromAPItoSizesFormat(sizes),
     prices: pricesFetched,
   };
+
+  const filter =
+    Object.keys(searchParams).length > 0
+      ? setFilterFromParams(searchParams, filterOptions)
+      : filterOptions;
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products-filtered', filter],
+    queryFn: () =>
+      fetchFilteredProducts(
+        '/products' + getFromFiltersToAPIParams(filter, searchParams.search)
+      ),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const products = queryClient.getQueryData<{ data: any[] }>([
+    'products-filtered',
+    filter,
+  ]);
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <HomePageContainer
         paramsQuery={searchParams}
         filterOptions={filterOptions}
+        initialProducts={products ? products : { data: [] }}
       />
     </HydrationBoundary>
   );
