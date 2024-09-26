@@ -34,12 +34,14 @@ export const FilterForm = ({
   initialFilter,
   updateFilter,
 }: FilterFormProps) => {
-  const [genders, setGenders] = useState<DataType[]>([]);
-  const [brands, setBrands] = useState<DataType[]>([]);
-  const [categories, setCategories] = useState<DataType[]>([]);
-  const [sizes, setSizes] = useState<SizesType[]>([]);
-  const [prices, setPrices] = useState<number[]>([0, 1000]);
-  const [colors, setColors] = useState<DataType[]>([]);
+  const [genders, setGenders] = useState<DataType[]>(filterOptions.genders);
+  const [brands, setBrands] = useState<DataType[]>(filterOptions.brands);
+  const [categories, setCategories] = useState<DataType[]>(
+    filterOptions.categories
+  );
+  const [sizes, setSizes] = useState<SizesType[]>(filterOptions.sizes);
+  const [prices, setPrices] = useState<number[]>(filterOptions.prices);
+  const [colors, setColors] = useState<DataType[]>(filterOptions.colors);
 
   useEffect(() => {
     if (
@@ -83,7 +85,16 @@ export const FilterForm = ({
   }, [initialFilter]);
 
   useEffect(() => {
-    updateFilter({ genders, brands, prices, colors, sizes, categories });
+    if (
+      genders !== initialFilter.genders ||
+      brands !== initialFilter.brands ||
+      prices !== initialFilter.prices ||
+      colors !== initialFilter.colors ||
+      sizes !== initialFilter.sizes ||
+      categories !== initialFilter.categories
+    ) {
+      updateFilter({ genders, brands, prices, colors, sizes, categories });
+    }
   }, [genders, brands, prices, colors, sizes, categories]);
 
   const handleOnGenderChange = (selectedId: number) => {

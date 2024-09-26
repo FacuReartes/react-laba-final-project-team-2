@@ -3,51 +3,58 @@ import { Box, IconButton, useMediaQuery } from '@mui/material';
 import Header from '@/components/common/Header/Header';
 import { FilterSideBar } from '@/components/common/FilterSideBar/FilterSideBar';
 import { useEffect, useState } from 'react';
-import useFilter from '@/hooks/useFilter';
+import useFilter, { FilterTypes } from '@/hooks/useFilter';
 import CloseIcon from '@mui/icons-material/Close';
 import HomePageContent from './HomePageContent';
 import { FilterOptionsType } from '../common/FilterSideBar/FilterForm';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { useRouter } from 'next/navigation';
+
+import {
+  fetchFilteredProducts,
+  getFromFiltersToAPIParams,
+} from '@/utils/prefetchingProducts';
+
 import { env } from '../../../env';
+
 
 interface HomePageContainerProps {
   paramsQuery: Record<string, string | string[]>;
   filterOptions: FilterOptionsType;
+  initialProducts: { data: any[] };
 }
-
-const URL = env.BASE_URL;
-
-const fetchFilteredProducts = async (path: string) => {
-  const response = await fetch(URL + path);
-  if (!response.ok) throw new Error('Failed to fetch genders');
-  return await response.json();
-};
 
 export default function HomePageContainer({
   paramsQuery,
   filterOptions,
+  initialProducts,
 }: HomePageContainerProps) {
   const [showFilters, setShowFilters] = useState(false);
   const {
     filter,
     updateFilter,
-    fromFiltersToAPI,
     setFilterFromParams,
     getFiltersAsParams,
     initialFilter,
-  } = useFilter();
+  } = useFilter({ initial: filterOptions });
   const [searchTerm, setSearchTerm] = useState<string | string[]>('');
 
   const isDesktop = useMediaQuery('(min-width: 900px)');
   const router = useRouter();
-  const { data: products, isPending } = useQuery({
-    queryKey: ['products-filtered', filter, searchTerm],
-    queryFn: async () =>
-      await fetchFilteredProducts(
-        '/products' + fromFiltersToAPI(filter, searchTerm)
+  const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
+
+  const queryClient = useQueryClient();
+
+  const { data: products } = useQuery({
+    queryKey: ['products-filtered'],
+    queryFn: () =>
+      fetchFilteredProducts(
+        '/products' + getFromFiltersToAPIParams(filter, searchTerm)
       ),
-    enabled: Boolean(filter),
+    staleTime: 1000 * 60 * 5,
+    initialData: initialProducts,
+    enabled: triggerFetch,
   });
 
   useEffect(() => {
@@ -57,9 +64,20 @@ export default function HomePageContainer({
     }
   }, []);
 
+  const serializedFilter = JSON.stringify(filter);
+
   useEffect(() => {
-    router.push(getFiltersAsParams(filter, searchTerm));
-  }, [filter]);
+    if (triggerFetch) {
+      setTriggerFetch(false);
+      queryClient.invalidateQueries({ queryKey: ['products-filtered'] });
+      router.push(getFiltersAsParams(filter, searchTerm));
+    }
+  }, [serializedFilter]);
+
+  const handleUpdateFilter = (newFilter: FilterTypes) => {
+    updateFilter(newFilter);
+    setTriggerFetch(true);
+  };
 
   return (
     initialFilter && (
@@ -92,9 +110,9 @@ export default function HomePageContainer({
             filterOptions={filterOptions}
             searchTerm={Array.isArray(searchTerm) ? searchTerm[0] : searchTerm}
             showFilters={showFilters}
-            updateFilter={updateFilter}
+            updateFilter={handleUpdateFilter}
             initialFilter={initialFilter}
-            matches={products?.data.length ? products.data.length : 0}
+            matches={products.data?.length ? products.data.length : 0}
           />
           
           <HomePageContent
@@ -106,7 +124,6 @@ export default function HomePageContainer({
             setShowFilters={() => setShowFilters(!showFilters)}
             isPending={isPending}
           />
-
         </Box>
       </Box>
     )
