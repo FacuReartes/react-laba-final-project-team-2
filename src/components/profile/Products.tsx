@@ -141,6 +141,29 @@ export default function Products() {
         <Loading/> 
         :  
         <ProductsContainer products={products} />}
+      <Button
+        onClick={() => router.push('/profile/products/add-product')}
+        variant="contained"
+        disableElevation
+        size="large"
+        sx={{
+          mt: '60px',
+          display: {
+            xs: products?.length > 0 ? 'block' : 'none',
+            md: 'none',
+          },
+          bgcolor: 'secondary.light',
+          color: 'common.white',
+          height: '40px',
+          textTransform: 'capitalize',
+          transition: 'opacity .2s ease',
+          ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+          borderRadius: 2,
+          mr: { md: '20px' },
+        }}
+      >
+        Add product
+      </Button>
     </Box>
   );
 }

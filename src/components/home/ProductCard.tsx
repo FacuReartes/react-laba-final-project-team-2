@@ -50,13 +50,14 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
   const handleAddToCartClick = () => {
     handleAddToCart(product, selectedSize);
     handleClose();
+    setOnHover(false);
   };
 
   return (
     product.attributes.images.data && (
       <Box
         sx={{
-          width: isSmallMobile ? '100%' : { md: '320px', xs: '152px' },
+          width: { md: '320px', xs: '152px' },
           margin: { md: '0 30px 60px', xs: '0 0 16px' },
           p: 2,
           borderRadius: '12px',

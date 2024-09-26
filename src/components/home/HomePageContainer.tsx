@@ -16,9 +16,6 @@ import {
   getFromFiltersToAPIParams,
 } from '@/utils/prefetchingProducts';
 
-import { env } from '../../../env';
-
-
 interface HomePageContainerProps {
   paramsQuery: Record<string, string | string[]>;
   filterOptions: FilterOptionsType;
@@ -46,7 +43,7 @@ export default function HomePageContainer({
 
   const queryClient = useQueryClient();
 
-  const { data: products } = useQuery({
+  const { data: products, isPending } = useQuery({
     queryKey: ['products-filtered'],
     queryFn: () =>
       fetchFilteredProducts(

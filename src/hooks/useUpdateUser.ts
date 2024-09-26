@@ -21,7 +21,7 @@ export const useUpdateUser = (
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: ['user-data'] });
       setOpenDialog(true);
       setMessage('User updated successfully');
     },

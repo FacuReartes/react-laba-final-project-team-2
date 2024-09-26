@@ -7,7 +7,7 @@ interface SummaryProps {
 }
 
 function Summary({ subtotal, loading }: SummaryProps) {
-  const shipping: number = 20;
+  const shipping: number = subtotal === 0 ? 0 : 20;
   const tax: number = 0;
   const fixedSubtotal: number = Number(subtotal.toFixed(2));
 
@@ -45,7 +45,7 @@ function Summary({ subtotal, loading }: SummaryProps) {
             fontSize: { xs: '16px', md: '20px' },
           }}
         >
-          Do you have a promo code? ˅
+          Do you have a promo code?
         </Typography>
 
         <Box

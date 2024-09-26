@@ -80,7 +80,7 @@ const HeaderSearchResults = ({
                   }}
                 >
                   <Link
-                    href={'/' + product.id}
+                    href={'/product/' + product.id}
                     style={{
                       textDecoration: 'none',
                     }}

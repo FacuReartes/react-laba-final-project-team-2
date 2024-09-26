@@ -12,17 +12,18 @@ import {
   useInitializeForm,
   useSettingsForm,
 } from '@/lib/schemas/settingsSchema';
-import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import { useSession } from 'next-auth/react';
+import useUserQuery from '@/hooks/useUserQuery';
+import { useQuery } from '@tanstack/react-query';
 
 const SettingsForm = () => {
   const session = useSession();
   const jwt = session.data?.user?.jwt;
-  const { data: userData, isPending: userIsPending } = useUserData(jwt);
+  const { data: userData, isPending: userIsPending } = useQuery(useUserQuery(jwt));
 
   const {
     mutate: updateUser,
