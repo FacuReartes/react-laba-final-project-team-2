@@ -96,16 +96,17 @@ export default function HomePageContainer({
             initialFilter={initialFilter}
             matches={products?.data.length ? products.data.length : 0}
           />
-          {!isPending && (
-            <HomePageContent
-              products={products.data}
-              searchTerm={
-                Array.isArray(searchTerm) ? searchTerm[0] : searchTerm
-              }
-              showFilters={showFilters}
-              setShowFilters={() => setShowFilters(!showFilters)}
-            />
-          )}
+          
+          <HomePageContent
+            products={products?.data}
+            searchTerm={
+              Array.isArray(searchTerm) ? searchTerm[0] : searchTerm
+            }
+            showFilters={showFilters}
+            setShowFilters={() => setShowFilters(!showFilters)}
+            isPending={isPending}
+          />
+
         </Box>
       </Box>
     )

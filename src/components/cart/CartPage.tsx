@@ -12,9 +12,10 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
+import Loading from '../common/Loading';
 
 export default function Page() {
-  const { cartList, handleQuantity, handleDelete } = useContext(
+  const { cartList, loading, handleQuantity, handleDelete } = useContext(
     CartContext
   ) as ICartContext;
 
@@ -72,80 +73,86 @@ export default function Page() {
         >
           Chart
         </Typography>
-        <List
-          sx={{
-            p: 0,
-            overflowY: { xs: 'hidden', md: 'auto' },
-            maxHeight: { xs: 'none', md: '650px' },
-            pr: { xs: '0px', md: '20px' },
-          }}
-        >
-          {cartList.length > 0 ? (
-            renderList
-          ) : (
-            <Box
+        { loading ? (
+          <Loading/>
+        ) : (
+          <>
+            <List
               sx={{
-                my: '50px',
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 2,
-                px: { xs: '20px', sm: '0px' },
+                p: 0,
+                overflowY: { xs: 'hidden', md: 'auto' },
+                maxHeight: { xs: 'none', md: '650px' },
+                pr: { xs: '0px', md: '20px' },
               }}
             >
-              <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
-                You don&apos;t have any products in the cart.
-              </Typography>
-              <Button
-                onClick={() => router.push('/')}
-                variant="contained"
-                disableElevation
-                size="large"
+              {cartList.length > 0 ? (
+                renderList
+              ) : (
+                <Box
+                  sx={{
+                    my: '50px',
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 2,
+                    px: { xs: '20px', sm: '0px' },
+                  }}
+                >
+                  <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
+                    You don&apos;t have any products in the cart.
+                  </Typography>
+                  <Button
+                    onClick={() => router.push('/')}
+                    variant="contained"
+                    disableElevation
+                    size="large"
+                    sx={{
+                      bgcolor: 'secondary.light',
+                      color: 'common.white',
+                      height: '40px',
+                      transition: 'opacity .2s ease',
+                      ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+                      borderRadius: 2,
+                    }}
+                  >
+                    Continue Shopping
+                  </Button>
+                </Box>
+              )}
+            </List>
+            {cartList.length > 0 && (
+              <Box
                 sx={{
-                  bgcolor: 'secondary.light',
-                  color: 'common.white',
-                  height: '40px',
-                  transition: 'opacity .2s ease',
-                  ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
-                  borderRadius: 2,
+                  mb: '25px',
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
-                Continue Shopping
-              </Button>
-            </Box>
-          )}
-        </List>
-        {cartList.length > 0 && (
-          <Box
-            sx={{
-              mb: '25px',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Button
-              onClick={() => router.push('/')}
-              variant="contained"
-              disableElevation
-              size="large"
-              sx={{
-                textAlign: 'center',
-                bgcolor: 'secondary.light',
-                color: 'common.white',
-                height: '40px',
-                transition: 'opacity .2s ease',
-                ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
-                borderRadius: 2,
-              }}
-            >
-              Continue Shopping
-            </Button>
-          </Box>
+                <Button
+                  onClick={() => router.push('/')}
+                  variant="contained"
+                  disableElevation
+                  size="large"
+                  sx={{
+                    textAlign: 'center',
+                    bgcolor: 'secondary.light',
+                    color: 'common.white',
+                    height: '40px',
+                    transition: 'opacity .2s ease',
+                    ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+                    borderRadius: 2,
+                  }}
+                >
+                  Continue Shopping
+                </Button>
+              </Box>
+            )}
+          </>
         )}
       </Box>
 
-      <Summary subtotal={calculateSubTotal} />
+      <Summary subtotal={calculateSubTotal} loading={loading}/>
     </Box>
   );
 }
