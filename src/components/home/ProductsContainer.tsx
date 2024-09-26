@@ -12,7 +12,9 @@ interface ProductsContainerProps {
 export default function ProductsContainer({
   products,
 }: ProductsContainerProps) {
+
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
+
 
   return (
     <Box
