@@ -9,6 +9,7 @@ import {
   FormControlLabel,
   InputAdornment,
   IconButton,
+  useMediaQuery,
   Backdrop,
 } from '@mui/material';
 import Link from 'next/link';
@@ -21,33 +22,34 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useShowPassword } from '@/hooks/useShowPassword';
 import Loading from '@/components/common/Loading';
 
+const containerWidth = { md: '459px', xs: '320px' };
+const inputWidth = { md: '436px', xs: '320px' };
+const marginTop = { md: '289px', xs: '94px' };
+const marginLeft = { md: '196px', xs: '20px' };
+const marginRight = { md: '305px', xs: '20px' };
+
+const textFieldStyles = {
+  '& .MuiOutlinedInput-root': {
+    boxSizing: 'border-box',
+    width: inputWidth,
+    borderRadius: { md: '8px', xs: '6px' },
+    height: { md: '48px', xs: '33px' },
+  },
+  '& .MuiOutlinedInput-input': {
+    fontSize: { md: '15px', xs: '10px' },
+  },
+  '& .MuiOutlinedInput-input::placeholder': {
+    fontSize: { md: '15px', xs: '10px' },
+  },
+};
+
+const formLabelStyles = {
+  fontWeight: '500',
+  fontSize: { md: 'inherit', xs: '12px' },
+};
+
 const SignInForm = () => {
-  const containerWidth = { md: '459px', xs: '320px' };
-  const inputWidth = { md: '436px', xs: '320px' };
-  const marginTop = { md: '289px', xs: '94px' };
-  const marginLeft = { md: '196px', xs: '20px' };
-  const marginRight = { md: '305px', xs: '20px' };
-
-  const textFieldStyles = {
-    '& .MuiOutlinedInput-root': {
-      boxSizing: 'border-box',
-      width: inputWidth,
-      borderRadius: { md: '8px', xs: '6px' },
-      height: { md: '48px', xs: '33px' },
-    },
-    '& .MuiOutlinedInput-input': {
-      fontSize: { md: '15px', xs: '10px' },
-    },
-    '& .MuiOutlinedInput-input::placeholder': {
-      fontSize: { md: '15px', xs: '10px' },
-    },
-  };
-
-  const formLabelStyles = {
-    fontWeight: '500',
-    fontSize: { md: 'inherit', xs: '12px' },
-  };
-
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const {
     register,
     handleSubmit,
@@ -65,11 +67,8 @@ const SignInForm = () => {
 
   return (
     <>
-      <Backdrop
-        open={isLoading}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={isLoading} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
       <Box
         sx={{
@@ -145,7 +144,8 @@ const SignInForm = () => {
               }}
             >
               <InputLabel htmlFor="id-password" sx={formLabelStyles}>
-                Password<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
+                Password
+                <span style={{ color: 'red', marginLeft: '5px' }}>*</span>
               </InputLabel>
 
               <TextField
@@ -283,6 +283,23 @@ const SignInForm = () => {
           }
         ></Popup>
       </Box>
+      <Popup
+        open={openDialog}
+        onClose={closeDialog}
+        title="Sign in error"
+        actions={
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            onClick={closeDialog}
+          >
+            {message === 'Invalid identifier or password' ? 'Try again' : 'Ok'}
+          </Button>
+        }
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
+      </Popup>
     </>
   );
 };

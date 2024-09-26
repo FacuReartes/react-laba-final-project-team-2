@@ -29,27 +29,27 @@ interface HeaderBarProps {
   setEnterKeyPress: (value: boolean) => void;
 }
 
-const pathsMap: {[key: string]: string} = {
+const pathsMap: { [key: string]: string } = {
   '/': 'Products',
   '/cart': 'Cart',
   '/profile/products': 'My Products',
   '/profile/products/add-product': 'Add Product',
   '/profile/settings': 'Settings',
-}
+};
 
 const handlePathname = (path: string): string => {
-  const headerText: string = pathsMap[path]
+  const headerText: string = pathsMap[path];
 
   if (!headerText) {
     if (/d/.test(path)) {
-      return 'Product'
+      return 'Product';
     } else {
-      return ''
+      return '';
     }
-  }  
+  }
 
-  return headerText
-}
+  return headerText;
+};
 
 const HeaderBar = ({
   setSearchTerm,
@@ -62,15 +62,14 @@ const HeaderBar = ({
   const { data: userData } = useQuery(useUserQuery(token));
   const router = useRouter();
 
+  const pathname: string = usePathname();
+  const headerText: string = handlePathname(pathname);
 
-  const pathname: string = usePathname()
-  const headerText: string = handlePathname(pathname)
- 
   const [isTyping, setIsTyping] = useState(false);
   const [showInputSearch, setShowInputSearch] = useState(false);
-  
+
   const { cartList } = useContext(CartContext) as ICartContext;
- 
+
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     const validation = searchSchema.safeParse(targetValue);
@@ -110,12 +109,8 @@ const HeaderBar = ({
         }}
       >
         <Box sx={{ ml: '12px', mr: '-4px' }}>
-          <Link href='/' style={{ display: 'block', padding: '4px' }}>
-            <Box
-              component="img"
-              alt="logo"
-              src="/logo.svg"
-            />
+          <Link href="/" style={{ display: 'block', padding: '4px' }}>
+            <Box component="img" alt="logo" src="/logo.svg" />
           </Link>
         </Box>
 
@@ -230,15 +225,16 @@ const HeaderBar = ({
           </IconButton>
 
           {session ? (
-            <Box 
+            <Box
               sx={{
                 display: isTyping ? 'none' : { xs: 'none', md: 'block' },
               }}
             >
-              <Link href="/profile/products" style={{ marginRight: '28px', display: 'block' }}>
-                <IconButton
-                  aria-label="avatar"
-                >
+              <Link
+                href="/profile/products"
+                style={{ marginRight: '28px', display: 'block' }}
+              >
+                <IconButton aria-label="avatar">
                   <Avatar
                     alt="profileAvatar"
                     src={userData?.avatar?.url}

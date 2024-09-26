@@ -29,8 +29,7 @@ export default function Popup(props: PopupProps) {
       open={open}
       PaperProps={{
         sx: {
-          width: '100%',
-          maxwidth: { lg: '592px', xs: '256px' },
+          width: { lg: '392px', xs: '256px' },
           p: '32px',
           position: 'relative',
         },
@@ -39,17 +38,19 @@ export default function Popup(props: PopupProps) {
     >
       <IconButton
         onClick={handleClose}
-        sx={{ position: 'absolute', top: '32px', right: '32px' }}
+        sx={{ position: 'absolute', top: '8px', right: '8px' }}
         aria-hidden={true}
       >
         <CloseIcon />
       </IconButton>
       <DialogTitle
         variant="h1"
+        color="info"
         sx={{
           p: 0,
           mr: { lg: '83px', xs: '38px' },
           fontSize: { lg: '45px', xs: '30px' },
+          textDecoration: 'underline',
         }}
       >
         {title}
@@ -63,7 +64,15 @@ export default function Popup(props: PopupProps) {
       >
         {children}
       </DialogContent>
-      <DialogActions sx={{ p: 0, height: '60px', gap: '30px' }}>
+      <DialogActions
+        sx={{
+          p: 0,
+          height: '60px',
+          gap: '10px',
+          display: 'flex',
+          flexDirection: { md: 'row', xs: 'column' },
+        }}
+      >
         {actions}
       </DialogActions>
     </Dialog>

@@ -11,6 +11,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,6 +21,7 @@ import { Visibility } from '@mui/icons-material';
 import Loading from '@/components/common/Loading';
 
 const SignupForm = () => {
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const router = useRouter();
   const {
     register,
@@ -43,11 +45,8 @@ const SignupForm = () => {
 
   return (
     <>
-      <Backdrop
-        open={isPending}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={isPending} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
       <Box
         sx={{
@@ -59,7 +58,10 @@ const SignupForm = () => {
           bgcolor: 'common.white',
         }}
       >
-        <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
+        <Typography
+          variant={'h1'}
+          sx={{ fontSize: { md: '45px', xs: '30px' } }}
+        >
           Create an account
         </Typography>
         <Typography
@@ -199,6 +201,38 @@ const SignupForm = () => {
           }
         ></Popup>
       </Box>
+      <Popup
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        title="Sign up error"
+        actions={
+          <>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDialog(false);
+              }}
+            >
+              Try again
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDialog(false);
+                router.push('/auth/sign-in');
+              }}
+            >
+              Go to sign in
+            </Button>
+          </>
+        }
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
+      </Popup>
     </>
   );
 };
