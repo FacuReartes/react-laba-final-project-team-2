@@ -2,12 +2,14 @@
 import ProductsContainer from '@/components/home/ProductsContainer';
 import { Box, Typography, Button } from '@mui/material';
 import { APIProductsType } from '@/lib/apiDataTypes';
+import Loading from '../common/Loading';
 
 interface HomePageContentProps {
   showFilters: boolean;
   searchTerm: string;
   setShowFilters: () => void;
   products: APIProductsType[];
+  isPending: boolean;
 }
 
 export default function HomePageContent({
@@ -15,6 +17,7 @@ export default function HomePageContent({
   showFilters,
   setShowFilters,
   searchTerm,
+  isPending,
 }: HomePageContentProps) {
   return (
     <Box
@@ -95,7 +98,10 @@ export default function HomePageContent({
           </Button>
         </Box>
       </Box>
-      <ProductsContainer products={products} searchTerm={searchTerm} />
+      { isPending ? 
+        <Loading/> 
+        :  
+        <ProductsContainer products={products} searchTerm={searchTerm} />}
     </Box>
   );
 }

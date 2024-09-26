@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
 
 interface SummaryProps {
   subtotal: number;
+  loading: boolean;
 }
 
-function Summary({ subtotal }: SummaryProps) {
+function Summary({ subtotal, loading }: SummaryProps) {
   const shipping: number = 20;
   const tax: number = 0;
   const fixedSubtotal: number = Number(subtotal.toFixed(2));
@@ -31,8 +32,7 @@ function Summary({ subtotal }: SummaryProps) {
       >
         Summary
       </Typography>
-      <Divider sx={{ display: { xs: 'block', md: 'none' } }} />
-
+      <Divider sx={{ display: { xs: 'block', md: 'none' } }} /> 
       <Box
         sx={{
           px: { xs: '20px', sm: '125px', md: '0px' },
@@ -57,84 +57,100 @@ function Summary({ subtotal }: SummaryProps) {
             gap: '20px',
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography
-              sx={{
-                lineHeight: { xs: '23.46px', md: '35.19px' },
-                fontSize: { xs: '20px', md: '30px' },
-              }}
-            >
-              Subtotal
-            </Typography>
-            <Typography
-              sx={{
-                lineHeight: { xs: '23.46px', md: '35.19px' },
-                fontSize: { xs: '20px', md: '30px' },
-              }}
-            >
-              ${fixedSubtotal}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography
-              sx={{
-                lineHeight: { xs: '23.46px', md: '35.19px' },
-                fontSize: { xs: '20px', md: '30px' },
-              }}
-            >
-              Shipping
-            </Typography>
-            <Typography
-              sx={{
-                lineHeight: { xs: '23.46px', md: '35.19px' },
-                fontSize: { xs: '20px', md: '30px' },
-              }}
-            >
-              ${shipping}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography
-              sx={{
-                lineHeight: { xs: '23.46px', md: '35.19px' },
-                fontSize: { xs: '20px', md: '30px' },
-              }}
-            >
-              Tax
-            </Typography>
-            <Typography
-              sx={{
-                lineHeight: { xs: '23.46px', md: '35.19px' },
-                fontSize: { xs: '20px', md: '30px' },
-              }}
-            >
-              ${tax}
-            </Typography>
-          </Box>
+          {loading ? (
+            <>
+              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+            </>
+          ): (
+            <>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography
+                  sx={{
+                    lineHeight: { xs: '23.46px', md: '35.19px' },
+                    fontSize: { xs: '20px', md: '30px' },
+                  }}
+                >
+                  Subtotal
+                </Typography>
+                <Typography
+                  sx={{
+                    lineHeight: { xs: '23.46px', md: '35.19px' },
+                    fontSize: { xs: '20px', md: '30px' },
+                  }}
+                >
+                  ${fixedSubtotal}
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography
+                  sx={{
+                    lineHeight: { xs: '23.46px', md: '35.19px' },
+                    fontSize: { xs: '20px', md: '30px' },
+                  }}
+                >
+                  Shipping
+                </Typography>
+                <Typography
+                  sx={{
+                    lineHeight: { xs: '23.46px', md: '35.19px' },
+                    fontSize: { xs: '20px', md: '30px' },
+                  }}
+                >
+                  ${shipping}
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography
+                  sx={{
+                    lineHeight: { xs: '23.46px', md: '35.19px' },
+                    fontSize: { xs: '20px', md: '30px' },
+                  }}
+                >
+                  Tax
+                </Typography>
+                <Typography
+                  sx={{
+                    lineHeight: { xs: '23.46px', md: '35.19px' },
+                    fontSize: { xs: '20px', md: '30px' },
+                  }}
+                >
+                  ${tax}
+                </Typography>
+              </Box>
+            </>
+          )}
         </Box>
 
         <Divider />
         <Box
           sx={{ display: 'flex', justifyContent: 'space-between', my: '19px' }}
         >
-          <Typography
-            sx={{
-              fontWeight: 600,
-              lineHeight: { xs: '23.46px', md: '35.19px' },
-              fontSize: { xs: '20px', md: '30px' },
-            }}
-          >
-            Total
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 600,
-              lineHeight: { xs: '23.46px', md: '35.19px' },
-              fontSize: { xs: '20px', md: '30px' },
-            }}
-          >
-            ${fixedSubtotal + shipping + tax}
-          </Typography>
+          {loading ? (
+            <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+          ) : (
+            <>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  lineHeight: { xs: '23.46px', md: '35.19px' },
+                  fontSize: { xs: '20px', md: '30px' },
+                }}
+              >
+                Total
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  lineHeight: { xs: '23.46px', md: '35.19px' },
+                  fontSize: { xs: '20px', md: '30px' },
+                }}
+              >
+                ${fixedSubtotal + shipping + tax}
+              </Typography>
+            </>
+          )}
         </Box>
 
         <Divider />
@@ -150,6 +166,7 @@ function Summary({ subtotal }: SummaryProps) {
             ':hover': { bgcolor: 'secondary.main' },
           }}
           variant="contained"
+          disabled={loading}
         >
           Checkout
         </Button>

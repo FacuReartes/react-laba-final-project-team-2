@@ -33,16 +33,19 @@ export interface ICartContext {
     action: QuantityAction
   ) => void;
   handleDelete: (productID: number, selectedSize: number | string) => void;
+  loading: boolean;
 }
 
 export const CartContext = createContext<ICartContext | null>(null);
 
 const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [cartList, setCartList] = useState<ICartProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const storage: string | null = localStorage.getItem('cart-list');
     if (storage) setCartList(JSON.parse(storage));
+    setLoading(false);
   }, []);
 
   const handleAddToCart = (
@@ -117,7 +120,7 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartList, handleAddToCart, handleDelete, handleQuantity }}
+      value={{ cartList, loading, handleAddToCart, handleDelete, handleQuantity }}
     >
       {children}
     </CartContext.Provider>
