@@ -5,6 +5,8 @@ import {
   Skeleton,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import SettingsCard from './SettingsCard';
 import { SettingsFormData } from '@/lib/definitions';
@@ -17,14 +19,16 @@ import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import { useSession } from 'next-auth/react';
-import useUserQuery from '@/hooks/useUserQuery';
 import { useQuery } from '@tanstack/react-query';
+import useUserQuery from '@/hooks/useUserQuery';
 
 const SettingsForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
   const session = useSession();
   const jwt = session.data?.user?.jwt;
-  const { data: userData, isPending: userIsPending } = useQuery(useUserQuery(jwt));
+  const { data: userData, isPending: userIsPending } = useQuery(
+    useUserQuery(jwt)
+  );
 
   const {
     mutate: updateUser,
@@ -67,103 +71,109 @@ const SettingsForm = () => {
     updateUser(updatedData);
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'lg'));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const getLeftMargin = () => {
+    if (isSmallScreen) return '0px';
+    if (isMediumScreen) return '10%';
+    if (isLargeScreen) return '20%';
+    return '0px';
+  };
+
   return (
-    <Box sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      width: '100%'
+    <Box
+      sx={{
+        width: { md: '436px', xs: '360px' },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        pt: { md: '52px', xs: '24px' },
+        pb: '91px',
+        bgcolor: 'common.white',
+        ml: getLeftMargin(),
+        transition: 'margin-left 0.3s ease-in-out',
       }}
     >
-      <Box
+      <Typography
+        variant={'h1'}
         sx={{
-          width: { md: '436px', xs: '360px' },
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          pt: { md: '52px', xs: '24px' },
-          pb: '91px',
-          mr: { xs: '0px', xl: '20%' },
-          bgcolor: 'common.white',
-          transition: 'margin-left 0.3s ease-in-out',
+          alignSelf: 'flex-start',
+          ml: { xs: '34px', md: '29px' },
+          fontSize: { md: '45px', xs: '30px' },
         }}
       >
-        <Typography
-          variant={'h1'}
-          sx={{
-            alignSelf: 'flex-start',
-            ml: { xs: '34px', md: '29px' },
-            fontSize: { md: '45px', xs: '30px' },
+        My Profile
+      </Typography>
+      <SettingsCard
+        uploadAvatar={uploadAvatar}
+        avatarUrl={userData?.avatar?.url}
+        isPending={isPending}
+        userIsPending={userIsPending}
+        deleteAvatar={deleteAvatar}
+        deleteIsPending={deleteIsPending}
+      />
+      <Typography
+        variant={'subtitle1'}
+        sx={{
+          mb: '48px',
+          px: { xs: '20px', md: '0' },
+          fontSize: { md: '15px', xs: '12px' },
+        }}
+      >
+        Welcome back! Please enter your details to log into your account.
+      </Typography>
+      <Box sx={{ width: { md: '436px', xs: '320px' } }}>
+        <form
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
           }}
-          >
-          My Profile
-        </Typography>
-        <SettingsCard
-          uploadAvatar={uploadAvatar}
-          avatarUrl={userData?.avatar?.url}
-          isPending={isPending}
-          userIsPending={userIsPending}
-          deleteAvatar={deleteAvatar}
-          deleteIsPending={deleteIsPending}
-          />
-        <Typography
-          variant={'subtitle1'}
-          sx={{
-            mb: '48px',
-            px: { xs: '20px', md: '0' },
-            fontSize: { md: '15px', xs: '12px' },
-          }}
-          >
-          Welcome back! Please enter your details to log into your account.
-        </Typography>
-        <Box sx={{ width: { md: '436px', xs: '320px' } }}>
-          <form
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-            }}
-            onSubmit={handleSubmit(submitData)}
-          >
-              {userIsPending ? (
-                <>
-                  <Skeleton height={56}/>
-                  <Skeleton height={56}/>
-                  <Skeleton height={56}/>
-                  <Skeleton height={56}/>
-                </>
-              ): (
-                <>   
-                  <TextField
-                    variant="outlined"
-                    placeholder="Name"
-                    {...register('firstName')}
-                    error={Boolean(errors.firstName)}
-                    helperText={errors.firstName?.message}
-                    />
-                  <TextField
-                    variant="outlined"
-                    placeholder="Surname"
-                    {...register('lastName')}
-                    error={Boolean(errors.lastName)}
-                    helperText={errors.lastName?.message}
-                    />
-                  <TextField
-                    variant="outlined"
-                    placeholder="example@mail.com"
-                    {...register('email')}
-                    error={Boolean(errors.email)}
-                    helperText={errors.email?.message}
-                    disabled
-                    />
-                  <TextField
-                    variant="outlined"
-                    placeholder="(949) 354-2574"
-                    {...register('phoneNumber')}
-                    error={Boolean(errors.phoneNumber)}
-                    helperText={errors.phoneNumber?.message}
-                    />
-                </>
-              )}
+          onSubmit={handleSubmit(submitData)}
+        >
+          {userIsPending ? (
+            <>
+              <Skeleton height={56} />
+              <Skeleton height={56} />
+              <Skeleton height={56} />
+              <Skeleton height={56} />
+            </>
+          ) : (
+            <>
+              <TextField
+                variant="outlined"
+                placeholder="Name"
+                {...register('firstName')}
+                error={Boolean(errors.firstName)}
+                helperText={errors.firstName?.message}
+              />
+              <TextField
+                variant="outlined"
+                placeholder="Surname"
+                {...register('lastName')}
+                error={Boolean(errors.lastName)}
+                helperText={errors.lastName?.message}
+              />
+              <TextField
+                variant="outlined"
+                placeholder="example@mail.com"
+                {...register('email')}
+                error={Boolean(errors.email)}
+                helperText={errors.email?.message}
+                disabled
+              />
+              <TextField
+                variant="outlined"
+                placeholder="(949) 354-2574"
+                {...register('phoneNumber')}
+                error={Boolean(errors.phoneNumber)}
+                helperText={errors.phoneNumber?.message}
+              />
+            </>
+          )}
 
           <Button
             type="submit"
