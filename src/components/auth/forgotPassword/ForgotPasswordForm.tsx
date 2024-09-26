@@ -6,6 +6,7 @@ import {
   Typography,
   InputLabel,
   DialogContentText,
+  Backdrop,
 } from '@mui/material';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -18,6 +19,7 @@ import { forgotPasswordSchema } from '@/lib/schemas/authSchemas';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import Popup from '@/components/common/Popup';
 import { env } from '../../../../env';
+import Loading from '@/components/common/Loading';
 
 type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
 
@@ -86,95 +88,104 @@ const ForgotPasswordForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        m: 'auto',
-        width: { xs: '100%', md: '50%' },
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        maxWidth: { md: '436px', xs: '320px' },
-      }}
-    >
-      <Typography variant="h1">Forgot password?</Typography>
-      <Typography variant="subtitle3" sx={{ marginBottom: 4 }}>
-        Don’t worry, we’ll send you reset instructions.
-      </Typography>
-      <form
-        style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-        onSubmit={handleSubmit(onSubmitHandler)}
+    <>
+      <Backdrop
+        open={mutation.isPending}
+        sx={{ zIndex: 99 }}
       >
-        <Box>
-          <InputLabel htmlFor="id-email" sx={{ mb: 1 }}>
-            Email<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
-          </InputLabel>
-          <TextField
-            id="id-email"
-            variant="outlined"
-            placeholder="Enter your email"
-            {...register('email')}
-            error={Boolean(errors.email)}
-            helperText={errors.email?.message as string}
-            fullWidth
-          />
-        </Box>
-
-        <Box
-          maxWidth="436px"
-          sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+        <Loading color='common.white' circularColor='secondary.main'/>
+      </Backdrop>
+      <Box
+        sx={{
+          m: 'auto',
+          width: { xs: '100%', md: '50%' },
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          maxWidth: { md: '436px', xs: '320px' },
+        }}
+      >
+        <Typography variant="h1">Forgot password?</Typography>
+        <Typography variant="subtitle3" sx={{ marginBottom: 4 }}>
+          Don’t worry, we’ll send you reset instructions.
+        </Typography>
+        <form
+          style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+          onSubmit={handleSubmit(onSubmitHandler)}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              p: 2,
-              color: 'common.white',
-              bgcolor: 'secondary.light',
-              fontSize: '16px',
-            }}
-            color="secondary"
+          <Box>
+            <InputLabel htmlFor="id-email" sx={{ mb: 1 }}>
+              Email<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
+            </InputLabel>
+            <TextField
+              id="id-email"
+              variant="outlined"
+              placeholder="Enter your email"
+              {...register('email')}
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message as string}
+              fullWidth
+            />
+          </Box>
+
+          <Box
+            maxWidth="436px"
+            sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
           >
-            Reset password
-          </Button>
-          <Link
-            href="/auth/sign-in"
-            style={{
-              margin: 'auto',
-              textDecoration: 'none',
-              fontSize: '15px',
-            }}
-          >
-            <Typography sx={{ color: 'grey.200' }}>Back to log in</Typography>
-          </Link>
-        </Box>
-      </form>
-      <Popup
-        open={openDialog}
-        onClose={handleDialogOnClose}
-        title="Verify your email!"
-        actions={
-          <Button
-            variant="outlined"
-            onClick={handleDialogOnClose}
-            sx={{
-              width: '100%',
-              height: '100%',
-              m: 0,
-              color: 'common.white',
-              border: 'none',
-              bgcolor: 'secondary.light',
-              ':hover': { bgcolor: 'secondary.main', border: 'none' },
-            }}
-          >
-            Close
-          </Button>
-        }
-      >
-        <DialogContentText variant="subtitle3">
-          Check your email accont to reset your password
-        </DialogContentText>
-      </Popup>
-    </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                p: 2,
+                color: 'common.white',
+                bgcolor: 'secondary.light',
+                fontSize: '16px',
+              }}
+              color="secondary"
+              disabled={mutation.isPending}
+            >
+              Reset password
+            </Button>
+            <Link
+              href="/auth/sign-in"
+              style={{
+                margin: 'auto',
+                textDecoration: 'none',
+                fontSize: '15px',
+              }}
+            >
+              <Typography sx={{ color: 'grey.200' }}>Back to log in</Typography>
+            </Link>
+          </Box>
+        </form>
+        <Popup
+          open={openDialog}
+          onClose={handleDialogOnClose}
+          title="Verify your email!"
+          actions={
+            <Button
+              variant="outlined"
+              onClick={handleDialogOnClose}
+              sx={{
+                width: '100%',
+                height: '100%',
+                m: 0,
+                color: 'common.white',
+                border: 'none',
+                bgcolor: 'secondary.light',
+                ':hover': { bgcolor: 'secondary.main', border: 'none' },
+              }}
+            >
+              Close
+            </Button>
+          }
+        >
+          <DialogContentText variant="subtitle3">
+            Check your email accont to reset your password
+          </DialogContentText>
+        </Popup>
+      </Box>
+    </>
   );
 };
 
