@@ -45,11 +45,8 @@ const SignupForm = () => {
 
   return (
     <>
-      <Backdrop
-        open={isPending}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={isPending} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
       <Box
         sx={{
@@ -61,7 +58,10 @@ const SignupForm = () => {
           bgcolor: 'common.white',
         }}
       >
-        <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
+        <Typography
+          variant={'h1'}
+          sx={{ fontSize: { md: '45px', xs: '30px' } }}
+        >
           Create an account
         </Typography>
         <Typography
@@ -233,10 +233,7 @@ const SignupForm = () => {
       >
         <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
       </Popup>
-    </Box>
-
     </>
-
   );
 };
 

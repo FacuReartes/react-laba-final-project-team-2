@@ -67,11 +67,8 @@ const SignInForm = () => {
 
   return (
     <>
-      <Backdrop
-        open={isLoading}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={isLoading} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
       <Box
         sx={{
@@ -147,7 +144,8 @@ const SignInForm = () => {
               }}
             >
               <InputLabel htmlFor="id-password" sx={formLabelStyles}>
-                Password<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
+                Password
+                <span style={{ color: 'red', marginLeft: '5px' }}>*</span>
               </InputLabel>
 
               <TextField
@@ -302,7 +300,6 @@ const SignInForm = () => {
       >
         <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
       </Popup>
-    </Box>
     </>
   );
 };
