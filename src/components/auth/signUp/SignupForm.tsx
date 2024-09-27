@@ -187,7 +187,7 @@ const SignupForm = () => {
       <Popup
         open={openDialog}
         onClose={() => setOpenDialog(false)}
-        title="Sign up error"
+        title="Sign up info"
         actions={
           <>
             <Button

@@ -105,7 +105,7 @@ export default async function Home({ searchParams }: HomeProps) {
       : filterOptions;
 
   await queryClient.prefetchQuery({
-    queryKey: ['products-filtered', filter],
+    queryKey: ['products-filtered'],
     queryFn: () =>
       fetchFilteredProducts(
         '/products' + getFromFiltersToAPIParams(filter, searchParams.search)

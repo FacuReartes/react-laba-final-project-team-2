@@ -30,7 +30,7 @@ export default function ProductCategorySelect() {
             defaultValue={[categories[0]?.id]}
             multiple
           >
-            {categories.map(
+            {categories?.map(
               (category: { id: number; attributes: { name: string } }) => (
                 <MenuItem key={category.id} value={category.id}>
                   {category.attributes.name}

@@ -114,6 +114,7 @@ const AddProductForm = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['products-filtered'] });
       methods.reset();
       setProductImages([]);
     },
