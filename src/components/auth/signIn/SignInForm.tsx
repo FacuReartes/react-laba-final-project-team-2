@@ -272,16 +272,6 @@ const SignInForm = () => {
             </Box>
           </form>
         </Box>
-        <Popup
-          open={openDialog}
-          onClose={closeDialog}
-          title={message}
-          actions={
-            <Button variant="contained" color={'info'} onClick={closeDialog}>
-              Ok
-            </Button>
-          }
-        ></Popup>
       </Box>
       <Popup
         open={openDialog}

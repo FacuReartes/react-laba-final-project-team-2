@@ -183,23 +183,6 @@ const SignupForm = () => {
             </Box>
           </form>
         </Box>
-        <Popup
-          open={openDialog}
-          onClose={() => setOpenDialog(false)}
-          title={message}
-          actions={
-            <Button
-              variant="contained"
-              color={'info'}
-              onClick={() => {
-                setOpenDialog(false);
-                router.push('/auth/sign-in');
-              }}
-            >
-              Ok
-            </Button>
-          }
-        ></Popup>
       </Box>
       <Popup
         open={openDialog}
