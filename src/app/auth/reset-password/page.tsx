@@ -5,7 +5,6 @@ import { Suspense } from 'react';
 import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPasswordFormContainer';
 import sneakersResetPassword from '@/images/sneakers-reset-password.webp';
 import { Metadata } from 'next';
-import Loading from '@/components/common/Loading';
 
 export const metadata: Metadata = {
   title: 'Reset password',
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={<Loading/>}>
+    <Suspense fallback={''}>
       <Box
         sx={{
           display: 'flex',
