@@ -2,6 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import image404 from '@/images/404-img.webp';
+import GoBackButton from '@/components/common/GoBackButton';
 
 const pageText = {
   error: 'Error 404',
@@ -66,17 +67,7 @@ export default function NotFoundPage() {
             alignItems: 'center',
           }}
         >
-          <Button
-            variant="outlined"
-            sx={{
-              borderColor: 'secondary.light',
-              color: 'secondary.light',
-              ':hover': { borderColor: 'secondary.light' },
-              flexGrow: 1,
-            }}
-          >
-            Go back
-          </Button>
+          <GoBackButton />
           <Button
             variant="contained"
             sx={{
@@ -130,17 +121,7 @@ export default function NotFoundPage() {
               mt: '16px',
             }}
           >
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: 'secondary.light',
-                color: 'secondary.light',
-                ':hover': { borderColor: 'secondary.light' },
-                flexGrow: 1,
-              }}
-            >
-              Go back
-            </Button>
+            <GoBackButton />
             <Button
               variant="contained"
               sx={{
