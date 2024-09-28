@@ -48,10 +48,10 @@ export default function ProductSizesButtons() {
                 },
                 width: '100%',
                 border: errors.sizes && '1px solid !important',
-                borderColor: 'secondary.light',
+                borderColor: '#FE645E !important',
               }}
             >
-              {sizes.map(
+              {Array.isArray(sizes) && sizes.map(
                 (size: { id: number; attributes: { value: number } }) => (
                   <ToggleButton
                     key={size.id}

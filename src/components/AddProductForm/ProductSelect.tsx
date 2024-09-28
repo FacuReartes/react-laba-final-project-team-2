@@ -35,7 +35,7 @@ export default function ProductSelect({ queryObj }: ProductSelectProps) {
         error={Boolean(errors[queryKey[0]])}
         defaultValue={properties[0]?.id}
       >
-        {properties?.map(
+        {Array.isArray(properties) && properties.map(
           (property: { id: number; attributes: { name: string } }) => (
             <MenuItem key={property.id} value={property.id}>
               {property.attributes.name}
