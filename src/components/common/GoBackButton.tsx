@@ -3,7 +3,7 @@
 import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
-export default function GoBackButton() {
+export default function GoBackButton({ text }: { text: string }) {
   const router = useRouter();
   return (
     <Button
@@ -12,11 +12,10 @@ export default function GoBackButton() {
         borderColor: 'secondary.light',
         color: 'secondary.light',
         ':hover': { borderColor: 'secondary.light' },
-        flexGrow: 1,
       }}
       onClick={() => router.back()}
     >
-      Go back
+      {text}
     </Button>
   );
 }
