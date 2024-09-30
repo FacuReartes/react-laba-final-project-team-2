@@ -105,10 +105,16 @@ export default async function Home({ searchParams }: HomeProps) {
       : filterOptions;
 
   await queryClient.prefetchQuery({
-    queryKey: ['products-filtered'],
+    queryKey: ['products-filtered', filter, searchParams.search],
     queryFn: () =>
       fetchFilteredProducts(
-        '/products' + getFromFiltersToAPIParams(filter, searchParams.search)
+        '/products' +
+          getFromFiltersToAPIParams(
+            filter,
+            Array.isArray(searchParams.search)
+              ? searchParams.search[0]
+              : searchParams.search
+          )
       ),
     staleTime: 1000 * 60 * 5,
   });
@@ -116,12 +122,12 @@ export default async function Home({ searchParams }: HomeProps) {
   const products = queryClient.getQueryData<{ data: any[] }>([
     'products-filtered',
     filter,
+    searchParams.search,
   ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <HomePageContainer
-        paramsQuery={searchParams}
         filterOptions={filterOptions}
         initialProducts={products ? products : { data: [] }}
       />

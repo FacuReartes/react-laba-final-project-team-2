@@ -9,24 +9,22 @@ import HomePageContent from './HomePageContent';
 import { FilterOptionsType } from '../common/FilterSideBar/FilterForm';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import {
   fetchFilteredProducts,
   getFromFiltersToAPIParams,
 } from '@/utils/prefetchingProducts';
 
-interface HomePageContainerProps {
-  paramsQuery: Record<string, string | string[]>;
+interface Props {
   filterOptions: FilterOptionsType;
   initialProducts: { data: any[] };
 }
 
 export default function HomePageContainer({
-  paramsQuery,
   filterOptions,
   initialProducts,
-}: HomePageContainerProps) {
+}: Props) {
   const [showFilters, setShowFilters] = useState(false);
   const {
     filter,
@@ -35,8 +33,9 @@ export default function HomePageContainer({
     getFiltersAsParams,
     initialFilter,
   } = useFilter({ initial: filterOptions });
-  const [searchTerm, setSearchTerm] = useState<string | string[]>('');
+  const [searchTerm, setSearchTerm] = useState<string | null>('');
 
+  const paramsQuery = useSearchParams();
   const isDesktop = useMediaQuery('(min-width: 900px)');
   const router = useRouter();
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
@@ -57,7 +56,7 @@ export default function HomePageContainer({
   useEffect(() => {
     if (filterOptions && paramsQuery) {
       setFilterFromParams(paramsQuery, filterOptions);
-      setSearchTerm(paramsQuery.search);
+      setSearchTerm(paramsQuery.get('search'));
     }
   }, []);
 
@@ -87,13 +86,9 @@ export default function HomePageContainer({
         }}
       >
         {isDesktop ? (
-          <Header
-            search={Array.isArray(searchTerm) ? searchTerm[0] : searchTerm}
-          />
+          <Header />
         ) : !showFilters ? (
-          <Header
-            search={Array.isArray(searchTerm) ? searchTerm[0] : searchTerm}
-          />
+          <Header />
         ) : (
           <IconButton
             sx={{ width: '40px', m: '25px 20px 0 auto' }}
@@ -105,18 +100,14 @@ export default function HomePageContainer({
         <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
           <FilterSideBar
             filterOptions={filterOptions}
-            searchTerm={Array.isArray(searchTerm) ? searchTerm[0] : searchTerm}
             showFilters={showFilters}
             updateFilter={handleUpdateFilter}
             initialFilter={initialFilter}
             matches={products.data?.length ? products.data.length : 0}
           />
-          
+
           <HomePageContent
             products={products?.data}
-            searchTerm={
-              Array.isArray(searchTerm) ? searchTerm[0] : searchTerm
-            }
             showFilters={showFilters}
             setShowFilters={() => setShowFilters(!showFilters)}
             isPending={isPending}

@@ -4,17 +4,12 @@ import { APIProductsType } from '@/lib/apiDataTypes';
 import { useContext } from 'react';
 import { CartContext, ICartContext } from '@/context/CartContext';
 
-interface ProductsContainerProps {
-  searchTerm: string;
+interface Props {
   products: APIProductsType[];
 }
 
-export default function ProductsContainer({
-  products,
-}: ProductsContainerProps) {
-
+export default function ProductsContainer({ products }: Props) {
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
-
 
   return (
     <Box
