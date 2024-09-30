@@ -19,6 +19,7 @@ import Popup from '@/components/common/Popup';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
 import EmailInput from '../common/EmailInput';
+import ActionButton from '../common/ActionButton';
 
 type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
 
@@ -115,20 +116,10 @@ const ForgotPasswordForm = () => {
             maxWidth="436px"
             sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                p: 2,
-                color: 'common.white',
-                bgcolor: 'secondary.light',
-                fontSize: '16px',
-              }}
-              color="secondary"
-              disabled={mutation.isPending}
-            >
-              Reset password
-            </Button>
+            <ActionButton
+              isLoading={mutation.isPending}
+              text="Reset password"
+            />
             <Link
               href="/auth/sign-in"
               style={{

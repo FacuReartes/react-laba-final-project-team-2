@@ -17,6 +17,7 @@ import PasswordInput from '../common/PasswordInput';
 import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 import EmailInput from '../common/EmailInput';
 import NameInput from '../common/NameInput';
+import ActionButton from '../common/ActionButton';
 
 const SignupForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
@@ -88,15 +89,7 @@ const SignupForm = () => {
                 mt: '90px',
               }}
             >
-              <Button
-                type="submit"
-                variant="contained"
-                color="error"
-                sx={{ color: 'common.white', width: '100%', height: '48px' }}
-                disabled={isPending}
-              >
-                Sign Up
-              </Button>
+              <ActionButton isLoading={isPending} text={'Sign up'} />
               <Typography variant="subtitle1" sx={{ color: 'common.black' }}>
                 Already have an account?{' '}
                 <Link

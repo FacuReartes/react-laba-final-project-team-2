@@ -18,6 +18,7 @@ import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
 import PasswordInput from '../common/PasswordInput';
 import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
+import ActionButton from '../common/ActionButton';
 
 interface APISuccessResponse {
   jwt: string;
@@ -167,15 +168,10 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
                 mt: '90px',
               }}
             >
-              <Button
-                type="submit"
-                variant="contained"
-                color="error"
-                sx={{ color: 'common.white', width: '100%', height: '48px' }}
-                disabled={mutation.isPending}
-              >
-                Reset password
-              </Button>
+              <ActionButton
+                isLoading={mutation.isPending}
+                text="Reset password"
+              />
               <Link
                 style={{
                   textDecoration: 'none',

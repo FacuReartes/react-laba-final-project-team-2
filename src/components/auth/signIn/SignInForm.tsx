@@ -15,6 +15,7 @@ import Loading from '@/components/common/Loading';
 import EmailInput from '../common/EmailInput';
 import PasswordInput from '../common/PasswordInput';
 import RememberMeInput from '../common/RememberMeInput';
+import ActionButton from '../common/ActionButton';
 
 const containerWidth = { md: '459px', xs: '320px' };
 const inputWidth = { md: '436px', xs: '320px' };
@@ -149,21 +150,7 @@ const SignInForm = () => {
                 alignItems: 'center',
               }}
             >
-              <Button
-                type="submit"
-                variant="contained"
-                color="error"
-                sx={{
-                  color: 'common.white',
-                  width: inputWidth,
-                  height: { md: '48px', xs: '33px' },
-                  fontSize: { md: 'inherit', xs: '11px' },
-                  alignSelf: 'flex-start',
-                }}
-                disabled={isLoading}
-              >
-                Sign in
-              </Button>
+              <ActionButton text="Sign in" isLoading={isLoading} />
               <Typography
                 variant="subtitle1"
                 sx={{ color: 'common.black' }}
