@@ -3,8 +3,6 @@ import {
   Box,
   Button,
   Typography,
-  Checkbox,
-  FormControlLabel,
   useMediaQuery,
   Backdrop,
 } from '@mui/material';
@@ -16,6 +14,7 @@ import { useSignIn } from '@/hooks/useSignIn';
 import Loading from '@/components/common/Loading';
 import EmailInput from '../common/EmailInput';
 import PasswordInput from '../common/PasswordInput';
+import RememberMeInput from '../common/RememberMeInput';
 
 const containerWidth = { md: '459px', xs: '320px' };
 const inputWidth = { md: '436px', xs: '320px' };
@@ -119,25 +118,8 @@ const SignInForm = () => {
                 width: inputWidth,
               }}
             >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...register('rememberMe')}
-                    sx={{
-                      '& .MuiSvgIcon-root': {
-                        fontSize: { md: '16px', xs: '12px' },
-                      },
-                    }}
-                  />
-                }
-                label="Remember me"
-                sx={{
-                  '& .MuiFormControlLabel-label': {
-                    fontSize: { md: '16px', xs: '10px' },
-                    ml: '-6px',
-                  },
-                }}
-              />
+              <RememberMeInput register={register} />
+
               <Typography
                 variant="subtitle1"
                 sx={{
