@@ -6,7 +6,6 @@ import {
   DialogContentText,
   Backdrop,
 } from '@mui/material';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,6 +19,7 @@ import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
 import EmailInput from '../common/EmailInput';
 import ActionButton from '../common/ActionButton';
+import SecondaryActionButton from '../common/SecondaryActionButton';
 
 type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
 
@@ -120,16 +120,10 @@ const ForgotPasswordForm = () => {
               isLoading={mutation.isPending}
               text="Reset password"
             />
-            <Link
-              href="/auth/sign-in"
-              style={{
-                margin: 'auto',
-                textDecoration: 'none',
-                fontSize: '15px',
-              }}
-            >
-              <Typography sx={{ color: 'grey.200' }}>Back to log in</Typography>
-            </Link>
+            <SecondaryActionButton
+              btnText="Back to login"
+              goto="/auth/sign-in"
+            />
           </Box>
         </form>
         <Popup

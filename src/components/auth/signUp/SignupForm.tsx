@@ -10,7 +10,6 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/common/Loading';
 import PasswordInput from '../common/PasswordInput';
@@ -18,6 +17,7 @@ import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 import EmailInput from '../common/EmailInput';
 import NameInput from '../common/NameInput';
 import ActionButton from '../common/ActionButton';
+import SecondaryActionButton from '../common/SecondaryActionButton';
 
 const SignupForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
@@ -90,22 +90,11 @@ const SignupForm = () => {
               }}
             >
               <ActionButton isLoading={isPending} text={'Sign up'} />
-              <Typography variant="subtitle1" sx={{ color: 'common.black' }}>
-                Already have an account?{' '}
-                <Link
-                  style={{
-                    textDecoration: 'none',
-                    fontWeight: '500',
-                  }}
-                  href="/auth/sign-in"
-                >
-                  <Typography
-                    sx={{ color: 'secondary.light', display: 'inline' }}
-                  >
-                    Log in
-                  </Typography>
-                </Link>
-              </Typography>
+              <SecondaryActionButton
+                text={'Already have an account? '}
+                btnText={'Sign in'}
+                goto={'/auth/sign-in'}
+              />
             </Box>
           </form>
         </Box>

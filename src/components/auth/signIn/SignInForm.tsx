@@ -16,6 +16,7 @@ import EmailInput from '../common/EmailInput';
 import PasswordInput from '../common/PasswordInput';
 import RememberMeInput from '../common/RememberMeInput';
 import ActionButton from '../common/ActionButton';
+import SecondaryActionButton from '../common/SecondaryActionButton';
 
 const containerWidth = { md: '459px', xs: '320px' };
 const inputWidth = { md: '436px', xs: '320px' };
@@ -151,27 +152,11 @@ const SignInForm = () => {
               }}
             >
               <ActionButton text="Sign in" isLoading={isLoading} />
-              <Typography
-                variant="subtitle1"
-                sx={{ color: 'common.black' }}
-                fontWeight={500}
-                fontSize={{ md: '15px', xs: '10px' }}
-              >
-                Don&apos;t have an account?{' '}
-                <Link
-                  style={{
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                  }}
-                  href="/auth/sign-up"
-                >
-                  <Typography
-                    sx={{ color: 'secondary.light', display: 'inline' }}
-                  >
-                    Sign up
-                  </Typography>
-                </Link>
-              </Typography>
+              <SecondaryActionButton
+                text="Don't have an account? "
+                btnText="Sign up"
+                goto="/auth/sign-up"
+              />
             </Box>
           </form>
         </Box>

@@ -9,7 +9,6 @@ import {
   Backdrop,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Popup from '@/components/common/Popup';
@@ -19,6 +18,7 @@ import Loading from '@/components/common/Loading';
 import PasswordInput from '../common/PasswordInput';
 import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 import ActionButton from '../common/ActionButton';
+import SecondaryActionButton from '../common/SecondaryActionButton';
 
 interface APISuccessResponse {
   jwt: string;
@@ -172,17 +172,10 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
                 isLoading={mutation.isPending}
                 text="Reset password"
               />
-              <Link
-                style={{
-                  textDecoration: 'none',
-                  fontWeight: '500',
-                }}
-                href="/sign-in"
-              >
-                <Typography sx={{ color: 'grey.200' }}>
-                  Back to login
-                </Typography>
-              </Link>
+              <SecondaryActionButton
+                btnText="Back to Login"
+                goto="/auth/sign-in"
+              />
             </Box>
           </form>
         </Box>
