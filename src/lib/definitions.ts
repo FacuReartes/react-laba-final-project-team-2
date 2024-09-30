@@ -1,5 +1,3 @@
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-
 export type ImageType = {
   id: number;
   attributes: {
@@ -125,6 +123,6 @@ export type SignInFormInputs = {
 };
 
 export type SingleFormInput = {
-  register: UseFormRegister<SignUpFormData>;
-  errors: FieldErrors<SignUpFormData>;
+  register: any;
+  errors: any;
 };
