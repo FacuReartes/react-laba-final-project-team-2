@@ -7,37 +7,28 @@ import {
   Backdrop,
   Box,
   Button,
-  IconButton,
-  InputAdornment,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useShowPassword } from '@/hooks/useShowPassword';
-import { Visibility } from '@mui/icons-material';
 import Loading from '@/components/common/Loading';
+import PasswordInput from '../common/PasswordInput';
+import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
+import EmailInput from '../common/EmailInput';
+import NameInput from '../common/NameInput';
 
 const SignupForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
   const router = useRouter();
   const {
-    register,
     handleSubmit,
+    register,
     formState: { errors },
   } = useSignupForm();
 
   const { mutate, setOpenDialog, openDialog, message, isPending } =
     useRegisterUser();
-
-  const {
-    handleClickShowPassword,
-    handleClickShowConfirmPassword,
-    showPassword,
-    showConfirmPassword,
-  } = useShowPassword();
 
   const submitData = (data: SignUpFormData) => {
     mutate(data);
@@ -83,68 +74,10 @@ const SignupForm = () => {
             }}
             onSubmit={handleSubmit(submitData)}
           >
-            <TextField
-              label="Name *"
-              variant="outlined"
-              placeholder="Hayman Andrews"
-              {...register('username')}
-              error={Boolean(errors.username)}
-              helperText={errors.username && errors.username.message}
-            />
-            <TextField
-              label="Email *"
-              variant="outlined"
-              placeholder="example@mail.com"
-              {...register('email')}
-              error={Boolean(errors.email)}
-              helperText={errors.email && errors.email.message}
-            />
-            <TextField
-              type={showPassword ? 'text' : 'password'}
-              label="Password *"
-              variant="outlined"
-              placeholder="at least 8 characters"
-              {...register('password')}
-              error={Boolean(errors.password)}
-              helperText={errors.password && errors.password.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              type={showConfirmPassword ? 'text' : 'password'}
-              label="Confirm Password *"
-              variant="outlined"
-              placeholder="at least 8 characters"
-              {...register('confirmPassword')}
-              error={Boolean(errors.confirmPassword)}
-              helperText={
-                errors.confirmPassword && errors.confirmPassword.message
-              }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowConfirmPassword}
-                      edge="end"
-                    >
-                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <NameInput register={register} errors={errors} />
+            <EmailInput register={register} errors={errors} />
+            <PasswordInput register={register} errors={errors} />
+            <ConfirmPasswordInput register={register} errors={errors} />
 
             <Box
               sx={{

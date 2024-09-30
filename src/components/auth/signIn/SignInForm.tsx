@@ -2,13 +2,9 @@
 import {
   Box,
   Button,
-  InputLabel,
-  TextField,
   Typography,
   Checkbox,
   FormControlLabel,
-  InputAdornment,
-  IconButton,
   useMediaQuery,
   Backdrop,
 } from '@mui/material';
@@ -17,36 +13,15 @@ import { useSignInForm } from '@/lib/schemas/authSchemas';
 import { SignInFormInputs } from '@/lib/definitions';
 import Popup from '@/components/common/Popup';
 import { useSignIn } from '@/hooks/useSignIn';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useShowPassword } from '@/hooks/useShowPassword';
 import Loading from '@/components/common/Loading';
+import EmailInput from '../common/EmailInput';
+import PasswordInput from '../common/PasswordInput';
 
 const containerWidth = { md: '459px', xs: '320px' };
 const inputWidth = { md: '436px', xs: '320px' };
 const marginTop = { md: '289px', xs: '94px' };
 const marginLeft = { md: '196px', xs: '20px' };
 const marginRight = { md: '305px', xs: '20px' };
-
-const textFieldStyles = {
-  '& .MuiOutlinedInput-root': {
-    boxSizing: 'border-box',
-    width: inputWidth,
-    borderRadius: { md: '8px', xs: '6px' },
-    height: { md: '48px', xs: '33px' },
-  },
-  '& .MuiOutlinedInput-input': {
-    fontSize: { md: '15px', xs: '10px' },
-  },
-  '& .MuiOutlinedInput-input::placeholder': {
-    fontSize: { md: '15px', xs: '10px' },
-  },
-};
-
-const formLabelStyles = {
-  fontWeight: '500',
-  fontSize: { md: 'inherit', xs: '12px' },
-};
 
 const SignInForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
@@ -58,8 +33,6 @@ const SignInForm = () => {
 
   const { handleSignIn, openDialog, closeDialog, message, isLoading } =
     useSignIn();
-
-  const { handleClickShowPassword, showPassword } = useShowPassword();
 
   const submitData = async (data: SignInFormInputs) => {
     await handleSignIn(data);
@@ -121,19 +94,7 @@ const SignInForm = () => {
                 mb: '24px',
               }}
             >
-              <InputLabel htmlFor="id-email" sx={formLabelStyles}>
-                Email<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
-              </InputLabel>
-              <TextField
-                id="id-email"
-                variant="outlined"
-                placeholder="example@mail.com"
-                sx={textFieldStyles}
-                autoFocus={true}
-                {...register('email')}
-                error={Boolean(errors.email)}
-                helperText={errors.email?.message as string}
-              />
+              <EmailInput register={register} errors={errors} />
             </Box>
 
             <Box
@@ -143,34 +104,7 @@ const SignInForm = () => {
                 gap: { md: '8px', xs: '4px' },
               }}
             >
-              <InputLabel htmlFor="id-password" sx={formLabelStyles}>
-                Password
-                <span style={{ color: 'red', marginLeft: '5px' }}>*</span>
-              </InputLabel>
-
-              <TextField
-                id="id-password"
-                variant="outlined"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="at least 8 characters"
-                sx={textFieldStyles}
-                {...register('password')}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message as string}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <PasswordInput register={register} errors={errors} />
             </Box>
 
             <Box

@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
-  TextField,
   Typography,
   DialogContentText,
   Backdrop,
@@ -17,6 +16,8 @@ import Popup from '@/components/common/Popup';
 import axios from 'axios';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
+import PasswordInput from '../common/PasswordInput';
+import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 
 interface APISuccessResponse {
   jwt: string;
@@ -115,11 +116,8 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
 
   return (
     <>
-      <Backdrop
-        open={mutation.isPending}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={mutation.isPending} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
       <Box
         sx={{
@@ -131,7 +129,10 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
           bgcolor: 'common.white',
         }}
       >
-        <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
+        <Typography
+          variant={'h1'}
+          sx={{ fontSize: { md: '45px', xs: '30px' } }}
+        >
           Reset password
         </Typography>
         <Typography
@@ -154,30 +155,8 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
             }}
             onSubmit={handleSubmit(onSubmitHandler)}
           >
-            <TextField
-              id="id-password"
-              label="Password *"
-              variant="outlined"
-              placeholder="at least 8 characters"
-              sx={{ height: '48px' }}
-              {...register('password')}
-            />
-            {errors.password && (
-              <Typography color="error">{errors.password.message}</Typography>
-            )}
-            <TextField
-              id="id-confirm-password"
-              label="Confirm Password *"
-              variant="outlined"
-              placeholder="at least 8 characters"
-              sx={{ height: '48px' }}
-              {...register('confirmPassword')}
-            />
-            {errors.confirmPassword && (
-              <Typography color="error">
-                {errors.confirmPassword.message}
-              </Typography>
-            )}
+            <PasswordInput register={register} errors={errors} />
+            <ConfirmPasswordInput register={register} errors={errors} />
 
             <Box
               sx={{
@@ -204,7 +183,9 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
                 }}
                 href="/sign-in"
               >
-                <Typography sx={{ color: 'grey.200' }}>Back to login</Typography>
+                <Typography sx={{ color: 'grey.200' }}>
+                  Back to login
+                </Typography>
               </Link>
             </Box>
           </form>

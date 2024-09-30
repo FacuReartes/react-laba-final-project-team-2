@@ -2,9 +2,7 @@
 import {
   Box,
   Button,
-  TextField,
   Typography,
-  InputLabel,
   DialogContentText,
   Backdrop,
 } from '@mui/material';
@@ -20,6 +18,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import Popup from '@/components/common/Popup';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
+import EmailInput from '../common/EmailInput';
 
 type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
 
@@ -89,11 +88,8 @@ const ForgotPasswordForm = () => {
 
   return (
     <>
-      <Backdrop
-        open={mutation.isPending}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={mutation.isPending} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
       <Box
         sx={{
@@ -113,20 +109,7 @@ const ForgotPasswordForm = () => {
           style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
           onSubmit={handleSubmit(onSubmitHandler)}
         >
-          <Box>
-            <InputLabel htmlFor="id-email" sx={{ mb: 1 }}>
-              Email<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
-            </InputLabel>
-            <TextField
-              id="id-email"
-              variant="outlined"
-              placeholder="Enter your email"
-              {...register('email')}
-              error={Boolean(errors.email)}
-              helperText={errors.email?.message as string}
-              fullWidth
-            />
-          </Box>
+          <EmailInput register={register} errors={errors} />
 
           <Box
             maxWidth="436px"
