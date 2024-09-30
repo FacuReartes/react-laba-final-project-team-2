@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
   DialogContentText,
+  Backdrop,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
@@ -14,6 +15,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Popup from '@/components/common/Popup';
 import axios from 'axios';
+import { env } from '../../../../env';
+import Loading from '@/components/common/Loading';
 
 interface APISuccessResponse {
   jwt: string;
@@ -50,14 +53,11 @@ const resetPassword = async ({
   passwordConfirmation,
 }: ResetPasswordVariables) => {
   try {
-    const response = axios.post(
-      'https://shoes-shop-strapi.herokuapp.com/api/auth/reset-password',
-      {
-        code,
-        password,
-        passwordConfirmation,
-      }
-    );
+    const response = axios.post(`${env.BASE_URL}/auth/reset-password`, {
+      code,
+      password,
+      passwordConfirmation,
+    });
     return (await response).data as APISuccessResponse;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
@@ -114,149 +114,158 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: { md: '50%', xs: '100%' },
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        pt: { md: '288px', xs: '94px' },
-        bgcolor: 'common.white',
-      }}
-    >
-      <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
-        Reset password
-      </Typography>
-      <Typography
-        variant={'subtitle1'}
-        sx={{ mb: '48px', pl: '20px', fontSize: { md: '15px', xs: '12px' } }}
+    <>
+      <Backdrop
+        open={mutation.isPending}
+        sx={{ zIndex: 99 }}
       >
-        Please create a new password here
-      </Typography>
-
+        <Loading color='common.white' circularColor='secondary.main'/>
+      </Backdrop>
       <Box
         sx={{
-          width: { md: '436px', xs: '320px' },
+          width: { md: '50%', xs: '100%' },
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          pt: { md: '288px', xs: '94px' },
+          bgcolor: 'common.white',
         }}
       >
-        <form
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '24px',
-          }}
-          onSubmit={handleSubmit(onSubmitHandler)}
+        <Typography variant={'h1'} sx={{ fontSize: { md: '45px', xs: '30px' } }}>
+          Reset password
+        </Typography>
+        <Typography
+          variant={'subtitle1'}
+          sx={{ mb: '48px', pl: '20px', fontSize: { md: '15px', xs: '12px' } }}
         >
-          <TextField
-            id="id-password"
-            label="Password *"
-            variant="outlined"
-            placeholder="at least 8 characters"
-            sx={{ height: '48px' }}
-            {...register('password')}
-          />
-          {errors.password && (
-            <Typography color="error">{errors.password.message}</Typography>
-          )}
-          <TextField
-            id="id-confirm-password"
-            label="Confirm Password *"
-            variant="outlined"
-            placeholder="at least 8 characters"
-            sx={{ height: '48px' }}
-            {...register('confirmPassword')}
-          />
-          {errors.confirmPassword && (
-            <Typography color="error">
-              {errors.confirmPassword.message}
-            </Typography>
-          )}
+          Please create a new password here
+        </Typography>
 
-          <Box
-            sx={{
+        <Box
+          sx={{
+            width: { md: '436px', xs: '320px' },
+          }}
+        >
+          <form
+            style={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
-              gap: '16px',
-              mt: '90px',
+              gap: '24px',
             }}
+            onSubmit={handleSubmit(onSubmitHandler)}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              color="error"
-              sx={{ color: 'common.white', width: '100%', height: '48px' }}
-            >
-              Reset password
-            </Button>
-            <Link
-              style={{
-                textDecoration: 'none',
-                fontWeight: '500',
+            <TextField
+              id="id-password"
+              label="Password *"
+              variant="outlined"
+              placeholder="at least 8 characters"
+              sx={{ height: '48px' }}
+              {...register('password')}
+            />
+            {errors.password && (
+              <Typography color="error">{errors.password.message}</Typography>
+            )}
+            <TextField
+              id="id-confirm-password"
+              label="Confirm Password *"
+              variant="outlined"
+              placeholder="at least 8 characters"
+              sx={{ height: '48px' }}
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword && (
+              <Typography color="error">
+                {errors.confirmPassword.message}
+              </Typography>
+            )}
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '16px',
+                mt: '90px',
               }}
-              href="/sign-in"
             >
-              <Typography sx={{ color: 'grey.200' }}>Back to login</Typography>
-            </Link>
-          </Box>
-        </form>
-      </Box>
-      <Popup
-        open={openDialog}
-        onClose={handleDialogOnClose}
-        title="Password Changed!"
-        actions={
-          <Button
-            variant="outlined"
-            onClick={handleDialogOnClose}
-            sx={{
-              width: '100%',
-              height: '100%',
-              m: 0,
-              color: 'common.white',
-              border: 'none',
-              bgcolor: 'secondary.light',
-              ':hover': { bgcolor: 'secondary.main', border: 'none' },
-            }}
-            href="/auth/sign-in"
-          >
-            Back to Login
-          </Button>
-        }
-      >
-        {
+              <Button
+                type="submit"
+                variant="contained"
+                color="error"
+                sx={{ color: 'common.white', width: '100%', height: '48px' }}
+                disabled={mutation.isPending}
+              >
+                Reset password
+              </Button>
+              <Link
+                style={{
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                }}
+                href="/sign-in"
+              >
+                <Typography sx={{ color: 'grey.200' }}>Back to login</Typography>
+              </Link>
+            </Box>
+          </form>
+        </Box>
+        <Popup
+          open={openDialog}
+          onClose={handleDialogOnClose}
+          title="Password Changed!"
+          actions={
+            <Button
+              variant="outlined"
+              onClick={handleDialogOnClose}
+              sx={{
+                width: '100%',
+                height: '100%',
+                m: 0,
+                color: 'common.white',
+                border: 'none',
+                bgcolor: 'secondary.light',
+                ':hover': { bgcolor: 'secondary.main', border: 'none' },
+              }}
+              href="/auth/sign-in"
+            >
+              Back to Login
+            </Button>
+          }
+        >
+          {
+            <DialogContentText variant="subtitle3">
+              Congrats, your password has been changed successfully.
+            </DialogContentText>
+          }
+        </Popup>
+        <Popup
+          open={openErrorDialog}
+          onClose={handleErrorDialogOnClose}
+          title="Password Reset Fail"
+          actions={
+            <Button
+              variant="outlined"
+              onClick={handleErrorDialogOnClose}
+              sx={{
+                width: '100%',
+                height: '100%',
+                m: 0,
+                color: 'common.white',
+                border: 'none',
+                bgcolor: 'secondary.light',
+                ':hover': { bgcolor: 'secondary.main', border: 'none' },
+              }}
+            >
+              Close
+            </Button>
+          }
+        >
           <DialogContentText variant="subtitle3">
-            Congrats, your password has been changed successfully.
+            {dialogErrorMessage}
           </DialogContentText>
-        }
-      </Popup>
-      <Popup
-        open={openErrorDialog}
-        onClose={handleErrorDialogOnClose}
-        title="Password Reset Fail"
-        actions={
-          <Button
-            variant="outlined"
-            onClick={handleErrorDialogOnClose}
-            sx={{
-              width: '100%',
-              height: '100%',
-              m: 0,
-              color: 'common.white',
-              border: 'none',
-              bgcolor: 'secondary.light',
-              ':hover': { bgcolor: 'secondary.main', border: 'none' },
-            }}
-          >
-            Close
-          </Button>
-        }
-      >
-        <DialogContentText variant="subtitle3">
-          {dialogErrorMessage}
-        </DialogContentText>
-      </Popup>
-    </Box>
+        </Popup>
+      </Box>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
+import { env } from '../../env';
 
 export const useUploadAvatar = (jwt: string | undefined) => {
   const [avatarData, setAvatarData] = useState<object | null>(null);
@@ -15,15 +16,11 @@ export const useUploadAvatar = (jwt: string | undefined) => {
       const formData = new FormData();
       formData.append('files', file);
 
-      return axios.post(
-        'https://shoes-shop-strapi.herokuapp.com/api/upload',
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      );
+      return axios.post(`${env.BASE_URL}/upload`, formData, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
     },
     onSuccess: data => {
       setAvatarData(data.data[0]);

@@ -5,12 +5,16 @@ interface LoadingProps {
   message?: string;
   size?: number;
   overlay?: boolean;
+  color?: string;
+  circularColor?: string;
 }
 
 export default function Loading({
   message = 'Loading...',
   size = 50,
   overlay = false,
+  color,
+  circularColor
 }: LoadingProps) {
   return (
     <Box
@@ -24,11 +28,12 @@ export default function Loading({
       justifyContent="center"
       alignItems="center"
       bgcolor={overlay ? 'rgba(255, 255, 255, 0.75)' : 'transparent'}
+      my={5}
     >
       <Box textAlign="center">
-        <CircularProgress size={size} />
+        <CircularProgress size={size} sx={{ color: circularColor ?? '' }}/>
         {message && (
-          <Typography variant="subtitle3" margin={'30px'}>
+          <Typography variant="subtitle3" margin={'20px'} color={color ?? ''}>
             {message}
           </Typography>
         )}

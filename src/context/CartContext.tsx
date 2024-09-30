@@ -10,7 +10,7 @@ export interface ICartProduct {
   description?: string;
   price: number;
   gender: number | string;
-  sizes?: number | string;
+  sizes: number | string;
   color?: number | string;
   brand?: number | string;
   quantity: number;
@@ -23,26 +23,40 @@ enum QuantityAction {
 
 export interface ICartContext {
   cartList: ICartProduct[];
-  handleAddToCart: (product: APIProductsType) => void;
-  handleQuantity: (productID: number, action: QuantityAction) => void;
-  handleDelete: (productID: number) => void;
+  handleAddToCart: (
+    product: APIProductsType,
+    selectedSize: number | string
+  ) => void;
+  handleQuantity: (
+    productID: number,
+    selectedSize: number | string,
+    action: QuantityAction
+  ) => void;
+  handleDelete: (productID: number, selectedSize: number | string) => void;
+  loading: boolean;
 }
 
 export const CartContext = createContext<ICartContext | null>(null);
 
 const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [cartList, setCartList] = useState<ICartProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const storage: string | null = localStorage.getItem('cart-list');
     if (storage) setCartList(JSON.parse(storage));
+    setLoading(false);
   }, []);
 
-  const handleAddToCart = (product: APIProductsType): void => {
+  const handleAddToCart = (
+    product: APIProductsType,
+    selectedSize: number | string
+  ): void => {
     let newList: ICartProduct[] = [...cartList];
 
     const existingProduct: ICartProduct | undefined = newList.find(
-      (cartProduct: ICartProduct) => cartProduct.id === product.id
+      (cartProduct: ICartProduct) =>
+        cartProduct.id === product.id && cartProduct.sizes === selectedSize
     );
 
     if (existingProduct) {
@@ -54,6 +68,7 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
         imageUrl: product.attributes.images.data[0].attributes.url,
         price: product.attributes.price,
         gender: product.attributes.gender.data.attributes.name,
+        sizes: selectedSize,
         quantity: 1,
       };
 
@@ -65,11 +80,15 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
     localStorage.setItem('cart-list', JSON.stringify(newList));
   };
 
-  const handleQuantity = (productID: number, action: QuantityAction): void => {
+  const handleQuantity = (
+    productID: number,
+    selectedSize: number | string,
+    action: QuantityAction
+  ): void => {
     const newList: ICartProduct[] = [...cartList];
 
     newList.forEach((product: ICartProduct) => {
-      if (product.id === productID) {
+      if (product.id === productID && product.sizes === selectedSize) {
         if (action === QuantityAction.plus) {
           product.quantity += 1;
         } else {
@@ -85,9 +104,13 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
     localStorage.setItem('cart-list', JSON.stringify(newList));
   };
 
-  const handleDelete = (productID: number): void => {
+  const handleDelete = (
+    productID: number,
+    selectedSize: number | string
+  ): void => {
     const newList: ICartProduct[] = cartList.filter(
-      (product: ICartProduct) => product.id !== productID
+      (product: ICartProduct) =>
+        !(product.id === productID && product.sizes === selectedSize)
     );
 
     setCartList(newList);
@@ -97,7 +120,7 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartList, handleAddToCart, handleDelete, handleQuantity }}
+      value={{ cartList, loading, handleAddToCart, handleDelete, handleQuantity }}
     >
       {children}
     </CartContext.Provider>

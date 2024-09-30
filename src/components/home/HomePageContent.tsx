@@ -2,12 +2,14 @@
 import ProductsContainer from '@/components/home/ProductsContainer';
 import { Box, Typography, Button } from '@mui/material';
 import { APIProductsType } from '@/lib/apiDataTypes';
+import Loading from '../common/Loading';
 
 interface HomePageContentProps {
   showFilters: boolean;
   searchTerm: string;
   setShowFilters: () => void;
   products: APIProductsType[];
+  isPending: boolean;
 }
 
 export default function HomePageContent({
@@ -15,15 +17,17 @@ export default function HomePageContent({
   showFilters,
   setShowFilters,
   searchTerm,
+  isPending,
 }: HomePageContentProps) {
   return (
     <Box
       sx={{
         width: '100%',
-        display: showFilters ? { xs: 'none', md: 'flex' } : { md: 'flex' },
+        display: showFilters ? { xs: 'none', md: 'flex' } : 'flex',
         flexDirection: 'column',
-        p: { md: '60px', xs: '30px' },
-        pl: showFilters ? '20px' : '60px',
+        p: showFilters
+          ? { md: '60px 60px 0 20px' }
+          : { md: '60px', xs: '30px' },
         position: 'relative',
       }}
     >
@@ -45,6 +49,7 @@ export default function HomePageContent({
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
+            mt: { xs: '20px' },
           }}
         >
           <Box>
@@ -93,7 +98,10 @@ export default function HomePageContent({
           </Button>
         </Box>
       </Box>
-      <ProductsContainer products={products} searchTerm={searchTerm} />
+      { isPending ? 
+        <Loading/> 
+        :  
+        <ProductsContainer products={products} searchTerm={searchTerm} />}
     </Box>
   );
 }

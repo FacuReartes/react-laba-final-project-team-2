@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  Skeleton,
   TextField,
   Typography,
   useMediaQuery,
@@ -13,17 +14,21 @@ import {
   useInitializeForm,
   useSettingsForm,
 } from '@/lib/schemas/settingsSchema';
-import { useUserData } from '@/hooks/useUserData';
 import { useUpdateUser } from '@/hooks/useUpdateUser';
 import { useUploadAvatar } from '@/hooks/useUploadAvatar';
 import Popup from '../common/Popup';
 import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import { useSession } from 'next-auth/react';
+import { useQuery } from '@tanstack/react-query';
+import useUserQuery from '@/hooks/useUserQuery';
 
 const SettingsForm = () => {
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const session = useSession();
   const jwt = session.data?.user?.jwt;
-  const { data: userData } = useUserData(jwt);
+  const { data: userData, isPending: userIsPending } = useQuery(
+    useUserQuery(jwt)
+  );
 
   const {
     mutate: updateUser,
@@ -106,6 +111,7 @@ const SettingsForm = () => {
         uploadAvatar={uploadAvatar}
         avatarUrl={userData?.avatar?.url}
         isPending={isPending}
+        userIsPending={userIsPending}
         deleteAvatar={deleteAvatar}
         deleteIsPending={deleteIsPending}
       />
@@ -128,35 +134,46 @@ const SettingsForm = () => {
           }}
           onSubmit={handleSubmit(submitData)}
         >
-          <TextField
-            variant="outlined"
-            placeholder="Name"
-            {...register('firstName')}
-            error={Boolean(errors.firstName)}
-            helperText={errors.firstName?.message}
-          />
-          <TextField
-            variant="outlined"
-            placeholder="Surname"
-            {...register('lastName')}
-            error={Boolean(errors.lastName)}
-            helperText={errors.lastName?.message}
-          />
-          <TextField
-            variant="outlined"
-            placeholder="example@mail.com"
-            {...register('email')}
-            error={Boolean(errors.email)}
-            helperText={errors.email?.message}
-            disabled
-          />
-          <TextField
-            variant="outlined"
-            placeholder="(949) 354-2574"
-            {...register('phoneNumber')}
-            error={Boolean(errors.phoneNumber)}
-            helperText={errors.phoneNumber?.message}
-          />
+          {userIsPending ? (
+            <>
+              <Skeleton height={56} />
+              <Skeleton height={56} />
+              <Skeleton height={56} />
+              <Skeleton height={56} />
+            </>
+          ) : (
+            <>
+              <TextField
+                variant="outlined"
+                placeholder="Name"
+                {...register('firstName')}
+                error={Boolean(errors.firstName)}
+                helperText={errors.firstName?.message}
+              />
+              <TextField
+                variant="outlined"
+                placeholder="Surname"
+                {...register('lastName')}
+                error={Boolean(errors.lastName)}
+                helperText={errors.lastName?.message}
+              />
+              <TextField
+                variant="outlined"
+                placeholder="example@mail.com"
+                {...register('email')}
+                error={Boolean(errors.email)}
+                helperText={errors.email?.message}
+                disabled
+              />
+              <TextField
+                variant="outlined"
+                placeholder="(949) 354-2574"
+                {...register('phoneNumber')}
+                error={Boolean(errors.phoneNumber)}
+                helperText={errors.phoneNumber?.message}
+              />
+            </>
+          )}
 
           <Button
             type="submit"
@@ -182,11 +199,12 @@ const SettingsForm = () => {
           setUploadDialog(false);
           setDeleteDialog(false);
         }}
-        title={message || uploadMessage || deleteMessage}
+        title="Information"
         actions={
           <Button
+            fullWidth
             variant="contained"
-            color={'info'}
+            color="info"
             onClick={() => {
               setOpenDialog(false);
               setUploadDialog(false);
@@ -196,7 +214,11 @@ const SettingsForm = () => {
             Ok
           </Button>
         }
-      ></Popup>
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>
+          {message || uploadMessage || deleteMessage}
+        </Typography>
+      </Popup>
     </Box>
   );
 };

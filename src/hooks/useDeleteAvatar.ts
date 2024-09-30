@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
+import { env } from '../../env';
 
 export const useDeleteAvatar = (
   jwt: string | undefined,
@@ -13,14 +14,11 @@ export const useDeleteAvatar = (
 
   const { mutate, ...rest } = useMutation({
     mutationFn: () => {
-      return axios.delete(
-        `https://shoes-shop-strapi.herokuapp.com/api/upload/files/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      );
+      return axios.delete(`${env.BASE_URL}/upload/files/${id}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });

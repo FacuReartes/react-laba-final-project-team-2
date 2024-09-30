@@ -1,5 +1,12 @@
 'use client';
-import { Box, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Snackbar,
+  Alert,
+  useMediaQuery,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
 import PreviewImages from './PreviewImages';
@@ -19,6 +26,8 @@ import ProductCategorySelect from './ProductCategorySelect';
 import useGetGenders from '@/hooks/useGetGenders';
 import useGetBrands from '@/hooks/useGetBrands';
 import useGetColors from '@/hooks/useGetColors';
+import Popup from '../common/Popup';
+import { env } from '../../../env';
 
 interface ICompletedProduct {
   teamName: string;
@@ -42,9 +51,11 @@ interface INewProduct {
 }
 
 const AddProductForm = () => {
+  const isMdUp = useMediaQuery('( min-width: 600px )');
   const [productImages, setProductImages] = useState<File[]>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -71,41 +82,46 @@ const AddProductForm = () => {
     mutate(newProduct);
   };
 
-  const { mutate } = useMutation({
-    mutationFn: (newProduct: INewProduct) => {
+  const { mutate, isSuccess, reset, isPending } = useMutation({
+    mutationFn: async (newProduct: INewProduct) => {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       };
+
       const formData = new FormData();
       newProduct.images.forEach((x: File) => {
         formData.append('files', x);
       });
 
-      return axios
-        .post('https://shoes-shop-strapi.herokuapp.com/api/upload', formData, {
+      // eslint-disable-next-line no-useless-catch
+      try {
+        const res = await axios.post(`${env.BASE_URL}/upload`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        .then(res => {
-          const imagesId = res.data.map((image: { id: number }) => image.id);
-          newProduct.product.data.images = imagesId;
-
-          axios.post(
-            'https://shoes-shop-strapi.herokuapp.com/api/products',
-            newProduct.product,
-            config
-          );
         });
+
+        const imagesId = res.data.map((image: { id: number }) => image.id);
+        newProduct.product.data.images = imagesId;
+
+        axios.post(`${env.BASE_URL}/products`, newProduct.product, config);
+      } catch (error) {
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      router.push('/profile/products');
+      queryClient.invalidateQueries({ queryKey: ['products-filtered'] });
+      methods.reset();
+      setProductImages([]);
     },
-    onError: error => console.log(error),
+    onError: error => {
+      setOpenPopup(true);
+      console.log(error);
+    },
   });
 
   const handleAcceptedFiles = (files: File[]) => {
@@ -155,6 +171,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
+                disabled={isPending}
                 sx={{
                   position: 'absolute',
                   top: { lg: '58px', xs: '' },
@@ -215,6 +232,55 @@ const AddProductForm = () => {
         open={openDialog}
         onClose={handleDialogOnClose}
       />
+      <Snackbar
+        open={isSuccess}
+        autoHideDuration={4000}
+        onClose={reset}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={reset}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          New product has been added successfully
+        </Alert>
+      </Snackbar>
+      <Popup
+        open={openPopup}
+        onClose={() => setOpenPopup(false)}
+        title="Add product error"
+        actions={
+          <>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenPopup(false);
+              }}
+            >
+              Try again
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDialog(false);
+                router.push('/profile/products');
+              }}
+            >
+              Go to my products
+            </Button>
+          </>
+        }
+      >
+        <Typography variant={isMdUp ? 'h6' : 'body1'}>
+          Something went wrong!
+        </Typography>
+      </Popup>
     </Box>
   );
 };

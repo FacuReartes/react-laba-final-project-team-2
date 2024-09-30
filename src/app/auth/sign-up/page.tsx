@@ -4,6 +4,12 @@ import Logo from '@/components/common/Logo';
 import { Box } from '@mui/material';
 import Image from 'next/image';
 import sneakerSignup from '@/images/sneakers-signup.webp';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sign up',
+  description: 'Sign up to your account',
+};
 
 export default function Page() {
   return (

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button } from '@mui/material';
+import { Avatar, Box, Button, Skeleton } from '@mui/material';
 import { useState } from 'react';
 
 type SettingsCardProps = {
@@ -7,6 +7,7 @@ type SettingsCardProps = {
   isPending: boolean;
   deleteAvatar: () => void;
   deleteIsPending: boolean;
+  userIsPending: boolean;
 };
 
 const SettingsCard: React.FC<SettingsCardProps> = ({
@@ -15,6 +16,7 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
   isPending,
   deleteAvatar,
   deleteIsPending,
+  userIsPending
 }) => {
   const [avatar, setAvatar] = useState<string | null>(null);
 
@@ -54,14 +56,23 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
         mb: '49px',
       }}
     >
-      <Avatar
-        alt="profileAvatar"
-        src={avatar ? avatar : avatarUrl || ''}
-        sx={{
-          width: { xs: '100px', md: '150px' },
-          height: { xs: '100px', md: '150px' },
-        }}
-      />
+      { userIsPending ? 
+        <Skeleton variant='circular' 
+          sx={{
+            width: { xs: '100px', md: '150px' },
+            height: { xs: '100px', md: '150px' },
+          }}
+        />
+        : 
+        <Avatar
+          alt="profileAvatar"
+          src={avatar ? avatar : avatarUrl || ''}
+          sx={{
+            width: { xs: '100px', md: '150px' },
+            height: { xs: '100px', md: '150px' },
+          }}
+        />
+       }
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <Button
           type="button"
