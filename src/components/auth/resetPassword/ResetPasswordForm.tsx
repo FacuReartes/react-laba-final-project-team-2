@@ -1,3 +1,4 @@
+'use client'
 import { ResetPasswordFormData } from '@/lib/definitions';
 import schema from '@/lib/schemas/resetPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,26 +12,12 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Popup from '@/components/common/Popup';
 import axios from 'axios';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
-
-interface APISuccessResponse {
-  jwt: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    provider: string;
-    confirmed: boolean;
-    blocked: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
 
 interface APIErrorResponse {
   error: {
@@ -47,32 +34,38 @@ interface ResetPasswordVariables {
   passwordConfirmation: string;
 }
 
-const resetPassword = async ({
-  code,
-  password,
-  passwordConfirmation,
-}: ResetPasswordVariables) => {
-  try {
-    const response = axios.post(`${env.BASE_URL}/auth/reset-password`, {
-      code,
-      password,
-      passwordConfirmation,
-    });
-    return (await response).data as APISuccessResponse;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response) {
-      const apiError = error.response.data as APIErrorResponse;
-      throw new Error(apiError.error.message || 'Failed to send reset email');
-    } else {
-      throw new Error('Something went wrong! Failed to send reset email');
-    }
-  }
-};
-
-const ResetPasswordForm = ({ code }: { code: string }) => {
+const ResetPasswordForm = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [dialogErrorMessage, setDialogErrorMessage] = useState('');
+  const [code, setCode] = useState<string | null>(null)
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setCode(urlParams.get('code'))
+  }, [])
+  
+  const resetPassword = async ({
+    code,
+    password,
+    passwordConfirmation,
+  }: ResetPasswordVariables) => {
+    try {
+      await axios.post(`${env.BASE_URL}/auth/reset-password`, {
+        code,
+        password,
+        passwordConfirmation,
+      });
+  
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        const apiError = error.response.data as APIErrorResponse;
+        throw new Error(apiError.error.message || 'Failed to send reset email');
+      } else {
+        throw new Error('Something went wrong! Failed to send reset email');
+      }
+    }
+  };
 
   const {
     register,
@@ -81,9 +74,9 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(schema),
   });
-
+  
   const mutation = useMutation<
-    APISuccessResponse,
+    any,
     Error,
     ResetPasswordVariables
   >({
@@ -96,12 +89,12 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
       setOpenErrorDialog(true);
     },
   });
-
+  
   const onSubmitHandler = (formData: ResetPasswordFormData) => {
     mutation.mutate({
       password: formData.password,
       passwordConfirmation: formData.confirmPassword,
-      code: code,
+      code: code || '',
     });
   };
 
@@ -202,7 +195,7 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
                   textDecoration: 'none',
                   fontWeight: '500',
                 }}
-                href="/sign-in"
+                href="/auth/sign-in"
               >
                 <Typography sx={{ color: 'grey.200' }}>Back to login</Typography>
               </Link>
