@@ -12,6 +12,30 @@ import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
 import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
+const BoxContainerStyles = {
+  width: { md: '960px', xs: '360px' },
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  pt: { md: '208px', xs: '94px' },
+  bgcolor: 'common.white',
+};
+
+const BoxInputStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '16px',
+  mt: '90px',
+};
+
+const BoxRememberMeStyles = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+};
+
 const SignInForm = () => {
   const {
     register,
@@ -31,65 +55,27 @@ const SignInForm = () => {
       <Backdrop open={isLoading} sx={{ zIndex: 99 }}>
         <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
-      <Box
-        sx={{
-          width: { md: '960px', xs: '360px' },
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          pt: { md: '208px', xs: '94px' },
-          bgcolor: 'common.white',
-        }}
-      >
+      <Box sx={BoxContainerStyles}>
         <TitleAndSubtitle
           title="Welcome back"
           subtitle="Welcome back! Please enter your details to log into your account."
         />
-
-        <Box
-          sx={{
-            width: { md: '436px', xs: '320px' },
-          }}
-        >
+        <Box sx={{ width: { md: '436px', xs: '320px' } }}>
           <form
             onSubmit={handleSubmit(submitData)}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
           >
             <EmailInput register={register} errors={errors} />
             <PasswordInput register={register} errors={errors} />
 
-            <Box
-              height={{ md: '48px', xs: '13px' }}
-              mt={{ md: '2px', xs: '13px' }}
-              mb={{ md: '8px', xs: '0px' }}
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: { md: '436px', xs: '320px' },
-              }}
-            >
+            <Box sx={BoxRememberMeStyles}>
               <RememberMeInput register={register} />
               <SecondaryActionButton
                 btnText="Forgot password?"
                 goto="/auth/forgot-password"
               />
             </Box>
-
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '16px',
-                mt: '90px',
-              }}
-            >
+            <Box sx={BoxInputStyles}>
               <ActionButton text="Sign in" isLoading={isLoading} />
               <SecondaryActionButton
                 text="Don't have an account? "

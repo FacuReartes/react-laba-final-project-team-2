@@ -20,6 +20,15 @@ import AuthPopup from '../common/AuthPopup';
 import { ForgotPasswordFormInputs } from '@/lib/definitions';
 import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
+const BoxContainerStyles = {
+  m: 'auto',
+  width: { xs: '100%', md: '50%' },
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
+  maxWidth: { md: '436px', xs: '320px' },
+};
+
 const forgotPassword = async (email: string): Promise<APISuccessResponse> => {
   try {
     const response = axios.post(`${env.BASE_URL}/auth/forgot-password/`, {
@@ -75,16 +84,7 @@ const ForgotPasswordForm = () => {
       <Backdrop open={mutation.isPending} sx={{ zIndex: 99 }}>
         <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
-      <Box
-        sx={{
-          m: 'auto',
-          width: { xs: '100%', md: '50%' },
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          maxWidth: { md: '436px', xs: '320px' },
-        }}
-      >
+      <Box sx={BoxContainerStyles}>
         <TitleAndSubtitle
           title="Forgot password?"
           subtitle="Don’t worry, we’ll send you reset instructions."
