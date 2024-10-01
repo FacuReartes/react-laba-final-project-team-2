@@ -1,12 +1,15 @@
 'use client';
 import { Box, Typography, Backdrop } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import axios from 'axios';
 
-import { forgotPasswordSchema } from '@/lib/schemas/authSchemas';
+import {
+  APIErrorResponse,
+  APISuccessResponse,
+  forgotPasswordSchema,
+} from '@/lib/schemas/authSchemas';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
@@ -14,22 +17,7 @@ import EmailInput from '../common/EmailInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
-
-type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
-
-interface APISuccessResponse {
-  ok: boolean;
-  message?: string;
-}
-
-interface APIErrorResponse {
-  error: {
-    status: number;
-    name: string;
-    message: string;
-    details: unknown;
-  };
-}
+import { ForgotPasswordFormInputs } from '@/lib/definitions';
 
 const forgotPassword = async (email: string): Promise<APISuccessResponse> => {
   try {
@@ -54,7 +42,7 @@ const ForgotPasswordForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ForgotPasswordSchemaProps>({
+  } = useForm<ForgotPasswordFormInputs>({
     resolver: zodResolver(forgotPasswordSchema),
   });
 
@@ -73,7 +61,7 @@ const ForgotPasswordForm = () => {
     },
   });
 
-  const onSubmitHandler = (formData: ForgotPasswordSchemaProps) => {
+  const onSubmitHandler = (formData: ForgotPasswordFormInputs) => {
     mutation.mutate(formData.email);
   };
 
