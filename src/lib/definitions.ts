@@ -122,6 +122,10 @@ export type SignInFormInputs = {
   rememberMe: boolean;
 };
 
+export type ForgotPasswordFormInputs = {
+  email: string;
+};
+
 export type SingleFormInput = {
   register: any;
   errors: any;
