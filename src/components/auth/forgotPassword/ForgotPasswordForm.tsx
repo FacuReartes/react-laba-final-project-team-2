@@ -1,41 +1,33 @@
 'use client';
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  InputLabel,
-  DialogContentText,
-  Backdrop,
-} from '@mui/material';
-import Link from 'next/link';
+import { Box, Backdrop } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import axios from 'axios';
 
-import { forgotPasswordSchema } from '@/lib/schemas/authSchemas';
+import {
+  APIErrorResponse,
+  APISuccessResponse,
+  forgotPasswordSchema,
+} from '@/lib/schemas/authSchemas';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import Popup from '@/components/common/Popup';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
+import EmailInput from '../common/EmailInput';
+import ActionButton from '../common/ActionButton';
+import SecondaryActionButton from '../common/SecondaryActionButton';
+import AuthPopup from '../common/AuthPopup';
+import { ForgotPasswordFormInputs } from '@/lib/definitions';
+import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
-type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
-
-interface APISuccessResponse {
-  ok: boolean;
-  message?: string;
-}
-
-interface APIErrorResponse {
-  error: {
-    status: number;
-    name: string;
-    message: string;
-    details: unknown;
-  };
-}
+const BoxContainerStyles = {
+  m: 'auto',
+  width: { xs: '100%', md: '50%' },
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
+  maxWidth: { md: '436px', xs: '320px' },
+};
 
 const forgotPassword = async (email: string): Promise<APISuccessResponse> => {
   try {
@@ -60,7 +52,7 @@ const ForgotPasswordForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ForgotPasswordSchemaProps>({
+  } = useForm<ForgotPasswordFormInputs>({
     resolver: zodResolver(forgotPasswordSchema),
   });
 
@@ -79,7 +71,7 @@ const ForgotPasswordForm = () => {
     },
   });
 
-  const onSubmitHandler = (formData: ForgotPasswordSchemaProps) => {
+  const onSubmitHandler = (formData: ForgotPasswordFormInputs) => {
     mutation.mutate(formData.email);
   };
 
@@ -89,101 +81,41 @@ const ForgotPasswordForm = () => {
 
   return (
     <>
-      <Backdrop
-        open={mutation.isPending}
-        sx={{ zIndex: 99 }}
-      >
-        <Loading color='common.white' circularColor='secondary.main'/>
+      <Backdrop open={mutation.isPending} sx={{ zIndex: 99 }}>
+        <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
-      <Box
-        sx={{
-          m: 'auto',
-          width: { xs: '100%', md: '50%' },
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          maxWidth: { md: '436px', xs: '320px' },
-        }}
-      >
-        <Typography variant="h1">Forgot password?</Typography>
-        <Typography variant="subtitle3" sx={{ marginBottom: 4 }}>
-          Don’t worry, we’ll send you reset instructions.
-        </Typography>
+      <Box sx={BoxContainerStyles}>
+        <TitleAndSubtitle
+          title="Forgot password?"
+          subtitle="Don’t worry, we’ll send you reset instructions."
+        />
         <form
           style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
           onSubmit={handleSubmit(onSubmitHandler)}
         >
-          <Box>
-            <InputLabel htmlFor="id-email" sx={{ mb: 1 }}>
-              Email<span style={{ color: 'red', marginLeft: '5px' }}>*</span>
-            </InputLabel>
-            <TextField
-              id="id-email"
-              variant="outlined"
-              placeholder="Enter your email"
-              {...register('email')}
-              error={Boolean(errors.email)}
-              helperText={errors.email?.message as string}
-              fullWidth
-            />
-          </Box>
+          <EmailInput register={register} errors={errors} />
 
           <Box
             maxWidth="436px"
             sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                p: 2,
-                color: 'common.white',
-                bgcolor: 'secondary.light',
-                fontSize: '16px',
-              }}
-              color="secondary"
-              disabled={mutation.isPending}
-            >
-              Reset password
-            </Button>
-            <Link
-              href="/auth/sign-in"
-              style={{
-                margin: 'auto',
-                textDecoration: 'none',
-                fontSize: '15px',
-              }}
-            >
-              <Typography sx={{ color: 'grey.200' }}>Back to log in</Typography>
-            </Link>
+            <ActionButton
+              isLoading={mutation.isPending}
+              text="Reset password"
+            />
+            <SecondaryActionButton
+              btnText="Back to login"
+              goto="/auth/sign-in"
+            />
           </Box>
         </form>
-        <Popup
-          open={openDialog}
-          onClose={handleDialogOnClose}
+        <AuthPopup
+          openDialog={openDialog}
+          setOpenDialog={handleDialogOnClose}
           title="Verify your email!"
-          actions={
-            <Button
-              variant="outlined"
-              onClick={handleDialogOnClose}
-              sx={{
-                width: '100%',
-                height: '100%',
-                m: 0,
-                color: 'common.white',
-                border: 'none',
-                bgcolor: 'secondary.light',
-                ':hover': { bgcolor: 'secondary.main', border: 'none' },
-              }}
-            >
-              Close
-            </Button>
-          }
-        >
-          <DialogContentText variant="subtitle3">
-            Check your email accont to reset your password
-          </DialogContentText>
-        </Popup>
+          btnText1="Close"
+          message="Check your email account to reset your password"
+        />
       </Box>
     </>
   );

@@ -23,25 +23,26 @@ export default function Page() {
       <Logo />
       <ResetPasswordForm />
 
-      <Box
-        sx={{
-          width: '50%',
-          height: '100vh',
-          m: 0,
-          p: 0,
-          display: { xs: 'none', md: 'block' },
-          position: 'relative',
-        }}
-      >
-        <Image
-          src={sneakersResetPassword}
-          alt="Sneakers"
-          fill
-          objectFit="cover"
-          priority
-          placeholder="blur"
-        />
+        <Box
+          sx={{
+            width: '50%',
+            height: '100vh',
+            m: 0,
+            p: 0,
+            display: { xs: 'none', md: 'block' },
+            position: 'relative',
+          }}
+        >
+          <Image
+            src={sneakersResetPassword}
+            alt="Sneakers"
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+            placeholder="blur"
+            sizes="50vw"
+          />
+        </Box>
       </Box>
-    </Box>
   );
 }
