@@ -41,8 +41,8 @@ export default function Page() {
           src={sneakersForgotPassword}
           alt="Sneakers"
           fill
-          sizes="(100vw - 200px) 100vh"
-          objectFit="cover"
+          style={{ objectFit: 'cover' }}
+          sizes="50vw"
           priority
           placeholder="blur"
         />
