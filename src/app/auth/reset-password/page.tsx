@@ -39,9 +39,10 @@ export default function Page() {
             src={sneakersResetPassword}
             alt="Sneakers"
             fill
-            objectFit="cover"
+            style={{ objectFit: 'cover' }}
             priority
             placeholder="blur"
+            sizes="50vw"
           />
         </Box>
       </Box>

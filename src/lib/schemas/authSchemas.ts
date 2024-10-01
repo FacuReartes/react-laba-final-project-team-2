@@ -19,3 +19,17 @@ export const useSignInForm = () => {
     resolver: zodResolver(signInSchema),
   });
 };
+
+export interface APISuccessResponse {
+  ok: boolean;
+  message?: string;
+}
+
+export interface APIErrorResponse {
+  error: {
+    status: number;
+    name: string;
+    message: string;
+    details: unknown;
+  };
+}
