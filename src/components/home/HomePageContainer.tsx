@@ -48,7 +48,7 @@ export default function HomePageContainer({
       fetchFilteredProducts(
         '/products' + getFromFiltersToAPIParams(filter, searchTerm)
       ),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60,
     initialData: initialProducts,
     enabled: triggerFetch,
   });
