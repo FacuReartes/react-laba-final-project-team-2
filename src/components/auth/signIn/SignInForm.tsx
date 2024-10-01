@@ -1,15 +1,8 @@
 'use client';
-import {
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-  Backdrop,
-} from '@mui/material';
+import { Box, Typography, Backdrop } from '@mui/material';
 import Link from 'next/link';
 import { useSignInForm } from '@/lib/schemas/authSchemas';
 import { SignInFormInputs } from '@/lib/definitions';
-import Popup from '@/components/common/Popup';
 import { useSignIn } from '@/hooks/useSignIn';
 import Loading from '@/components/common/Loading';
 import EmailInput from '../common/EmailInput';
@@ -17,6 +10,7 @@ import PasswordInput from '../common/PasswordInput';
 import RememberMeInput from '../common/RememberMeInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
+import AuthPopup from '../common/AuthPopup';
 
 const containerWidth = { md: '459px', xs: '320px' };
 const inputWidth = { md: '436px', xs: '320px' };
@@ -25,7 +19,6 @@ const marginLeft = { md: '196px', xs: '20px' };
 const marginRight = { md: '305px', xs: '20px' };
 
 const SignInForm = () => {
-  const isMdUp = useMediaQuery('( min-width: 600px )');
   const {
     register,
     handleSubmit,
@@ -161,23 +154,15 @@ const SignInForm = () => {
           </form>
         </Box>
       </Box>
-      <Popup
-        open={openDialog}
-        onClose={closeDialog}
+      <AuthPopup
+        openDialog={openDialog}
+        setOpenDialog={closeDialog}
         title="Sign in error"
-        actions={
-          <Button
-            fullWidth
-            variant="contained"
-            color="error"
-            onClick={closeDialog}
-          >
-            {message === 'Invalid identifier or password' ? 'Try again' : 'Ok'}
-          </Button>
+        message={message}
+        btnText1={
+          message === 'Invalid identifier or password' ? 'Try again' : 'Ok'
         }
-      >
-        <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
-      </Popup>
+      />
     </>
   );
 };

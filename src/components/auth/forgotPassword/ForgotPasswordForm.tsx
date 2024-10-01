@@ -1,11 +1,5 @@
 'use client';
-import {
-  Box,
-  Button,
-  Typography,
-  DialogContentText,
-  Backdrop,
-} from '@mui/material';
+import { Box, Typography, Backdrop } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,12 +8,12 @@ import axios from 'axios';
 
 import { forgotPasswordSchema } from '@/lib/schemas/authSchemas';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import Popup from '@/components/common/Popup';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
 import EmailInput from '../common/EmailInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
+import AuthPopup from '../common/AuthPopup';
 
 type ForgotPasswordSchemaProps = z.infer<typeof forgotPasswordSchema>;
 
@@ -126,32 +120,13 @@ const ForgotPasswordForm = () => {
             />
           </Box>
         </form>
-        <Popup
-          open={openDialog}
-          onClose={handleDialogOnClose}
+        <AuthPopup
+          openDialog={openDialog}
+          setOpenDialog={handleDialogOnClose}
           title="Verify your email!"
-          actions={
-            <Button
-              variant="outlined"
-              onClick={handleDialogOnClose}
-              sx={{
-                width: '100%',
-                height: '100%',
-                m: 0,
-                color: 'common.white',
-                border: 'none',
-                bgcolor: 'secondary.light',
-                ':hover': { bgcolor: 'secondary.main', border: 'none' },
-              }}
-            >
-              Close
-            </Button>
-          }
-        >
-          <DialogContentText variant="subtitle3">
-            Check your email accont to reset your password
-          </DialogContentText>
-        </Popup>
+          btnText1="Close"
+          message="Check your email account to reset your password"
+        />
       </Box>
     </>
   );

@@ -1,17 +1,10 @@
 import { ResetPasswordFormData } from '@/lib/definitions';
 import schema from '@/lib/schemas/resetPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Box,
-  Button,
-  Typography,
-  DialogContentText,
-  Backdrop,
-} from '@mui/material';
+import { Box, Typography, Backdrop } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Popup from '@/components/common/Popup';
 import axios from 'axios';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
@@ -19,6 +12,7 @@ import PasswordInput from '../common/PasswordInput';
 import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
+import AuthPopup from '../common/AuthPopup';
 
 interface APISuccessResponse {
   jwt: string;
@@ -179,61 +173,24 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
             </Box>
           </form>
         </Box>
-        <Popup
-          open={openDialog}
-          onClose={handleDialogOnClose}
+        <AuthPopup
+          openDialog={openDialog}
+          setOpenDialog={handleDialogOnClose}
           title="Password Changed!"
-          actions={
-            <Button
-              variant="outlined"
-              onClick={handleDialogOnClose}
-              sx={{
-                width: '100%',
-                height: '100%',
-                m: 0,
-                color: 'common.white',
-                border: 'none',
-                bgcolor: 'secondary.light',
-                ':hover': { bgcolor: 'secondary.main', border: 'none' },
-              }}
-              href="/auth/sign-in"
-            >
-              Back to Login
-            </Button>
-          }
-        >
-          {
-            <DialogContentText variant="subtitle3">
-              Congrats, your password has been changed successfully.
-            </DialogContentText>
-          }
-        </Popup>
-        <Popup
-          open={openErrorDialog}
-          onClose={handleErrorDialogOnClose}
+          goto1="/auth/sign-in"
+          btnText1="Back to Login"
+          message="Congrats, your password has been changed successfully."
+        />
+
+        <AuthPopup
+          openDialog={openErrorDialog}
+          setOpenDialog={handleErrorDialogOnClose}
           title="Password Reset Fail"
-          actions={
-            <Button
-              variant="outlined"
-              onClick={handleErrorDialogOnClose}
-              sx={{
-                width: '100%',
-                height: '100%',
-                m: 0,
-                color: 'common.white',
-                border: 'none',
-                bgcolor: 'secondary.light',
-                ':hover': { bgcolor: 'secondary.main', border: 'none' },
-              }}
-            >
-              Close
-            </Button>
-          }
-        >
-          <DialogContentText variant="subtitle3">
-            {dialogErrorMessage}
-          </DialogContentText>
-        </Popup>
+          btnText1="Close"
+          message={dialogErrorMessage}
+          btnText2="Back to Login"
+          goto2="/auth/sign-in"
+        />
       </Box>
     </>
   );

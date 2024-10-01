@@ -1,16 +1,8 @@
 'use client';
-import Popup from '@/components/common/Popup';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { SignUpFormData } from '@/lib/definitions';
 import { useSignupForm } from '@/lib/schemas/signUpSchema';
-import {
-  Backdrop,
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { Backdrop, Box, Typography } from '@mui/material';
 import Loading from '@/components/common/Loading';
 import PasswordInput from '../common/PasswordInput';
 import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
@@ -18,10 +10,9 @@ import EmailInput from '../common/EmailInput';
 import NameInput from '../common/NameInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
+import AuthPopup from '../common/AuthPopup';
 
 const SignupForm = () => {
-  const isMdUp = useMediaQuery('( min-width: 600px )');
-  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -99,38 +90,21 @@ const SignupForm = () => {
           </form>
         </Box>
       </Box>
-      <Popup
-        open={openDialog}
-        onClose={() => setOpenDialog(false)}
+      <AuthPopup
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
         title="Sign up info"
-        actions={
-          <>
-            <Button
-              fullWidth
-              variant="contained"
-              color="error"
-              onClick={() => {
-                setOpenDialog(false);
-              }}
-            >
-              Try again
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="error"
-              onClick={() => {
-                setOpenDialog(false);
-                router.push('/auth/sign-in');
-              }}
-            >
-              Go to sign in
-            </Button>
-          </>
+        btnText1={
+          message.includes('User registered successfully') ? 'Ok' : 'Try again'
         }
-      >
-        <Typography variant={isMdUp ? 'h6' : 'body1'}>{message}</Typography>
-      </Popup>
+        goto2="/auth/sign-in"
+        btnText2={
+          message.includes('User registered successfully')
+            ? ''
+            : 'Go to sign in'
+        }
+        message={message}
+      />
     </>
   );
 };
