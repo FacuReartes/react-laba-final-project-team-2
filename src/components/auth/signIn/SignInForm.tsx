@@ -1,6 +1,5 @@
 'use client';
-import { Box, Typography, Backdrop } from '@mui/material';
-import Link from 'next/link';
+import { Box, Backdrop } from '@mui/material';
 import { useSignInForm } from '@/lib/schemas/authSchemas';
 import { SignInFormInputs } from '@/lib/definitions';
 import { useSignIn } from '@/hooks/useSignIn';
@@ -12,8 +11,6 @@ import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
 import TitleAndSubtitle from '../common/TitleAndSubtitle';
-
-const inputWidth = { md: '436px', xs: '320px' };
 
 const SignInForm = () => {
   const {
@@ -74,29 +71,14 @@ const SignInForm = () => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                width: inputWidth,
+                width: { md: '436px', xs: '320px' },
               }}
             >
               <RememberMeInput register={register} />
-
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: '300',
-                  fontSize: { md: 'inherit', xs: '10px' },
-                }}
-              >
-                <Link
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                  href="/auth/forgot-password"
-                >
-                  <Typography sx={{ color: 'secondary.light' }}>
-                    Forgot password?{' '}
-                  </Typography>
-                </Link>
-              </Typography>
+              <SecondaryActionButton
+                btnText="Forgot password?"
+                goto="/auth/forgot-password"
+              />
             </Box>
 
             <Box
@@ -123,9 +105,7 @@ const SignInForm = () => {
         setOpenDialog={closeDialog}
         title="Sign in error"
         message={message}
-        btnText1={
-          message === 'Invalid identifier or password' ? 'Try again' : 'Ok'
-        }
+        btnText1={message.includes('Invalid') ? 'Try again' : 'Ok'}
       />
     </>
   );
