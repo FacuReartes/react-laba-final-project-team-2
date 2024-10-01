@@ -13,4 +13,33 @@ const schema: ZodType<ResetPasswordFormData> = z
     path: ['confirmPassword'],
   });
 
+export interface APISuccessResponse {
+  jwt: string;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    provider: string;
+    confirmed: boolean;
+    blocked: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
+export interface APIErrorResponse {
+  error: {
+    status: number;
+    name: string;
+    message: string;
+    details: unknown;
+  };
+}
+
+export interface ResetPasswordVariables {
+  code: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 export default schema;

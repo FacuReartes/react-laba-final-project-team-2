@@ -1,5 +1,9 @@
 import { ResetPasswordFormData } from '@/lib/definitions';
-import schema from '@/lib/schemas/resetPasswordSchema';
+import schema, {
+  APIErrorResponse,
+  APISuccessResponse,
+  ResetPasswordVariables,
+} from '@/lib/schemas/resetPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Typography, Backdrop } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
@@ -13,35 +17,6 @@ import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
-
-interface APISuccessResponse {
-  jwt: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    provider: string;
-    confirmed: boolean;
-    blocked: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
-
-interface APIErrorResponse {
-  error: {
-    status: number;
-    name: string;
-    message: string;
-    details: unknown;
-  };
-}
-
-interface ResetPasswordVariables {
-  code: string;
-  password: string;
-  passwordConfirmation: string;
-}
 
 const resetPassword = async ({
   code,
