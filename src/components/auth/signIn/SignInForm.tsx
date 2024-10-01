@@ -11,12 +11,9 @@ import RememberMeInput from '../common/RememberMeInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
+import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
-const containerWidth = { md: '459px', xs: '320px' };
 const inputWidth = { md: '436px', xs: '320px' };
-const marginTop = { md: '289px', xs: '94px' };
-const marginLeft = { md: '196px', xs: '20px' };
-const marginRight = { md: '305px', xs: '20px' };
 
 const SignInForm = () => {
   const {
@@ -39,67 +36,34 @@ const SignInForm = () => {
       </Backdrop>
       <Box
         sx={{
-          width: containerWidth,
-          height: '100%',
+          width: { md: '960px', xs: '360px' },
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-start',
-          mt: marginTop,
-          ml: marginLeft,
-          mr: marginRight,
+          alignItems: 'center',
+          pt: { md: '208px', xs: '94px' },
+          bgcolor: 'common.white',
         }}
       >
-        <Typography
-          variant={'h1'}
-          sx={{
-            fontSize: { md: '45px', xs: '30px' },
-            fontWeight: 500,
-            mb: { md: '14px', xs: '4px' },
-          }}
-        >
-          Welcome back
-        </Typography>
-        <Typography
-          variant={'subtitle1'}
-          sx={{
-            mb: { md: '48px', xs: '24px' },
-            width: { md: 'auto', xs: '300px' },
-            lineHeight: { md: '17px', xs: '14px' },
-            fontSize: { md: '15px', xs: '12px' },
-          }}
-          fontWeight={300}
-        >
-          Welcome back! Please enter your details to log into your account.
-        </Typography>
+        <TitleAndSubtitle
+          title="Welcome back"
+          subtitle="Welcome back! Please enter your details to log into your account."
+        />
 
-        <Box sx={{ width: containerWidth }}>
+        <Box
+          sx={{
+            width: { md: '436px', xs: '320px' },
+          }}
+        >
           <form
             onSubmit={handleSubmit(submitData)}
             style={{
               display: 'flex',
               flexDirection: 'column',
+              gap: '24px',
             }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: { md: '8px', xs: '4px' },
-                mb: '24px',
-              }}
-            >
-              <EmailInput register={register} errors={errors} />
-            </Box>
-
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: { md: '8px', xs: '4px' },
-              }}
-            >
-              <PasswordInput register={register} errors={errors} />
-            </Box>
+            <EmailInput register={register} errors={errors} />
+            <PasswordInput register={register} errors={errors} />
 
             <Box
               height={{ md: '48px', xs: '13px' }}
@@ -136,12 +100,12 @@ const SignInForm = () => {
             </Box>
 
             <Box
-              mt={{ md: '32px', xs: '30px' }}
-              gap={{ md: '20px', xs: '14px' }}
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                gap: '16px',
+                mt: '90px',
               }}
             >
               <ActionButton text="Sign in" isLoading={isLoading} />

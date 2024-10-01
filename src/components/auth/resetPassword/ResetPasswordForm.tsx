@@ -5,7 +5,7 @@ import schema, {
   ResetPasswordVariables,
 } from '@/lib/schemas/resetPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Typography, Backdrop } from '@mui/material';
+import { Box, Backdrop } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,6 +17,7 @@ import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
+import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
 const resetPassword = async ({
   code,
@@ -99,18 +100,10 @@ const ResetPasswordForm = ({ code }: { code: string }) => {
           bgcolor: 'common.white',
         }}
       >
-        <Typography
-          variant={'h1'}
-          sx={{ fontSize: { md: '45px', xs: '30px' } }}
-        >
-          Reset password
-        </Typography>
-        <Typography
-          variant={'subtitle1'}
-          sx={{ mb: '48px', pl: '20px', fontSize: { md: '15px', xs: '12px' } }}
-        >
-          Please create a new password here
-        </Typography>
+        <TitleAndSubtitle
+          title="Reset password"
+          subtitle="Please create a new password here"
+        />
 
         <Box
           sx={{

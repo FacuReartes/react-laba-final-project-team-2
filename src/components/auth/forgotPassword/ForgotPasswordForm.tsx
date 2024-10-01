@@ -1,5 +1,5 @@
 'use client';
-import { Box, Typography, Backdrop } from '@mui/material';
+import { Box, Backdrop } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -18,6 +18,7 @@ import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
 import { ForgotPasswordFormInputs } from '@/lib/definitions';
+import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
 const forgotPassword = async (email: string): Promise<APISuccessResponse> => {
   try {
@@ -84,10 +85,10 @@ const ForgotPasswordForm = () => {
           maxWidth: { md: '436px', xs: '320px' },
         }}
       >
-        <Typography variant="h1">Forgot password?</Typography>
-        <Typography variant="subtitle3" sx={{ marginBottom: 4 }}>
-          Don’t worry, we’ll send you reset instructions.
-        </Typography>
+        <TitleAndSubtitle
+          title="Forgot password?"
+          subtitle="Don’t worry, we’ll send you reset instructions."
+        />
         <form
           style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
           onSubmit={handleSubmit(onSubmitHandler)}

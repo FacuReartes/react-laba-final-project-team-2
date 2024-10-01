@@ -2,7 +2,7 @@
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { SignUpFormData } from '@/lib/definitions';
 import { useSignupForm } from '@/lib/schemas/signUpSchema';
-import { Backdrop, Box, Typography } from '@mui/material';
+import { Backdrop, Box } from '@mui/material';
 import Loading from '@/components/common/Loading';
 import PasswordInput from '../common/PasswordInput';
 import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
@@ -11,6 +11,7 @@ import NameInput from '../common/NameInput';
 import ActionButton from '../common/ActionButton';
 import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
+import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
 const SignupForm = () => {
   const {
@@ -41,18 +42,11 @@ const SignupForm = () => {
           bgcolor: 'common.white',
         }}
       >
-        <Typography
-          variant={'h1'}
-          sx={{ fontSize: { md: '45px', xs: '30px' } }}
-        >
-          Create an account
-        </Typography>
-        <Typography
-          variant={'subtitle1'}
-          sx={{ mb: '48px', pl: '20px', fontSize: { md: '15px', xs: '12px' } }}
-        >
-          Create an account to get an easy access to your dream shopping
-        </Typography>
+        <TitleAndSubtitle
+          title="Create an account"
+          subtitle="Create an account to get an easy access to your dream shopping"
+        />
+
         <Box
           sx={{
             width: { md: '436px', xs: '320px' },
