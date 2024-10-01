@@ -15,7 +15,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Popup from '@/components/common/Popup';
-import axios from 'axios';
 import { env } from '../../../../env';
 import Loading from '@/components/common/Loading';
 
@@ -29,7 +28,6 @@ interface APIErrorResponse {
 }
 
 interface ResetPasswordVariables {
-  code: string;
   password: string;
   passwordConfirmation: string;
 }
@@ -46,24 +44,28 @@ const ResetPasswordForm = () => {
   }, [])
   
   const resetPassword = async ({
-    code,
     password,
     passwordConfirmation,
   }: ResetPasswordVariables) => {
     try {
-      await axios.post(`${env.BASE_URL}/auth/reset-password`, {
-        code,
-        password,
-        passwordConfirmation,
+      const response = await fetch(`${env.BASE_URL}/auth/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code,
+          password,
+          passwordConfirmation,
+        }),
       });
   
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        const apiError = error.response.data as APIErrorResponse;
+      if (!response.ok) {
+        const apiError: APIErrorResponse = await response.json();
         throw new Error(apiError.error.message || 'Failed to send reset email');
-      } else {
-        throw new Error('Something went wrong! Failed to send reset email');
       }
+    } catch (error: unknown) { // eslint-disable-line @typescript-eslint/no-unused-vars
+      throw new Error('Something went wrong! Failed to send reset email');
     }
   };
 
@@ -76,7 +78,7 @@ const ResetPasswordForm = () => {
   });
   
   const mutation = useMutation<
-    any,
+    void,
     Error,
     ResetPasswordVariables
   >({
@@ -94,7 +96,6 @@ const ResetPasswordForm = () => {
     mutation.mutate({
       password: formData.password,
       passwordConfirmation: formData.confirmPassword,
-      code: code || '',
     });
   };
 
