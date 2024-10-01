@@ -116,7 +116,7 @@ export default async function Home({ searchParams }: HomeProps) {
               : searchParams.search
           )
       ),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
   });
 
   const products = queryClient.getQueryData<{ data: any[] }>([
