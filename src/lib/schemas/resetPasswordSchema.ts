@@ -37,7 +37,6 @@ export interface APIErrorResponse {
 }
 
 export interface ResetPasswordVariables {
-  code: string;
   password: string;
   passwordConfirmation: string;
 }
