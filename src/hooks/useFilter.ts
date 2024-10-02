@@ -1,5 +1,7 @@
+'use client';
 import { FilterOptionsType } from '@/components/common/FilterSideBar/FilterForm';
 import { DataType, SizesDataType } from '@/lib/definitions';
+import { ReadonlyURLSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 export interface FilterTypes {
@@ -21,7 +23,7 @@ const useFilter = ({ initial }: { initial: FilterTypes }) => {
 
   const getFiltersAsParams = (
     filter: FilterTypes,
-    searchTerm: string | string[]
+    searchTerm: string | null
   ): string => {
     let str = '?';
     if (filter.brands) {
@@ -61,7 +63,7 @@ const useFilter = ({ initial }: { initial: FilterTypes }) => {
   };
 
   const setFilterFromParams = (
-    params: Record<string, string | string[]>,
+    params: ReadonlyURLSearchParams,
     filterOptions: FilterOptionsType
   ) => {
     let tempBrands: string[] = [];
@@ -71,47 +73,27 @@ const useFilter = ({ initial }: { initial: FilterTypes }) => {
     let tempSizes: number[] = [];
     let tempCategories: string[] = [];
 
-    if (params.brands) {
-      if (Array.isArray(params.brands)) {
-        tempBrands = params.brands;
-      } else {
-        tempBrands.push(params.brands);
-      }
+    if (params.get('brands')) {
+      tempBrands = params.getAll('brands');
     }
-    if (params.colors) {
-      if (Array.isArray(params.colors)) {
-        tempColors = params.colors;
-      } else {
-        tempColors.push(params.colors);
-      }
+    if (params.get('colors')) {
+      tempColors = params.getAll('colors');
     }
-    if (params.prices) {
-      if (Array.isArray(params.prices)) {
-        tempPrices = params.prices[0].split('-').map(price => parseInt(price));
-      } else {
-        tempPrices = params.prices.split('-').map(price => parseFloat(price));
-      }
+    if (params.get('prices')) {
+      const arr = params
+        .get('prices')
+        ?.split('-')
+        .map(price => parseInt(price));
+      tempPrices = arr ? arr : [0, 0];
     }
-    if (params.genders) {
-      if (Array.isArray(params.genders)) {
-        tempGender = params.genders;
-      } else {
-        tempGender.push(params.genders);
-      }
+    if (params.get('genders')) {
+      tempGender = params.getAll('genders');
     }
-    if (params.sizes) {
-      if (Array.isArray(params.sizes)) {
-        tempSizes = params.sizes.map(size => parseInt(size));
-      } else {
-        tempSizes.push(parseInt(params.sizes));
-      }
+    if (params.get('sizes')) {
+      tempSizes = params.getAll('sizes').map(size => parseInt(size));
     }
-    if (params.categories) {
-      if (Array.isArray(params.categories)) {
-        tempCategories = params.categories;
-      } else {
-        tempCategories.push(params.categories);
-      }
+    if (params.get('categories')) {
+      tempCategories = params.getAll('categories');
     }
     const genderOption = filterOptions.genders.map(option => ({
       ...option,
