@@ -22,8 +22,6 @@ export default function ProductDetailsView({
     }
   }
 
-  console.log(selectedSize);
-
   return (
     <Box
       sx={{

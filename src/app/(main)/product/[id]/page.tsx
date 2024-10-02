@@ -17,7 +17,7 @@ export const generateMetadata = async ({
     `https://shoes-shop-strapi.herokuapp.com/api/products/${params.id}?populate=*`
   );
   const res = await req.json();
-  console.log(res);
+
   const productName = res.data?.attributes?.name || `Product ${params.id}`;
   return {
     title: productName,

@@ -22,7 +22,7 @@ import { CartContext, ICartContext } from '@/context/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import useUserQuery from '@/hooks/useUserQuery';
 
-interface HeaderBarProps {
+interface Props {
   search?: string;
   setSearchTerm: (value: string) => void;
   setOpenResults: (value: boolean) => void;
@@ -56,7 +56,7 @@ const HeaderBar = ({
   setOpenResults,
   setEnterKeyPress,
   search,
-}: HeaderBarProps) => {
+}: Props) => {
   const { data: session } = useSession();
   const token = session?.user?.jwt;
   const { data: userData } = useQuery(useUserQuery(token));
@@ -76,6 +76,7 @@ const HeaderBar = ({
 
     if (targetValue.trim() === '') {
       setSearchTerm('');
+      setIsTyping(false);
     } else if (validation.success) {
       setSearchTerm(targetValue);
       setIsTyping(true);
@@ -85,8 +86,6 @@ const HeaderBar = ({
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      router.push('/?search=' + search);
-
       setEnterKeyPress(true);
     }
   };
@@ -158,6 +157,7 @@ const HeaderBar = ({
             display: 'flex',
             justifyContent: 'flex-end',
             padding: { md: isTyping ? '0 60px' : '0', xs: '' },
+            transition: 'width 0.5s',
           }}
         >
           <TextField

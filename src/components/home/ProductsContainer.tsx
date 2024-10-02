@@ -6,7 +6,6 @@ import { CartContext, ICartContext } from '@/context/CartContext';
 import EmptyProducts from './EmptyProducts';
 
 interface Props {
-  searchTerm: string;
   products: APIProductsType[];
 }
 

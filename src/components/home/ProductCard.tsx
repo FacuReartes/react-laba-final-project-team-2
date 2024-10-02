@@ -113,9 +113,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
                 flexDirection: 'column',
                 gap: '9px',
               }}
-
               onClick={handleClickOpen}
-
             >
               <img src="./assets/add-shopping-basket.svg" />
               Add to Cart

@@ -1,11 +1,12 @@
 import { Box, Typography } from '@mui/material';
+import { useSearchParams } from 'next/navigation';
 
-interface FilterHeadProps {
-  searchTerm?: string;
+interface Props {
   matches: number;
 }
 
-export const FilterHead = ({ searchTerm, matches }: FilterHeadProps) => {
+export const FilterHead = ({ matches }: Props) => {
+  const searchTerm = useSearchParams().get('search');
   return (
     <Box
       sx={{

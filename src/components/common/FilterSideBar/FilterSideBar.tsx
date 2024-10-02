@@ -3,8 +3,7 @@ import { FilterHead } from './FilterHead';
 import { FilterForm, FilterOptionsType } from './FilterForm';
 import { FilterTypes } from '@/hooks/useFilter';
 
-interface FilterSideBarProps {
-  searchTerm: string;
+interface Props {
   showFilters: boolean;
   initialFilter: FilterTypes;
   updateFilter: (filter: FilterTypes) => void;
@@ -13,13 +12,12 @@ interface FilterSideBarProps {
 }
 
 export const FilterSideBar = ({
-  searchTerm,
   showFilters,
   updateFilter,
   initialFilter,
   filterOptions,
   matches,
-}: FilterSideBarProps) => {
+}: Props) => {
   return (
     <Box
       sx={{
@@ -30,7 +28,7 @@ export const FilterSideBar = ({
         zIndex: '10',
       }}
     >
-      <FilterHead searchTerm={searchTerm} matches={matches} />
+      <FilterHead matches={matches} />
       <FilterForm
         updateFilter={updateFilter}
         initialFilter={initialFilter}

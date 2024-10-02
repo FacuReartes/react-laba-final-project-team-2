@@ -1,35 +1,27 @@
-import { env } from '../../env';
-
-const URL = `${env.BASE_URL}`;
-
-const fetchData = async (path: string) => {
-  const response = await fetch(URL + path);
-  if (!response.ok) throw new Error('Failed to fetch genders');
-  return await response.json();
-};
+import { fetchDataFromAPI } from './fetchDataFromAPI';
 
 export const fetchGenders = async () => {
-  return fetchData('/genders');
+  return fetchDataFromAPI('/genders');
 };
 
 export const fetchBrands = async () => {
-  return await fetchData('/brands');
+  return await fetchDataFromAPI('/brands');
 };
 
 export const fetchColors = async () => {
-  return fetchData('/colors');
+  return fetchDataFromAPI('/colors');
 };
 
 export const fetchCategories = async () => {
-  return fetchData('/categories');
+  return fetchDataFromAPI('/categories');
 };
 
 export const fetchSizes = async () => {
-  return fetchData('/sizes');
+  return fetchDataFromAPI('/sizes');
 };
 
 export const fetchPrices = async () => {
-  return fetchData(
+  return fetchDataFromAPI(
     '/products?sort[price]=desc&fields=price&filters[teamName]=team-2'
   );
 };
