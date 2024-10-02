@@ -1,6 +1,7 @@
 import { Box, Slider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import FilterField from './FilterField';
+import useDebounce from '@/hooks/useDebounce';
 
 interface Props {
   Min: number;
@@ -20,14 +21,18 @@ export const FilterPrice = ({
   onPriceChange,
 }: Props) => {
   const [value, setValue] = useState<number[]>(selectedPrice);
+  const debouncedValue = useDebounce(value, 750);
 
   useEffect(() => {
     setValue(selectedPrice);
   }, [selectedPrice]);
 
+  useEffect(() => {
+    onPriceChange(debouncedValue);
+  }, [debouncedValue, onPriceChange]);
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
-    onPriceChange(newValue as number[]);
   };
 
   return (
