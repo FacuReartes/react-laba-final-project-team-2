@@ -8,6 +8,8 @@ type Props = {
 export default function ActionButton({ isLoading, text }: Props) {
   return (
     <Button
+      role="button"
+      data-testid="action-button"
       type="submit"
       variant="contained"
       color="error"
