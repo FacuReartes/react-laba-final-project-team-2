@@ -34,6 +34,8 @@ export default function AuthPopup({
       actions={
         <>
           <Button
+            role="button"
+            data-testid="action1-button"
             fullWidth
             variant="contained"
             color="error"
@@ -46,6 +48,8 @@ export default function AuthPopup({
           </Button>
           {btnText2 && (
             <Button
+              role="button"
+              data-testid="action2-button"
               fullWidth
               variant="contained"
               color="error"
