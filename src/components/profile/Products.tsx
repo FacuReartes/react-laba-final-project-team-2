@@ -1,14 +1,14 @@
 'use client';
-import { Avatar, Box, Button, Typography } from '@mui/material';
+import { Avatar, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import ProductsContainer from '@/components/profile/ProductsContainer';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import heroImage from '@/images/products-hero-img.webp';
 import useGetProducts from '@/hooks/useGetProducts';
 import useUserQuery from '@/hooks/useUserQuery';
 import Loading from '../common/Loading';
+import AddProductButton from './common/AddProductButton';
 
 export default function Products() {
   const { data: session } = useSession();
@@ -19,8 +19,6 @@ export default function Products() {
   const { data: userData } = useQuery(useUserQuery(token));
 
   const { data: products, isPending } = useQuery(useGetProducts(token, userID));
-
-  const router = useRouter();
 
   return (
     <Box
@@ -101,57 +99,17 @@ export default function Products() {
           My products
         </Typography>
 
-        <Button
-          onClick={() => router.push('/profile/products/add-product')}
-          variant="contained"
-          disableElevation
-          size="large"
-          sx={{
-            display: {
-              xs: 'none',
-              md: products?.length > 0 ? 'block' : 'none',
-            },
-            bgcolor: 'secondary.light',
-            color: 'common.white',
-            height: '40px',
-            textTransform: 'capitalize',
-            transition: 'opacity .2s ease',
-            ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
-            borderRadius: 2,
-            mr: { md: '20px' },
-          }}
-        >
-          Add product
-        </Button>
+        {/* Add Product Button for Desktop */}
+        <AddProductButton
+          display={{ xs: 'none', md: products?.length > 0 ? 'block' : 'none' }}
+          dataTestId="add-product-1"
+        />
       </Box>
       {isPending ? <Loading /> : <ProductsContainer products={products} />}
-      <Button
-        onClick={() => router.push('/profile/products/add-product')}
-        variant="contained"
-        disableElevation
-        size="large"
-        sx={{
-          mt: '60px',
-          display: {
-            xs: products?.length > 0 ? 'block' : 'none',
-            md: 'none',
-          },
-          width: {
-            xs: '80%',
-            md: 'fit-content',
-          },
-          bgcolor: 'secondary.light',
-          color: 'common.white',
-          height: '40px',
-          textTransform: 'capitalize',
-          transition: 'opacity .2s ease',
-          ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
-          borderRadius: 2,
-          mr: { md: '20px' },
-        }}
-      >
-        Add product
-      </Button>
+      <AddProductButton
+        display={{ xs: products?.length > 0 ? 'block' : 'none', md: 'none' }}
+        dataTestId="add-product-2"
+      />
     </Box>
   );
 }
