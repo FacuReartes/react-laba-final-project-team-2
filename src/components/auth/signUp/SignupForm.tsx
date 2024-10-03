@@ -80,6 +80,7 @@ const SignupForm = () => {
         setOpenDialog={setOpenDialog}
         title="Sign up info"
         btnText1={message.includes('successfully') ? 'Ok' : 'Try again'}
+        goto1={message.includes('successfully') ? '/auth/sign-in' : ''}
         goto2="/auth/sign-in"
         btnText2={message.includes('successfully') ? '' : 'Go to sign in'}
         message={message}

@@ -21,7 +21,7 @@ export const useDeleteAvatar = (
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: ['user-data'] });
       setAvatarData(null);
       setOpenDialog(true);
       setMessage('Avatar deleted.');
