@@ -3,10 +3,11 @@ import ProductsContainer from '@/components/home/ProductsContainer';
 import { Box, Typography, Button } from '@mui/material';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import Loading from '../common/Loading';
+import { useSearchParams } from 'next/navigation';
 
-interface HomePageContentProps {
+interface Props {
   showFilters: boolean;
-  searchTerm: string;
+
   setShowFilters: () => void;
   products: APIProductsType[];
   isPending: boolean;
@@ -16,9 +17,9 @@ export default function HomePageContent({
   products,
   showFilters,
   setShowFilters,
-  searchTerm,
   isPending,
-}: HomePageContentProps) {
+}: Props) {
+  const searchTerm = useSearchParams().get('search');
   return (
     <Box
       sx={{
@@ -98,10 +99,7 @@ export default function HomePageContent({
           </Button>
         </Box>
       </Box>
-      { isPending ? 
-        <Loading/> 
-        :  
-        <ProductsContainer products={products} searchTerm={searchTerm} />}
+      {isPending ? <Loading /> : <ProductsContainer products={products} />}
     </Box>
   );
 }

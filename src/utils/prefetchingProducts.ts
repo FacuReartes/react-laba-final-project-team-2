@@ -2,7 +2,7 @@ import { FilterTypes } from '@/hooks/useFilter';
 
 export const getFromFiltersToAPIParams = (
   filter: FilterTypes,
-  searchTerm: string[] | string
+  searchTerm: string | null
 ) => {
   let path = '?filters[teamName]=team-2&populate=*';
 
@@ -41,11 +41,7 @@ export const getFromFiltersToAPIParams = (
   }
 
   if (searchTerm) {
-    if (Array.isArray(searchTerm)) {
-      path += '&filters[name][$containsi]=' + searchTerm[0];
-    } else {
-      path += '&filters[name][$containsi]=' + searchTerm;
-    }
+    path += '&filters[name][$containsi]=' + searchTerm;
   }
   if (brandsFilter) {
     path += brandsFilter;

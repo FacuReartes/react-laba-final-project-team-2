@@ -1,7 +1,13 @@
 'use client';
 import { CartContext, ICartContext } from '@/context/CartContext';
 import { APIProductsType } from '@/lib/apiDataTypes';
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import { usePathname } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -13,6 +19,13 @@ export default function ProductDetailsView({
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
   const [selectedSize, setSelectedSize] = useState<number | string>('');
 
+  function handleChangeSize(
+    event: React.MouseEvent<HTMLElement>,
+    newSize: number | string
+  ) {
+    setSelectedSize(newSize);
+  }
+
   function handleClick() {
     const pathName = path.split('/');
 
@@ -21,8 +34,6 @@ export default function ProductDetailsView({
       setSelectedSize('');
     }
   }
-
-  console.log(selectedSize);
 
   return (
     <Box
@@ -94,35 +105,35 @@ export default function ProductDetailsView({
       ></Box>
 
       <Typography sx={{ fontWeight: 500, my: 2 }}>Size Availables</Typography>
-      <Box
+      <ToggleButtonGroup
+        value={selectedSize}
+        onChange={handleChangeSize}
+        aria-label="size selection"
+        exclusive
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           gap: '24px',
         }}
       >
-        {attributes?.sizes?.data?.map(size => (
-          <Box
-            key={size?.attributes?.value}
-            sx={{
-              width: '85px',
-              height: '55px',
-              borderRadius: '8px',
-              border: '1px solid',
-              borderColor:
-                selectedSize === size.attributes.value
-                  ? 'secondary.light'
-                  : 'grey.200',
-              textAlign: 'center',
-              alignContent: 'center',
-              cursor: 'pointer',
-            }}
-            onClick={() => setSelectedSize(size.attributes.value)}
-          >
-            EU-{size?.attributes?.value}
-          </Box>
-        ))}
-      </Box>
+        {attributes?.sizes?.data
+          .sort((a, b) => (a.attributes.value > b.attributes.value ? 1 : -1))
+          ?.map(size => (
+            <ToggleButton
+              key={size?.attributes?.value}
+              value={size?.attributes?.value}
+              sx={{
+                border: '1px solid rgba(0, 0, 0, 0.12) !important',
+                borderRadius: '4px !important',
+                height: '55px',
+                width: '85px',
+              }}
+              color="secondary"
+            >
+              {size?.attributes?.value}
+            </ToggleButton>
+          ))}
+      </ToggleButtonGroup>
 
       <Box
         sx={{

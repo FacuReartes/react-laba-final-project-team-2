@@ -4,44 +4,59 @@ import HeaderBar from './HeaderBar';
 import { Box } from '@mui/material';
 import HeaderSearchResults from './HeaderSearchResults';
 import useDebounce from '@/hooks/useDebounce';
-import useSearchProducts from '@/hooks/useSearchProducts';
-import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getQueryClient } from '@/utils/getQueryClient';
+import { fetchSearchProducts } from '@/utils/fetchSearchProducts';
 
-interface HeaderProps {
-  search?: string;
-}
-
-const Header = ({ search }: HeaderProps) => {
+const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const searchTermDebounce = useDebounce(searchTerm, 500);
   const [openResults, setOpenResults] = useState(false);
-  const { products, refetch } = useSearchProducts(searchTermDebounce);
+  const [triggerRefetch, setTriggerRefetch] = useState(false);
   const [enterKeyPress, setEnterKeyPress] = useState(false);
 
-  const router = useRouter();
+  const queryClient = getQueryClient();
+
+  const { data: products } = useQuery({
+    queryKey: ['search-products', searchTermDebounce],
+    queryFn: () => fetchSearchProducts(searchTermDebounce),
+    enabled: triggerRefetch,
+    staleTime: 1000 * 60 * 5,
+  });
 
   useEffect(() => {
     if (searchTermDebounce.length > 0) {
-      refetch();
+      setTriggerRefetch(true);
       setOpenResults(true);
+      queryClient.invalidateQueries({ queryKey: ['search-products'] });
+    } else {
+      setOpenResults(false);
+      setTriggerRefetch(false);
     }
+  }, [searchTermDebounce]);
+
+  useEffect(() => {
     if (enterKeyPress) {
       setEnterKeyPress(false);
-      router.replace('/?search=' + searchTermDebounce);
+      setOpenResults(false);
+      setTriggerRefetch(false);
+      const params = new URLSearchParams();
+      params.set('search', searchTermDebounce);
+      window.location.href = `${window.location.origin}/?${params.toString()}`;
     }
-  }, [searchTermDebounce, enterKeyPress]);
+  }, [enterKeyPress]);
 
   return (
     <Box sx={{ position: 'relative' }}>
       <HeaderBar
-        search={search}
+        search={searchTerm}
         setSearchTerm={setSearchTerm}
         setOpenResults={setOpenResults}
         setEnterKeyPress={setEnterKeyPress}
       />
       <HeaderSearchResults
         searchTerm={searchTerm}
-        productsList={products}
+        productsList={products?.data}
         openResults={openResults}
       />
     </Box>

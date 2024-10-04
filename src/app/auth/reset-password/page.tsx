@@ -1,10 +1,9 @@
 import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
 import Image from 'next/image';
-import { Suspense } from 'react';
-import ResetPasswordFormContainer from '@/components/auth/resetPassword/ResetPasswordFormContainer';
 import sneakersResetPassword from '@/images/sneakers-reset-password.webp';
 import { Metadata } from 'next';
+import ResetPasswordForm from '@/components/auth/resetPassword/ResetPasswordForm';
 
 export const metadata: Metadata = {
   title: 'Reset password',
@@ -13,17 +12,16 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={''}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          minWidth: '100vw',
-          minHeight: '100vh',
-        }}
-      >
-        <Logo />
-        <ResetPasswordFormContainer />
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        minWidth: '100vw',
+        minHeight: '100vh',
+      }}
+    >
+      <Logo />
+      <ResetPasswordForm />
 
         <Box
           sx={{
@@ -39,12 +37,12 @@ export default function Page() {
             src={sneakersResetPassword}
             alt="Sneakers"
             fill
-            objectFit="cover"
+            style={{ objectFit: 'cover' }}
             priority
             placeholder="blur"
+            sizes="50vw"
           />
         </Box>
       </Box>
-    </Suspense>
   );
 }

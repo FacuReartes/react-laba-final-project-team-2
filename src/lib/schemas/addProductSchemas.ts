@@ -21,9 +21,9 @@ const schema: ZodType<IProducts> = z.object({
   brand: z.string().or(z.number()),
   description: z.string().min(2, 'Description is required').max(300),
   sizes: z.array(z.number()).min(1),
-  images: z.array(z.any()),
+  images: z.array(z.any()).min(1),
   color: z.string().or(z.number()),
-  categories: z.array(z.string()).or(z.array(z.number())),
+  categories: z.array(z.string()).min(1).or(z.array(z.number()).min(1)),
 });
 
 export const useAddProductForm = (defaultValues?: Partial<IProducts>) => {

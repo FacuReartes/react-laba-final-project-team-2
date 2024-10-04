@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 
-interface HeaderSearchResultsProps {
+interface Props {
   searchTerm: string;
   selectedTerm?: string;
   productsList?: any[];
@@ -12,7 +12,7 @@ const HeaderSearchResults = ({
   searchTerm,
   productsList,
   openResults,
-}: HeaderSearchResultsProps) => {
+}: Props) => {
   const highlightText = (text: string) => {
     if (!searchTerm) return text;
 

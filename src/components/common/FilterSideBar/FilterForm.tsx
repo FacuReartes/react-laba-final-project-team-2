@@ -24,7 +24,7 @@ export interface FilterOptionsType {
   prices: number[];
 }
 
-interface FilterFormProps {
+interface Props {
   updateFilter: (filter: FilterTypes) => void;
   initialFilter: FilterTypes;
   filterOptions: FilterOptionsType;
@@ -33,7 +33,7 @@ export const FilterForm = ({
   filterOptions,
   initialFilter,
   updateFilter,
-}: FilterFormProps) => {
+}: Props) => {
   const [genders, setGenders] = useState<DataType[]>(filterOptions.genders);
   const [brands, setBrands] = useState<DataType[]>(filterOptions.brands);
   const [categories, setCategories] = useState<DataType[]>(
