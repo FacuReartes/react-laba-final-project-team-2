@@ -1,6 +1,6 @@
-import AddProductForm from "@/components/AddProductForm/AddProductForm"
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import AddProductForm from '@/components/AddProductForm/AddProductForm'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 jest.mock('next/navigation', () => ({
   useRouter() {
@@ -97,7 +97,7 @@ it('User should be able to add a product', async () => {
   const mockImages = [
     new File(['img1'], 'img1.png', { type: 'image/png' })
   ]
-  const input = screen.getByTestId("dropzone");
+  const input = screen.getByTestId('dropzone');
   await userEvent.upload(input, mockImages);
 
   // Submit form
@@ -190,7 +190,7 @@ describe('Image handling', () => {
       new File(['img1'], 'img1.png', { type: 'image/png' })
     ]
     
-    const input = screen.getByTestId("dropzone");
+    const input = screen.getByTestId('dropzone');
     await userEvent.upload(input, mockImages);
     
     expect(screen.queryAllByRole('img')).toHaveLength(1)
@@ -244,7 +244,7 @@ describe('Image handling', () => {
       new File(['img3'], 'img3.png', { type: 'image/png' })
     ]
     
-    const input = screen.getByTestId("dropzone");
+    const input = screen.getByTestId('dropzone');
     await userEvent.upload(input, mockImages);
     
     // Expect 3 images

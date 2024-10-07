@@ -1,89 +1,89 @@
-import ProductCategorySelect from "@/components/AddProductForm/ProductCategorySelect"
-import ProductSelect from "@/components/AddProductForm/ProductSelect"
-import { useAddProductForm } from "@/lib/schemas/addProductSchemas"
-import { useQuery } from "@tanstack/react-query"
+import ProductCategorySelect from '@/components/AddProductForm/ProductCategorySelect'
+import ProductSelect from '@/components/AddProductForm/ProductSelect'
+import { useAddProductForm } from '@/lib/schemas/addProductSchemas'
+import { useQuery } from '@tanstack/react-query'
 import { 
   fireEvent, 
   render, 
   renderHook, 
   screen 
-} from "@testing-library/react"
-import { FormProvider } from "react-hook-form"
+} from '@testing-library/react'
+import { FormProvider } from 'react-hook-form'
 
 const mockCategories = [
   {
-    "id": 5,
-    "attributes": {
-      "name": "Casual"
+    'id': 5,
+    'attributes': {
+      'name': 'Casual'
     }
   },
   {
-    "id": 6,
-    "attributes": {
-      "name": "Running",
+    'id': 6,
+    'attributes': {
+      'name': 'Running',
     }
   },
   {
-    "id": 4,
-    "attributes": {
-      "name": "Volleyball",
+    'id': 4,
+    'attributes': {
+      'name': 'Volleyball',
     }
   },
   {
-    "id": 7,
-    "attributes": {
-      "name": "Tennis",
+    'id': 7,
+    'attributes': {
+      'name': 'Tennis',
     }
   },
   {
-    "id": 8,
-    "attributes": {
-      "name": "Athletic",
+    'id': 8,
+    'attributes': {
+      'name': 'Athletic',
     }
   },
   {
-    "id": 9,
-    "attributes": {
-      "name": "Boots",
+    'id': 9,
+    'attributes': {
+      'name': 'Boots',
     }
   },
   {
-    "id": 10,
-    "attributes": {
-      "name": "Tracking",
+    'id': 10,
+    'attributes': {
+      'name': 'Tracking',
     }
   }
 ]
 
 const mockBrands = [
   {
-    "id": 9,
-    "attributes": {
-      "name": "Nike"
+    'id': 9,
+    'attributes': {
+      'name': 'Nike'
     }
   },
   {
-    "id": 10,
-    "attributes": {
-      "name": "Adidas"
+    'id': 10,
+    'attributes': {
+      'name': 'Adidas'
     }
   },
   {
-    "id": 11,
-    "attributes": {
-      "name": "Asics"
+    'id': 11,
+    'attributes': {
+      'name': 'Asics'
     }
   },
   {
-    "id": 12,
-    "attributes": {
-      "name": "Puma"
+    'id': 12,
+    'attributes': {
+      'name': 'Puma'
     }
   },
   {
-    "id": 13,
-    "attributes": {
-      "name": "New Balance"
+    'id': 13,
+    'attributes': {
+      'name': 'New Balance'
     }
   }
 ]
