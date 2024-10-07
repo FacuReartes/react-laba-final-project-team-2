@@ -40,7 +40,7 @@ interface ICompletedProduct {
   color: number | string;
   gender: number | string;
   sizes: number[];
-  price: string;
+  price: number;
 }
 
 interface INewProduct {
@@ -171,6 +171,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
+                data-testid='submit'
                 disabled={isPending}
                 sx={{
                   position: 'absolute',

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import Dropzone, { FileRejection } from 'react-dropzone';
-import { Box, Typography } from '@mui/material';
+import { Box, FormHelperText, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface ImageDropzoneProps {
@@ -12,7 +12,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
   onFileAccepted,
   onFileRejected,
 }) => {
-  const { control } = useFormContext();
+  const { control, formState: { errors } } = useFormContext();
 
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -27,6 +27,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
   );
 
   return (
+    <>
     <Controller
       control={control}
       name={'images'}
@@ -54,7 +55,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
                 m: 0,
               }}
             >
-              <input {...getInputProps()} />
+              <input {...getInputProps()} data-testid='dropzone'/>
               {isDragActive ? (
                 <Typography variant="subtitle1">
                   Drop the images here ...
@@ -68,7 +69,9 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
           )}
         </Dropzone>
       )}
-    />
+      />
+      {errors.images && <FormHelperText error>Image is required</FormHelperText>}
+    </>
   );
 };
 
