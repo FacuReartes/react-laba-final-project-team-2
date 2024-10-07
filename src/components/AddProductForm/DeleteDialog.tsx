@@ -82,6 +82,7 @@ export default function DeleteDialog(props: DeleteDialogProps) {
           Cancel
         </Button>
         <Button
+          data-testid='confirm-image-delete'
           variant="outlined"
           onClick={() => handleDeleteButtonClick(true)}
           sx={{

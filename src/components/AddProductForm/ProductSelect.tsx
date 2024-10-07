@@ -1,4 +1,4 @@
-import { Box, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Select, MenuItem, FormHelperText } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -43,6 +43,7 @@ export default function ProductSelect({ queryObj }: ProductSelectProps) {
           )
         )}
       </Select>
+      {errors[queryKey[0]] && <FormHelperText error>{errors[queryKey[0]]?.message as string}</FormHelperText>}
     </Box>
   );
 }
