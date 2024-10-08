@@ -54,7 +54,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
   };
 
   return (
-    product.attributes.images.data && (
+    product.attributes?.images.data && (
       <Box
         sx={{
           width: { md: '320px', xs: '152px' },

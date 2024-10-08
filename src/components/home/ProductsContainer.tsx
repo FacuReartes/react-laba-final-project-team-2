@@ -4,14 +4,15 @@ import { APIProductsType } from '@/lib/apiDataTypes';
 import { useContext } from 'react';
 import { CartContext, ICartContext } from '@/context/CartContext';
 import EmptyProducts from './EmptyProducts';
+import { InfiniteData } from '@tanstack/react-query';
 
 interface Props {
-  products: APIProductsType[];
+  data: InfiniteData<any, unknown> | undefined;
 }
 
-export default function ProductsContainer({ products }: Props) {
+export default function ProductsContainer({ data }: Props) {
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
-
+  const allProducts = data?.pages.flatMap(page => page.data) || [];
   return (
     <Box
       sx={{
@@ -23,14 +24,27 @@ export default function ProductsContainer({ products }: Props) {
         height: '100%',
       }}
     >
-      {Array.isArray(products) && products.length > 0 ? (
-        products.map(product => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            handleAddToCart={handleAddToCart}
-          />
-        ))
+      {data && allProducts.length > 0 ? (
+        data.pages.flatMap(
+          (products: {
+            data: APIProductsType[];
+            meta: {
+              pagination: {
+                page: number;
+                pageCount: number;
+                pageSize: number;
+                total: number;
+              };
+            };
+          }) =>
+            products.data.map((product: APIProductsType) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                handleAddToCart={handleAddToCart}
+              />
+            ))
+        )
       ) : (
         <EmptyProducts />
       )}
