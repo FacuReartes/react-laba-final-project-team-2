@@ -14,6 +14,8 @@ export default function ProductDetail({ params }: { params: number }) {
 
   const { data: product } = useQuery(useGetProductDetail(params));
 
+  useRecentlyViewed(product)
+
   function handleRedirect() {
     if (pathName.includes('product')) {
       router.push('/');
@@ -23,8 +25,6 @@ export default function ProductDetail({ params }: { params: number }) {
   }
 
   if (product) {
-
-    useRecentlyViewed(product)
 
     return (
       <Box

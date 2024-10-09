@@ -19,7 +19,8 @@ export default function ProductsContainer({ products }: Props) {
         flexDirection: 'row',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        gap: { xs: '16px', md: '0' },
+        columnGap: { xs: '16px', md:'60px' },
+        rowGap: { xs: '16px', md: '40px' },
         height: '100%',
       }}
     >
@@ -29,6 +30,7 @@ export default function ProductsContainer({ products }: Props) {
             key={product.id}
             product={product}
             handleAddToCart={handleAddToCart}
+            width='320px' upperHeight='380px'
           />
         ))
       ) : (
