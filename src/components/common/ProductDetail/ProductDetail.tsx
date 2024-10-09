@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import useGetProductDetail from '@/hooks/useGetProductDetail';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
 export default function ProductDetail({ params }: { params: number }) {
   const router = useRouter();
@@ -22,6 +23,9 @@ export default function ProductDetail({ params }: { params: number }) {
   }
 
   if (product) {
+
+    useRecentlyViewed(product)
+
     return (
       <Box
         sx={{
