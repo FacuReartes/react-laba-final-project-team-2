@@ -34,7 +34,7 @@ const ProfileSidebar = () => {
   return (
     <Box
       sx={{
-        width: { xs: '250px', lg: '320px' },
+        minWidth: { xs: '250px', lg: '320px' },
         display: { xs: 'none', md: 'block' },
       }}
     >
