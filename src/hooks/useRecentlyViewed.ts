@@ -1,5 +1,5 @@
-import { APIProductsType } from "@/lib/apiDataTypes";
-import { useEffect, useState } from "react"
+import { APIProductsType } from '@/lib/apiDataTypes';
+import { useEffect, useState } from 'react'
 
 export const useRecentlyViewed = (product?: APIProductsType) => {
   const [productList, setProductList] = useState<APIProductsType[]>([]);
@@ -23,14 +23,14 @@ export const useRecentlyViewed = (product?: APIProductsType) => {
 
       // If list exceeds the limit, delete last product from the list
       if (productListStorage.length > 12) productListStorage.pop();
-      
+
       // Save to local storage
       localStorage.setItem('recently-watched', JSON.stringify(productListStorage));
     }
 
     setProductList(productListStorage);
 
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     productList

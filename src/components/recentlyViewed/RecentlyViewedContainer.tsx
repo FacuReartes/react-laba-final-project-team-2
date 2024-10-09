@@ -1,10 +1,10 @@
 'use client'
-import { Box, List, ListItem, Typography } from "@mui/material"
-import ProductCard from "../home/ProductCard";
-import { useContext } from "react";
-import { ICartContext, CartContext } from "@/context/CartContext";
-import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
-import { APIProductsType } from "@/lib/apiDataTypes";
+import { Box, List, ListItem, Typography } from '@mui/material'
+import ProductCard from '../home/ProductCard';
+import { useContext } from 'react';
+import { ICartContext, CartContext } from '@/context/CartContext';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
+import { APIProductsType } from '@/lib/apiDataTypes';
 
 const RecentlyViewedContainer: React.FC = () => {
 
