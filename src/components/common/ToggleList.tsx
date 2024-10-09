@@ -1,6 +1,6 @@
 import { Box, ToggleButton } from '@mui/material';
 import React from 'react';
-import { SizesType } from './FilterSideBar/FilterForm';
+import { SizesType } from './Filter/FilterForm';
 
 interface Props {
   array: SizesType[];

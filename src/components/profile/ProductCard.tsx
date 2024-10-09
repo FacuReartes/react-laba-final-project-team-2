@@ -1,10 +1,11 @@
 'use client';
+
 import { ProductType } from '@/lib/definitions';
 import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import ProductsModal from './ProductsModal';
 import { useRef, useState } from 'react';
-import useOutSideClick from '../../hooks/useOutsideClick';
+import useOutSideClick from '../../hooks/common/useOutsideClick';
 
 interface PProps {
   product: ProductType;
@@ -12,8 +13,17 @@ interface PProps {
 
 export default function ProductCard({ product }: PProps) {
   const [open, setOpen] = useState(false);
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
   useOutSideClick(ref, () => setOpen(false));
+
+  const productImage = product?.attributes?.images?.data[0]?.attributes?.url;
+  const productName = product?.attributes?.name;
+  const productPrice = product?.attributes?.price;
+  const productGender = product?.attributes?.gender?.data?.attributes?.name;
+
+  const handleModalOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Box
@@ -26,15 +36,15 @@ export default function ProductCard({ product }: PProps) {
       }}
     >
       <Box sx={{ position: 'relative', width: '320px' }}>
-        {
+        {productImage && (
           <Image
-            src={product?.attributes?.images?.data[0]?.attributes?.url}
-            alt={product?.attributes?.name}
+            src={productImage}
+            alt={productName}
             width={320}
             height={380}
             style={{ objectFit: 'contain' }}
           />
-        }
+        )}
         <Button
           sx={{
             position: 'absolute',
@@ -44,17 +54,15 @@ export default function ProductCard({ product }: PProps) {
             px: 1,
             fontSize: '24px',
           }}
-          onClick={() => setOpen(true)}
+          onClick={handleModalOpen}
         >
           ...
         </Button>
         <Box ref={ref}>
-          <ProductsModal open={open} id={product.id} product={product}/>
+          <ProductsModal open={open} id={product.id} product={product} />
         </Box>
       </Box>
-      <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', mt: '12px' }}
-      >
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '12px' }}>
         <Typography
           sx={{
             fontSize: { xs: '10px', md: '22px' },
@@ -62,12 +70,12 @@ export default function ProductCard({ product }: PProps) {
             width: '220px',
           }}
         >
-          {product?.attributes?.name}
+          {productName}
         </Typography>
         <Typography
           sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
         >
-          ${product?.attributes?.price}
+          ${productPrice}
         </Typography>
       </Box>
       <Typography
@@ -77,12 +85,11 @@ export default function ProductCard({ product }: PProps) {
           color: 'common.100',
         }}
       >
-        {product?.attributes?.gender?.data?.attributes?.name === 'Men'
+        {productGender === 'Men'
           ? 'Men'
-          : product?.attributes?.gender?.data?.attributes?.name === 'Women'
-            ? 'Women'
-            : 'Unisex'}
-        {"'"}s Shoes
+          : productGender === 'Women'
+          ? 'Women'
+          : 'Unisex'}{"'"}s Shoes
       </Typography>
     </Box>
   );

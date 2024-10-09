@@ -18,7 +18,7 @@ import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
 import HeaderMenu from './HeaderMenu';
 import { usePathname, useRouter } from 'next/navigation';
-import { CartContext, ICartContext } from '@/context/CartContext';
+import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import useUserQuery from '@/hooks/useUserQuery';
 

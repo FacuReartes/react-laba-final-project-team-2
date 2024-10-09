@@ -79,6 +79,9 @@ export type ProductType = {
       data: ImageType[];
     };
     description: string;
+    brand: {
+      data: Brands;
+    };
     price: number;
     teamName: 'team-1' | 'team-2' | 'team-3' | 'team-5';
     gender: {

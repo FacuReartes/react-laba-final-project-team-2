@@ -1,9 +1,9 @@
-import AddProductForm from '@/components/AddProductForm/AddProductForm';
-import useGetBrands from '@/hooks/useGetBrands';
-import useGetCategories from '@/hooks/useGetCategories';
-import useGetColors from '@/hooks/useGetColors';
-import useGetGenders from '@/hooks/useGetGenders';
-import useGetSizes from '@/hooks/useGetSizes';
+import AddProductForm from '@/components/Product/Form/AddProductForm';
+import useGetBrands from '@/hooks/products/useGetBrands';
+import useGetCategories from '@/hooks/products/useGetCategories';
+import useGetColors from '@/hooks/products/useGetColors';
+import useGetGenders from '@/hooks/products/useGetGenders';
+import useGetSizes from '@/hooks/products/useGetSizes';
 import { Box, Typography } from '@mui/material';
 import {
   dehydrate,

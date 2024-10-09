@@ -1,5 +1,4 @@
-'use client';
-import { FilterOptionsType } from '@/components/common/FilterSideBar/FilterForm';
+import { FilterOptionsType } from '@/components/common/Filter/FilterForm';
 import { DataType, SizesDataType } from '@/lib/definitions';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import { useState } from 'react';

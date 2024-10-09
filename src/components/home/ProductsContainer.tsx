@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import { useContext } from 'react';
-import { CartContext, ICartContext } from '@/context/CartContext';
+import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import EmptyProducts from './EmptyProducts';
 
 interface Props {
