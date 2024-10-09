@@ -13,7 +13,6 @@ import {
   Typography,
 } from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -26,9 +25,11 @@ interface PProps {
     product: APIProductsType,
     selectedSize: number | string
   ) => void;
+  width: string,
+  upperHeight: string
 }
 
-export default function ProductCard({ product, handleAddToCart }: PProps) {
+export default function ProductCard({ product, handleAddToCart, width, upperHeight }: PProps) {
   const router = useRouter();
   const [onHover, setOnHover] = useState(false);
 
@@ -57,8 +58,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
     product.attributes?.images.data && (
       <Box
         sx={{
-          width: { md: '320px', xs: '152px' },
-          margin: { md: '0 30px 60px', xs: '0 0 16px' },
+          width: { md: width, xs: '152px' },
           p: 2,
           borderRadius: '12px',
           display: 'flex',
@@ -76,8 +76,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
         <Box
           sx={{
             position: 'relative',
-            width: { md: '320px', xs: '100%' },
-            height: { md: '380px', xs: '180px' },
+            height: { md: upperHeight, xs: '180px' },
             overflow: 'hidden',
             borderRadius: '8px',
           }}
@@ -86,8 +85,8 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             sx={{
               display: onHover ? 'flex' : 'none',
               position: 'absolute',
-              width: { md: '320px', xs: '100%' },
-              height: { md: '380px', xs: '180px' },
+              width: '100%',
+              height: '100%',
               top: '0',
               left: '0',
               zIndex: 10,
@@ -115,7 +114,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               }}
               onClick={handleClickOpen}
             >
-              <img src="./assets/add-shopping-basket.svg" />
+              <img src="/assets/add-shopping-basket.svg"/>
               Add to Cart
             </IconButton>
             <IconButton
@@ -145,6 +144,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               src={product.attributes.images.data[0].attributes.url}
               alt={product.attributes.name}
               fill
+              priority
               style={{
                 objectFit: 'contain',
                 transition: 'transform 0.5s ease',
@@ -155,7 +155,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
           )}
         </Box>
         <Link
-          href={`product/${product.id}`}
+          href={`/product/${product.id}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box
@@ -166,7 +166,7 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             }}
           >
             <Typography
-              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
+              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500', maxHeight: '35px', overflow: 'hidden' }}
             >
               {product.attributes.name}
             </Typography>

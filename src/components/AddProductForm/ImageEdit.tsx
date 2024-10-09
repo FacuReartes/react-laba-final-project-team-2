@@ -35,10 +35,11 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
   return (
     <Box
       sx={{ width, height, position: 'relative' }}
+      data-testid='image-hover'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Image src={src} alt={alt} width={width} height={height} />
+      <Image src={src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='} alt={alt} width={width} height={height} role='img' />
       {isHover && (
         <Box
           sx={{
@@ -53,6 +54,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
           }}
         >
           <IconButton
+            data-testid='image-delete'
             onClick={handleDeleteImage}
             size="large"
             sx={{

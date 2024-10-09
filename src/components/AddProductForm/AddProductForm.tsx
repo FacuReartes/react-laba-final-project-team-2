@@ -19,36 +19,13 @@ import ProductSelect from './ProductSelect';
 import { IProducts, useAddProductForm } from '@/lib/schemas/addProductSchemas';
 import { FormProvider } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ProductCategorySelect from './ProductCategorySelect';
 import useGetGenders from '@/hooks/useGetGenders';
 import useGetBrands from '@/hooks/useGetBrands';
 import useGetColors from '@/hooks/useGetColors';
 import Popup from '../common/Popup';
-import { env } from '../../../env';
-
-interface ICompletedProduct {
-  teamName: string;
-  userID?: number;
-  name: string;
-  images?: number[];
-  description: string;
-  brand: number | string;
-  categories: number[] | string[];
-  color: number | string;
-  gender: number | string;
-  sizes: number[];
-  price: string;
-}
-
-interface INewProduct {
-  images: File[];
-  product: {
-    data: ICompletedProduct;
-  };
-}
+import { INewProduct, useAddProduct } from '@/hooks/useAddProduct';
 
 const AddProductForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
@@ -65,7 +42,7 @@ const AddProductForm = () => {
 
   const methods = useAddProductForm();
 
-  const queryClient = useQueryClient();
+  const { mutate, isSuccess, reset, isPending } = useAddProduct(token, methods, setProductImages, setOpenPopup)
 
   const submitData = (data: IProducts) => {
     const { images, ...rest } = data;
@@ -81,48 +58,6 @@ const AddProductForm = () => {
     };
     mutate(newProduct);
   };
-
-  const { mutate, isSuccess, reset, isPending } = useMutation({
-    mutationFn: async (newProduct: INewProduct) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const formData = new FormData();
-      newProduct.images.forEach((x: File) => {
-        formData.append('files', x);
-      });
-
-      // eslint-disable-next-line no-useless-catch
-      try {
-        const res = await axios.post(`${env.BASE_URL}/upload`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const imagesId = res.data.map((image: { id: number }) => image.id);
-        newProduct.product.data.images = imagesId;
-
-        axios.post(`${env.BASE_URL}/products`, newProduct.product, config);
-      } catch (error) {
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({ queryKey: ['products-filtered'] });
-      methods.reset();
-      setProductImages([]);
-    },
-    onError: error => {
-      setOpenPopup(true);
-      console.log(error);
-    },
-  });
 
   const handleAcceptedFiles = (files: File[]) => {
     setProductImages(prev => [...prev, ...files]);
@@ -171,6 +106,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
+                data-testid='submit'
                 disabled={isPending}
                 sx={{
                   position: 'absolute',
