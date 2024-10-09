@@ -166,7 +166,7 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
             }}
           >
             <Typography
-              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
+              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500', maxHeight: '35px', overflow: 'hidden' }}
             >
               {product.attributes.name}
             </Typography>
