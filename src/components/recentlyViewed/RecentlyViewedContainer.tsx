@@ -1,20 +1,25 @@
 'use client'
-import { Box, List, ListItem, Typography } from '@mui/material'
+import { Box, Button, List, ListItem, Typography } from '@mui/material'
 import ProductCard from '../home/ProductCard';
 import { useContext } from 'react';
 import { ICartContext, CartContext } from '@/context/CartContext';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import { APIProductsType } from '@/lib/apiDataTypes';
+import { useRouter } from 'next/navigation';
+import Loading from '../common/Loading';
 
 const RecentlyViewedContainer: React.FC = () => {
 
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
 
-  const { productList } = useRecentlyViewed()
+  const { productList, isLoading } = useRecentlyViewed()
+
+  const router = useRouter()
 
   return (
     <Box 
       sx={{ 
+        width:'100%',
         px: { xs: '20px', sm: '60px' }, 
         mt: { xs: '20px', md: '40px' },
       }}
@@ -28,6 +33,9 @@ const RecentlyViewedContainer: React.FC = () => {
       >
         Recently Viewed
       </Typography>
+      { isLoading ? 
+      <Loading/>
+      : 
       <List 
         sx={{ 
           my: { xs: '20px', sm:'40.8px' }, 
@@ -39,7 +47,7 @@ const RecentlyViewedContainer: React.FC = () => {
           justifyContent: 'space-around'
         }} 
       >
-        { productList && productList.map((product: APIProductsType) => (
+        { productList.length > 0 ? productList.map((product: APIProductsType) => (
           <ListItem 
             sx={{
               p: 0, 
@@ -55,8 +63,41 @@ const RecentlyViewedContainer: React.FC = () => {
               upperHeight='338px'
             />
           </ListItem>
-        )) }
+        )) : 
+        <Box
+          sx={{
+            my: '50px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+            px: { xs: '20px', sm: '0px' },
+          }}
+        >
+        <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
+          You haven&apos;t watched any products recently.
+        </Typography>
+        <Button
+          onClick={() => router.push('/')}
+          variant="contained"
+          disableElevation
+          size="large"
+          sx={{
+            bgcolor: 'secondary.light',
+            color: 'common.white',
+            height: '40px',
+            transition: 'opacity .2s ease',
+            ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
+            borderRadius: 2,
+          }}
+        >
+          Continue Shopping
+        </Button>
+      </Box>
+        }
       </List>
+    }
     </Box>
   )
 }

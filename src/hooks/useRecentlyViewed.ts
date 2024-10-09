@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 export const useRecentlyViewed = (product?: APIProductsType) => {
   const [productList, setProductList] = useState<APIProductsType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     // Get list from local storage
@@ -29,10 +30,12 @@ export const useRecentlyViewed = (product?: APIProductsType) => {
     }
 
     setProductList(productListStorage);
+    setIsLoading(false)
 
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
-    productList
+    productList,
+    isLoading
   }
 }
