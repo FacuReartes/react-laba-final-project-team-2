@@ -19,20 +19,20 @@ import {
   getFromAPItoGenericFormat,
   getFromAPItoSizesFormat,
 } from '@/utils/getFromAPIToFilterFormat';
-import { getQueryClient } from '@/utils/getQueryClient';
-import {
-  fetchFilteredProducts,
-  getFromFiltersToAPIParams,
-} from '@/utils/prefetchingProducts';
+import { getFromFiltersToAPIParams } from '@/utils/prefetchingProducts';
 import { setFilterFromParams } from '@/utils/setFilterFromParams';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import { env } from '@/../env';
 interface HomeProps {
   searchParams: Record<string, string | string[]>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
-  const queryClient = getQueryClient();
+  const queryClient = new QueryClient();
 
   try {
     await queryClient.prefetchQuery({
@@ -103,34 +103,37 @@ export default async function Home({ searchParams }: HomeProps) {
     Object.keys(searchParams).length > 0
       ? setFilterFromParams(searchParams, filterOptions)
       : filterOptions;
-
   await queryClient.prefetchQuery({
-    queryKey: ['products-filtered', filter, searchParams.search],
-    queryFn: () =>
-      fetchFilteredProducts(
-        '/products' +
-          getFromFiltersToAPIParams(
-            filter,
-            Array.isArray(searchParams.search)
-              ? searchParams.search[0]
-              : searchParams.search
-          )
-      ),
-    staleTime: 0,
+    queryKey: ['products-filtered', filter],
+    queryFn: async () => {
+      const response = await fetch(
+        `${env.BASE_URL}/products${getFromFiltersToAPIParams(filter, Array.isArray(searchParams.search) ? searchParams.search[0] : searchParams.search)}&pagination[page]=1`,
+        { next: { revalidate: 0 } }
+      );
+      const result = await response.json();
+      const structuredData = {
+        pages: [
+          {
+            data: result.data || [],
+            meta: {
+              pagination: {
+                page: 1,
+                pageSize: 25,
+                pageCount: result.meta?.pagination?.pageCount || 1,
+                total: result.meta?.pagination?.total || 0,
+              },
+            },
+          },
+        ],
+        pageParams: [1],
+      };
+      return structuredData;
+    },
   });
-
-  const products = queryClient.getQueryData<{ data: any[] }>([
-    'products-filtered',
-    filter,
-    searchParams.search,
-  ]);
-
+  queryClient.invalidateQueries({ queryKey: ['products-filtered', filter] });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <HomePageContainer
-        filterOptions={filterOptions}
-        initialProducts={products ? products : { data: [] }}
-      />
+      <HomePageContainer filterOptions={filter} />
     </HydrationBoundary>
   );
 }

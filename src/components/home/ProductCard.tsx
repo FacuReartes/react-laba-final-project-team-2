@@ -55,7 +55,7 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
   };
 
   return (
-    product.attributes.images.data && (
+    product.attributes?.images.data && (
       <Box
         sx={{
           width: { md: width, xs: '152px' },

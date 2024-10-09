@@ -7,24 +7,19 @@ import useFilter, { FilterTypes } from '@/hooks/useFilter';
 import CloseIcon from '@mui/icons-material/Close';
 import HomePageContent from './HomePageContent';
 import { FilterOptionsType } from '../common/FilterSideBar/FilterForm';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-
+import { QueryClient, useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import {
-  fetchFilteredProducts,
-  getFromFiltersToAPIParams,
-} from '@/utils/prefetchingProducts';
+import { getFromFiltersToAPIParams } from '@/utils/prefetchingProducts';
+
+import { env } from '@/../env';
 
 interface Props {
   filterOptions: FilterOptionsType;
-  initialProducts: { data: any[] };
 }
 
-export default function HomePageContainer({
-  filterOptions,
-  initialProducts,
-}: Props) {
+export default function HomePageContainer({ filterOptions }: Props) {
   const [showFilters, setShowFilters] = useState(false);
   const {
     filter,
@@ -40,17 +35,29 @@ export default function HomePageContainer({
   const router = useRouter();
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
 
-  const queryClient = useQueryClient();
+  const { ref, inView } = useInView();
 
-  const { data: products, isPending } = useQuery({
-    queryKey: ['products-filtered'],
-    queryFn: () =>
-      fetchFilteredProducts(
-        '/products' + getFromFiltersToAPIParams(filter, searchTerm)
-      ),
-    staleTime: 1000 * 60,
-    initialData: initialProducts,
-    enabled: triggerFetch,
+  const queryClient = new QueryClient();
+
+  const { data, fetchNextPage, isPending } = useInfiniteQuery({
+    queryKey: ['products-filtered', filter],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await fetch(
+        `${env.BASE_URL}/products${getFromFiltersToAPIParams(filter, searchTerm)}&pagination[page]=${pageParam}`
+      );
+      const result = await response.json();
+      return result || { data: [], meta: {} };
+    },
+    getNextPageParam: lastPage => {
+      const {
+        meta: {
+          pagination: { page, pageCount },
+        },
+      } = lastPage;
+      return page < pageCount ? page + 1 : undefined;
+    },
+    initialPageParam: 1,
+    enabled: false,
   });
 
   useEffect(() => {
@@ -59,6 +66,12 @@ export default function HomePageContainer({
       setSearchTerm(paramsQuery.get('search'));
     }
   }, []);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
 
   const serializedFilter = JSON.stringify(filter);
 
@@ -74,6 +87,9 @@ export default function HomePageContainer({
     updateFilter(newFilter);
     setTriggerFetch(true);
   };
+
+  const allProducts = data?.pages.flatMap(page => page.data) || [];
+  const matches = allProducts.length;
 
   return (
     initialFilter && (
@@ -103,16 +119,22 @@ export default function HomePageContainer({
             showFilters={showFilters}
             updateFilter={handleUpdateFilter}
             initialFilter={initialFilter}
-            matches={products.data?.length ? products.data.length : 0}
+            matches={matches}
           />
 
           <HomePageContent
-            products={products?.data}
+            data={data}
             showFilters={showFilters}
             setShowFilters={() => setShowFilters(!showFilters)}
             isPending={isPending}
           />
         </Box>
+        <span
+          style={{
+            bottom: 0,
+          }}
+          ref={ref}
+        />
       </Box>
     )
   );
