@@ -1,6 +1,6 @@
-import React from 'react';
 import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 interface SummaryProps {
   subtotal: number;
@@ -13,6 +13,8 @@ function Summary({ subtotal, loading }: SummaryProps) {
   const fixedSubtotal: number = Number(subtotal.toFixed(2));
   const total: number = fixedSubtotal + shipping + tax;
   const router = useRouter();
+  const session = useSession();
+  const userId = session?.data?.user?.user?.id;
 
   return (
     <Box
@@ -183,7 +185,7 @@ function Summary({ subtotal, loading }: SummaryProps) {
           variant="contained"
           disabled={loading || total === 0}
           onClick={() => {
-            router.push(`/cart/checkout?total=${total}`);
+            router.push(`/cart/checkout?total=${total}&userId=${userId}`);
           }}
         >
           Checkout
