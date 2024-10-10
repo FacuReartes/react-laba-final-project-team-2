@@ -34,12 +34,12 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
 
   return (
     <Box
-      sx={{ width, height, position: 'relative' }}
+      sx={{ width: { xs: '280px', sm: width }, height, position: 'relative' }}
       data-testid='image-hover'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Image src={src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='} alt={alt} width={width} height={height} role='img' />
+      <Image src={src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='} alt={alt} fill role='img' />
       {isHover && (
         <Box
           sx={{
