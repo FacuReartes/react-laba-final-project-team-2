@@ -3,7 +3,15 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import imageThankYou from '@/images/thank-you.webp';
 
-export default function Page() {
+type Props = {
+  searchParams: {
+    payment_intent: string;
+  };
+};
+
+export default function Page({ searchParams }: Props) {
+  const paymentIntentId = searchParams.payment_intent.slice(15);
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '109px' }}>
       <Box
@@ -30,7 +38,7 @@ export default function Page() {
           <Typography
             sx={{
               fontSize: { xs: '24px', xl: '48px' },
-              lineHeight: { xs: '0px', xl: '56px' },
+              lineHeight: { xs: '28px', xl: '56px' },
             }}
             variant={'h5'}
           >
@@ -42,7 +50,7 @@ export default function Page() {
                 fontWeight: '500',
               }}
             >
-              #9082372
+              {paymentIntentId}
             </span>
           </Typography>
         </Box>
