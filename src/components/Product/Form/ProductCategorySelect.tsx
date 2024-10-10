@@ -1,5 +1,5 @@
 import useGetCategories from '@/hooks/products/useGetCategories';
-import { Box, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Select, MenuItem, FormHelperText } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -30,10 +30,11 @@ export default function ProductCategorySelect() {
               error={Boolean(errors.categories)}
               defaultValue={[categories[0]?.id]}
               multiple
+              data-testid='category-select'
             >
               {categories.map(
                 (category: { id: number; attributes: { name: string } }) => (
-                  <MenuItem key={category.id} value={category.id}>
+                  <MenuItem key={category.id} value={category.id} data-testid={`category-option-${category.id}`}>
                     {category.attributes.name}
                   </MenuItem>
                 )
@@ -42,6 +43,7 @@ export default function ProductCategorySelect() {
           )}
         />
       }
+      {errors.categories && <FormHelperText error>{errors.categories.message as string}</FormHelperText>}
     </Box>
   );
 }

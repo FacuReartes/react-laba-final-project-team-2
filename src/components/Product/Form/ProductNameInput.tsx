@@ -1,4 +1,4 @@
-import { Box, InputLabel, OutlinedInput } from '@mui/material';
+import { Box, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -22,6 +22,7 @@ export default function ProductNameInput() {
         {...register('name')}
         error={Boolean(errors.name)}
       />
+      {errors.name && <FormHelperText error>{errors.name.message as string}</FormHelperText>}
     </Box>
   );
 }

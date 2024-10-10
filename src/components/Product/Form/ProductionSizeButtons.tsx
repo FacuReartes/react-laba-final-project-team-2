@@ -9,22 +9,14 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-interface ProductSizesButtonsProps {
-  selectedSizes: number[];
-  onChangeSizes: (sizes: number[]) => void;
-}
-
-export default function ProductSizesButtons({
-  selectedSizes,
-  onChangeSizes,
-}: ProductSizesButtonsProps) {
+export default function ProductSizesButtons() {
   const { data: sizes } = useQuery(useGetSizes());
+  const { control, getValues, setValue, formState: { errors } } = useFormContext();
 
   const handleSizeChange = (event: React.MouseEvent<HTMLElement>, value: number[]) => {
-    onChangeSizes(value);
+    setValue('sizes', value);
   };
 
-  const { control } = useFormContext();
 
   return (
     <Box>
@@ -41,10 +33,10 @@ export default function ProductSizesButtons({
         <Controller
           name="sizes"
           control={control}
-          render={({ field, formState: { errors } }) => (
+          render={({ field }) => (
             <ToggleButtonGroup
               {...field}
-              value={selectedSizes || []}
+              value={getValues('sizes') || []}
               onChange={handleSizeChange}
               sx={{
                 display: 'grid',
