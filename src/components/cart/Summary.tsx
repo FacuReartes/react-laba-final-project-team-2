@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 interface SummaryProps {
   subtotal: number;
@@ -10,6 +11,8 @@ function Summary({ subtotal, loading }: SummaryProps) {
   const shipping: number = subtotal === 0 ? 0 : 20;
   const tax: number = 0;
   const fixedSubtotal: number = Number(subtotal.toFixed(2));
+  const total: number = fixedSubtotal + shipping + tax;
+  const router = useRouter();
 
   return (
     <Box
@@ -32,7 +35,7 @@ function Summary({ subtotal, loading }: SummaryProps) {
       >
         Summary
       </Typography>
-      <Divider sx={{ display: { xs: 'block', md: 'none' } }} /> 
+      <Divider sx={{ display: { xs: 'block', md: 'none' } }} />
       <Box
         sx={{
           px: { xs: '20px', sm: '125px', md: '0px' },
@@ -59,11 +62,20 @@ function Summary({ subtotal, loading }: SummaryProps) {
         >
           {loading ? (
             <>
-              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
-              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
-              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+              <Skeleton
+                sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+                variant="text"
+              />
+              <Skeleton
+                sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+                variant="text"
+              />
+              <Skeleton
+                sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+                variant="text"
+              />
             </>
-          ): (
+          ) : (
             <>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography
@@ -128,7 +140,10 @@ function Summary({ subtotal, loading }: SummaryProps) {
           sx={{ display: 'flex', justifyContent: 'space-between', my: '19px' }}
         >
           {loading ? (
-            <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+            <Skeleton
+              sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+              variant="text"
+            />
           ) : (
             <>
               <Typography
@@ -147,7 +162,7 @@ function Summary({ subtotal, loading }: SummaryProps) {
                   fontSize: { xs: '20px', md: '30px' },
                 }}
               >
-                ${fixedSubtotal + shipping + tax}
+                ${total}
               </Typography>
             </>
           )}
@@ -166,7 +181,10 @@ function Summary({ subtotal, loading }: SummaryProps) {
             ':hover': { bgcolor: 'secondary.main' },
           }}
           variant="contained"
-          disabled={loading}
+          disabled={loading || total === 0}
+          onClick={() => {
+            router.push(`/cart/checkout?total=${total}`);
+          }}
         >
           Checkout
         </Button>
