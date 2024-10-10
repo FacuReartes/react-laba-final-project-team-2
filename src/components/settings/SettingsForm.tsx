@@ -73,18 +73,6 @@ const SettingsForm = () => {
     updateUser(updatedData);
   };
 
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'lg'));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
-
-  const getLeftMargin = () => {
-    if (isSmallScreen) return '0px';
-    if (isMediumScreen) return '10%';
-    if (isLargeScreen) return '20%';
-    return '0px';
-  };
-
   return (
     <Box sx={{ display: {xs: 'flex', md:'block'}, justifyContent: {xs: 'center'}, width: '100%' }}>
       <Box
