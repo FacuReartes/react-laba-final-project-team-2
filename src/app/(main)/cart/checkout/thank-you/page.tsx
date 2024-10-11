@@ -13,24 +13,32 @@ export default function Page({ searchParams }: Props) {
   const paymentIntentId = searchParams.payment_intent.slice(15);
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: '109px' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: { lg: '80px', xl: '109px' },
+        px: { xs: '10px', md: '20px' },
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'start',
-          gap: '70px',
-          mt: { xs: '30px', xl: '80px' },
-          ml: { xs: '20px', xl: '197px' },
-          width: { xs: '90%', xl: '827px' },
+          alignItems: { xs: 'center', lg: 'start' },
+          gap: { xs: '30px', md: '70px' },
+          mt: { xs: '90px', lg: '80px' },
+          width: { xs: '90%', sm: '600px', xl: '827px' },
+          textAlign: { xs: 'center', md: 'none' },
         }}
       >
         <Box>
           <Typography
             sx={{
-              fontSize: { xs: '45px', xl: '140px' },
+              fontSize: { xs: '40px', lg: '80px', xl: '140px' },
               fontWeight: '900',
-              lineHeight: { xs: '70px', xl: '164px' },
+              lineHeight: { xs: '70px', lg: '120px', xl: '164px' },
             }}
           >
             THANK YOU
@@ -77,7 +85,7 @@ export default function Page({ searchParams }: Props) {
         </Box>
       </Box>
 
-      <Box sx={{ display: { xs: 'none', xl: 'flex' }, mt: '244px' }}>
+      <Box sx={{ display: { xs: 'none', lg: 'flex' }, mt: '244px' }}>
         <Image
           src={imageThankYou}
           alt="thank you"

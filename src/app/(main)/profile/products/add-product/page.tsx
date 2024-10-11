@@ -29,7 +29,7 @@ export default async function AddProductPage() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Box
         sx={{
-          padding: { lg: '52px 68px', xs: '24px 20px 84px' },
+          padding: { xs: '24px 20px 84px', lg: '52px 15px', xl: '52px 68px' },
           m: 0,
           width: { lg: '100%', xs: '100vw' },
           position: 'relative',

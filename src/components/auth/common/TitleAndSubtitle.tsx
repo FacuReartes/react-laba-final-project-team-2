@@ -13,7 +13,7 @@ export default function TitleAndSubtitle({ title, subtitle }: Props) {
       </Typography>
       <Typography
         variant={'subtitle1'}
-        sx={{ mb: '48px', pl: '20px', fontSize: { md: '15px', xs: '12px' } }}
+        sx={{ mb: {xs: '20px', md: '48px'}, pl: {xs: '0', md: '20px'}, fontSize: { md: '15px', xs: '12px' } }}
       >
         {subtitle}
       </Typography>

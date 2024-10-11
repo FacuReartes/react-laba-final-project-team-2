@@ -18,23 +18,6 @@ import SecondaryActionButton from '../common/SecondaryActionButton';
 import AuthPopup from '../common/AuthPopup';
 import TitleAndSubtitle from '../common/TitleAndSubtitle';
 
-const BoxContainerStyles = {
-  width: { md: '960px', xs: '360px' },
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  pt: { md: '208px', xs: '94px' },
-  bgcolor: 'common.white',
-};
-
-const BoxInputStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '16px',
-  mt: '90px',
-};
-
 const ResetPasswordForm = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
@@ -115,13 +98,20 @@ const ResetPasswordForm = () => {
       <Backdrop open={mutation.isPending} sx={{ zIndex: 99 }}>
         <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
-      <Box sx={BoxContainerStyles}>
+      <Box sx={{
+        width: { md: '960px', xs: '300px', sm: '360px' },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        pt: { md: '208px', xs: '94px' },
+        bgcolor: 'common.white'
+      }}>
         <TitleAndSubtitle
           title="Reset password"
           subtitle="Please create a new password here"
         />
 
-        <Box sx={{ width: { md: '436px', xs: '320px' } }}>
+        <Box sx={{ width: { md: '436px', xs: '300px', sm: '320px' } }}>
           <form
             style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
             onSubmit={handleSubmit(onSubmitHandler)}
@@ -129,7 +119,13 @@ const ResetPasswordForm = () => {
             <PasswordInput register={register} errors={errors} />
             <ConfirmPasswordInput register={register} errors={errors} />
 
-            <Box sx={BoxInputStyles}>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '16px',
+              mt: {xs: '45px', md:'90px'}
+            }}>
               <ActionButton
                 isLoading={mutation.isPending}
                 text="Reset password"
