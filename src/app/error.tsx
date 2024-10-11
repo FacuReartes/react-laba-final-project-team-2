@@ -27,7 +27,7 @@ export default function Error({
       }}
     >
       <SickIcon sx={{ fontSize: '100px', color: 'secondary.light' }} />
-      <Typography variant="h2" sx={{ color: 'grey.100' }}>
+      <Typography variant="h2" sx={{ color: 'grey.100', textAlign: 'center' }}>
         Something went wrong!
       </Typography>
       <GoBackButton text="Try again" />

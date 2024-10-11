@@ -51,7 +51,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
       <Box
         sx={{
           position: 'relative',
-          width: { sm: '588px' },
+          width: { sm: '588px', md: '520px' },
           height: { sm: '628px' },
         }}
       >
