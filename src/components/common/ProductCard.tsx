@@ -16,7 +16,7 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import Popup from '../common/Popup';
+import Popup from './Popup';
 import { useRouter } from 'next/navigation';
 
 interface PProps {
@@ -58,7 +58,7 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
     product.attributes?.images.data && (
       <Box
         sx={{
-          width: { md: width, xs: '152px' },
+          boxSizing: 'border-box',
           p: 2,
           borderRadius: '12px',
           display: 'flex',
@@ -90,7 +90,8 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
               top: '0',
               left: '0',
               zIndex: 10,
-              columnGap: 2,
+              gap: 2,
+              flexDirection: { xs: 'column', sm: 'row' },
               justifyContent: 'center',
               alignItems: 'center',
               backdropFilter: 'brightness(50%)',
@@ -98,8 +99,8 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
           >
             <IconButton
               sx={{
-                width: '80px',
-                height: '80px',
+                width: { xs: '60px', sm: '80px' },
+                height: { xs: '60px', sm: '80px' },
                 bgcolor: 'rgba(255,255,255,0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
@@ -115,12 +116,12 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
               onClick={handleClickOpen}
             >
               <img src="/assets/add-shopping-basket.svg"/>
-              Add to Cart
+              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>Add to Cart</Typography>
             </IconButton>
             <IconButton
               sx={{
-                width: '80px',
-                height: '80px',
+                width: { xs: '60px', sm: '80px' },
+                height: { xs: '60px', sm: '80px' },
                 bgcolor: 'rgba(255,255,255, 0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
@@ -136,7 +137,7 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
               onClick={() => router.push(`/product/${product?.id}`)}
             >
               <ManageSearchIcon />
-              View details
+              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>View details</Typography>
             </IconButton>
           </Box>
           {product?.attributes?.images?.data[0]?.attributes?.url && (

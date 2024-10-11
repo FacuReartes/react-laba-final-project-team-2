@@ -1,6 +1,6 @@
 'use client'
 import { Box, Button, List, ListItem, Typography } from '@mui/material'
-import ProductCard from '../home/ProductCard';
+import ProductCard from '../common/ProductCard';
 import { useContext } from 'react';
 import { ICartContext, CartContext } from '@/context/CartContext';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
