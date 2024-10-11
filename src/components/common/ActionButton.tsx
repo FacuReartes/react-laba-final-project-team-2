@@ -19,9 +19,10 @@ export default function ActionButton({ isLoading, text, goto }: Props) {
       color="error"
       sx={{
         color: text === 'View Order' ? 'error.main' : 'common.white',
-        width: { xs: '300px', md: '280px' },
+        width: '100%',
         height: '61px',
         fontSize: { xs: '14px', md: '16px' },
+        mt: '10px',
       }}
       disabled={isLoading}
       onClick={() => {
