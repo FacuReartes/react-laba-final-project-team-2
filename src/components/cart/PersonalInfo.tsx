@@ -12,7 +12,7 @@ export default function PersonalInfo() {
 
   return (
     <Box>
-      <Typography mb={'32px'} variant="h3">
+      <Typography mt={'15px'} mb={'5px'} variant="h3">
         Personal Info
       </Typography>
       <Box

@@ -9,7 +9,7 @@ export default function ShippingInfo() {
 
   return (
     <Box>
-      <Typography mb={'32px'} variant="h3">
+      <Typography mt={'15px'} mb={'5px'} variant="h3">
         Shipping Info
       </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '24px' }}>
