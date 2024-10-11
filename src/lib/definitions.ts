@@ -130,3 +130,11 @@ export type SingleFormInput = {
   register: any;
   errors: any;
 };
+
+export type ShippingFormData = {
+  country: string;
+  city: string;
+  state: string;
+  zip: string;
+  address: string;
+};
