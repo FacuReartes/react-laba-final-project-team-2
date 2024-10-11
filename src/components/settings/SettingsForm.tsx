@@ -6,7 +6,6 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import SettingsCard from './SettingsCard';
 import { SettingsFormData } from '@/lib/definitions';

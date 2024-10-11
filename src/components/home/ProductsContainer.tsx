@@ -41,7 +41,7 @@ export default function ProductsContainer({ data }: Props) {
                 key={product.id}
                 product={product}
                 handleAddToCart={handleAddToCart}
-                width='320px' upperHeight='380px'
+                upperHeight='380px'
               />
             ))
         )

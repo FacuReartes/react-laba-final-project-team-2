@@ -25,11 +25,10 @@ interface PProps {
     product: APIProductsType,
     selectedSize: number | string
   ) => void;
-  width: string,
   upperHeight: string
 }
 
-export default function ProductCard({ product, handleAddToCart, width, upperHeight }: PProps) {
+export default function ProductCard({ product, handleAddToCart, upperHeight }: PProps) {
   const router = useRouter();
   const [onHover, setOnHover] = useState(false);
 
@@ -167,7 +166,11 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
             }}
           >
             <Typography
-              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500', maxHeight: '35px', overflow: 'hidden' }}
+              sx={{ 
+                fontSize: { xs: '10px', md: '22px' }, 
+                fontWeight: '500', 
+                maxHeight: { xs: '18px', md:'35px' }, 
+                overflow: 'hidden' }}
             >
               {product.attributes.name}
             </Typography>
