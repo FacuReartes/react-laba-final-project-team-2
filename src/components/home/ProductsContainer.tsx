@@ -5,6 +5,8 @@ import { useContext } from 'react';
 import { CartContext, ICartContext } from '@/context/CartContext';
 import EmptyProducts from './EmptyProducts';
 import { InfiniteData } from '@tanstack/react-query';
+import UserNotification from '../common/UserNotification';
+import { IWishListContext, WishListContext } from '@/context/WishListContext';
 
 interface Props {
   data: InfiniteData<any, unknown> | undefined;
@@ -12,6 +14,9 @@ interface Props {
 
 export default function ProductsContainer({ data }: Props) {
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
+  const { isSuccess, handleClose, message } = useContext(
+    WishListContext
+  ) as IWishListContext;
   const allProducts = data?.pages.flatMap(page => page.data) || [];
   return (
     <Box
@@ -20,7 +25,7 @@ export default function ProductsContainer({ data }: Props) {
         flexDirection: 'row',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        columnGap: { xs: '16px', md:'60px' },
+        columnGap: { xs: '16px', md: '60px' },
         rowGap: { xs: '16px', md: '40px' },
         height: '100%',
       }}
@@ -43,13 +48,20 @@ export default function ProductsContainer({ data }: Props) {
                 key={product.id}
                 product={product}
                 handleAddToCart={handleAddToCart}
-                width='320px' upperHeight='380px'
+                width="320px"
+                upperHeight="380px"
               />
             ))
         )
       ) : (
         <EmptyProducts />
       )}
+      <UserNotification
+        handleClose={handleClose}
+        message={message}
+        type={'success'}
+        open={isSuccess}
+      />
     </Box>
   );
 }

@@ -13,11 +13,14 @@ import {
   Typography,
 } from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Popup from '../common/Popup';
 import { useRouter } from 'next/navigation';
+import { IWishListContext, WishListContext } from '@/context/WishListContext';
 
 interface PProps {
   product: APIProductsType;
@@ -25,22 +28,40 @@ interface PProps {
     product: APIProductsType,
     selectedSize: number | string
   ) => void;
-  width: string,
-  upperHeight: string
+  width: string;
+  upperHeight: string;
 }
 
-export default function ProductCard({ product, handleAddToCart, width, upperHeight }: PProps) {
+export default function ProductCard({
+  product,
+  handleAddToCart,
+  width,
+  upperHeight,
+}: PProps) {
+  const { addWish, wishList, removeWish } = useContext(
+    WishListContext
+  ) as IWishListContext;
   const router = useRouter();
   const [onHover, setOnHover] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState<number | string>('');
 
+  const isInWishlist = wishList.some(item => item.id === product.id);
+
+  const handleWishListToggle = () => {
+    if (isInWishlist) {
+      removeWish(product.id);
+    } else {
+      addWish(product);
+    }
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseModal = () => {
     setOpen(false);
   };
 
@@ -50,7 +71,7 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
 
   const handleAddToCartClick = () => {
     handleAddToCart(product, selectedSize);
-    handleClose();
+    handleCloseModal();
     setOnHover(false);
   };
 
@@ -75,6 +96,25 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
       >
         <Box
           sx={{
+            position: 'absolute',
+            zIndex: 20,
+            top: 25,
+            right: 25,
+            cursor: 'pointer',
+          }}
+          onClick={handleWishListToggle}
+        >
+          {isInWishlist ? (
+            <FavoriteIcon sx={{ color: 'secondary.main' }} fontSize="large" />
+          ) : (
+            <FavoriteBorderIcon
+              sx={{ color: 'secondary.main' }}
+              fontSize="large"
+            />
+          )}
+        </Box>
+        <Box
+          sx={{
             position: 'relative',
             height: { md: upperHeight, xs: '180px' },
             overflow: 'hidden',
@@ -87,8 +127,6 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
               position: 'absolute',
               width: '100%',
               height: '100%',
-              top: '0',
-              left: '0',
               zIndex: 10,
               columnGap: 2,
               justifyContent: 'center',
@@ -114,7 +152,7 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
               }}
               onClick={handleClickOpen}
             >
-              <img src="/assets/add-shopping-basket.svg"/>
+              <img src="/assets/add-shopping-basket.svg" />
               Add to Cart
             </IconButton>
             <IconButton
@@ -166,7 +204,12 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
             }}
           >
             <Typography
-              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500', maxHeight: '35px', overflow: 'hidden' }}
+              sx={{
+                fontSize: { xs: '10px', md: '22px' },
+                fontWeight: '500',
+                maxHeight: '35px',
+                overflow: 'hidden',
+              }}
             >
               {product.attributes.name}
             </Typography>
@@ -188,12 +231,12 @@ export default function ProductCard({ product, handleAddToCart, width, upperHeig
         </Link>
 
         <Popup
-          onClose={handleClose}
+          onClose={handleCloseModal}
           title={product?.attributes?.name}
           open={open}
           actions={
             <>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleCloseModal}>Cancel</Button>
               <Button onClick={handleAddToCartClick} disabled={!selectedSize}>
                 Add to Cart
               </Button>
