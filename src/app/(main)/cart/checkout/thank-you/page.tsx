@@ -69,6 +69,7 @@ export default function Page({ searchParams }: Props) {
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' },
             gap: '30px',
+            width: '100%',
           }}
         >
           <ActionButton text="View Order" />
