@@ -76,7 +76,7 @@ export type ProductType = {
   attributes: {
     name: string;
     images: {
-      data: ImageType[];
+      data: File[];
     };
     description: string;
     brand: {

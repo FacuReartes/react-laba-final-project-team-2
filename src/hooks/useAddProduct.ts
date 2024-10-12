@@ -44,8 +44,8 @@ export const useAddProduct = (
       };
 
       const formData = new FormData();
-      newProduct.images.forEach((x: File) => {
-        formData.append('files', x);
+      newProduct.images.forEach((img: File) => {
+        formData.append('files', img);
       });
 
       // eslint-disable-next-line no-useless-catch

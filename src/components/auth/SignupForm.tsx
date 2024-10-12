@@ -1,17 +1,17 @@
 'use client';
-import { useRegisterUser } from '@/hooks/useRegisterUser';
+import { useRegisterUser } from '@/hooks/auth/useRegisterUser';
 import { SignUpFormData } from '@/lib/definitions';
 import { useSignupForm } from '@/lib/schemas/signUpSchema';
 import { Backdrop, Box } from '@mui/material';
 import Loading from '@/components/common/Loading';
-import PasswordInput from '../common/PasswordInput';
-import ConfirmPasswordInput from '../common/ConfirmPasswordInput';
-import EmailInput from '../common/EmailInput';
-import NameInput from '../common/NameInput';
-import ActionButton from '../common/ActionButton';
-import SecondaryActionButton from '../common/SecondaryActionButton';
-import AuthPopup from '../common/AuthPopup';
-import TitleAndSubtitle from '../common/TitleAndSubtitle';
+import PasswordInput from '../auth/common/PasswordInput';
+import ConfirmPasswordInput from '../auth/common/ConfirmPasswordInput';
+import EmailInput from '../auth/common/EmailInput';
+import NameInput from '../auth/common/NameInput';
+import ActionButton from '../auth/common/ActionButton';
+import SecondaryActionButton from '../auth/common/SecondaryActionButton';
+import AuthPopup from '../auth/common/AuthPopup';
+import TitleAndSubtitle from '../auth/common/TitleAndSubtitle';
 
 const BoxContainerStyles = {
   width: { md: '960px', xs: '360px' },

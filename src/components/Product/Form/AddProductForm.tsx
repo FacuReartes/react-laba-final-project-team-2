@@ -19,41 +19,17 @@ import ProductSelect from './ProductSelect';
 import { IProducts, useAddProductForm } from '@/lib/schemas/addProductSchemas';
 import { FormProvider } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ProductCategorySelect from './ProductCategorySelect';
 import useGetGenders from '@/hooks/products/useGetGenders';
 import useGetBrands from '@/hooks/products/useGetBrands';
 import useGetColors from '@/hooks/products/useGetColors';
 import Popup from '../../common/Popup';
-import { env } from '../../../../env';
-
-export interface ICompletedProduct {
-  teamName: string;
-  userID?: number;
-  name: string;
-  images?: number[];
-  description: string;
-  brand: number | string;
-  categories: number[] | string[];
-  color: number | string;
-  gender: number | string;
-  sizes: number[];
-  price: string;
-}
-
-export interface INewProduct {
-  images: File[];
-  product: {
-    data: ICompletedProduct;
-  };
-}
+import { INewProduct, useAddProduct } from '@/hooks/useAddProduct';
 
 const AddProductForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
   const [productImages, setProductImages] = useState<File[]>([]);
-  const [sizes, setSizes] = useState<number[]>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
@@ -66,7 +42,7 @@ const AddProductForm = () => {
 
   const methods = useAddProductForm();
 
-  const queryClient = useQueryClient();
+  const { mutate, isSuccess, reset, isPending } = useAddProduct(token, methods, setProductImages, setOpenPopup)
 
   const submitData = (data: IProducts) => {
     const { images, ...rest } = data;
@@ -76,56 +52,12 @@ const AddProductForm = () => {
         data: {
           teamName: 'team-2',
           ...rest,
-          sizes,
           userID: userID,
         },
       },
     };
     mutate(newProduct);
   };
-
-  const { mutate, isSuccess, reset, isPending } = useMutation({
-    mutationFn: async (newProduct: INewProduct) => {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const formData = new FormData();
-      newProduct.images.forEach((x: File) => {
-        formData.append('files', x);
-      });
-
-      // eslint-disable-next-line no-useless-catch
-      try {
-        const res = await axios.post(`${env.BASE_URL}/upload`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const imagesId = res.data.map((image: { id: number }) => image.id);
-        newProduct.product.data.images = imagesId;
-
-        axios.post(`${env.BASE_URL}/products`, newProduct.product, config);
-      } catch (error) {
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({ queryKey: ['products-filtered'] });
-      methods.reset();
-      setProductImages([]);
-      setSizes([]);
-    },
-    onError: error => {
-      setOpenPopup(true);
-      console.log(error);
-    },
-  });
 
   const handleAcceptedFiles = (files: File[]) => {
     setProductImages(prev => [...prev, ...files]);
@@ -149,11 +81,6 @@ const AddProductForm = () => {
     setOpenDialog(false);
     setActionDialog(value);
   };
-
-  const handleSizeChange= (sizes: number[]) => {
-    setSizes(sizes);
-    methods.setValue('sizes', sizes);
-  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -179,6 +106,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
+                data-testid='submit'
                 disabled={isPending}
                 sx={{
                   position: 'absolute',
@@ -212,7 +140,7 @@ const AddProductForm = () => {
 
               <ProductDescriptionInput />
 
-              <ProductSizesButtons selectedSizes={sizes} onChangeSizes={handleSizeChange} />
+              <ProductSizesButtons />
             </Box>
 
             <Box

@@ -8,8 +8,6 @@ interface ProductSelectProps {
     queryKey: string[];
     queryFn: () => Promise<any>;
   };
-  // value?: string | number;
-  // onChange?: (event: SelectChangeEvent<string | number>) => void;
 }
 
 export default function ProductSelect({ queryObj }: ProductSelectProps) {

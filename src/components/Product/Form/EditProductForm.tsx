@@ -13,15 +13,16 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import PreviewImages from '../Image/PreviewImages';
 import { useAddProductForm } from '@/lib/schemas/addProductSchemas';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, Controller } from 'react-hook-form';
 import { FileRejection } from 'react-dropzone';
 import ProductSelect from './ProductSelect';
 import useGetGenders from '@/hooks/products/useGetGenders';
 import useGetBrands from '@/hooks/products/useGetBrands';
+import useGetColors from '@/hooks/products/useGetColors';
+import ProductCategorySelect from './ProductCategorySelect';
 import ProductSizesButtons from './ProductionSizeButtons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { env } from '../../../../env';
-import useGetColors from '@/hooks/products/useGetColors';
 
 interface EditProductFormProps {
   product: ProductType;
@@ -34,25 +35,23 @@ export default function EditProductForm({
   open,
   onClose,
 }: EditProductFormProps) {
-  const [name, setName] = useState(product.attributes.name);
-  const [price, setPrice] = useState(product.attributes.price);
-  const [description, setDescription] = useState(
-    product.attributes.description
-  );
-  const [color, setColor] = useState(product.attributes.color.data.id || '');
-  const [gender, setGender] = useState(product.attributes.gender.data.id || '');
-  const [brand, setBrand] = useState(product.attributes.brand.data.id || '');
-  const [productImages, setProductImages] = useState(
-    product.attributes.images.data
-  );
-  const [sizes, setSizes] = useState(product.attributes.sizes.data.map(size => size.id));
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
 
   const { data: session } = useSession();
   const token = session?.user.jwt;
 
-  const methods = useAddProductForm();
+  const methods = useAddProductForm({
+    name: product.attributes.name,
+    price: product.attributes.price,
+    description: product.attributes.description,
+    color: product.attributes.color.data.id || '',
+    categories: product.attributes.categories.data.map(category => category.id),
+    gender: product.attributes.gender.data.id || '',
+    brand: product.attributes.brand.data.id || '',
+    sizes: product.attributes.sizes.data.map(size => size.id),
+    images: product.attributes.images.data,
+  });
   const queryClient = useQueryClient();
 
   const handleDialogOnClose = (value: boolean) => {
@@ -61,9 +60,10 @@ export default function EditProductForm({
   };
 
   const { mutate, isPending, isSuccess } = useMutation({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mutationFn: async (updatedProductData: any) => {
       const formData = new FormData();
-      productImages.forEach((img: File | { id: number }) => {
+      methods.getValues('images').forEach((img: File | { id: number }) => {
         if (img instanceof File) {
           formData.append('files', img);
         }
@@ -81,17 +81,19 @@ export default function EditProductForm({
 
       const updatedProduct = {
         data: {
-          name,
-          price,
-          description,
-          color,
-          gender,
-          brand,
-          sizes,
+          name: methods.getValues('name'),
+          price: methods.getValues('price'),
+          description: methods.getValues('description'),
+          categories: methods.getValues('categories'),
+          color: methods.getValues('color'),
+          gender: methods.getValues('gender'),
+          brand: methods.getValues('brand'),
+          sizes: methods.getValues('sizes'),
           images: [
-            ...productImages
-              .filter(img => !(img instanceof File))
-              .map(img => img.id),
+            ...methods
+              .getValues('images')
+              .filter(img => !(img instanceof File) && 'id' in img)
+              .map(img => (img as { id: number }).id),
             ...imagesId,
           ],
         },
@@ -110,6 +112,8 @@ export default function EditProductForm({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: [`product-${product.id}`] });
+      methods.reset();
       onClose();
     },
     onError: error => {
@@ -117,22 +121,10 @@ export default function EditProductForm({
     },
   });
 
-  const handleEditProduct = () => {
-    const updatedProductData = {
-      name,
-      price,
-      description,
-      color: color,
-      gender: gender,
-      brand: brand,
-      sizes: sizes,
-      images: productImages,
-    };
-    mutate(updatedProductData);
-  };
+  const handleEditProduct = () => mutate(methods.getValues());
 
   const handleAcceptedFiles = (files: File[]) => {
-    setProductImages(prev => [...prev, ...files]);
+    methods.setValue('images', [...methods.getValues('images'), ...files]);
   };
 
   const handleRejectedFiles = (fileRejections: FileRejection[]) => {
@@ -141,16 +133,27 @@ export default function EditProductForm({
     }
   };
 
-  const handleDeleteImage = useCallback((targetIndex: number) => {
-    setProductImages(prevImages =>
-      prevImages.filter((_, index) => index !== targetIndex)
-    );
-  }, []);
+  const handleDeleteImage = useCallback(
+    (targetIndex: number) => {
+      const prodImages = methods
+        .getValues('images')
+        .filter((temp, index) => index !== targetIndex);
+      methods.setValue('images', prodImages);
+    },
+    [methods]
+  );
 
   return (
     <FormProvider {...methods}>
       <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
-        <Box sx={{ py: '53px', px: '40px', background: '#FFFFFF', paddingRight: { lg: '85px' } }}>
+        <Box
+          sx={{
+            py: '53px',
+            px: '40px',
+            background: '#FFFFFF',
+            paddingRight: { lg: '85px' },
+          }}
+        >
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <DialogTitle
               variant="h1"
@@ -158,7 +161,13 @@ export default function EditProductForm({
             >
               Edit Product
             </DialogTitle>
-            <Box sx={{ display: { xs: 'none', lg: 'flex' }, justifyContent: 'flex-end', mt: '16px' }}>
+            <Box
+              sx={{
+                display: { xs: 'none', lg: 'flex' },
+                justifyContent: 'flex-end',
+                mt: '16px',
+              }}
+            >
               <Button
                 variant="contained"
                 sx={{
@@ -174,17 +183,28 @@ export default function EditProductForm({
               >
                 Save
               </Button>
-
             </Box>
           </Box>
-          <Typography sx={{ width: { lg: '890px' }, mb: '40px', fontSize: { xs: '12px', lg: '15px'} }}>
+          <Typography
+            sx={{
+              width: { lg: '890px' },
+              mb: '40px',
+              fontSize: { xs: '12px', lg: '15px' },
+            }}
+          >
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
             in laying out print, graphic or web designs. The passage is
             attributed to an unknown typesetter in the 15th century who is
             thought to have scrambled parts of Cicero&apos;s De Finibus Bonorum
             et Malorum for use in a type specimen book. It usually begins with
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: { lg: 'row', xs: 'column'}, justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { lg: 'row', xs: 'column' },
+              justifyContent: 'space-between',
+            }}
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -194,35 +214,60 @@ export default function EditProductForm({
                 maxWidth: '436px',
               }}
             >
-              <TextField
-                label="Product name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                InputProps={{ sx: { fontSize: { xs: '12px', lg: '15px' } }}}
+              <Controller
+                name="name"
+                control={methods.control}
+                render={({ field }) => (
+                  <TextField
+                    label="Product name"
+                    {...field}
+                    InputProps={{
+                      sx: { fontSize: { xs: '12px', lg: '15px' } },
+                    }}
+                  />
+                )}
               />
-              <TextField
-                label="Price"
-                value={price}
-                onChange={e => setPrice(parseFloat(e.target.value) || 0)}
-                InputProps={{ sx: { fontSize: { xs: '12px', lg: '15px' } }}}
+              <Controller
+                name="price"
+                control={methods.control}
+                render={({ field }) => (
+                  <TextField
+                    label="Price"
+                    type="number"
+                    {...field}
+                    InputProps={{
+                      sx: { fontSize: { xs: '12px', lg: '15px' } },
+                    }}
+                  />
+                )}
               />
-              <TextField
-                label="Description"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                multiline
-                rows={4}
-                InputProps={{ sx: { fontSize: { xs: '12px', lg: '15px' } }}}
+              <Controller
+                name="description"
+                control={methods.control}
+                render={({ field }) => (
+                  <TextField
+                    label="Description"
+                    multiline
+                    rows={4}
+                    {...field}
+                    InputProps={{
+                      sx: { fontSize: { xs: '12px', lg: '15px' } },
+                    }}
+                  />
+                )}
               />
-
-              <ProductSelect queryObj={useGetColors()} value={color} onChange={(e) => setColor(e.target.value)} />
 
               <Box sx={{ display: 'flex', gap: '24px' }}>
-                <ProductSelect queryObj={useGetGenders()} value={gender} onChange={(e) => setGender(e.target.value)}  />
-                <ProductSelect queryObj={useGetBrands()} value={brand} onChange={(e) => setBrand(e.target.value)}/>
+                <ProductCategorySelect />
+                <ProductSelect queryObj={useGetColors()} />
               </Box>
 
-              <ProductSizesButtons selectedSizes={sizes} onChangeSizes={setSizes} />
+              <Box sx={{ display: 'flex', gap: '24px' }}>
+                <ProductSelect queryObj={useGetGenders()} />
+                <ProductSelect queryObj={useGetBrands()} />
+              </Box>
+
+              <ProductSizesButtons />
 
               {isSuccess && (
                 <Typography>Product updated successfully!</Typography>
@@ -230,14 +275,20 @@ export default function EditProductForm({
             </Box>
             <Box sx={{ display: 'flex', mt: '24px' }}>
               <PreviewImages
-                gallery={productImages}
+                gallery={methods.watch('images')}
                 onFileAccepted={handleAcceptedFiles}
                 onFileRejected={handleRejectedFiles}
                 onDelete={handleDeleteImage}
               />
             </Box>
           </Box>
-          <Box sx={{ display: { lg: 'none', xs: 'flex' }, justifyContent: 'flex-end', mt: '20px' }}>
+          <Box
+            sx={{
+              display: { lg: 'none', xs: 'flex' },
+              justifyContent: 'flex-end',
+              mt: '20px',
+            }}
+          >
             <Button
               variant="contained"
               sx={{
