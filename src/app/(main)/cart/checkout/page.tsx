@@ -33,6 +33,7 @@ export default function Page({ searchParams }: Props) {
     address: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const isPersonalInfoValid = Object.values(personalInfo).every(
@@ -42,6 +43,10 @@ export default function Page({ searchParams }: Props) {
       value => value !== ''
     );
     setIsFormValid(isPersonalInfoValid && isShippingInfoValid);
+
+    if (!isPersonalInfoValid || !isShippingInfoValid) {
+      setErrorMessage('Please fill in all fields');
+    }
   }, [personalInfo, shippingInfo]);
 
   return (
@@ -74,6 +79,7 @@ export default function Page({ searchParams }: Props) {
         <ShippingInfo
           shippingInfo={shippingInfo}
           setShippingInfo={setShippingInfo}
+          errorMessage={errorMessage}
         />
         <PaymentForm
           amount={amount}

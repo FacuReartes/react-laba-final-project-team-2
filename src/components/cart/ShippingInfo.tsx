@@ -17,11 +17,13 @@ type ShippingInfoProps = {
       address: string;
     }>
   >;
+  errorMessage: string;
 };
 
 export default function ShippingInfo({
   shippingInfo,
   setShippingInfo,
+  errorMessage,
 }: ShippingInfoProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShippingInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -79,6 +81,11 @@ export default function ShippingInfo({
           required
         />
       </Box>
+      {errorMessage && (
+        <Typography color="error" sx={{ mt: 2 }}>
+          {errorMessage}
+        </Typography>
+      )}
     </Box>
   );
 }
