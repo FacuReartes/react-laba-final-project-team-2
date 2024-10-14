@@ -15,6 +15,8 @@ export default function ProductCard({ product }: PProps) {
   const ref = useRef();
   useOutSideClick(ref, () => setOpen(false));
 
+  const imgUrl: string | undefined = product?.attributes?.images?.data[0]?.attributes?.url
+
   return (
     <Box
       sx={{
@@ -27,10 +29,10 @@ export default function ProductCard({ product }: PProps) {
     >
       <Box sx={{ position: 'relative', width: {xs: '300px', sm: '320px'}, height: '380px' }}>
         <Image
-          src={product?.attributes?.images?.data[0]?.attributes?.url}
+          src={imgUrl ?? '/no-img.webp'}
           alt={product?.attributes?.name}
           fill
-          style={{ objectFit: 'contain' }}
+          objectFit={imgUrl ? 'contain' : 'scale-down'}
         />
         <Button
           sx={{

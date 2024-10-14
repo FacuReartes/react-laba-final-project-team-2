@@ -53,6 +53,8 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
     setOnHover(false);
   };
 
+  const imgUrl: string | undefined = product?.attributes?.images?.data[0]?.attributes?.url
+
   return (
     product.attributes?.images.data && (
       <Box
@@ -139,20 +141,18 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
               <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>View details</Typography>
             </IconButton>
           </Box>
-          {product?.attributes?.images?.data[0]?.attributes?.url && (
-            <Image
-              src={product.attributes.images.data[0].attributes.url}
-              alt={product.attributes.name}
-              fill
-              priority
-              style={{
-                objectFit: 'contain',
-                transition: 'transform 0.5s ease',
-                transform: onHover ? 'scale(1.1)' : 'scale(1)',
-              }}
-              sizes="800px"
-            />
-          )}
+          <Image
+            src={ imgUrl ?? '/no-img.webp' }
+            alt={product.attributes.name}
+            fill
+            priority
+            objectFit={ imgUrl ? 'contain' : 'scale-down' }
+            style={{
+              transition: 'transform 0.5s ease',
+              transform: onHover ? 'scale(1.1)' : 'scale(1)',
+            }}
+            sizes="800px"
+          />
         </Box>
         <Link
           href={`/product/${product.id}`}
