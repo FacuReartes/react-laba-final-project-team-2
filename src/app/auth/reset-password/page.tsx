@@ -3,7 +3,7 @@ import Logo from '@/components/common/Logo';
 import Image from 'next/image';
 import sneakersResetPassword from '@/images/sneakers-reset-password.webp';
 import { Metadata } from 'next';
-import ResetPasswordForm from '@/components/auth/resetPassword/ResetPasswordForm';
+import ResetPasswordForm from '@/components/auth/ResetPasswordForm';
 
 export const metadata: Metadata = {
   title: 'Reset password',

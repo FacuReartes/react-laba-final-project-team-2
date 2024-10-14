@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import useGetProductDetail from '@/hooks/useGetProductDetail';
+import useGetProductDetail from '@/hooks/products/useGetProductDetail';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import UserNotification from '../UserNotification';

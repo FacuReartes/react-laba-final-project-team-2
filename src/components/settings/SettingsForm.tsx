@@ -13,10 +13,10 @@ import {
   useInitializeForm,
   useSettingsForm,
 } from '@/lib/schemas/settingsSchema';
-import { useUpdateUser } from '@/hooks/useUpdateUser';
-import { useUploadAvatar } from '@/hooks/useUploadAvatar';
+import { useUpdateUser } from '@/hooks/profile/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/profile/useUploadAvatar';
 import Popup from '../common/Popup';
-import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
+import { useDeleteAvatar } from '@/hooks/profile/useDeleteAvatar';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import useUserQuery from '@/hooks/useUserQuery';

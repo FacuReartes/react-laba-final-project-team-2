@@ -13,7 +13,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Popup from '../common/Popup';
-import { useLogOut } from '@/hooks/useLogOut';
+import { useLogOut } from '@/hooks/auth/useLogOut';
 import useUserQuery from '@/hooks/useUserQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';

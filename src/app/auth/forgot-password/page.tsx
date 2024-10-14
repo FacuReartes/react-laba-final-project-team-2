@@ -1,7 +1,7 @@
 import { Box, Container } from '@mui/material';
 import Image from 'next/image';
 import Logo from '@/components/common/Logo';
-import ForgotPasswordForm from '@/components/auth/forgotPassword/ForgotPasswordForm';
+import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
 import sneakersForgotPassword from '@/images/forgot-password.webp';
 import { Metadata } from 'next';
 

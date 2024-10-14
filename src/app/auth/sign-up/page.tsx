@@ -1,5 +1,5 @@
-import SignupCard from '@/components/auth/signUp/SignupCard';
-import SignupForm from '@/components/auth/signUp/SignupForm';
+import SignupCard from '@/components/auth/SignupCard';
+import SignupForm from '@/components/auth/SignupForm';
 import Logo from '@/components/common/Logo';
 import { Box } from '@mui/material';
 import Image from 'next/image';

@@ -1,5 +1,5 @@
 'use client';
-import { CartContext, ICartContext } from '@/context/CartContext';
+import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import {
   Box,

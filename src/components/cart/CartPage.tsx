@@ -1,7 +1,11 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import { CartContext, ICartContext, ICartProduct } from '@/context/CartContext';
+import {
+  CartContext,
+  ICartContext,
+  ICartProduct,
+} from '@/context/cart/CartContext';
 import {
   Box,
   Button,
@@ -73,8 +77,8 @@ export default function Page() {
         >
           Cart
         </Typography>
-        { loading ? (
-          <Loading/>
+        {loading ? (
+          <Loading />
         ) : (
           <>
             <List
@@ -152,7 +156,7 @@ export default function Page() {
         )}
       </Box>
 
-      <Summary subtotal={calculateSubTotal} loading={loading}/>
+      <Summary subtotal={calculateSubTotal} loading={loading} />
     </Box>
   );
 }

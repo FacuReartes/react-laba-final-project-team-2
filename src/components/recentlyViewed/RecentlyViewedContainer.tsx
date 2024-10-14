@@ -2,7 +2,7 @@
 import { Box, Button, List, ListItem, Typography } from '@mui/material'
 import ProductCard from '../common/ProductCard';
 import { useContext } from 'react';
-import { ICartContext, CartContext } from '@/context/CartContext';
+import { ICartContext, CartContext } from '@/context/cart/CartContext';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import { useRouter } from 'next/navigation';

@@ -7,7 +7,7 @@ import ActionButton from '@/components/common/ActionButton';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import Loading from '../common/Loading';
 import convertToSubcurrency from '@/lib/convertToSubcurrency';
-import { CartContext, ICartContext } from '@/context/CartContext';
+import { CartContext, ICartContext } from '@/context/cart/CartContext';
 
 type Props = {
   amount: number;

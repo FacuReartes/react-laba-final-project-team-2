@@ -11,6 +11,7 @@ export const typography: TypographyVariantsOptions = {
   subtitle1: {
     fontSize: '15px',
     color: '#5C5C5C',
+    fontWeight: '300',
   },
   subtitle2: {
     fontSize: '12px',
