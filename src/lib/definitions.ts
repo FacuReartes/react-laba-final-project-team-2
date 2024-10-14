@@ -138,3 +138,10 @@ export type ShippingFormData = {
   zip: string;
   address: string;
 };
+
+export type PersonalInfoData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+};
