@@ -15,7 +15,6 @@ export interface IWishListContext {
   addWish: (product: APIProductsType) => void;
   removeWish: (productId: string | number) => void;
   isSuccess: boolean;
-  isWarning: boolean;
   message: string;
   handleClose: (
     event: React.SyntheticEvent | Event,
@@ -29,7 +28,6 @@ const WishListProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [wishList, setWishList] = useState<APIProductsType[]>([]);
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [isWarning, setIsWarning] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
@@ -46,7 +44,6 @@ const WishListProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
 
     setIsSuccess(false);
-    setIsWarning(false);
   };
 
   const addWish = useCallback((product: APIProductsType) => {
@@ -64,7 +61,6 @@ const WishListProvider: FC<{ children: ReactNode }> = ({ children }) => {
       }
 
       setMessage('You already have this product in your wishlist');
-      setIsWarning(true);
       return prevWishList;
     });
   }, []);
@@ -84,7 +80,6 @@ const WishListProvider: FC<{ children: ReactNode }> = ({ children }) => {
         addWish,
         removeWish,
         isSuccess,
-        isWarning,
         handleClose,
         message,
       }}

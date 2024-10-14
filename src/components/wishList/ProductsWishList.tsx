@@ -4,7 +4,10 @@ import ProductWish from './ProductWish';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import ProductsEmptyState from '../common/ProductsEmptyState';
 import { useContext } from 'react';
-import { IWishListContext, WishListContext } from '@/context/WishListContext';
+import {
+  IWishListContext,
+  WishListContext,
+} from '@/context/wishlist/WishListContext';
 
 export default function ProductsWishList() {
   const { wishList, removeWish } = useContext(
