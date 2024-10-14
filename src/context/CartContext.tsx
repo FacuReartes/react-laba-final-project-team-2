@@ -23,6 +23,7 @@ enum QuantityAction {
 
 export interface ICartContext {
   cartList: ICartProduct[];
+  setCartList: (newList: ICartProduct[]) => void;
   handleAddToCart: (
     product: APIProductsType,
     selectedSize: number | string
@@ -120,7 +121,14 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartList, loading, handleAddToCart, handleDelete, handleQuantity }}
+      value={{
+        cartList,
+        setCartList,
+        loading,
+        handleAddToCart,
+        handleDelete,
+        handleQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>
