@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import ProductCard from './ProductCard';
+import ProductCard from '../common/ProductCard';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import { useContext } from 'react';
 import { CartContext, ICartContext } from '@/context/CartContext';
@@ -21,12 +21,10 @@ export default function ProductsContainer({ data }: Props) {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        columnGap: { xs: '16px', md: '60px' },
-        rowGap: { xs: '16px', md: '40px' },
+        display: 'grid',
+        gridTemplateColumns: { xs:'repeat(2, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(4, 1fr)' },
+        columnGap: { xs: '16px', md: '50px' },
+        rowGap: { xs: '16px',md: '40px' },
         height: '100%',
       }}
     >
@@ -48,8 +46,7 @@ export default function ProductsContainer({ data }: Props) {
                 key={product.id}
                 product={product}
                 handleAddToCart={handleAddToCart}
-                width="320px"
-                upperHeight="380px"
+                upperHeight='380px'
               />
             ))
         )

@@ -28,19 +28,15 @@ interface PProps {
     product: APIProductsType,
     selectedSize: number | string
   ) => void;
-  width: string;
-  upperHeight: string;
+  upperHeight: string
 }
 
-export default function ProductCard({
-  product,
-  handleAddToCart,
-  width,
-  upperHeight,
-}: PProps) {
+export default function ProductCard({ product, handleAddToCart, upperHeight }: PProps) {
+
   const { addWish, wishList, removeWish } = useContext(
     WishListContext
   ) as IWishListContext;
+
   const router = useRouter();
   const [onHover, setOnHover] = useState(false);
 
@@ -75,11 +71,13 @@ export default function ProductCard({
     setOnHover(false);
   };
 
+  const imgUrl: string | undefined = product?.attributes?.images?.data[0]?.attributes?.url
+
   return (
     product.attributes?.images.data && (
       <Box
         sx={{
-          width: { md: width, xs: '152px' },
+          boxSizing: 'border-box',
           p: 2,
           borderRadius: '12px',
           display: 'flex',
@@ -128,7 +126,8 @@ export default function ProductCard({
               width: '100%',
               height: '100%',
               zIndex: 10,
-              columnGap: 2,
+              gap: 2,
+              flexDirection: { xs: 'column', sm: 'row' },
               justifyContent: 'center',
               alignItems: 'center',
               backdropFilter: 'brightness(50%)',
@@ -136,8 +135,8 @@ export default function ProductCard({
           >
             <IconButton
               sx={{
-                width: '80px',
-                height: '80px',
+                width: { xs: '60px', sm: '80px' },
+                height: { xs: '60px', sm: '80px' },
                 bgcolor: 'rgba(255,255,255,0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
@@ -152,13 +151,13 @@ export default function ProductCard({
               }}
               onClick={handleClickOpen}
             >
-              <img src="/assets/add-shopping-basket.svg" />
-              Add to Cart
+              <img src="/assets/add-shopping-basket.svg"/>
+              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>Add to Cart</Typography>
             </IconButton>
             <IconButton
               sx={{
-                width: '80px',
-                height: '80px',
+                width: { xs: '60px', sm: '80px' },
+                height: { xs: '60px', sm: '80px' },
                 bgcolor: 'rgba(255,255,255, 0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
@@ -174,23 +173,21 @@ export default function ProductCard({
               onClick={() => router.push(`/product/${product?.id}`)}
             >
               <ManageSearchIcon />
-              View details
+              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>View details</Typography>
             </IconButton>
           </Box>
-          {product?.attributes?.images?.data[0]?.attributes?.url && (
-            <Image
-              src={product.attributes.images.data[0].attributes.url}
-              alt={product.attributes.name}
-              fill
-              priority
-              style={{
-                objectFit: 'contain',
-                transition: 'transform 0.5s ease',
-                transform: onHover ? 'scale(1.1)' : 'scale(1)',
-              }}
-              sizes="800px"
-            />
-          )}
+          <Image
+            src={ imgUrl ?? '/no-img.webp' }
+            alt={product.attributes.name}
+            fill
+            priority
+            objectFit={ imgUrl ? 'contain' : 'scale-down' }
+            style={{
+              transition: 'transform 0.5s ease',
+              transform: onHover ? 'scale(1.1)' : 'scale(1)',
+            }}
+            sizes="800px"
+          />
         </Box>
         <Link
           href={`/product/${product.id}`}
@@ -204,12 +201,11 @@ export default function ProductCard({
             }}
           >
             <Typography
-              sx={{
-                fontSize: { xs: '10px', md: '22px' },
-                fontWeight: '500',
-                maxHeight: '35px',
-                overflow: 'hidden',
-              }}
+              sx={{ 
+                fontSize: { xs: '10px', md: '22px' }, 
+                fontWeight: '500', 
+                maxHeight: { xs: '18px', md:'35px' }, 
+                overflow: 'hidden' }}
             >
               {product.attributes.name}
             </Typography>

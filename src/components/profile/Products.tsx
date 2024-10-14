@@ -31,45 +31,42 @@ export default function Products() {
         width: '100%',
       }}
     >
-      <Box sx={{ position: 'relative', width: '100%' }}>
+      <Box sx={{ position: 'relative', width: '100%', height: {xs: '100px',sm: '150px', md: '200px', xl: '280px'} }}>
         <Image
           src={heroImage}
           alt="hero-img"
-          width={700}
-          sizes="100vw"
-          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+          style={{ objectFit: 'cover' }}
           priority
+          fill
           placeholder="blur"
         />
         <Box
           sx={{
             position: 'absolute',
-            bottom: { xs: '-35%', md: '-25%' },
-            left: '54px',
+            bottom: { xs:'-40px' ,sm: '-50px', md: '-60px' },
+            left: {xs: '20px', sm:'54px'},
             display: 'flex',
             alignItems: 'center',
           }}
         >
           <Avatar
             sx={{
-              width: { xs: '60px', md: '120px' },
-              height: { xs: '60px', md: '120px' },
+              width: { xs: '80px' , sm: '100px', md: '120px' },
+              height: { xs: '80px', sm: '100px', md: '120px' },
             }}
             src={userData?.avatar?.url}
           />
           <Box
             sx={{
-              alignSelf: 'flex-end',
-              ml: '26px',
-              mb: '15px',
+              mt: {xs: '30px', sm:'50px'},
+              ml: {xs: '15px', sm: '26px'},
             }}
           >
             <Typography
-              variant="h5"
               sx={{
                 color: 'common.black',
                 fontWeight: '500',
-                fontSize: { xs: '14px', md: '20px' },
+                fontSize: { xs: '16px', sm: '20px' },
               }}
             >
               {userData?.firstName} {userData?.lastName}
@@ -84,7 +81,7 @@ export default function Products() {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: 1,
-          mt: '120px',
+          mt: {xs: '60px', sm: '70px', md: '100px'},
         }}
       >
         <Typography
