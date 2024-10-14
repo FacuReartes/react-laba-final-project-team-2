@@ -5,23 +5,16 @@ type ShippingInfoProps = {
   shippingInfo: ShippingFormData;
   setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
   errorMessage: string;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function ShippingInfo({
   shippingInfo,
   setShippingInfo,
   errorMessage,
-  setErrorMessage,
 }: ShippingInfoProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setShippingInfo(prev => ({ ...prev, [name]: value }));
-
-    const updatedShippingInfo = { ...shippingInfo, [name]: value };
-    if (Object.values(updatedShippingInfo).every(val => val.trim() !== '')) {
-      setErrorMessage('');
-    }
   };
 
   return (

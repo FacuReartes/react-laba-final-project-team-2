@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Summary from '@/components/cart/Summary';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { validateEmail, validatePhoneNumber } from '@/lib/validateFields';
 
 type Props = {
   searchParams: { total: string; userId: string };
@@ -35,16 +36,19 @@ export default function Page({ searchParams }: Props) {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const isPersonalInfoValid = Object.values(personalInfo).every(
-      value => value !== ''
-    );
+    const isPersonalInfoValid =
+      Object.values(personalInfo).every(value => value.trim() !== '') &&
+      validateEmail(personalInfo.email) &&
+      validatePhoneNumber(personalInfo.phoneNumber);
     const isShippingInfoValid = Object.values(shippingInfo).every(
-      value => value !== ''
+      value => value.trim() !== ''
     );
     setIsFormValid(isPersonalInfoValid && isShippingInfoValid);
 
     if (!isPersonalInfoValid || !isShippingInfoValid) {
-      setErrorMessage('Please fill in all fields');
+      setErrorMessage('Please fill in all fields with valid data.');
+    } else {
+      setErrorMessage('');
     }
   }, [personalInfo, shippingInfo]);
 
@@ -74,13 +78,11 @@ export default function Page({ searchParams }: Props) {
           personalInfo={personalInfo}
           setPersonalInfo={setPersonalInfo}
           isLoggedIn={Boolean(session)}
-          setErrorMessage={setErrorMessage}
         />
         <ShippingInfo
           shippingInfo={shippingInfo}
           setShippingInfo={setShippingInfo}
           errorMessage={errorMessage}
-          setErrorMessage={setErrorMessage}
         />
         <PaymentForm
           amount={amount}

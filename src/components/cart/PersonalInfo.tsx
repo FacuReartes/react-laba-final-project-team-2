@@ -11,14 +11,12 @@ type PersonalInfoProps = {
   personalInfo: PersonalInfoData;
   setPersonalInfo: React.Dispatch<React.SetStateAction<PersonalInfoData>>;
   isLoggedIn: boolean;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function PersonalInfo({
   personalInfo,
   setPersonalInfo,
   isLoggedIn,
-  setErrorMessage,
 }: PersonalInfoProps) {
   const session = useSession();
   const jwt = session.data?.user?.jwt;
@@ -44,14 +42,8 @@ export default function PersonalInfo({
     if (name === 'email' && !isLoggedIn) {
       setIsEmailValid(validateEmail(value));
     }
-
     if (name === 'phoneNumber' && !isLoggedIn) {
       setIsPhoneNumberValid(validatePhoneNumber(value));
-    }
-
-    const updatedPersonalInfo = { ...personalInfo, [name]: value };
-    if (Object.values(updatedPersonalInfo).every(val => val.trim() !== '')) {
-      setErrorMessage('');
     }
   };
 
@@ -111,7 +103,7 @@ export default function PersonalInfo({
           error={!isPhoneNumberValid && !isLoggedIn}
           helperText={
             !isPhoneNumberValid && !isLoggedIn
-              ? 'Please enter a valid phone number: (299) 418-4677'
+              ? 'Please enter a valid phone number: (xxx) xxx-xxxx'
               : ''
           }
         />
