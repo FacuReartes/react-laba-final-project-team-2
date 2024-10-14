@@ -15,7 +15,7 @@ export default function Page() {
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: {xs: 'center', md:'space-between'},
         minWidth: '100vw',
         minHeight: '100vh',
       }}

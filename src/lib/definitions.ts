@@ -76,7 +76,7 @@ export type ProductType = {
   attributes: {
     name: string;
     images: {
-      data: File[];
+      data: any[];
     };
     description: string;
     brand: {
@@ -132,4 +132,12 @@ export type ForgotPasswordFormInputs = {
 export type SingleFormInput = {
   register: any;
   errors: any;
+};
+
+export type ShippingFormData = {
+  country: string;
+  city: string;
+  state: string;
+  zip: string;
+  address: string;
 };

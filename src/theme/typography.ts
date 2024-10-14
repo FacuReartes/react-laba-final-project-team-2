@@ -39,4 +39,17 @@ export const typography: TypographyVariantsOptions = {
     fontSize: '15px',
     color: '#494949',
   },
+  h5: {
+    fontSize: '48px',
+    color: '#000',
+    fontWeight: '300',
+    lineHeight: '56px',
+    fontStyle: 'italic',
+  },
+  h6: {
+    fontSize: '24px',
+    color: '#5C5C5C',
+    fontWeight: '300',
+    lineHeight: '40px',
+  },
 };

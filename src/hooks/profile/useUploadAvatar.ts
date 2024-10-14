@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
-import { env } from '../../env';
+import { env } from '../../../env';
 
 export const useUploadAvatar = (jwt: string | undefined) => {
   const [avatarData, setAvatarData] = useState<object | null>(null);

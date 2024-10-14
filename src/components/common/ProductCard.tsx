@@ -13,12 +13,14 @@ import {
   Typography,
 } from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Popup from '../common/Popup';
 import { useRouter } from 'next/navigation';
+import { IWishListContext, WishListContext } from '@/context/WishListContext';
 
 interface PProps {
   product: APIProductsType;
@@ -26,20 +28,36 @@ interface PProps {
     product: APIProductsType,
     selectedSize: number | string
   ) => void;
+  upperHeight: string
 }
 
-export default function ProductCard({ product, handleAddToCart }: PProps) {
+export default function ProductCard({ product, handleAddToCart, upperHeight }: PProps) {
+
+  const { addWish, wishList, removeWish } = useContext(
+    WishListContext
+  ) as IWishListContext;
+
   const router = useRouter();
   const [onHover, setOnHover] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState<number | string>('');
 
+  const isInWishlist = wishList.some(item => item.id === product.id);
+
+  const handleWishListToggle = () => {
+    if (isInWishlist) {
+      removeWish(product.id);
+    } else {
+      addWish(product);
+    }
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseModal = () => {
     setOpen(false);
   };
 
@@ -49,16 +67,17 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
 
   const handleAddToCartClick = () => {
     handleAddToCart(product, selectedSize);
-    handleClose();
+    handleCloseModal();
     setOnHover(false);
   };
 
+  const imgUrl: string | undefined = product?.attributes?.images?.data[0]?.attributes?.url
+
   return (
-    product.attributes.images.data && (
+    product.attributes?.images.data && (
       <Box
         sx={{
-          width: { md: '320px', xs: '152px' },
-          margin: { md: '0 30px 60px', xs: '0 0 16px' },
+          boxSizing: 'border-box',
           p: 2,
           borderRadius: '12px',
           display: 'flex',
@@ -75,9 +94,29 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
       >
         <Box
           sx={{
+            position: 'absolute',
+            zIndex: 20,
+            top: 25,
+            right: 25,
+            cursor: 'pointer',
+          }}
+          onClick={handleWishListToggle}
+        >
+          {isInWishlist ? (
+            <FavoriteIcon sx={{ color: 'secondary.light' }} fontSize="large" />
+          ) : (
+            <FavoriteBorderIcon
+              sx={{
+                color: 'secondary.light',
+              }}
+              fontSize="large"
+            />
+          )}
+        </Box>
+        <Box
+          sx={{
             position: 'relative',
-            width: { md: '320px', xs: '100%' },
-            height: { md: '380px', xs: '180px' },
+            height: { md: upperHeight, xs: '180px' },
             overflow: 'hidden',
             borderRadius: '8px',
           }}
@@ -86,12 +125,11 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             sx={{
               display: onHover ? 'flex' : 'none',
               position: 'absolute',
-              width: { md: '320px', xs: '100%' },
-              height: { md: '380px', xs: '180px' },
-              top: '0',
-              left: '0',
+              width: '100%',
+              height: '100%',
               zIndex: 10,
-              columnGap: 2,
+              gap: 2,
+              flexDirection: { xs: 'column', sm: 'row' },
               justifyContent: 'center',
               alignItems: 'center',
               backdropFilter: 'brightness(50%)',
@@ -99,8 +137,8 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
           >
             <IconButton
               sx={{
-                width: '80px',
-                height: '80px',
+                width: { xs: '60px', sm: '80px' },
+                height: { xs: '60px', sm: '80px' },
                 bgcolor: 'rgba(255,255,255,0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
@@ -115,13 +153,13 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               }}
               onClick={handleClickOpen}
             >
-              <img src="./assets/add-shopping-basket.svg" />
-              Add to Cart
+              <img src="/assets/add-shopping-basket.svg"/>
+              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>Add to Cart</Typography>
             </IconButton>
             <IconButton
               sx={{
-                width: '80px',
-                height: '80px',
+                width: { xs: '60px', sm: '80px' },
+                height: { xs: '60px', sm: '80px' },
                 bgcolor: 'rgba(255,255,255, 0.9)',
                 fontSize: '10px',
                 borderRadius: '50%',
@@ -137,25 +175,24 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
               onClick={() => router.push(`/product/${product?.id}`)}
             >
               <ManageSearchIcon />
-              View details
+              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>View details</Typography>
             </IconButton>
           </Box>
-          {product?.attributes?.images?.data[0]?.attributes?.url && (
-            <Image
-              src={product.attributes.images.data[0].attributes.url}
-              alt={product.attributes.name}
-              fill
-              style={{
-                objectFit: 'contain',
-                transition: 'transform 0.5s ease',
-                transform: onHover ? 'scale(1.1)' : 'scale(1)',
-              }}
-              sizes="800px"
-            />
-          )}
+          <Image
+            src={ imgUrl ?? '/no-img.webp' }
+            alt={product.attributes.name}
+            fill
+            priority
+            objectFit={ imgUrl ? 'contain' : 'scale-down' }
+            style={{
+              transition: 'transform 0.5s ease',
+              transform: onHover ? 'scale(1.1)' : 'scale(1)',
+            }}
+            sizes="800px"
+          />
         </Box>
         <Link
-          href={`product/${product.id}`}
+          href={`/product/${product.id}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <Box
@@ -166,7 +203,11 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
             }}
           >
             <Typography
-              sx={{ fontSize: { xs: '10px', md: '22px' }, fontWeight: '500' }}
+              sx={{ 
+                fontSize: { xs: '10px', md: '22px' }, 
+                fontWeight: '500', 
+                maxHeight: { xs: '18px', md:'35px' }, 
+                overflow: 'hidden' }}
             >
               {product.attributes.name}
             </Typography>
@@ -188,12 +229,12 @@ export default function ProductCard({ product, handleAddToCart }: PProps) {
         </Link>
 
         <Popup
-          onClose={handleClose}
+          onClose={handleCloseModal}
           title={product?.attributes?.name}
           open={open}
           actions={
             <>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleCloseModal}>Cancel</Button>
               <Button onClick={handleAddToCartClick} disabled={!selectedSize}>
                 Add to Cart
               </Button>

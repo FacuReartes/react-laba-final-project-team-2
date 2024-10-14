@@ -35,14 +35,13 @@ export default function ProductCard({ product }: PProps) {
         width: 'auto',
       }}
     >
-      <Box sx={{ position: 'relative', width: '320px' }}>
+      <Box sx={{ position: 'relative', width: {xs: '300px', sm: '320px'}, height: '380px' }}>
         {productImage && (
           <Image
-            src={productImage}
+            src={productImage ?? '/no-img.webp'}
             alt={productName}
-            width={320}
-            height={380}
-            style={{ objectFit: 'contain' }}
+            fill
+            objectFit={productImage ? 'contain' : 'scale-down'}
           />
         )}
         <Button

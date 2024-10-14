@@ -2,7 +2,7 @@ import { SignUpFormData } from '@/lib/definitions';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
-import { env } from '../../env';
+import { env } from '../../../env';
 
 export const useRegisterUser = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);

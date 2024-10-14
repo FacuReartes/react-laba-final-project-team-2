@@ -11,23 +11,14 @@ import {
   forgotPasswordSchema,
 } from '@/lib/schemas/authSchemas';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import { env } from '../../../../env';
+import { env } from '@/../env';
 import Loading from '@/components/common/Loading';
-import EmailInput from '../common/EmailInput';
+import EmailInput from './common/EmailInput';
 import ActionButton from '../common/ActionButton';
-import SecondaryActionButton from '../common/SecondaryActionButton';
-import AuthPopup from '../common/AuthPopup';
+import SecondaryActionButton from './common/SecondaryActionButton';
+import AuthPopup from './common/AuthPopup';
 import { ForgotPasswordFormInputs } from '@/lib/definitions';
-import TitleAndSubtitle from '../common/TitleAndSubtitle';
-
-const BoxContainerStyles = {
-  m: 'auto',
-  width: { xs: '100%', md: '50%' },
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 2,
-  maxWidth: { md: '436px', xs: '320px' },
-};
+import TitleAndSubtitle from './common/TitleAndSubtitle';
 
 const forgotPassword = async (email: string): Promise<APISuccessResponse> => {
   try {
@@ -84,7 +75,14 @@ const ForgotPasswordForm = () => {
       <Backdrop open={mutation.isPending} sx={{ zIndex: 99 }}>
         <Loading color="common.white" circularColor="secondary.main" />
       </Backdrop>
-      <Box sx={BoxContainerStyles}>
+      <Box sx={{
+        m: 'auto',
+        width: { xs: '100%', md: '50%' },
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        maxWidth: { md: '436px', sm: '320px', xs: '300px' },
+      }}>
         <TitleAndSubtitle
           title="Forgot password?"
           subtitle="Don’t worry, we’ll send you reset instructions."

@@ -14,7 +14,8 @@ import { useContext, useState } from 'react';
 export default function ProductDetailsView({
   id,
   attributes,
-}: APIProductsType) {
+  addWish,
+}: APIProductsType & { addWish: (product: APIProductsType) => void }) {
   const path = usePathname();
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
   const [selectedSize, setSelectedSize] = useState<number | string>('');
@@ -140,8 +141,22 @@ export default function ProductDetailsView({
           display: 'flex',
           mt: 4,
           justifyContent: { xs: 'center' },
+          gap: 2,
         }}
       >
+        <Button
+          variant="outlined"
+          sx={{
+            width: '248px',
+            bgcolor: 'common.white',
+            color: 'secondary.light',
+            borderColor: 'secondary.light',
+            ':hover': { opacity: '.9', borderColor: 'inherit' },
+          }}
+          onClick={() => addWish({ id, attributes })}
+        >
+          Add to Wishlist
+        </Button>
         <Button
           variant="contained"
           sx={{

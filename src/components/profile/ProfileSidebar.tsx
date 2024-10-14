@@ -34,7 +34,7 @@ const ProfileSidebar = () => {
   return (
     <Box
       sx={{
-        width: { xs: '250px', lg: '320px' },
+        minWidth: { xs: '250px', lg: '320px' },
         display: { xs: 'none', md: 'block' },
       }}
     >
@@ -102,6 +102,41 @@ const ProfileSidebar = () => {
                   fontWeight: 500,
                 }}
                 primary="My products"
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
+            <ListItemButton onClick={() => router.push('/profile/wishlist')}>
+              <ListItemIcon sx={{ my: '0px' }}>
+                {pathName === '/profile/wishlist' ? (
+                  <Image
+                    src="/sidebar-icons/wishlist-red.svg"
+                    alt="settings-red"
+                    width={20}
+                    height={21}
+                  />
+                ) : (
+                  <Image
+                    src="/sidebar-icons/wishlist.svg"
+                    alt="settings"
+                    width={20}
+                    height={21}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/wishlist' ? 'secondary.light' : '',
+                }}
+                primaryTypographyProps={{
+                  fontSize: '16px',
+                  lineHeight: '18.77px',
+                  fontWeight: 500,
+                }}
+                primary="My Wishlist"
               />
             </ListItemButton>
           </ListItem>

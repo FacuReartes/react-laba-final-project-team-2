@@ -8,6 +8,7 @@ import ReactQueryProvider from '@/provider/ReactQueryProvider';
 import SessionWrapper from '@/components/auth/SessionWrapper';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import CartProvider from '@/context/cart/CartContext';
+import WishListProvider from '@/context/WishListContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,7 +33,9 @@ export default function RootLayout({
             <ReactQueryDevtools />
             <AppRouterCacheProvider>
               <ThemeProvider theme={theme}>
-                <CartProvider>{children}</CartProvider>
+                <CartProvider>
+                  <WishListProvider>{children}</WishListProvider>
+                </CartProvider>
               </ThemeProvider>
             </AppRouterCacheProvider>
           </ReactQueryProvider>

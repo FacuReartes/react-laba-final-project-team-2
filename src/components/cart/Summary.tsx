@@ -1,5 +1,8 @@
-import React from 'react';
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
+'use client';
+import { Box, Divider, Skeleton, Typography } from '@mui/material';
+import { useSession } from 'next-auth/react';
+import ActionButton from '../common/ActionButton';
+import { usePathname } from 'next/navigation';
 
 interface SummaryProps {
   subtotal: number;
@@ -10,6 +13,10 @@ function Summary({ subtotal, loading }: SummaryProps) {
   const shipping: number = subtotal === 0 ? 0 : 20;
   const tax: number = 0;
   const fixedSubtotal: number = Number(subtotal.toFixed(2));
+  const total: number = fixedSubtotal + shipping + tax;
+  const session = useSession();
+  const userId = session?.data?.user?.user?.id;
+  const isCart = usePathname();
 
   return (
     <Box
@@ -32,7 +39,7 @@ function Summary({ subtotal, loading }: SummaryProps) {
       >
         Summary
       </Typography>
-      <Divider sx={{ display: { xs: 'block', md: 'none' } }} /> 
+      <Divider sx={{ display: { xs: 'block', md: 'none' } }} />
       <Box
         sx={{
           px: { xs: '20px', sm: '125px', md: '0px' },
@@ -59,11 +66,20 @@ function Summary({ subtotal, loading }: SummaryProps) {
         >
           {loading ? (
             <>
-              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
-              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
-              <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+              <Skeleton
+                sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+                variant="text"
+              />
+              <Skeleton
+                sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+                variant="text"
+              />
+              <Skeleton
+                sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+                variant="text"
+              />
             </>
-          ): (
+          ) : (
             <>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography
@@ -128,7 +144,10 @@ function Summary({ subtotal, loading }: SummaryProps) {
           sx={{ display: 'flex', justifyContent: 'space-between', my: '19px' }}
         >
           {loading ? (
-            <Skeleton sx={{fontSize: { xs: '20px', md: '30px' }, width: '100%'}} variant='text'/>
+            <Skeleton
+              sx={{ fontSize: { xs: '20px', md: '30px' }, width: '100%' }}
+              variant="text"
+            />
           ) : (
             <>
               <Typography
@@ -147,29 +166,20 @@ function Summary({ subtotal, loading }: SummaryProps) {
                   fontSize: { xs: '20px', md: '30px' },
                 }}
               >
-                ${fixedSubtotal + shipping + tax}
+                ${total}
               </Typography>
             </>
           )}
         </Box>
 
         <Divider />
-        <Button
-          sx={{
-            mb: { sm: '30px', md: '0px' },
-            mt: { xs: '83px', md: '100px' },
-            width: '100%',
-            bgcolor: 'secondary.light',
-            lineHeight: '18.77px',
-            fontSize: '16px',
-            py: '10px',
-            ':hover': { bgcolor: 'secondary.main' },
-          }}
-          variant="contained"
-          disabled={loading}
-        >
-          Checkout
-        </Button>
+        {isCart === '/cart' && (
+          <ActionButton
+            isLoading={loading || total === 0}
+            text="Checkout"
+            goto={`/cart/checkout?total=${total}&userId=${userId}`}
+          />
+        )}
       </Box>
     </Box>
   );

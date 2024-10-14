@@ -3,7 +3,7 @@
 import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
 import { ProductType } from '@/lib/definitions';
-import ProductsEmptyState from './ProductsEmptyState';
+import ProductsEmptyState from '../common/ProductsEmptyState';
 
 interface ProductsContainerProps {
   products: ProductType[];
@@ -31,7 +31,11 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
             <ProductCard key={product.id} product={product} />
           ))
         ) : (
-          <ProductsEmptyState />
+          <ProductsEmptyState
+            text="You dont have any products yet."
+            path="/profile/products/add-product"
+            buttonText="Add Product"
+          />
         )}
       </Box>
     </Box>

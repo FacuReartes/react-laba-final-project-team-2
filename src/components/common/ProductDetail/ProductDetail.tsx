@@ -5,13 +5,22 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import useGetProductDetail from '@/hooks/products/useGetProductDetail';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
+import UserNotification from '../UserNotification';
+import { useContext } from 'react';
+import { IWishListContext, WishListContext } from '@/context/WishListContext';
 
 export default function ProductDetail({ params }: { params: number }) {
   const router = useRouter();
   const path = usePathname();
   const pathName = path.split('/');
+  const { addWish, isSuccess, isWarning, handleClose, message } = useContext(
+    WishListContext
+  ) as IWishListContext;
 
   const { data: product } = useQuery(useGetProductDetail(params));
+
+  useRecentlyViewed(product);
 
   function handleRedirect() {
     if (pathName.includes('product')) {
@@ -46,7 +55,7 @@ export default function ProductDetail({ params }: { params: number }) {
             imageUrls={product.attributes?.images?.data}
           />
 
-          <ProductDetailsView {...product} />
+          <ProductDetailsView {...product} addWish={addWish} />
         </Box>
         <Button
           onClick={handleRedirect}
@@ -64,6 +73,18 @@ export default function ProductDetail({ params }: { params: number }) {
             ? 'Go back Home'
             : 'Back to My Products'}
         </Button>
+        <UserNotification
+          open={isSuccess}
+          handleClose={handleClose}
+          message={message}
+          type={'success'}
+        />
+        <UserNotification
+          open={isWarning}
+          handleClose={handleClose}
+          message={message}
+          type={'warning'}
+        />
       </Box>
     );
   }

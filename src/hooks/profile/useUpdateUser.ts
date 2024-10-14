@@ -2,7 +2,7 @@ import { SettingsFormData } from '@/lib/definitions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
-import { env } from '../../env';
+import { env } from '../../../env';
 
 export const useUpdateUser = (
   userId: number | undefined,
