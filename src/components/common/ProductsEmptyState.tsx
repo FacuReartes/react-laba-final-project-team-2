@@ -1,7 +1,15 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
-export default function ProductsEmptyState() {
+export default function ProductsEmptyState({
+  text,
+  path,
+  buttonText,
+}: {
+  text: string;
+  path: string;
+  buttonText: string;
+}) {
   const router = useRouter();
   return (
     <Box
@@ -14,10 +22,10 @@ export default function ProductsEmptyState() {
       }}
     >
       <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
-        You don&apos;t have any products yet.
+        {text}
       </Typography>
       <Button
-        onClick={() => router.push('/profile/products/add-product')}
+        onClick={() => router.push(path)}
         variant="contained"
         disableElevation
         size="large"
@@ -30,7 +38,7 @@ export default function ProductsEmptyState() {
           borderRadius: 2,
         }}
       >
-        Add Product
+        {buttonText}
       </Button>
     </Box>
   );

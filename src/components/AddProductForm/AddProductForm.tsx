@@ -1,12 +1,5 @@
 'use client';
-import {
-  Box,
-  Typography,
-  Button,
-  Snackbar,
-  Alert,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Typography, Button, useMediaQuery } from '@mui/material';
 import React, { useState } from 'react';
 import { FileRejection } from 'react-dropzone';
 import PreviewImages from './PreviewImages';
@@ -26,6 +19,7 @@ import useGetBrands from '@/hooks/useGetBrands';
 import useGetColors from '@/hooks/useGetColors';
 import Popup from '../common/Popup';
 import { INewProduct, useAddProduct } from '@/hooks/useAddProduct';
+import UserNotification from '../common/UserNotification';
 
 const AddProductForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
@@ -42,7 +36,12 @@ const AddProductForm = () => {
 
   const methods = useAddProductForm();
 
-  const { mutate, isSuccess, reset, isPending } = useAddProduct(token, methods, setProductImages, setOpenPopup)
+  const { mutate, isSuccess, reset, isPending } = useAddProduct(
+    token,
+    methods,
+    setProductImages,
+    setOpenPopup
+  );
 
   const submitData = (data: IProducts) => {
     const { images, ...rest } = data;
@@ -106,7 +105,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
-                data-testid='submit'
+                data-testid="submit"
                 disabled={isPending}
                 sx={{
                   position: 'absolute',
@@ -168,21 +167,12 @@ const AddProductForm = () => {
         open={openDialog}
         onClose={handleDialogOnClose}
       />
-      <Snackbar
+      <UserNotification
+        handleClose={reset}
         open={isSuccess}
-        autoHideDuration={4000}
-        onClose={reset}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={reset}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          New product has been added successfully
-        </Alert>
-      </Snackbar>
+        message="New product has been added successfully"
+        type={'success'}
+      />
       <Popup
         open={openPopup}
         onClose={() => setOpenPopup(false)}
