@@ -105,10 +105,12 @@ export default function ProductCard({
           onClick={handleWishListToggle}
         >
           {isInWishlist ? (
-            <FavoriteIcon sx={{ color: 'secondary.main' }} fontSize="large" />
+            <FavoriteIcon sx={{ color: 'secondary.light' }} fontSize="large" />
           ) : (
             <FavoriteBorderIcon
-              sx={{ color: 'secondary.main' }}
+              sx={{
+                color: 'secondary.light',
+              }}
               fontSize="large"
             />
           )}
