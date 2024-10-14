@@ -1,5 +1,4 @@
 'use client';
-
 import { Box, Typography } from '@mui/material';
 import PaymentForm from '@/components/cart/PaymentForm';
 import PersonalInfo from '@/components/cart/PersonalInfo';
@@ -29,7 +28,7 @@ export default function Page({ searchParams }: Props) {
     country: '',
     city: '',
     state: '',
-    zipCode: '',
+    zip: '',
     address: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
@@ -75,11 +74,13 @@ export default function Page({ searchParams }: Props) {
           personalInfo={personalInfo}
           setPersonalInfo={setPersonalInfo}
           isLoggedIn={Boolean(session)}
+          setErrorMessage={setErrorMessage}
         />
         <ShippingInfo
           shippingInfo={shippingInfo}
           setShippingInfo={setShippingInfo}
           errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
         <PaymentForm
           amount={amount}

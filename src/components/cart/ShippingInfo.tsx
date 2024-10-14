@@ -1,32 +1,27 @@
+import { ShippingFormData } from '@/lib/definitions';
 import { Box, TextField, Typography } from '@mui/material';
 
 type ShippingInfoProps = {
-  shippingInfo: {
-    country: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    address: string;
-  };
-  setShippingInfo: React.Dispatch<
-    React.SetStateAction<{
-      country: string;
-      city: string;
-      state: string;
-      zipCode: string;
-      address: string;
-    }>
-  >;
+  shippingInfo: ShippingFormData;
+  setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
   errorMessage: string;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function ShippingInfo({
   shippingInfo,
   setShippingInfo,
   errorMessage,
+  setErrorMessage,
 }: ShippingInfoProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShippingInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setShippingInfo(prev => ({ ...prev, [name]: value }));
+
+    const updatedShippingInfo = { ...shippingInfo, [name]: value };
+    if (Object.values(updatedShippingInfo).every(val => val.trim() !== '')) {
+      setErrorMessage('');
+    }
   };
 
   return (
@@ -65,8 +60,8 @@ export default function ShippingInfo({
         <TextField
           variant="outlined"
           label="Zip Code"
-          name="zipCode"
-          value={shippingInfo.zipCode}
+          name="zip"
+          value={shippingInfo.zip}
           onChange={handleChange}
           sx={{ width: '182px' }}
           required
