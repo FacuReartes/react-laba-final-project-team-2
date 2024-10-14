@@ -12,9 +12,10 @@ import { CartContext, ICartContext } from '@/context/CartContext';
 type Props = {
   amount: number;
   userId: number | undefined;
+  isFormValid: boolean;
 };
 
-export const PaymentFormContent = ({ amount, userId }: Props) => {
+export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
   const { setCartList } = useContext(CartContext) as ICartContext;
@@ -83,7 +84,7 @@ export const PaymentFormContent = ({ amount, userId }: Props) => {
       {error && <p>{error}</p>}
       <ActionButton
         text={!loading ? `Confirm & Pay $ ${amount}` : 'Processing...'}
-        isLoading={!stripe || loading}
+        isLoading={!stripe || loading || !isFormValid}
       />
     </form>
   );

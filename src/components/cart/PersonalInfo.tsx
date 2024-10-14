@@ -3,12 +3,49 @@ import useUserQuery from '@/hooks/useUserQuery';
 import { Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
-export default function PersonalInfo() {
+type PersonalInfoProps = {
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+  };
+  setPersonalInfo: React.Dispatch<
+    React.SetStateAction<{
+      firstName: string;
+      lastName: string;
+      email: string;
+      phoneNumber: string;
+    }>
+  >;
+  isLoggedIn: boolean;
+};
+
+export default function PersonalInfo({
+  personalInfo,
+  setPersonalInfo,
+  isLoggedIn,
+}: PersonalInfoProps) {
   const session = useSession();
   const jwt = session.data?.user?.jwt;
   const { data: userData } = useQuery(useUserQuery(jwt));
-  const { firstName, lastName, email, phoneNumber } = userData || {};
+
+  useEffect(() => {
+    if (isLoggedIn && userData) {
+      setPersonalInfo({
+        firstName: userData.firstName || '',
+        lastName: userData.lastName || '',
+        email: userData.email || '',
+        phoneNumber: userData.phoneNumber || '',
+      });
+    }
+  }, [isLoggedIn, userData, setPersonalInfo]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPersonalInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
     <Box>
@@ -21,34 +58,42 @@ export default function PersonalInfo() {
         <TextField
           variant="outlined"
           label="Name"
-          defaultValue={firstName}
+          name="firstName"
+          value={personalInfo.firstName}
+          onChange={handleChange}
           sx={{ width: '388px' }}
+          disabled={isLoggedIn}
           required
-          disabled={firstName}
         />
         <TextField
           variant="outlined"
           label="Surname"
-          defaultValue={lastName}
+          name="lastName"
+          value={personalInfo.lastName}
+          onChange={handleChange}
           sx={{ width: '388px' }}
+          disabled={isLoggedIn}
           required
-          disabled={lastName}
         />
         <TextField
           variant="outlined"
           label="Email"
-          defaultValue={email}
+          name="email"
+          value={personalInfo.email}
+          onChange={handleChange}
           sx={{ width: '388px' }}
+          disabled={isLoggedIn}
           required
-          disabled={email}
         />
         <TextField
           variant="outlined"
           label="Phone number"
-          defaultValue={phoneNumber}
+          name="phoneNumber"
+          value={personalInfo.phoneNumber}
+          onChange={handleChange}
           sx={{ width: '388px' }}
+          disabled={isLoggedIn}
           required
-          disabled={phoneNumber}
         />
       </Box>
     </Box>

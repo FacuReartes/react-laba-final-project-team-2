@@ -12,9 +12,10 @@ const stripePromise = loadStripe(
 type Props = {
   amount: number;
   userId: number | undefined;
+  isFormValid: boolean;
 };
 
-export default function PaymentForm({ amount, userId }: Props) {
+export default function PaymentForm({ amount, userId, isFormValid }: Props) {
   return (
     <Elements
       stripe={stripePromise}
@@ -25,7 +26,11 @@ export default function PaymentForm({ amount, userId }: Props) {
       }}
     >
       <Typography variant="h3">Payment Info</Typography>
-      <PaymentFormContent amount={amount} userId={Number(userId)} />
+      <PaymentFormContent
+        amount={amount}
+        userId={Number(userId)}
+        isFormValid={isFormValid}
+      />
     </Elements>
   );
 }
