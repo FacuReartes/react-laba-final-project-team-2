@@ -23,28 +23,32 @@ export default function PersonalInfo() {
           label="Name"
           defaultValue={firstName}
           sx={{ width: '388px' }}
-          disabled
+          required
+          disabled={firstName}
         />
         <TextField
           variant="outlined"
           label="Surname"
           defaultValue={lastName}
           sx={{ width: '388px' }}
-          disabled
+          required
+          disabled={lastName}
         />
         <TextField
           variant="outlined"
           label="Email"
           defaultValue={email}
           sx={{ width: '388px' }}
-          disabled
+          required
+          disabled={email}
         />
         <TextField
           variant="outlined"
           label="Phone number"
           defaultValue={phoneNumber}
           sx={{ width: '388px' }}
-          disabled
+          required
+          disabled={phoneNumber}
         />
       </Box>
     </Box>
