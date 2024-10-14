@@ -53,14 +53,21 @@ export default function Page({ searchParams }: Props) {
   }, [personalInfo, shippingInfo]);
 
   return (
-    <Box sx={{ display: 'flex', gap: '20px' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', xl: 'row' },
+        alignItems: 'center',
+        gap: '20px',
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
-          width: '800px',
-          ml: '352px',
+          width: { xs: '350px', md: '800px' },
+          ml: { xs: '0px', xl: '352px' },
         }}
       >
         <Link
@@ -90,7 +97,7 @@ export default function Page({ searchParams }: Props) {
           isFormValid={isFormValid}
         />
       </Box>
-      <Box sx={{ mt: '50px' }}>
+      <Box sx={{ mt: { xs: '0px', md: '50px' } }}>
         <Summary subtotal={amount - SHIPPING} loading={false} />
       </Box>
     </Box>

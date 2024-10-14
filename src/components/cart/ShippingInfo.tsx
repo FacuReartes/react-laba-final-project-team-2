@@ -29,7 +29,7 @@ export default function ShippingInfo({
           name="country"
           value={shippingInfo.country}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -38,7 +38,7 @@ export default function ShippingInfo({
           name="city"
           value={shippingInfo.city}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -47,7 +47,7 @@ export default function ShippingInfo({
           name="state"
           value={shippingInfo.state}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -56,7 +56,7 @@ export default function ShippingInfo({
           name="zip"
           value={shippingInfo.zip}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -65,7 +65,7 @@ export default function ShippingInfo({
           name="address"
           value={shippingInfo.address}
           onChange={handleChange}
-          sx={{ width: '800px' }}
+          sx={{ width: '100%' }}
           required
         />
       </Box>

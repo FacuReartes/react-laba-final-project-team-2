@@ -53,7 +53,13 @@ export default function PersonalInfo({
         Personal Info
       </Typography>
       <Box
-        sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}
+        sx={{
+          display: { xs: 'flex', md: 'grid' },
+          flexDirection: 'column',
+          // ml: '20px',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '20px',
+        }}
       >
         <TextField
           variant="outlined"
@@ -61,7 +67,7 @@ export default function PersonalInfo({
           name="firstName"
           value={personalInfo.firstName}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
         />
@@ -71,7 +77,7 @@ export default function PersonalInfo({
           name="lastName"
           value={personalInfo.lastName}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
         />
@@ -81,7 +87,7 @@ export default function PersonalInfo({
           name="email"
           value={personalInfo.email}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
           error={!isEmailValid && !isLoggedIn}
@@ -97,7 +103,7 @@ export default function PersonalInfo({
           name="phoneNumber"
           value={personalInfo.phoneNumber}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
           error={!isPhoneNumberValid && !isLoggedIn}
