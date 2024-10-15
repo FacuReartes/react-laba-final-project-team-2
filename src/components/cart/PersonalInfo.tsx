@@ -1,25 +1,15 @@
 'use client';
 import useUserQuery from '@/hooks/useUserQuery';
+import { PersonalInfoData } from '@/lib/definitions';
+import { validateEmail, validatePhoneNumber } from '@/lib/validateFields';
 import { Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type PersonalInfoProps = {
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-  };
-  setPersonalInfo: React.Dispatch<
-    React.SetStateAction<{
-      firstName: string;
-      lastName: string;
-      email: string;
-      phoneNumber: string;
-    }>
-  >;
+  personalInfo: PersonalInfoData;
+  setPersonalInfo: React.Dispatch<React.SetStateAction<PersonalInfoData>>;
   isLoggedIn: boolean;
 };
 
@@ -31,6 +21,8 @@ export default function PersonalInfo({
   const session = useSession();
   const jwt = session.data?.user?.jwt;
   const { data: userData } = useQuery(useUserQuery(jwt));
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
 
   useEffect(() => {
     if (isLoggedIn && userData) {
@@ -44,7 +36,15 @@ export default function PersonalInfo({
   }, [isLoggedIn, userData, setPersonalInfo]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPersonalInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setPersonalInfo(prev => ({ ...prev, [name]: value }));
+
+    if (name === 'email' && !isLoggedIn) {
+      setIsEmailValid(validateEmail(value));
+    }
+    if (name === 'phoneNumber' && !isLoggedIn) {
+      setIsPhoneNumberValid(validatePhoneNumber(value));
+    }
   };
 
   return (
@@ -53,7 +53,13 @@ export default function PersonalInfo({
         Personal Info
       </Typography>
       <Box
-        sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}
+        sx={{
+          display: { xs: 'flex', md: 'grid' },
+          flexDirection: 'column',
+          // ml: '20px',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '20px',
+        }}
       >
         <TextField
           variant="outlined"
@@ -61,7 +67,7 @@ export default function PersonalInfo({
           name="firstName"
           value={personalInfo.firstName}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
         />
@@ -71,7 +77,7 @@ export default function PersonalInfo({
           name="lastName"
           value={personalInfo.lastName}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
         />
@@ -81,9 +87,15 @@ export default function PersonalInfo({
           name="email"
           value={personalInfo.email}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
+          error={!isEmailValid && !isLoggedIn}
+          helperText={
+            !isEmailValid && !isLoggedIn
+              ? 'Please enter a valid email address'
+              : ''
+          }
         />
         <TextField
           variant="outlined"
@@ -91,9 +103,15 @@ export default function PersonalInfo({
           name="phoneNumber"
           value={personalInfo.phoneNumber}
           onChange={handleChange}
-          sx={{ width: '388px' }}
+          sx={{ width: '100%' }}
           disabled={isLoggedIn}
           required
+          error={!isPhoneNumberValid && !isLoggedIn}
+          helperText={
+            !isPhoneNumberValid && !isLoggedIn
+              ? 'Please enter a valid phone number: (xxx) xxx-xxxx'
+              : ''
+          }
         />
       </Box>
     </Box>

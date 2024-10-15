@@ -1,22 +1,9 @@
+import { ShippingFormData } from '@/lib/definitions';
 import { Box, TextField, Typography } from '@mui/material';
 
 type ShippingInfoProps = {
-  shippingInfo: {
-    country: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    address: string;
-  };
-  setShippingInfo: React.Dispatch<
-    React.SetStateAction<{
-      country: string;
-      city: string;
-      state: string;
-      zipCode: string;
-      address: string;
-    }>
-  >;
+  shippingInfo: ShippingFormData;
+  setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
   errorMessage: string;
 };
 
@@ -26,7 +13,8 @@ export default function ShippingInfo({
   errorMessage,
 }: ShippingInfoProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShippingInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setShippingInfo(prev => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -41,7 +29,7 @@ export default function ShippingInfo({
           name="country"
           value={shippingInfo.country}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -50,7 +38,7 @@ export default function ShippingInfo({
           name="city"
           value={shippingInfo.city}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -59,16 +47,16 @@ export default function ShippingInfo({
           name="state"
           value={shippingInfo.state}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
           variant="outlined"
           label="Zip Code"
-          name="zipCode"
-          value={shippingInfo.zipCode}
+          name="zip"
+          value={shippingInfo.zip}
           onChange={handleChange}
-          sx={{ width: '182px' }}
+          sx={{ width: { xs: '100%', md: '182px' } }}
           required
         />
         <TextField
@@ -77,7 +65,7 @@ export default function ShippingInfo({
           name="address"
           value={shippingInfo.address}
           onChange={handleChange}
-          sx={{ width: '800px' }}
+          sx={{ width: '100%' }}
           required
         />
       </Box>

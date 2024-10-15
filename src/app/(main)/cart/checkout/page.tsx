@@ -1,5 +1,4 @@
 'use client';
-
 import { Box, Typography } from '@mui/material';
 import PaymentForm from '@/components/cart/PaymentForm';
 import PersonalInfo from '@/components/cart/PersonalInfo';
@@ -8,6 +7,7 @@ import Link from 'next/link';
 import Summary from '@/components/cart/Summary';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { validateEmail, validatePhoneNumber } from '@/lib/validateFields';
 
 type Props = {
   searchParams: { total: string; userId: string };
@@ -29,35 +29,45 @@ export default function Page({ searchParams }: Props) {
     country: '',
     city: '',
     state: '',
-    zipCode: '',
+    zip: '',
     address: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const isPersonalInfoValid = Object.values(personalInfo).every(
-      value => value !== ''
-    );
+    const isPersonalInfoValid =
+      Object.values(personalInfo).every(value => value.trim() !== '') &&
+      validateEmail(personalInfo.email) &&
+      validatePhoneNumber(personalInfo.phoneNumber);
     const isShippingInfoValid = Object.values(shippingInfo).every(
-      value => value !== ''
+      value => value.trim() !== ''
     );
     setIsFormValid(isPersonalInfoValid && isShippingInfoValid);
 
     if (!isPersonalInfoValid || !isShippingInfoValid) {
-      setErrorMessage('Please fill in all fields');
+      setErrorMessage('Please fill in all fields with valid data.');
+    } else {
+      setErrorMessage('');
     }
   }, [personalInfo, shippingInfo]);
 
   return (
-    <Box sx={{ display: 'flex', gap: '20px' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', xl: 'row' },
+        alignItems: 'center',
+        gap: '20px',
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
-          width: '800px',
-          ml: '352px',
+          width: { xs: '350px', md: '800px' },
+          ml: { xs: '0px', xl: '352px' },
         }}
       >
         <Link
@@ -87,7 +97,7 @@ export default function Page({ searchParams }: Props) {
           isFormValid={isFormValid}
         />
       </Box>
-      <Box sx={{ mt: '50px' }}>
+      <Box sx={{ mt: { xs: '0px', md: '50px' } }}>
         <Summary subtotal={amount - SHIPPING} loading={false} />
       </Box>
     </Box>
