@@ -20,7 +20,10 @@ import Link from 'next/link';
 import { useContext, useState } from 'react';
 import Popup from '../common/Popup';
 import { useRouter } from 'next/navigation';
-import { IWishListContext, WishListContext } from '@/context/WishListContext';
+import {
+  IWishListContext,
+  WishListContext,
+} from '@/context/wishlist/WishListContext';
 
 interface PProps {
   product: APIProductsType;
@@ -28,11 +31,14 @@ interface PProps {
     product: APIProductsType,
     selectedSize: number | string
   ) => void;
-  upperHeight: string
+  upperHeight: string;
 }
 
-export default function ProductCard({ product, handleAddToCart, upperHeight }: PProps) {
-
+export default function ProductCard({
+  product,
+  handleAddToCart,
+  upperHeight,
+}: PProps) {
   const { addWish, wishList, removeWish } = useContext(
     WishListContext
   ) as IWishListContext;
@@ -43,7 +49,7 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
   const [open, setOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState<number | string>('');
 
-  const isInWishlist = wishList.some(item => item.id === product.id);
+  const isInWishlist = wishList?.some(item => item.id === product.id);
 
   const handleWishListToggle = () => {
     if (isInWishlist) {
@@ -71,7 +77,8 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
     setOnHover(false);
   };
 
-  const imgUrl: string | undefined = product?.attributes?.images?.data[0]?.attributes?.url
+  const imgUrl: string | undefined =
+    product?.attributes?.images?.data[0]?.attributes?.url;
 
   return (
     product.attributes?.images.data && (
@@ -153,8 +160,15 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
               }}
               onClick={handleClickOpen}
             >
-              <img src="/assets/add-shopping-basket.svg"/>
-              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>Add to Cart</Typography>
+              <img src="/assets/add-shopping-basket.svg" />
+              <Typography
+                sx={{
+                  fontSize: '1em',
+                  display: { xs: 'none', sm: 'inline-block' },
+                }}
+              >
+                Add to Cart
+              </Typography>
             </IconButton>
             <IconButton
               sx={{
@@ -175,15 +189,22 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
               onClick={() => router.push(`/product/${product?.id}`)}
             >
               <ManageSearchIcon />
-              <Typography sx={{fontSize: '1em', display: {xs: 'none', sm: 'inline-block'}}}>View details</Typography>
+              <Typography
+                sx={{
+                  fontSize: '1em',
+                  display: { xs: 'none', sm: 'inline-block' },
+                }}
+              >
+                View details
+              </Typography>
             </IconButton>
           </Box>
           <Image
-            src={ imgUrl ?? '/no-img.webp' }
+            src={imgUrl ?? '/no-img.webp'}
             alt={product.attributes.name}
             fill
             priority
-            objectFit={ imgUrl ? 'contain' : 'scale-down' }
+            objectFit={imgUrl ? 'contain' : 'scale-down'}
             style={{
               transition: 'transform 0.5s ease',
               transform: onHover ? 'scale(1.1)' : 'scale(1)',
@@ -203,11 +224,12 @@ export default function ProductCard({ product, handleAddToCart, upperHeight }: P
             }}
           >
             <Typography
-              sx={{ 
-                fontSize: { xs: '10px', md: '22px' }, 
-                fontWeight: '500', 
-                maxHeight: { xs: '18px', md:'35px' }, 
-                overflow: 'hidden' }}
+              sx={{
+                fontSize: { xs: '10px', md: '22px' },
+                fontWeight: '500',
+                maxHeight: { xs: '18px', md: '35px' },
+                overflow: 'hidden',
+              }}
             >
               {product.attributes.name}
             </Typography>

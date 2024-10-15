@@ -8,13 +8,16 @@ import ProductDetailsImageSlider from './ProductDetailsImageSlider';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import UserNotification from '../UserNotification';
 import { useContext } from 'react';
-import { IWishListContext, WishListContext } from '@/context/WishListContext';
+import {
+  IWishListContext,
+  WishListContext,
+} from '@/context/wishlist/WishListContext';
 
 export default function ProductDetail({ params }: { params: number }) {
   const router = useRouter();
   const path = usePathname();
   const pathName = path.split('/');
-  const { addWish, isSuccess, isWarning, handleClose, message } = useContext(
+  const { isSuccess, handleClose, message } = useContext(
     WishListContext
   ) as IWishListContext;
 
@@ -55,7 +58,7 @@ export default function ProductDetail({ params }: { params: number }) {
             imageUrls={product.attributes?.images?.data}
           />
 
-          <ProductDetailsView {...product} addWish={addWish} />
+          <ProductDetailsView {...product} />
         </Box>
         <Button
           onClick={handleRedirect}
@@ -78,12 +81,6 @@ export default function ProductDetail({ params }: { params: number }) {
           handleClose={handleClose}
           message={message}
           type={'success'}
-        />
-        <UserNotification
-          open={isWarning}
-          handleClose={handleClose}
-          message={message}
-          type={'warning'}
         />
       </Box>
     );

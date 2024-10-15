@@ -6,7 +6,10 @@ import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import EmptyProducts from './EmptyProducts';
 import { InfiniteData } from '@tanstack/react-query';
 import UserNotification from '../common/UserNotification';
-import { IWishListContext, WishListContext } from '@/context/WishListContext';
+import {
+  IWishListContext,
+  WishListContext,
+} from '@/context/wishlist/WishListContext';
 
 interface Props {
   data: InfiniteData<any, unknown> | undefined;
@@ -22,9 +25,13 @@ export default function ProductsContainer({ data }: Props) {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: { xs:'repeat(2, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(4, 1fr)' },
+        gridTemplateColumns: {
+          xs: 'repeat(2, 1fr)',
+          lg: 'repeat(3, 1fr)',
+          xl: 'repeat(4, 1fr)',
+        },
         columnGap: { xs: '16px', md: '50px' },
-        rowGap: { xs: '16px',md: '40px' },
+        rowGap: { xs: '16px', md: '40px' },
         height: '100%',
       }}
     >
@@ -46,7 +53,7 @@ export default function ProductsContainer({ data }: Props) {
                 key={product.id}
                 product={product}
                 handleAddToCart={handleAddToCart}
-                upperHeight='380px'
+                upperHeight="380px"
               />
             ))
         )
