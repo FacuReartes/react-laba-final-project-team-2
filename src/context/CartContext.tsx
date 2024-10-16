@@ -9,7 +9,7 @@ export interface ICartProduct {
   imageUrl: string;
   description?: string;
   price: number;
-  gender: number | string;
+  gender?: number | string;
   sizes: number | string;
   color?: number | string;
   brand?: number | string;
@@ -120,7 +120,13 @@ const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartList, loading, handleAddToCart, handleDelete, handleQuantity }}
+      value={{
+        cartList,
+        loading,
+        handleAddToCart,
+        handleDelete,
+        handleQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>
