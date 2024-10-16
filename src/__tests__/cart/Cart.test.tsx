@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { CartContext, ICartProduct } from '@/context/CartContext';
+import { CartContext, ICartProduct } from '@/context/cart/CartContext';
 import CartPage from '@/components/cart/CartPage';
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
@@ -24,6 +24,7 @@ const renderWithMockCart = (ui: ReactNode, mockCart: ICartProduct[]) => {
     <CartContext.Provider
       value={{
         cartList: mockCart,
+        setCartList: jest.fn(),
         handleAddToCart: jest.fn(),
         handleQuantity: jest.fn(),
         handleDelete: jest.fn(),

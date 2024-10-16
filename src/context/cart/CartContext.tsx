@@ -9,7 +9,7 @@ export interface ICartProduct {
   imageUrl: string;
   description?: string;
   price: number;
-  gender: number | string;
+  gender?: number | string;
   sizes: number | string;
   color?: number | string;
   brand?: number | string;
