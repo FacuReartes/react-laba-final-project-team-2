@@ -1,5 +1,5 @@
 import Products from '@/components/profile/Products';
-import useGetProducts from '@/hooks/useGetProducts';
+import useGetProducts from '@/hooks/products/useGetProducts';
 import useUserQuery from '@/hooks/useUserQuery';
 import { authOptions } from '@/lib/authOptions';
 import {

@@ -1,7 +1,11 @@
 'use client';
 import Product from '@/components/cart/Product';
 import Summary from '@/components/cart/Summary';
-import { CartContext, ICartContext, ICartProduct } from '@/context/CartContext';
+import {
+  CartContext,
+  ICartContext,
+  ICartProduct,
+} from '@/context/cart/CartContext';
 import {
   Box,
   Button,

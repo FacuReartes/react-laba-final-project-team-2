@@ -1,5 +1,5 @@
 import { ImageType } from '@/lib/definitions';
-import { Box, useMediaQuery } from '@mui/material';
+import { Box } from '@mui/material';
 import Image from 'next/image';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -17,8 +17,6 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
     handleMouseLeave,
   } = useImageSlider(imageUrls);
 
-  const isDesktop = useMediaQuery('(min-width: 600px)');
-
   return (
     <>
       <Box
@@ -31,7 +29,7 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
       >
         {imageUrls?.map((img, index) => (
           <Image
-            src={img?.attributes?.url}
+            src={img?.attributes?.url ?? '/no-img.webp'}
             alt={img?.attributes?.name}
             key={img?.id}
             width={76}
@@ -51,44 +49,27 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
       <Box
         sx={{
           position: 'relative',
-          width: { sm: '588px' },
-          height: { sm: '628px' },
+          width: { xs: '100%', sm: '588px', md: '520px' },
+          height: { xs: '360px', sm: '628px' },
         }}
       >
         {imageUrls?.map(
           (img, index) =>
             index === currentSlide && (
               <Fragment key={img?.id}>
-                <Image
-                  src={img?.attributes?.url}
-                  alt={img?.attributes?.name}
-                  width={588}
-                  height={628}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    display: isDesktop ? 'block' : 'none',
-                    opacity: 0,
-                    transition: 'opacity 0.5s ease',
-                    animation: 'fade-in 0.5s forwards',
-                  }}
-                />
-                <Image
-                  src={img?.attributes?.url}
-                  alt={img?.attributes?.name}
-                  width={340}
-                  height={360}
-                  style={{
-                    width: '100%',
-                    height: '360px',
-                    objectFit: 'contain',
-                    display: isDesktop ? 'none' : 'block',
-                    opacity: 0,
-                    transition: 'opacity 0.5s ease',
-                    animation: 'fade-in 0.5s forwards',
-                  }}
-                />
+                <Box sx={{ width: '100%', height: '100%' }}>
+                  <Image
+                    src={img?.attributes?.url ?? '/no-img.webp'}
+                    alt={img?.attributes?.name}
+                    fill
+                    objectFit={ img?.attributes?.url ? 'contain' : 'scale-down' }
+                    style={{
+                      opacity: 0,
+                      transition: 'opacity 0.5s ease',
+                      animation: 'fade-in 0.5s forwards',
+                    }}
+                  />
+                </Box>
               </Fragment>
             )
         )}

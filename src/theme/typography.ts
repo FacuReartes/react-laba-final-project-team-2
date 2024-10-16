@@ -11,6 +11,7 @@ export const typography: TypographyVariantsOptions = {
   subtitle1: {
     fontSize: '15px',
     color: '#5C5C5C',
+    fontWeight: '300',
   },
   subtitle2: {
     fontSize: '12px',
@@ -37,5 +38,18 @@ export const typography: TypographyVariantsOptions = {
   h4: {
     fontSize: '15px',
     color: '#494949',
+  },
+  h5: {
+    fontSize: '48px',
+    color: '#000',
+    fontWeight: '300',
+    lineHeight: '56px',
+    fontStyle: 'italic',
+  },
+  h6: {
+    fontSize: '24px',
+    color: '#5C5C5C',
+    fontWeight: '300',
+    lineHeight: '40px',
   },
 };

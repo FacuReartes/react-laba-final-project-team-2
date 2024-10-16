@@ -1,0 +1,43 @@
+{
+  "products": [
+    {
+      "name": "Air Max 270",
+      "price": 150,
+      "gender": "Unisex",
+      "brand": "Nike",
+      "description": "A lightweight and responsive sneaker with superior cushioning, perfect for everyday comfort.",
+      "sizes": ["EU-36", "EU-37", "EU-38", "EU-39", "EU-10", "EU-11"],
+      "images": [
+        "/bag-mock/shoe-1.svg",
+        "/bag-mock/shoe-2.svg",
+        "/bag-mock/shoe-3.svg"
+      ]
+    },
+    {
+      "name": "Ultraboost 22",
+      "price": 180,
+      "gender": "Man",
+      "brand": "Adidas",
+      "description": "High-performance running shoes with enhanced energy return and comfort for long-distance runs.",
+      "sizes": ["EU-36", "EU-37", "EU-39", "EU-11"],
+      "images": [
+        "/bag-mock/shoe-1.svg",
+        "/bag-mock/shoe-2.svg",
+        "/bag-mock/shoe-3.svg"
+      ]
+    },
+    {
+      "name": "Gel-Kayano 28",
+      "price": 160,
+      "gender": "Woman",
+      "brand": "Asics",
+      "description": "Stability-focused running shoe with extra cushioning, ideal for overpronators seeking comfort and support.",
+      "sizes": ["EU-36", "EU-37", "EU-38", "EU-39", "EU-10", "EU-11"],
+      "images": [
+        "/bag-mock/shoe-1.svg",
+        "/bag-mock/shoe-2.svg",
+        "/bag-mock/shoe-3.svg"
+      ]
+    }
+  ]
+}

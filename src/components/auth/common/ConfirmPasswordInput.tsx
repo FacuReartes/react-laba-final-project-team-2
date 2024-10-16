@@ -1,4 +1,4 @@
-import { useShowPassword } from '@/hooks/useShowPassword';
+import { useShowPassword } from '@/hooks/common/useShowPassword';
 import { SingleFormInput } from '@/lib/definitions';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';

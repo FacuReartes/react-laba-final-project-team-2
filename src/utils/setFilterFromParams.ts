@@ -1,4 +1,4 @@
-import { FilterOptionsType } from '@/components/common/FilterSideBar/FilterForm';
+import { FilterOptionsType } from '@/components/common/Filter/FilterForm';
 
 export const setFilterFromParams = (
   params: Record<string, string | string[]>,

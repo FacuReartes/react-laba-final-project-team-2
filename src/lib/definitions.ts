@@ -76,9 +76,12 @@ export type ProductType = {
   attributes: {
     name: string;
     images: {
-      data: ImageType[];
+      data: any[];
     };
     description: string;
+    brand: {
+      data: Brands;
+    };
     price: number;
     teamName: 'team-1' | 'team-2' | 'team-3' | 'team-5';
     gender: {
@@ -129,4 +132,19 @@ export type ForgotPasswordFormInputs = {
 export type SingleFormInput = {
   register: any;
   errors: any;
+};
+
+export type ShippingFormData = {
+  country: string;
+  city: string;
+  state: string;
+  zip: string;
+  address: string;
+};
+
+export type PersonalInfoData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
 };

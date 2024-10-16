@@ -1,5 +1,9 @@
 'use client';
-import { CartContext, ICartContext } from '@/context/CartContext';
+import { CartContext, ICartContext } from '@/context/cart/CartContext';
+import {
+  IWishListContext,
+  WishListContext,
+} from '@/context/wishlist/WishListContext';
 import { APIProductsType } from '@/lib/apiDataTypes';
 import {
   Box,
@@ -17,6 +21,9 @@ export default function ProductDetailsView({
 }: APIProductsType) {
   const path = usePathname();
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
+  const { wishList, removeWish, addWish } = useContext(
+    WishListContext
+  ) as IWishListContext;
   const [selectedSize, setSelectedSize] = useState<number | string>('');
 
   function handleChangeSize(
@@ -32,6 +39,16 @@ export default function ProductDetailsView({
     if (pathName.includes('product') && selectedSize) {
       handleAddToCart({ id, attributes }, selectedSize);
       setSelectedSize('');
+    }
+  }
+
+  const isInWishlist = wishList?.some(wish => wish.id === id);
+
+  function handleAddToWish() {
+    if (isInWishlist) {
+      removeWish(id);
+    } else {
+      addWish({ id, attributes });
     }
   }
 
@@ -140,8 +157,22 @@ export default function ProductDetailsView({
           display: 'flex',
           mt: 4,
           justifyContent: { xs: 'center' },
+          gap: 2,
         }}
       >
+        <Button
+          variant="outlined"
+          sx={{
+            width: '248px',
+            bgcolor: 'common.white',
+            color: 'secondary.light',
+            borderColor: 'secondary.light',
+            ':hover': { opacity: '.9', borderColor: 'inherit' },
+          }}
+          onClick={handleAddToWish}
+        >
+          {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        </Button>
         <Button
           variant="contained"
           sx={{

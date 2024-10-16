@@ -44,7 +44,7 @@ const Product: FC<IProduct> = props => {
         }}
       >
         <Image
-          src={props.imageUrl}
+          src={props.imageUrl ?? '/no-img.webp'}
           alt={props.name}
           fill
           priority

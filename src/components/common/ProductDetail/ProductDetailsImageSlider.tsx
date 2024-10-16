@@ -13,6 +13,7 @@ export default function ProductDetailsImageSlider({
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         gap: 1,
+        alignItems: 'center'
       }}
     >
       <ImageSlider imageUrls={imageUrls} />

@@ -9,7 +9,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface PopupProps {
-  title: string;
+  title?: string;
   open: boolean;
   onClose: (value: boolean) => void;
   children?: React.ReactNode;

@@ -1,5 +1,5 @@
 import ProductDetail from '@/components/common/ProductDetail/ProductDetail';
-import useGetProductDetail from '@/hooks/useGetProductDetail';
+import useGetProductDetail from '@/hooks/products/useGetProductDetail';
 import {
   dehydrate,
   HydrationBoundary,
