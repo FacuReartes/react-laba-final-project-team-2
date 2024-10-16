@@ -83,13 +83,13 @@ describe('Product Management', () => {
 
     // Verify cart is empty
     renderWithMockCart(<CartPage />, mockArray);
-    expect(screen.getByText("You don't have any products in the cart."));
+    expect(screen.getByText('You dont have any products in the cart.'));
   });
 
   // 3. Empty State: Verify empty cart message is displayed
   test('display empty cart message when cart is empty', () => {
     renderWithMockCart(<CartPage />, []);
 
-    expect(screen.getByText("You don't have any products in the cart."));
+    expect(screen.getByText('You dont have any products in the cart.'));
   });
 });
