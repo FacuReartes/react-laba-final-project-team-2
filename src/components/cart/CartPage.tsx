@@ -73,8 +73,8 @@ export default function Page() {
         >
           Cart
         </Typography>
-        { loading ? (
-          <Loading/>
+        {loading ? (
+          <Loading />
         ) : (
           <>
             <List
@@ -152,7 +152,7 @@ export default function Page() {
         )}
       </Box>
 
-      <Summary subtotal={calculateSubTotal} loading={loading}/>
+      <Summary subtotal={calculateSubTotal} loading={loading} />
     </Box>
   );
 }

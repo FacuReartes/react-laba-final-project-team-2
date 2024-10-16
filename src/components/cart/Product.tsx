@@ -14,7 +14,7 @@ interface IProduct {
   imageUrl: string;
   name: string;
   price: string | number;
-  gender: string | number;
+  gender?: string | number;
   quantity: number;
   sizes: number | string;
   handleQuantity: (
@@ -26,6 +26,7 @@ interface IProduct {
 }
 
 const Product: FC<IProduct> = props => {
+  const totalPrice: number | string = `${Number(props.price) * props.quantity}`;
   return (
     <Box
       sx={{
@@ -84,7 +85,7 @@ const Product: FC<IProduct> = props => {
               fontSize: { xs: '12px', md: '30px' },
             }}
           >
-            ${props.price}
+            ${totalPrice}
           </Typography>
         </Box>
         <Typography
@@ -159,6 +160,8 @@ const Product: FC<IProduct> = props => {
                 {props.quantity}
               </Typography>
               <IconButton
+                role="button"
+                aria-label="addcircle"
                 sx={{ padding: 0 }}
                 onClick={() =>
                   props.handleQuantity(
@@ -194,6 +197,8 @@ const Product: FC<IProduct> = props => {
               sx={{ display: { xs: 'none', md: 'block' } }}
             />
             <Button
+              role="button"
+              aria-label="delete"
               sx={{
                 fontWeight: 400,
                 lineHeight: { xs: '14.08px', md: '28.15px' },
