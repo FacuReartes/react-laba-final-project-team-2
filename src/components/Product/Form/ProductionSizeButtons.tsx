@@ -10,7 +10,9 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export default function ProductSizesButtons() {
+
   const { data: sizes } = useQuery(useGetSizes());
+  console.log(sizes)
   const { control, getValues, setValue, formState: { errors } } = useFormContext();
 
   const handleSizeChange = (event: React.MouseEvent<HTMLElement>, value: number[]) => {

@@ -36,16 +36,16 @@ export default function ProductSelect({ queryObj }: ProductSelectProps) {
       <Typography variant="h4" sx={{ mb: 1, fontSize: { lg: '15px', xs: '12px' } }}>
         {queryKey[0].charAt(0).toUpperCase() + queryKey[0].slice(1)}
       </Typography>
+      { Array.isArray(properties) && 
       <Select
         {...register(queryKey[0])}
-        value={selectedValue || ''}
+        value={selectedValue || (properties ? properties[0].id : '')}
         onChange={handleChange}
         placeholder={`Select ${queryKey[0]}`}
         sx={{ width: '100%', fontSize: { xs: '12px', lg: '15px' } }}
-        defaultValue={properties ? properties[0].id : ''}
         error={Boolean(errors[queryKey[0]])}
       >
-        {Array.isArray(properties) && properties.map(
+        {properties.map(
           (property: { id: number; attributes: { name: string } }) => (
             <MenuItem key={property.id} value={property.id}>
               {property.attributes.name}
@@ -53,6 +53,7 @@ export default function ProductSelect({ queryObj }: ProductSelectProps) {
           )
         )}
       </Select>
+      }
       {errors[queryKey[0]] && <FormHelperText error>{errors[queryKey[0]]?.message as string}</FormHelperText>}
     </Box>
   );
