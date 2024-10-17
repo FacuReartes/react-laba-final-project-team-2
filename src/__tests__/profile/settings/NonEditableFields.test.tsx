@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
-import { useUpdateUser } from '@/hooks/useUpdateUser';
-import { useUploadAvatar } from '@/hooks/useUploadAvatar';
-import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import SettingsForm from '@/components/settings/SettingsForm';
+import { useUpdateUser } from '@/hooks/profile/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/profile/useUploadAvatar';
+import { useDeleteAvatar } from '@/hooks/profile/useDeleteAvatar';
 
 // Mock the hooks and modules
 jest.mock('next-auth/react');

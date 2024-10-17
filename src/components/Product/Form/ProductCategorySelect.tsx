@@ -11,10 +11,7 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export default function ProductCategorySelect() {
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: useGetCategories().queryFn,
-  });
+  const { data: categories } = useQuery(useGetCategories());
 
   const {
     formState: { errors },
@@ -33,7 +30,7 @@ export default function ProductCategorySelect() {
           render={({ field }) => (
             <Select
               {...field}
-              value={field.value || []}
+              value={field.value || [categories[0].id]}
               placeholder={'Select categories'}
               sx={{ width: '100%', fontSize: '15px' }}
               error={Boolean(errors.categories)}
