@@ -2,9 +2,16 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { CartContext, ICartProduct } from '@/context/cart/CartContext';
 import CartPage from '@/components/cart/CartPage';
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useQuery } from '@tanstack/react-query';
 
+jest.mock('next-auth/react');
+jest.mock('@tanstack/react-query', () => ({
+  useQuery: jest.fn(),
+}));
 jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
   useRouter: jest.fn(),
 }));
 
@@ -37,12 +44,30 @@ const renderWithMockCart = (ui: ReactNode, mockCart: ICartProduct[]) => {
 };
 
 describe('Product Management', () => {
+  (useSession as jest.Mock).mockReturnValue({
+    data: { user: { jwt: 'token', user: { id: 'userId' } } },
+  });
+  (useQuery as jest.Mock).mockImplementation(queryKey => {
+    if (queryKey.queryFn.name === 'useUserQuery') {
+      return {
+        data: {
+          firstName: 'Lucas',
+          lastName: 'Montecino',
+          avatar: { url: 'avatar-url' },
+        },
+      };
+    }
+
+    return {};
+  });
+
   const mockPush = jest.fn();
 
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
     });
+    (usePathname as jest.Mock).mockReturnValue('/cart');
   });
 
   // 1. Product Management: Test modifying product quantities and verifying total price update
@@ -83,13 +108,13 @@ describe('Product Management', () => {
 
     // Verify cart is empty
     renderWithMockCart(<CartPage />, mockArray);
-    expect(screen.getByText('You dont have any products in the cart.'));
+    expect(screen.getByText("You don't have any products in the cart."));
   });
 
   // 3. Empty State: Verify empty cart message is displayed
   test('display empty cart message when cart is empty', () => {
     renderWithMockCart(<CartPage />, []);
 
-    expect(screen.getByText('You dont have any products in the cart.'));
+    expect(screen.getByText("You don't have any products in the cart."));
   });
 });
