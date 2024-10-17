@@ -7,13 +7,10 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { ProductType } from '@/lib/definitions';
 import RejectFilesDialog from '../Dialogs/RejectedFilesDialog';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import PreviewImages from '../Image/PreviewImages';
-import { useAddProductForm } from '@/lib/schemas/addProductSchemas';
-import { FormProvider, Controller } from 'react-hook-form';
+import { IProducts, useAddProductForm } from '@/lib/schemas/addProductSchemas';
+import { FormProvider, Controller, UseFormReturn } from 'react-hook-form';
 import { FileRejection } from 'react-dropzone';
 import ProductSelect from './ProductSelect';
 import useGetGenders from '@/hooks/products/useGetGenders';
@@ -21,25 +18,31 @@ import useGetBrands from '@/hooks/products/useGetBrands';
 import useGetColors from '@/hooks/products/useGetColors';
 import ProductCategorySelect from './ProductCategorySelect';
 import ProductSizesButtons from './ProductionSizeButtons';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { env } from '../../../../env';
+import { ProductType } from '@/lib/definitions';
+import { UseMutationResult } from '@tanstack/react-query';
 
-interface EditProductFormProps {
-  product: ProductType;
+interface ProductUpdateFormProps {
+  title: string
   open: boolean;
   onClose: () => void;
+  useUpdateHook: (
+    onClose: () => void, 
+    methods: UseFormReturn<IProducts>, 
+    product: ProductType
+  ) => UseMutationResult<void, Error, unknown>
+  product: ProductType,
 }
 
-export default function EditProductForm({
-  product,
+export default function ProductUpdateForm({ 
+  title,
   open,
   onClose,
-}: EditProductFormProps) {
+  useUpdateHook,
+  product,
+}: ProductUpdateFormProps) {
+
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
-
-  const { data: session } = useSession();
-  const token = session?.user.jwt;
 
   const methods = useAddProductForm({
     name: product.attributes.name,
@@ -52,76 +55,10 @@ export default function EditProductForm({
     sizes: product.attributes.sizes.data.map(size => size.id),
     images: product.attributes.images.data,
   });
-  const queryClient = useQueryClient();
 
-  const handleDialogOnClose = (value: boolean) => {
-    setOpenDialog(false);
-    setActionDialog(value);
-  };
+  const mutation = useUpdateHook(onClose, methods, product)
 
-  const { mutate, isPending, isSuccess } = useMutation({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    mutationFn: async (updatedProductData: any) => {
-      const formData = new FormData();
-      methods.getValues('images').forEach((img: File | { id: number }) => {
-        if (img instanceof File) {
-          formData.append('files', img);
-        }
-      });
-
-      let imagesId: number[] = [];
-      if (formData.has('files')) {
-        const uploadRes = await axios.post(`${env.BASE_URL}/upload`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        imagesId = uploadRes.data.map((image: { id: number }) => image.id);
-      }
-
-      const updatedProduct = {
-        data: {
-          name: methods.getValues('name'),
-          price: methods.getValues('price'),
-          description: methods.getValues('description'),
-          categories: methods.getValues('categories'),
-          color: methods.getValues('color'),
-          gender: methods.getValues('gender'),
-          brand: methods.getValues('brand'),
-          sizes: methods.getValues('sizes'),
-          images: [
-            ...methods
-              .getValues('images')
-              .filter(img => !(img instanceof File) && 'id' in img)
-              .map(img => (img as { id: number }).id),
-            ...imagesId,
-          ],
-        },
-      };
-
-      return axios.put(
-        `${env.BASE_URL}/products/${product.id}`,
-        updatedProduct,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({ queryKey: [`product-${product.id}`] });
-      methods.reset();
-      onClose();
-    },
-    onError: error => {
-      console.log('Error updating product:', error);
-    },
-  });
-
-  const handleEditProduct = () => mutate(methods.getValues());
+  const handleUpdateProduct = () => mutation.mutate(methods.getValues());
 
   const handleAcceptedFiles = (files: File[]) => {
     methods.setValue('images', [...methods.getValues('images'), ...files]);
@@ -143,6 +80,11 @@ export default function EditProductForm({
     [methods]
   );
 
+  const handleDialogOnClose = (value: boolean) => {
+    setOpenDialog(false);
+    setActionDialog(value);
+  };
+
   return (
     <FormProvider {...methods}>
       <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
@@ -159,7 +101,7 @@ export default function EditProductForm({
               variant="h1"
               sx={{ p: 0, mb: '35px', fontSize: { lg: '45px', xs: '30px' } }}
             >
-              Edit Product
+              { title }
             </DialogTitle>
             <Box
               sx={{
@@ -178,8 +120,8 @@ export default function EditProductForm({
                   ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
                 }}
                 color="primary"
-                onClick={handleEditProduct}
-                disabled={isPending}
+                onClick={handleUpdateProduct}
+                disabled={mutation.isPending}
               >
                 Save
               </Button>
@@ -269,7 +211,7 @@ export default function EditProductForm({
 
               <ProductSizesButtons />
 
-              {isSuccess && (
+              {mutation.isSuccess && (
                 <Typography>Product updated successfully!</Typography>
               )}
             </Box>
@@ -299,8 +241,8 @@ export default function EditProductForm({
                 ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
               }}
               color="primary"
-              onClick={handleEditProduct}
-              disabled={isPending}
+              onClick={handleUpdateProduct}
+              disabled={mutation.isPending}
             >
               Save
             </Button>
@@ -313,5 +255,6 @@ export default function EditProductForm({
         onClose={handleDialogOnClose}
       />
     </FormProvider>
-  );
+  )
+
 }
