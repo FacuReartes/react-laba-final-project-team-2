@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Popup from '../Popup';
-import { useLogOut } from '@/hooks/useLogOut';
+import { useLogOut } from '@/hooks/auth/useLogOut';
 
 const StyledMenu = styled((props: MenuProps) => <Menu {...props} />)(() => ({
   '& .MuiMenu-list': {

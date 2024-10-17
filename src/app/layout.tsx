@@ -4,10 +4,11 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import './globals.css';
 import theme from '@/theme/theme';
 import { ThemeProvider } from '@mui/material';
-import ReactQueryProvider from '@/utils/provider/ReactQueryProvider';
+import ReactQueryProvider from '@/provider/ReactQueryProvider';
 import SessionWrapper from '@/components/auth/SessionWrapper';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import CartProvider from '@/context/CartContext';
+import CartProvider from '@/context/cart/CartContext';
+import WishListProvider from '@/context/wishlist/WishListContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,7 +33,9 @@ export default function RootLayout({
             <ReactQueryDevtools />
             <AppRouterCacheProvider>
               <ThemeProvider theme={theme}>
-                <CartProvider>{children}</CartProvider>
+                <CartProvider>
+                  <WishListProvider>{children}</WishListProvider>
+                </CartProvider>
               </ThemeProvider>
             </AppRouterCacheProvider>
           </ReactQueryProvider>

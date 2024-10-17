@@ -3,15 +3,27 @@ import { Box, Button } from '@mui/material';
 import ProductDetailsView from './ProductsDetailsView';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import useGetProductDetail from '@/hooks/useGetProductDetail';
+import useGetProductDetail from '@/hooks/products/useGetProductDetail';
 import ProductDetailsImageSlider from './ProductDetailsImageSlider';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
+import UserNotification from '../UserNotification';
+import { useContext } from 'react';
+import {
+  IWishListContext,
+  WishListContext,
+} from '@/context/wishlist/WishListContext';
 
 export default function ProductDetail({ params }: { params: number }) {
   const router = useRouter();
   const path = usePathname();
   const pathName = path.split('/');
+  const { isSuccess, handleClose, message } = useContext(
+    WishListContext
+  ) as IWishListContext;
 
   const { data: product } = useQuery(useGetProductDetail(params));
+
+  useRecentlyViewed(product);
 
   function handleRedirect() {
     if (pathName.includes('product')) {
@@ -64,6 +76,12 @@ export default function ProductDetail({ params }: { params: number }) {
             ? 'Go back Home'
             : 'Back to My Products'}
         </Button>
+        <UserNotification
+          open={isSuccess}
+          handleClose={handleClose}
+          message={message}
+          type={'success'}
+        />
       </Box>
     );
   }

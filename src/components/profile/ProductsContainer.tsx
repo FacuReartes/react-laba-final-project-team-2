@@ -3,9 +3,13 @@
 import { Box } from '@mui/material';
 import ProductCard from './ProductCard';
 import { ProductType } from '@/lib/definitions';
-import ProductsEmptyState from './ProductsEmptyState';
+import ProductsEmptyState from '../common/ProductsEmptyState';
 
-export default function Products({ products }: { products: ProductType[] }) {
+interface ProductsContainerProps {
+  products: ProductType[];
+}
+
+export default function ProductsContainer({ products }: ProductsContainerProps) {
   return (
     <Box
       sx={{
@@ -22,12 +26,16 @@ export default function Products({ products }: { products: ProductType[] }) {
           columnGap: 1,
         }}
       >
-        {products && products?.length > 0 ? (
+        {products && products.length > 0 ? (
           products.map((product: ProductType) => (
-            <ProductCard key={product.id} product={{ ...product }} />
+            <ProductCard key={product.id} product={product} />
           ))
         ) : (
-          <ProductsEmptyState />
+          <ProductsEmptyState
+            text="You dont have any products yet."
+            path="/profile/products/add-product"
+            buttonText="Add Product"
+          />
         )}
       </Box>
     </Box>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import HeaderBar from './HeaderBar';
 import { Box } from '@mui/material';
 import HeaderSearchResults from './HeaderSearchResults';
-import useDebounce from '@/hooks/useDebounce';
+import useDebounce from '@/hooks/common/useDebounce';
 import { useQuery } from '@tanstack/react-query';
 import { getQueryClient } from '@/utils/getQueryClient';
 import { fetchSearchProducts } from '@/utils/fetchSearchProducts';

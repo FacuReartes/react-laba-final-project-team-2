@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import Logo from '@/components/common/Logo';
-import SignInForm from '@/components/auth/signIn/SignInForm';
+import SignInForm from '@/components/auth/SignInForm';
 import Image from 'next/image';
 import sneakersSignin from '@/images/sneakers-signin.webp';
 import { Metadata } from 'next';

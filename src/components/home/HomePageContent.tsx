@@ -1,25 +1,26 @@
 'use client';
 import ProductsContainer from '@/components/home/ProductsContainer';
 import { Box, Typography, Button } from '@mui/material';
-import { APIProductsType } from '@/lib/apiDataTypes';
 import Loading from '../common/Loading';
 import { useSearchParams } from 'next/navigation';
+import { InfiniteData } from '@tanstack/react-query';
 
 interface Props {
   showFilters: boolean;
-
   setShowFilters: () => void;
-  products: APIProductsType[];
+  data: InfiniteData<any, unknown> | undefined;
   isPending: boolean;
 }
 
 export default function HomePageContent({
-  products,
+  data,
   showFilters,
   setShowFilters,
   isPending,
 }: Props) {
   const searchTerm = useSearchParams().get('search');
+  const allProducts = data?.pages.flatMap(page => page.data) || [];
+  const matches = allProducts.length;
   return (
     <Box
       sx={{
@@ -73,7 +74,7 @@ export default function HomePageContent({
                 lineHeight: '20px',
               }}
             >
-              {searchTerm ? `${searchTerm} (${products?.length})` : ''}
+              {searchTerm ? `${searchTerm} (${matches})` : ''}
             </Typography>
           </Box>
           <Button
@@ -99,7 +100,7 @@ export default function HomePageContent({
           </Button>
         </Box>
       </Box>
-      {isPending ? <Loading /> : <ProductsContainer products={products} />}
+      {isPending ? <Loading /> : <ProductsContainer data={data} />}
     </Box>
   );
 }

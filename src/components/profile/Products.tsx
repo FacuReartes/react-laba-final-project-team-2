@@ -1,24 +1,36 @@
 'use client';
+import { useMemo } from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import ProductsContainer from '@/components/profile/ProductsContainer';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import heroImage from '@/images/products-hero-img.webp';
-import useGetProducts from '@/hooks/useGetProducts';
+import useGetProducts from '@/hooks/products/useGetProducts';
 import useUserQuery from '@/hooks/useUserQuery';
 import Loading from '../common/Loading';
 import AddProductButton from './common/AddProductButton';
 
 export default function Products() {
   const { data: session } = useSession();
+  const token = useMemo(() => session?.user.jwt, [session]);
+  const userID = useMemo(() => session?.user.user.id, [session]);
 
-  const token = session?.user.jwt;
-  const userID = session?.user.user.id;
+  const {
+    data: userData,
+    isLoading: userLoading,
+    isError: userError,
+  } = useQuery(useUserQuery(token));
 
-  const { data: userData } = useQuery(useUserQuery(token));
+  const {
+    data: products,
+    isPending,
+    isError: productsError,
+  } = useQuery(useGetProducts(token, userID));
 
-  const { data: products, isPending } = useQuery(useGetProducts(token, userID));
+  if (userLoading || isPending) return <Loading />;
+  if (userError || productsError)
+    return <Typography color="error">Error loading data</Typography>;
 
   return (
     <Box
@@ -31,45 +43,44 @@ export default function Products() {
         width: '100%',
       }}
     >
-      <Box sx={{ position: 'relative', width: '100%' }}>
+      {/* Hero Image and User Info */}
+      <Box sx={{ position: 'relative', width: '100%', height: {xs: '100px',sm: '150px', md: '200px', xl: '280px'} }}>
         <Image
           src={heroImage}
           alt="hero-img"
-          width={700}
-          sizes="100vw"
-          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+          style={{ objectFit: 'cover' }}
           priority
+          fill
           placeholder="blur"
         />
         <Box
           sx={{
             position: 'absolute',
-            bottom: { xs: '-35%', md: '-25%' },
-            left: '54px',
+            bottom: { xs:'-40px' ,sm: '-50px', md: '-60px' },
+            left: {xs: '20px', sm:'54px'},
             display: 'flex',
             alignItems: 'center',
           }}
         >
           <Avatar
             sx={{
-              width: { xs: '60px', md: '120px' },
-              height: { xs: '60px', md: '120px' },
+              width: { xs: '80px' , sm: '100px', md: '120px' },
+              height: { xs: '80px', sm: '100px', md: '120px' },
             }}
             src={userData?.avatar?.url}
+            alt={`${userData?.username}'s avatar`}
           />
           <Box
             sx={{
-              alignSelf: 'flex-end',
-              ml: '26px',
-              mb: '15px',
+              mt: {xs: '30px', sm:'50px'},
+              ml: {xs: '15px', sm: '26px'},
             }}
           >
             <Typography
-              variant="h5"
               sx={{
                 color: 'common.black',
                 fontWeight: '500',
-                fontSize: { xs: '14px', md: '20px' },
+                fontSize: { xs: '16px', sm: '20px' },
               }}
             >
               {userData?.firstName} {userData?.lastName}
@@ -78,13 +89,14 @@ export default function Products() {
         </Box>
       </Box>
 
+      {/* Products Section */}
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           width: 1,
-          mt: '120px',
+          mt: {xs: '60px', sm: '70px', md: '100px'},
         }}
       >
         <Typography
@@ -100,16 +112,24 @@ export default function Products() {
         </Typography>
 
         {/* Add Product Button for Desktop */}
-        <AddProductButton
-          display={{ xs: 'none', md: products?.length > 0 ? 'block' : 'none' }}
-          dataTestId="add-product-1"
-        />
+        {products?.length > 0 && (
+          <AddProductButton
+            display={{ xs: 'none', md: 'block' }}
+            dataTestId="add-product-1"
+          />
+        )}
       </Box>
+
+      {/* Conditional Rendering of Products or Loading section */}
       {isPending ? <Loading /> : <ProductsContainer products={products} />}
-      <AddProductButton
-        display={{ xs: products?.length > 0 ? 'block' : 'none', md: 'none' }}
-        dataTestId="add-product-2"
-      />
+
+      {/* Add Product Button for Mobile */}
+      {products.length > 0 && (
+        <AddProductButton
+          display={{ xs: 'block', md: 'none' }}
+          dataTestId="add-product-2"
+        />
+      )}
     </Box>
   );
 }

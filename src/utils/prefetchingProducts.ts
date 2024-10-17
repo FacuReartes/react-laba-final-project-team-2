@@ -1,3 +1,4 @@
+import { env } from '../../env';
 import { FilterTypes } from '@/hooks/useFilter';
 
 export const getFromFiltersToAPIParams = (
@@ -58,10 +59,8 @@ export const getFromFiltersToAPIParams = (
   return path;
 };
 
-const URL = 'https://shoes-shop-strapi.herokuapp.com/api';
-
 export const fetchFilteredProducts = async (path: string) => {
-  const response = await fetch(URL + path);
+  const response = await fetch(`${env.BASE_URL + path}`);
   if (!response.ok) throw new Error('Failed to fetch products');
   return await response.json();
 };

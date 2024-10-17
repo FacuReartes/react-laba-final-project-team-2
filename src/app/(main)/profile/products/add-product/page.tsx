@@ -1,9 +1,9 @@
-import AddProductForm from '@/components/AddProductForm/AddProductForm';
-import useGetBrands from '@/hooks/useGetBrands';
-import useGetCategories from '@/hooks/useGetCategories';
-import useGetColors from '@/hooks/useGetColors';
-import useGetGenders from '@/hooks/useGetGenders';
-import useGetSizes from '@/hooks/useGetSizes';
+import AddProductForm from '@/components/Product/Form/AddProductForm';
+import useGetBrands from '@/hooks/products/useGetBrands';
+import useGetCategories from '@/hooks/products/useGetCategories';
+import useGetColors from '@/hooks/products/useGetColors';
+import useGetGenders from '@/hooks/products/useGetGenders';
+import useGetSizes from '@/hooks/products/useGetSizes';
 import { Box, Typography } from '@mui/material';
 import {
   dehydrate,
@@ -29,7 +29,7 @@ export default async function AddProductPage() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Box
         sx={{
-          padding: { lg: '52px 68px', xs: '24px 20px 84px' },
+          padding: { xs: '24px 20px 84px', lg: '52px 15px', xl: '52px 68px' },
           m: 0,
           width: { lg: '100%', xs: '100vw' },
           position: 'relative',
