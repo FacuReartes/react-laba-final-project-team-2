@@ -11,9 +11,9 @@ import { useDeleteAvatar } from '@/hooks/profile/useDeleteAvatar';
 // Mock the hooks and modules
 jest.mock('next-auth/react');
 jest.mock('@tanstack/react-query');
-jest.mock('@/hooks/useUpdateUser');
-jest.mock('@/hooks/useUploadAvatar');
-jest.mock('@/hooks/useDeleteAvatar');
+jest.mock('@/hooks/profile/useUpdateUser');
+jest.mock('@/hooks/profile/useUploadAvatar');
+jest.mock('@/hooks/profile/useDeleteAvatar');
 jest.mock('@/hooks/useUserQuery', () => ({
   __esModule: true,
   default: jest.fn(),

@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useRegisterUser } from '@/hooks/auth/useRegisterUser';
 import SignupForm from '@/components/auth/SignupForm';
 
-jest.mock('@/hooks/useRegisterUser', () => ({
+jest.mock('@/hooks/auth/useRegisterUser', () => ({
   useRegisterUser: jest.fn(),
 }));
 

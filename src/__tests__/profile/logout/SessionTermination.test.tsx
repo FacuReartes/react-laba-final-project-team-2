@@ -20,7 +20,7 @@ jest.mock('next-auth/react', () => ({
   signOut: jest.fn(),
 }));
 
-jest.mock('@/hooks/useLogOut', () => ({
+jest.mock('@/hooks/auth/useLogOut', () => ({
   useLogOut: jest.fn(),
 }));
 

@@ -9,7 +9,7 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('@/hooks/useSignIn', () => ({
+jest.mock('@/hooks/auth/useSignIn', () => ({
   useSignIn: jest.fn(),
 }));
 

@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { useRegisterUser } from '@/hooks/auth/useRegisterUser';
 import SignupForm from '@/components/auth/SignupForm';
 
-jest.mock('@/hooks/useRegisterUser');
+jest.mock('@/hooks/auth/useRegisterUser');
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
