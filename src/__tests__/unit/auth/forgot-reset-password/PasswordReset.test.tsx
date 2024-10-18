@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import ResetPasswordForm from '@/components/auth/resetPassword/ResetPasswordForm';
+import ResetPasswordForm from '@/components/auth/ResetPasswordForm';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),

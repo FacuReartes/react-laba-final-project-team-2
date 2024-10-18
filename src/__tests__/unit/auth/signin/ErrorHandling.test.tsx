@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useSignIn } from '@/hooks/useSignIn';
 import { useRouter } from 'next/navigation';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import SignInForm from '@/components/auth/signIn/SignInForm';
+import { useSignIn } from '@/hooks/auth/useSignIn';
+import SignInForm from '@/components/auth/SignInForm';
 
-jest.mock('@/hooks/useSignIn');
+jest.mock('@/hooks/auth/useSignIn');
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
