@@ -48,6 +48,7 @@ const Product: FC<IProduct> = props => {
           fill
           priority
           style={{ objectFit: 'contain' }}
+          sizes='100%'
         />
       </Box>
 
