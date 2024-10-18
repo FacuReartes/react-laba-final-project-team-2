@@ -20,7 +20,7 @@ describe('Products empty state', () => {
 
     // Check if the ProductsEmptyState component is rendered
     expect(
-      screen.getByText(/You don't have any products yet./i)
+      screen.getByText(/You dont have any products yet./i)
     ).toBeInTheDocument();
   });
 });

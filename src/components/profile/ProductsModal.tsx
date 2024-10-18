@@ -10,7 +10,7 @@ import { useDuplicateProduct } from '@/hooks/products/useDuplicateProduct';
 
 interface ProductsModalProps {
   open: boolean;
-  id: number;
+  id: number | string;
   product: ProductType;
 }
 
@@ -48,15 +48,13 @@ export default function ProductsModal({
             zIndex: 1000,
           }}
         >
-            <Link
-              href={`/profile/products/${id}`}
-              passHref
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <Button sx={{ py: 0.5, width: '100%' }}>
-                  View
-              </Button>
-            </Link>
+          <Link
+            href={`/profile/products/${id}`}
+            passHref
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <Button sx={{ py: 0.5, width: '100%' }}>View</Button>
+          </Link>
           <Divider />
           <Button
             onClick={handleEditOpen}
