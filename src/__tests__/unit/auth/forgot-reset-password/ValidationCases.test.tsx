@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ForgotPasswordForm from '@/components/auth/forgotPassword/ForgotPasswordForm';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation'; // Importing the useRouter
+import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
