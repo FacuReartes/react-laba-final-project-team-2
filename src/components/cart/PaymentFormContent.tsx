@@ -60,7 +60,7 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://localhost:3000/cart/checkout/thank-you?amount=${amount}`,
+        return_url: `${process.env.NEXT_PUBLIC_URL}/cart/checkout/thank-you?amount=${amount}`,
       },
     });
 
@@ -81,7 +81,7 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
     <form onSubmit={handleSubmit}>
       {clientSecret && <PaymentElement />}
 
-      {error && <p>{error}</p>}
+      {error && <p>{error} {process.env.NEXT_PUBLIC_URL}</p>}
       <ActionButton
         text={!loading ? `Confirm & Pay $ ${amount}` : 'Processing...'}
         isLoading={!stripe || loading || !isFormValid}
