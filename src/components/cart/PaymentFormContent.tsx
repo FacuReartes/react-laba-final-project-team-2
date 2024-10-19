@@ -8,6 +8,7 @@ import { FormEvent, useContext, useEffect, useState } from 'react';
 import Loading from '../common/Loading';
 import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { CartContext, ICartContext } from '@/context/cart/CartContext';
+import { getBaseUrl } from '@/utils/getBaseUrl';
 
 type Props = {
   amount: number;
@@ -22,6 +23,8 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const url = getBaseUrl()
 
   useEffect(() => {
     fetch('/api/checkout', {
@@ -60,7 +63,7 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${process.env.NEXT_PUBLIC_URL}/cart/checkout/thank-you?amount=${amount}`,
+        return_url: `${url}/cart/checkout/thank-you?amount=${amount}`,
       },
     });
 
@@ -81,7 +84,7 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
     <form onSubmit={handleSubmit}>
       {clientSecret && <PaymentElement />}
 
-      {error && <p>{error} {process.env.NEXT_PUBLIC_URL}</p>}
+      {error && <p>{error} {url}</p>}
       <ActionButton
         text={!loading ? `Confirm & Pay $ ${amount}` : 'Processing...'}
         isLoading={!stripe || loading || !isFormValid}
