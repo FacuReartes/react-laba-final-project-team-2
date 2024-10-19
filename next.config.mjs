@@ -1,3 +1,7 @@
+import { expand } from 'dotenv-expand';
+
+expand({ parsed: { ...process.env } });
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
