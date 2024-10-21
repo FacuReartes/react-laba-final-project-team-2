@@ -23,6 +23,8 @@ import ProductCategorySelect from './ProductCategorySelect';
 import ProductSizesButtons from './ProductionSizeButtons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { env } from '../../../../env';
+import AIButton from '@/components/chat/AIButton/AIButton';
+import { generateDescription } from '@/app/api/chat/textGenerator';
 
 interface EditProductFormProps {
   product: ProductType;
@@ -37,6 +39,7 @@ export default function EditProductForm({
 }: EditProductFormProps) {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { data: session } = useSession();
   const token = session?.user.jwt;
@@ -143,6 +146,19 @@ export default function EditProductForm({
     [methods]
   );
 
+  const handleGenerateText = async () => {
+    const productTitle = methods.getValues('name');
+    setLoading(true);
+    try {
+      const generatedDescription = await generateDescription(productTitle);
+      methods.setValue('description', generatedDescription);
+    } catch (error) {
+      console.error('Error generating text:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <FormProvider {...methods}>
       <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
@@ -245,15 +261,26 @@ export default function EditProductForm({
                 name="description"
                 control={methods.control}
                 render={({ field }) => (
-                  <TextField
-                    label="Description"
-                    multiline
-                    rows={4}
-                    {...field}
-                    InputProps={{
-                      sx: { fontSize: { xs: '12px', lg: '15px' } },
-                    }}
-                  />
+                  <Box position='relative'>
+                    <TextField
+                      label="Description"
+                      multiline
+                      fullWidth
+                      rows={8}
+                      {...field}
+                      InputProps={{
+                        sx: { fontSize: { xs: '12px', lg: '15px' } },
+                      }}
+                      value={field.value}
+                    />
+                    <Box
+                      position="absolute"
+                      bottom={10}
+                      right={10}
+                    >
+                      <AIButton onClick={handleGenerateText} disabled={loading} />
+                    </Box>
+                  </Box>
                 )}
               />
 
