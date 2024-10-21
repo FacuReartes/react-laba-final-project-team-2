@@ -109,7 +109,7 @@ it('User should be able to add a product', async () => {
   await userEvent.upload(input, mockImages);
 
   // Submit form
-  fireEvent.submit(screen.getByTestId('submit'));
+  fireEvent.submit(screen.getByRole('submit'));
 
   // Expect for success
   await waitFor(() => {
@@ -123,7 +123,7 @@ it('User should be able to add a product', async () => {
 
 describe('Form Validation Errors', () => {
   it('Product is required', async () => {
-    fireEvent.submit(screen.getByTestId('submit'));
+    fireEvent.submit(screen.getByRole('submit'));
     await waitFor(() => {
       expect(
         screen.queryByText(/Product name is required/)
@@ -138,7 +138,7 @@ describe('Form Validation Errors', () => {
       },
     });
 
-    fireEvent.submit(screen.getByTestId('submit'));
+    fireEvent.submit(screen.getByRole('submit'));
     await waitFor(() => {
       expect(
         screen.queryByText(/Product name is too long/)
@@ -147,7 +147,7 @@ describe('Form Validation Errors', () => {
   });
 
   it('Price is required', async () => {
-    fireEvent.submit(screen.getByTestId('submit'));
+    fireEvent.submit(screen.getByRole('submit'));
     await waitFor(() => {
       expect(screen.queryByText(/Price is required/)).toBeInTheDocument();
     });
@@ -160,7 +160,7 @@ describe('Form Validation Errors', () => {
       },
     });
 
-    fireEvent.submit(screen.getByTestId('submit'));
+    fireEvent.submit(screen.getByRole('submit'));
     await waitFor(() => {
       expect(screen.queryByText(/Price must be positive/)).toBeInTheDocument();
     });
@@ -172,22 +172,23 @@ describe('Form Validation Errors', () => {
     const option = await screen.findByTestId('category-option-1');
     // Click the default option, leaving the input empty
     fireEvent.click(option);
+    fireEvent.submit(screen.getByText('Save'));
 
-    fireEvent.submit(screen.getByTestId('submit'));
     await waitFor(() => {
       expect(screen.queryByText(/Category is required/)).toBeInTheDocument();
     });
   });
+  
 
   it('Description is required', async () => {
-    fireEvent.submit(screen.getByTestId('submit'));
+    fireEvent.submit(screen.getByRole('submit'));
     await waitFor(() => {
       expect(screen.queryByText(/Description is required/)).toBeInTheDocument();
     });
   });
 
   it('Image is required', async () => {
-    fireEvent.submit(screen.getByTestId('submit'));
+    fireEvent.submit(screen.getByRole('submit'));
     await waitFor(() => {
       expect(screen.queryByText(/Image is required/)).toBeInTheDocument();
     });
@@ -204,15 +205,15 @@ describe('Image handling', () => {
     expect(screen.queryAllByRole('img')).toHaveLength(1);
 
     // Click delete image
-    fireEvent.mouseEnter(screen.getByTestId('image-hover'));
-    fireEvent.click(screen.getByTestId('image-delete'));
+    fireEvent.mouseEnter(screen.getByRole('product-image'));
+    fireEvent.click(screen.getByRole('image-delete'));
 
     // Modal opens
     expect(
       screen.getByText(/Are you sure to delete product image\?/i)
     ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByTestId('confirm-image-delete'));
+    fireEvent.click(screen.getByText('Delete'));
 
     // Expect deleted image and closed modal
     expect(screen.queryAllByRole('img', { hidden: true })).toHaveLength(0);
@@ -236,7 +237,7 @@ describe('Image handling', () => {
       expect(screen.getByText(/Wrong file extension/i)).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByTestId('close-reject'));
+    fireEvent.click(screen.getByText('Close'));
 
     // Expect closed modal and image not uploaded
     await waitFor(() => {

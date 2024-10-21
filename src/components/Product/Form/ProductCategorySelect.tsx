@@ -27,15 +27,15 @@ export default function ProductCategorySelect() {
         <Controller
           name="categories"
           control={control}
+          defaultValue={[categories[0].id]}
           render={({ field }) => (
             <Select
               {...field}
-              value={field.value || [categories[0].id]}
+              value={field.value}
               placeholder={'Select categories'}
               sx={{ width: '100%', fontSize: '15px' }}
               error={Boolean(errors.categories)}
               multiple
-              data-testid="category-select"
             >
               {categories.map(
                 (category: { id: number; attributes: { name: string } }) => (

@@ -57,6 +57,7 @@ export default function ProductSizesButtons() {
                 (size: { id: number; attributes: { value: number } }) => (
                   <ToggleButton
                     key={size.id}
+                    data-testid={`size-button-${size.id}`}
                     value={size.id}
                     sx={{
                       width: '100%',
