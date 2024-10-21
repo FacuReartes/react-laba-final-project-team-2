@@ -36,7 +36,6 @@ export default function ProductCategorySelect() {
               sx={{ width: '100%', fontSize: '15px' }}
               error={Boolean(errors.categories)}
               multiple
-              data-testid="category-select"
             >
               {categories.map(
                 (category: { id: number; attributes: { name: string } }) => (

@@ -105,7 +105,7 @@ const AddProductForm = () => {
             >
               <Button
                 type="submit"
-                data-testid="submit"
+                role='submit'
                 disabled={isPending}
                 sx={{
                   position: 'absolute',

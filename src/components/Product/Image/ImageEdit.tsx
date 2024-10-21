@@ -35,7 +35,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
   return (
     <Box
       sx={{ width: { xs: '280px', sm: width }, height, position: 'relative' }}
-      data-testid='image-hover'
+      role='product-image'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
@@ -54,7 +54,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
           }}
         >
           <IconButton
-            data-testid='image-delete'
+            role='image-delete'
             onClick={handleDeleteImage}
             size="large"
             sx={{
