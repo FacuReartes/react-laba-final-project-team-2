@@ -31,7 +31,7 @@ function PreviewImages({
 
     return () => {
       urls.forEach(url => {
-        if (url.startsWith('blob:')) {
+        if (url && url.startsWith('blob:')) {
           URL.revokeObjectURL(url);
         }
       });

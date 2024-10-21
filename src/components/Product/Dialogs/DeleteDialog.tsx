@@ -77,7 +77,6 @@ export default function DeleteDialog({ open, onClose, onConfirm, message }: Dele
           Cancel
         </Button>
         <Button
-          data-testid='confirm-image-delete'
           variant="outlined"
           onClick={handleDeleteButtonClick}
           sx={{

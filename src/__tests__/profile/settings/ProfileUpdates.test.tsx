@@ -3,17 +3,17 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
-import { useUpdateUser } from '@/hooks/useUpdateUser';
-import { useUploadAvatar } from '@/hooks/useUploadAvatar';
-import { useDeleteAvatar } from '@/hooks/useDeleteAvatar';
 import SettingsForm from '@/components/settings/SettingsForm';
+import { useUpdateUser } from '@/hooks/profile/useUpdateUser';
+import { useUploadAvatar } from '@/hooks/profile/useUploadAvatar';
+import { useDeleteAvatar } from '@/hooks/profile/useDeleteAvatar';
 
 // Mock the hooks and modules
 jest.mock('next-auth/react');
 jest.mock('@tanstack/react-query');
-jest.mock('@/hooks/useUpdateUser');
-jest.mock('@/hooks/useUploadAvatar');
-jest.mock('@/hooks/useDeleteAvatar');
+jest.mock('@/hooks/profile/useUpdateUser');
+jest.mock('@/hooks/profile/useUploadAvatar');
+jest.mock('@/hooks/profile/useDeleteAvatar');
 jest.mock('@/hooks/useUserQuery', () => ({
   __esModule: true,
   default: jest.fn(),

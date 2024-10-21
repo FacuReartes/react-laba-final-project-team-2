@@ -12,5 +12,8 @@ export default function useGetSizes() {
   return {
     queryKey,
     queryFn,
+    select: (res: any) => {
+      return Array.isArray(res) ? res : res.data;
+    },
   };
 }

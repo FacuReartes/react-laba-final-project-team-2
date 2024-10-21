@@ -44,7 +44,13 @@ export default function Products() {
       }}
     >
       {/* Hero Image and User Info */}
-      <Box sx={{ position: 'relative', width: '100%', height: {xs: '100px',sm: '150px', md: '200px', xl: '280px'} }}>
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: { xs: '100px', sm: '150px', md: '200px', xl: '280px' },
+        }}
+      >
         <Image
           src={heroImage}
           alt="hero-img"
@@ -56,15 +62,15 @@ export default function Products() {
         <Box
           sx={{
             position: 'absolute',
-            bottom: { xs:'-40px' ,sm: '-50px', md: '-60px' },
-            left: {xs: '20px', sm:'54px'},
+            bottom: { xs: '-40px', sm: '-50px', md: '-60px' },
+            left: { xs: '20px', sm: '54px' },
             display: 'flex',
             alignItems: 'center',
           }}
         >
           <Avatar
             sx={{
-              width: { xs: '80px' , sm: '100px', md: '120px' },
+              width: { xs: '80px', sm: '100px', md: '120px' },
               height: { xs: '80px', sm: '100px', md: '120px' },
             }}
             src={userData?.avatar?.url}
@@ -72,8 +78,8 @@ export default function Products() {
           />
           <Box
             sx={{
-              mt: {xs: '30px', sm:'50px'},
-              ml: {xs: '15px', sm: '26px'},
+              mt: { xs: '30px', sm: '50px' },
+              ml: { xs: '15px', sm: '26px' },
             }}
           >
             <Typography
@@ -96,7 +102,7 @@ export default function Products() {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: 1,
-          mt: {xs: '60px', sm: '70px', md: '100px'},
+          mt: { xs: '60px', sm: '70px', md: '100px' },
         }}
       >
         <Typography
@@ -113,10 +119,7 @@ export default function Products() {
 
         {/* Add Product Button for Desktop */}
         {products?.length > 0 && (
-          <AddProductButton
-            display={{ xs: 'none', md: 'block' }}
-            dataTestId="add-product-1"
-          />
+          <AddProductButton display={{ xs: 'none', md: 'block' }} />
         )}
       </Box>
 
@@ -124,11 +127,8 @@ export default function Products() {
       {isPending ? <Loading /> : <ProductsContainer products={products} />}
 
       {/* Add Product Button for Mobile */}
-      {products.length > 0 && (
-        <AddProductButton
-          display={{ xs: 'block', md: 'none' }}
-          dataTestId="add-product-2"
-        />
+      {products?.length > 0 && (
+        <AddProductButton display={{ xs: 'block', md: 'none' }} />
       )}
     </Box>
   );

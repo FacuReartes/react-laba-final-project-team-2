@@ -62,12 +62,13 @@ export default function ImageSlider({ imageUrls }: { imageUrls: ImageType[] }) {
                     src={img?.attributes?.url ?? '/no-img.webp'}
                     alt={img?.attributes?.name}
                     fill
-                    objectFit={ img?.attributes?.url ? 'contain' : 'scale-down' }
                     style={{
+                      objectFit: img?.attributes?.url ? 'contain' : 'scale-down',
                       opacity: 0,
                       transition: 'opacity 0.5s ease',
                       animation: 'fade-in 0.5s forwards',
                     }}
+                    sizes='100%'
                   />
                 </Box>
               </Fragment>

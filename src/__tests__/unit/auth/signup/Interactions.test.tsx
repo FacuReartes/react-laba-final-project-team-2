@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { useRouter } from 'next/navigation';
 import '@testing-library/jest-dom';
-import SignupForm from '@/components/auth/signUp/SignupForm';
+import { useRegisterUser } from '@/hooks/auth/useRegisterUser';
+import SignupForm from '@/components/auth/SignupForm';
 
-jest.mock('@/hooks/useRegisterUser');
+jest.mock('@/hooks/auth/useRegisterUser');
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),

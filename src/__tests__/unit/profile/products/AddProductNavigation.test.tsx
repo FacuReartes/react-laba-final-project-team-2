@@ -48,10 +48,8 @@ describe('Add product navigation', () => {
 
     render(<Products />, { wrapper: Wrapper });
 
-    const addButton1 = screen.getByTestId('add-product-1');
-    const addButton2 = screen.getByTestId('add-product-2');
-    fireEvent.click(addButton1);
-    fireEvent.click(addButton2);
+    const addButton1 = screen.getAllByRole('button', { name: 'Add Product' });
+    fireEvent.click(addButton1[0]);
 
     expect(mockPush).toHaveBeenCalledWith('/profile/products/add-product');
   });

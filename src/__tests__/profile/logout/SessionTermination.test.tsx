@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider, signOut, useSession } from 'next-auth/react';
-import { useLogOut } from '@/hooks/useLogOut';
 import HeaderMenu from '@/components/common/Header/HeaderMenu';
-import * as useLogOutModule from '@/hooks/useLogOut';
+import * as useLogOutModule from '@/hooks/auth/useLogOut';
 import { useRouter } from 'next/navigation';
+import { useLogOut } from '@/hooks/auth/useLogOut';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
@@ -20,7 +20,7 @@ jest.mock('next-auth/react', () => ({
   signOut: jest.fn(),
 }));
 
-jest.mock('@/hooks/useLogOut', () => ({
+jest.mock('@/hooks/auth/useLogOut', () => ({
   useLogOut: jest.fn(),
 }));
 

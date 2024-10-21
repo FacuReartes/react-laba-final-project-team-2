@@ -142,6 +142,41 @@ const ProfileSidebar = () => {
           </ListItem>
 
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
+            <ListItemButton onClick={() => router.push('/profile/recently-viewed')}>
+              <ListItemIcon sx={{ my: '0px' }}>
+                {pathName === '/profile/recently-viewed' ? (
+                  <Image
+                    src="/sidebar-icons/recently-viewed-red.svg"
+                    alt="recently-viewed-red"
+                    width={20}
+                    height={21}
+                  />
+                ) : (
+                  <Image
+                    src="/sidebar-icons/recently-viewed.svg"
+                    alt="recently-viewed"
+                    width={20}
+                    height={21}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/recently-viewed' ? 'secondary.light' : '',
+                }}
+                primaryTypographyProps={{
+                  fontSize: '16px',
+                  lineHeight: '18.77px',
+                  fontWeight: 500,
+                }}
+                primary="Recently viewed"
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton onClick={() => router.push('/profile/settings')}>
               <ListItemIcon sx={{ my: '0px' }}>
                 {pathName === '/profile/settings' ? (
