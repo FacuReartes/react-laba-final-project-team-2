@@ -1,10 +1,9 @@
-import ProductDetail from "@/components/common/ProductDetail/ProductDetail";
-import RecentlyViewedContainer from "@/components/recentlyViewed/RecentlyViewedContainer"
-import { CartContext } from "@/context/cart/CartContext";
-import { WishListContext } from "@/context/wishlist/WishListContext";
-import { ProductType } from "@/lib/definitions";
-import { render, screen } from "@testing-library/react"
-import { ReactNode } from "react";
+import ProductDetail from '@/components/common/ProductDetail/ProductDetail';
+import RecentlyViewedContainer from '@/components/recentlyViewed/RecentlyViewedContainer'
+import { CartContext } from '@/context/cart/CartContext';
+import { WishListContext } from '@/context/wishlist/WishListContext';
+import { render, screen } from '@testing-library/react'
+import { ReactNode } from 'react';
 
 jest.mock('next/navigation', () => ({
   useRouter() {
@@ -55,16 +54,16 @@ const renderWithContext = (ui: ReactNode) => {
 
 const mockProduct = [
   {
-    "id":99,
-    "attributes": {
-      "name":"test",
-      "description":"test",
-      "price":10,
-      "createdAt":"1",
-      "updatedAt":"1",
-      "publishedAt":"1",
-      "teamName":"team-2",
-      "images": {
+    'id':99,
+    'attributes': {
+      'name':'test',
+      'description':'test',
+      'price':10,
+      'createdAt':'1',
+      'updatedAt':'1',
+      'publishedAt':'1',
+      'teamName':'team-2',
+      'images': {
         data: [{
           id: 1,
           attributes: {
@@ -73,17 +72,17 @@ const mockProduct = [
           }
         }]
       },
-      "brand":1,
-      "categories":[1],
-      "color":1,
-      "gender": { 
+      'brand':1,
+      'categories':[1],
+      'color':1,
+      'gender': { 
         data: {
           attributes: {
             name: 'Male'
           }
         }
       },
-      "sizes": {
+      'sizes': {
         data: [{
           id: 1,
           attributes: {
