@@ -5,7 +5,7 @@ import ProductsWishList from './ProductsWishList';
 export default function MyWishListContainer() {
   return (
     <Box sx={{ px: '60px', width: 1 }}>
-      <Typography variant="h1" sx={{ mt: '40px' }}>
+      <Typography variant="h1" sx={{ mt: '40px' }} role="heading">
         My WishList
       </Typography>
       <ProductsWishList />
