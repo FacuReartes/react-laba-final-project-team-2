@@ -148,3 +148,9 @@ export type PersonalInfoData = {
   email: string;
   phoneNumber: string;
 };
+
+export type ShippingInfoProps = {
+  shippingInfo: ShippingFormData;
+  setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
+  errorMessage: string;
+};
