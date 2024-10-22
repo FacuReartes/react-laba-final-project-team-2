@@ -60,7 +60,7 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://localhost:3000/cart/checkout/thank-you?amount=${amount}`,
+        return_url: `${window.location.origin}/cart/checkout/thank-you?amount=${amount}`,
       },
     });
 
