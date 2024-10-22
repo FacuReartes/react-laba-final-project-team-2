@@ -96,6 +96,7 @@ export default function ProductCard({
             : '0 0 8px rgba(0,0,0,0.1)',
           transform: onHover ? 'scale(1.03)' : 'scale(1)',
         }}
+        role='product'
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
