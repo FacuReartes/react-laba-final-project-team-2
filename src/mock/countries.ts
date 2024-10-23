@@ -1,13 +1,25 @@
 export const countries = [
   {
     name: 'Argentina',
-    cities: ['Buenos Aires', 'Córdoba', 'Rosario'],
-    states: ['Buenos Aires', 'Córdoba', 'Santa Fe'],
+    cities: [
+      'Buenos Aires',
+      'Córdoba',
+      'Villa Carlos Paz',
+      'Rosario',
+      'Corrientes',
+      'San Martin de los Andes',
+    ],
+    states: ['Buenos Aires', 'Córdoba', 'Corrientes', 'Neuquén'],
   },
   {
     name: 'Brazil',
-    cities: ['São Paulo', 'Rio de Janeiro', 'Brasília'],
-    states: ['São Paulo', 'Rio de Janeiro', 'Distrito Federal'],
+    cities: ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Florianópolis'],
+    states: [
+      'São Paulo',
+      'Rio de Janeiro',
+      'Distrito Federal',
+      'Santa Catarina',
+    ],
   },
   {
     name: 'Mexico',
