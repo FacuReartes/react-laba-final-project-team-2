@@ -15,6 +15,8 @@ const config: Config = {
   preset: 'ts-jest',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    "react-markdown": "<rootDir>/src/mock/ReactMarkdownMock.tsx",
+    "remark-gfm": "<rootDir>/src/mock/ReactMarkdownMock.tsx",
   },
   collectCoverage: true,
   coverageThreshold: {

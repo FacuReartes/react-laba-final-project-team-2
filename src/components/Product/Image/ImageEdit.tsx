@@ -39,7 +39,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Image src={src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='} alt={alt} fill sizes='100%' role='img' />
+      <Image src={src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='} alt={alt} fill sizes='100%' role='product-img' />
       {isHover && (
         <Box
           sx={{

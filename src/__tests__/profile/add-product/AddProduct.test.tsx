@@ -202,7 +202,7 @@ describe('Image handling', () => {
     const input = screen.getByTestId('dropzone');
     await userEvent.upload(input, mockImages);
 
-    expect(screen.queryAllByRole('img')).toHaveLength(1);
+    expect(screen.queryAllByRole('product-img')).toHaveLength(1);
 
     // Click delete image
     fireEvent.mouseEnter(screen.getByRole('product-image'));
@@ -216,7 +216,7 @@ describe('Image handling', () => {
     fireEvent.click(screen.getByText('Delete'));
 
     // Expect deleted image and closed modal
-    expect(screen.queryAllByRole('img', { hidden: true })).toHaveLength(0);
+    expect(screen.queryAllByRole('product-img', { hidden: true })).toHaveLength(0);
     expect(
       screen.queryByText(/Are you sure to delete product image\?/i)
     ).toBeFalsy();
@@ -242,7 +242,7 @@ describe('Image handling', () => {
     // Expect closed modal and image not uploaded
     await waitFor(() => {
       expect(screen.queryByText(/Wrong file extension/i)).toBeFalsy();
-      expect(screen.queryAllByRole('img', { hidden: true })).toHaveLength(0);
+      expect(screen.queryAllByRole('product-img', { hidden: true })).toHaveLength(0);
     });
   });
 
@@ -257,6 +257,6 @@ describe('Image handling', () => {
     await userEvent.upload(input, mockImages);
 
     // Expect 3 images
-    expect(screen.queryAllByRole('img')).toHaveLength(3);
+    expect(screen.queryAllByRole('product-img')).toHaveLength(3);
   });
 });
