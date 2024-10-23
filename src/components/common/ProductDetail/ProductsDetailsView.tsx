@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import { useContext, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export default function ProductDetailsView({
   id,
@@ -188,7 +189,7 @@ export default function ProductDetailsView({
 
       <Typography sx={{ fontWeight: 500, mt: 4 }}>Description</Typography>
       <Box sx={{ width: { xs: 1, lg: '522px' }, mt: 1 }}>
-        {attributes?.description}
+        <ReactMarkdown>{attributes?.description}</ReactMarkdown>
       </Box>
     </Box>
   );

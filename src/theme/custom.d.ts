@@ -19,3 +19,20 @@ declare module '@mui/material/Typography' {
     subtitle3: true;
   }
 }
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    custom: {
+      lightGreen: string;
+      darkPurple: string;
+    };
+  }
+  interface PaletteOptions {
+    custom?: {
+      lightBlue?: string;
+      lightGreen?: string;
+      blue?: string;
+      green?: string;
+    };
+  }
+}

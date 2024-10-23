@@ -3,6 +3,8 @@ import { CircularProgress, Box, Typography } from '@mui/material';
 
 interface LoadingProps {
   message?: string;
+  height?: string;
+  width?: string;
   size?: number;
   overlay?: boolean;
   color?: string;
@@ -14,7 +16,7 @@ export default function Loading({
   size = 50,
   overlay = false,
   color,
-  circularColor
+  circularColor,
 }: LoadingProps) {
   return (
     <Box
@@ -28,9 +30,9 @@ export default function Loading({
       justifyContent="center"
       alignItems="center"
       bgcolor={overlay ? 'rgba(255, 255, 255, 0.75)' : 'transparent'}
-      my={5}
+      // my={5}
     >
-      <Box textAlign="center">
+      <Box textAlign="center" sx={{ display: 'flex'}}>
         <CircularProgress size={size} sx={{ color: circularColor ?? '' }}/>
         {message && (
           <Typography variant="subtitle3" margin={'20px'} color={color ?? ''}>

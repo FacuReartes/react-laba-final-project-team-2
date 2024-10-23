@@ -20,6 +20,7 @@ import useGetColors from '@/hooks/products/useGetColors';
 import Popup from '../../common/Popup';
 import { INewProduct, useAddProduct } from '@/hooks/useAddProduct';
 import UserNotification from '../../common/UserNotification';
+import { generateDescription } from '@/app/api/chat/textGenerator';
 
 const AddProductForm = () => {
   const isMdUp = useMediaQuery('( min-width: 600px )');
@@ -27,6 +28,7 @@ const AddProductForm = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [actionDialog, setActionDialog] = useState<boolean>(false);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -80,6 +82,19 @@ const AddProductForm = () => {
     setOpenDialog(false);
     setActionDialog(value);
   };
+
+  const handleGenerateText = async () => {
+    const productTitle = methods.getValues('name');
+    setLoading(true);
+    try {
+      const generatedDescription = await generateDescription(productTitle);
+      methods.setValue('description', generatedDescription);
+    } catch (error) {
+      console.error('Error generating text:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -137,7 +152,7 @@ const AddProductForm = () => {
                 <ProductSelect queryObj={useGetColors()} />
               </Box>
 
-              <ProductDescriptionInput />
+              <ProductDescriptionInput onClick={handleGenerateText} loading={loading} />
 
               <ProductSizesButtons />
             </Box>
