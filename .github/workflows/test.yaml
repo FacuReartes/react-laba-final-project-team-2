@@ -1,10 +1,12 @@
 name: Run Unit Tests
+env:
+  NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
 on: 
   push:
     branches: 
       - '**'
 jobs:
-  test:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
