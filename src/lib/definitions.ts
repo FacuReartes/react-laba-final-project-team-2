@@ -148,3 +148,21 @@ export type PersonalInfoData = {
   email: string;
   phoneNumber: string;
 };
+
+export type ShippingInfoProps = {
+  shippingInfo: ShippingFormData;
+  setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
+  errorMessage: string;
+};
+
+export type City = {
+  name: string;
+  zipCode: string;
+  state: string;
+};
+
+export type Country = {
+  name: string;
+  cities: City[];
+  states: string[];
+};

@@ -1,20 +1,67 @@
-import { ShippingFormData } from '@/lib/definitions';
-import { Box, TextField, Typography } from '@mui/material';
-
-type ShippingInfoProps = {
-  shippingInfo: ShippingFormData;
-  setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
-  errorMessage: string;
-};
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  TextField,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
+} from '@mui/material';
+import { countries } from '@/mock/countries';
+import { City, ShippingFormData, ShippingInfoProps } from '@/lib/definitions';
 
 export default function ShippingInfo({
   shippingInfo,
   setShippingInfo,
   errorMessage,
 }: ShippingInfoProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setShippingInfo(prev => ({ ...prev, [name]: value }));
+  const [cities, setCities] = useState<City[]>([]);
+  const [states, setStates] = useState<string[]>([]);
+
+  useEffect(() => {
+    const selectedCountry = countries.find(
+      c => c.name === shippingInfo.country
+    );
+    if (selectedCountry) {
+      setCities(selectedCountry.cities);
+      setStates(selectedCountry.states);
+    } else {
+      setCities([]);
+      setStates([]);
+    }
+  }, [shippingInfo.country]);
+
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<string>
+  ) => {
+    const name = e.target.name as keyof ShippingFormData;
+    const value = e.target.value;
+
+    if (name === 'city') {
+      const selectedCity = cities.find(city => city.name === value);
+      if (selectedCity) {
+        setShippingInfo(prev => ({
+          ...prev,
+          [name]: value,
+          zip: selectedCity.zipCode,
+          state: selectedCity.state,
+        }));
+      }
+    } else if (name === 'country') {
+      setShippingInfo(prev => ({
+        ...prev,
+        [name]: value,
+        city: '',
+        state: '',
+        zip: '',
+      }));
+    } else {
+      setShippingInfo(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   return (
@@ -23,33 +70,59 @@ export default function ShippingInfo({
         Shipping Info
       </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '24px' }}>
-        <TextField
-          variant="outlined"
-          label="Country"
-          name="country"
-          value={shippingInfo.country}
-          onChange={handleChange}
-          sx={{ width: { xs: '100%', md: '182px' } }}
-          required
-        />
-        <TextField
-          variant="outlined"
-          label="City"
-          name="city"
-          value={shippingInfo.city}
-          onChange={handleChange}
-          sx={{ width: { xs: '100%', md: '182px' } }}
-          required
-        />
-        <TextField
-          variant="outlined"
-          label="State"
-          name="state"
-          value={shippingInfo.state}
-          onChange={handleChange}
-          sx={{ width: { xs: '100%', md: '182px' } }}
-          required
-        />
+        <FormControl sx={{ width: { xs: '100%', md: '182px' } }}>
+          <InputLabel id="country-label">Country</InputLabel>
+          <Select
+            labelId="country-label"
+            label="Country"
+            name="country"
+            value={shippingInfo.country}
+            onChange={handleChange}
+            required
+          >
+            {countries.map(country => (
+              <MenuItem key={country.name} value={country.name}>
+                {country.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ width: { xs: '100%', md: '182px' } }}>
+          <InputLabel id="city-label">City</InputLabel>
+          <Select
+            labelId="city-label"
+            label="City"
+            name="city"
+            value={shippingInfo.city}
+            onChange={handleChange}
+            required
+            disabled={!shippingInfo.country}
+          >
+            {cities.map(city => (
+              <MenuItem key={city.name} value={city.name}>
+                {city.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ width: { xs: '100%', md: '182px' } }}>
+          <InputLabel id="state-label">State</InputLabel>
+          <Select
+            labelId="state-label"
+            label="State"
+            name="state"
+            value={shippingInfo.state}
+            onChange={handleChange}
+            required
+            disabled={true}
+          >
+            {states.map(state => (
+              <MenuItem key={state} value={state}>
+                {state}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
           variant="outlined"
           label="Zip Code"
@@ -58,6 +131,9 @@ export default function ShippingInfo({
           onChange={handleChange}
           sx={{ width: { xs: '100%', md: '182px' } }}
           required
+          InputProps={{
+            readOnly: true,
+          }}
         />
         <TextField
           variant="outlined"
