@@ -9,15 +9,15 @@ import {
   InputLabel,
   SelectChangeEvent,
 } from '@mui/material';
-import { ShippingFormData, ShippingInfoProps } from '@/lib/definitions';
 import { countries } from '@/mock/countries';
+import { City, ShippingFormData, ShippingInfoProps } from '@/lib/definitions';
 
 export default function ShippingInfo({
   shippingInfo,
   setShippingInfo,
   errorMessage,
 }: ShippingInfoProps) {
-  const [cities, setCities] = useState<string[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
   const [states, setStates] = useState<string[]>([]);
 
   useEffect(() => {
@@ -40,7 +40,28 @@ export default function ShippingInfo({
   ) => {
     const name = e.target.name as keyof ShippingFormData;
     const value = e.target.value;
-    setShippingInfo(prev => ({ ...prev, [name]: value }));
+
+    if (name === 'city') {
+      const selectedCity = cities.find(city => city.name === value);
+      if (selectedCity) {
+        setShippingInfo(prev => ({
+          ...prev,
+          [name]: value,
+          zip: selectedCity.zipCode,
+          state: selectedCity.state,
+        }));
+      }
+    } else if (name === 'country') {
+      setShippingInfo(prev => ({
+        ...prev,
+        [name]: value,
+        city: '',
+        state: '',
+        zip: '',
+      }));
+    } else {
+      setShippingInfo(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   return (
@@ -78,8 +99,8 @@ export default function ShippingInfo({
             disabled={!shippingInfo.country}
           >
             {cities.map(city => (
-              <MenuItem key={city} value={city}>
-                {city}
+              <MenuItem key={city.name} value={city.name}>
+                {city.name}
               </MenuItem>
             ))}
           </Select>
@@ -93,7 +114,7 @@ export default function ShippingInfo({
             value={shippingInfo.state}
             onChange={handleChange}
             required
-            disabled={!shippingInfo.country}
+            disabled={true}
           >
             {states.map(state => (
               <MenuItem key={state} value={state}>
@@ -110,6 +131,9 @@ export default function ShippingInfo({
           onChange={handleChange}
           sx={{ width: { xs: '100%', md: '182px' } }}
           required
+          InputProps={{
+            readOnly: true,
+          }}
         />
         <TextField
           variant="outlined"

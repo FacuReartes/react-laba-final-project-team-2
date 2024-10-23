@@ -154,3 +154,15 @@ export type ShippingInfoProps = {
   setShippingInfo: React.Dispatch<React.SetStateAction<ShippingFormData>>;
   errorMessage: string;
 };
+
+export type City = {
+  name: string;
+  zipCode: string;
+  state: string;
+};
+
+export type Country = {
+  name: string;
+  cities: City[];
+  states: string[];
+};
