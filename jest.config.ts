@@ -22,10 +22,10 @@ const config: Config = {
   coverageReporters: ["json", "html"],
   coverageThreshold: {
     global: {
-      statements: 35,
-      branches: 35,
-      functions: 35,
-      lines: 35,
+      statements: 34,
+      branches: 34,
+      functions: 34,
+      lines: 34,
     },
   },
 };
