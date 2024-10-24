@@ -27,6 +27,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-coverage-report
-          path: output/test-coverage.html
+          path: build/output/test-coverage.html
 
       
