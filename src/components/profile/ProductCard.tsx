@@ -41,7 +41,8 @@ export default function ProductCard({ product }: PProps) {
             src={productImage ?? '/no-img.webp'}
             alt={productName}
             fill
-            objectFit={productImage ? 'contain' : 'scale-down'}
+            sizes='100%'
+            style={{ objectFit: productImage ? 'contain' : 'scale-down' }}
           />
         )}
         <Button

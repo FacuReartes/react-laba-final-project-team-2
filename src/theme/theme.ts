@@ -16,6 +16,7 @@ const theme = createTheme({
     },
     error: {
       main: '#FE645E',
+      light: '#fdeef0'
     },
     background: {
       paper: '#E5E5E7',
@@ -30,6 +31,12 @@ const theme = createTheme({
       200: '#494949',
       300: '#6E7278',
       400: '#F3F3F3',
+    },
+    custom: {
+      lightBlue: '#e1f5fe',
+      lightGreen: '#e8f5e8',
+      blue: '#0d47a1',
+      green: '#1b5e20',
     },
   },
   typography: { ...typography },

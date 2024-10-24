@@ -1,7 +1,7 @@
+import SignInForm from '@/components/auth/SignInForm';
 import { render, act } from '@testing-library/react';
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import SignInForm from '@/components/auth/signIn/SignInForm';
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
@@ -12,7 +12,7 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('@/hooks/useSignIn', () => ({
+jest.mock('@/hooks/auth/useSignIn', () => ({
   useSignIn: jest.fn().mockReturnValue({
     handleSignIn: jest.fn(),
     openDialog: false,

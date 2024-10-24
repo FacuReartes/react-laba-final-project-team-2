@@ -2,13 +2,15 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Divider, Button } from '@mui/material';
 import Link from 'next/link';
-import EditProductForm from '../Product/Form/EditProductForm';
 import { ProductType } from '@/lib/definitions';
 import DeleteProductForm from '../Product/Form/DeleteProductForm';
+import ProductUpdateForm from '../Product/Form/ProductUpdateForm';
+import { useEditProduct } from '@/hooks/products/useEditProduct';
+import { useDuplicateProduct } from '@/hooks/products/useDuplicateProduct';
 
 interface ProductsModalProps {
   open: boolean;
-  id: number;
+  id: number | string;
   product: ProductType;
 }
 
@@ -18,9 +20,11 @@ export default function ProductsModal({
   product,
 }: ProductsModalProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDuplicateOpen, setIsDuplicateOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleEditOpen = () => setIsEditOpen(true);
+  const handleDuplicateOpen = () => setIsDuplicateOpen(true);
   const handleDeleteOpen = () => setIsDeleteOpen(true);
 
   const handleDeleteProduct = (deletedProduct: ProductType) => {
@@ -44,21 +48,26 @@ export default function ProductsModal({
             zIndex: 1000,
           }}
         >
-            <Link
-              href={`/profile/products/${id}`}
-              passHref
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <Button sx={{ py: 0.5, width: '100%' }}>
-                  View
-              </Button>
-            </Link>
+          <Link
+            href={`/profile/products/${id}`}
+            passHref
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <Button sx={{ py: 0.5, width: '100%' }}>View</Button>
+          </Link>
           <Divider />
           <Button
             onClick={handleEditOpen}
             sx={{ py: 0.5, cursor: 'pointer', width: '100%' }}
           >
             Edit
+          </Button>
+          <Divider />
+          <Button
+            onClick={handleDuplicateOpen}
+            sx={{ py: 0.5, cursor: 'pointer', width: '100%' }}
+          >
+            Duplicate
           </Button>
           <Divider />
           <Button
@@ -70,10 +79,21 @@ export default function ProductsModal({
         </Box>
       )}
       {isEditOpen && (
-        <EditProductForm
+        <ProductUpdateForm
+          title='Edit Product'
           product={product}
           open={isEditOpen}
           onClose={() => setIsEditOpen(false)}
+          useUpdateHook={useEditProduct}
+        />
+      )}
+      {isDuplicateOpen && (
+        <ProductUpdateForm
+          title='Duplicate Product'
+          product={product}
+          open={isDuplicateOpen}
+          onClose={() => setIsDuplicateOpen(false)}
+          useUpdateHook={useDuplicateProduct}
         />
       )}
       {isDeleteOpen && (

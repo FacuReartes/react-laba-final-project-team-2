@@ -14,10 +14,12 @@ export default function ProductWish({
 }) {
   const [openPopup, setOpenPopup] = useState(false);
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}
+    >
       <Box
         sx={{
-          width: { xs: '152px', md: '320px' },
+          width: 'auto',
           height: { xs: '180px', md: '380px' },
           position: 'relative',
         }}

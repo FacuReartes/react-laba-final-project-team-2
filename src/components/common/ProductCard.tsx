@@ -96,6 +96,7 @@ export default function ProductCard({
             : '0 0 8px rgba(0,0,0,0.1)',
           transform: onHover ? 'scale(1.03)' : 'scale(1)',
         }}
+        role='product'
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
@@ -204,9 +205,9 @@ export default function ProductCard({
             alt={product.attributes.name}
             fill
             priority
-            objectFit={imgUrl ? 'contain' : 'scale-down'}
             style={{
               transition: 'transform 0.5s ease',
+              objectFit: imgUrl ? 'contain' : 'scale-down',
               transform: onHover ? 'scale(1.1)' : 'scale(1)',
             }}
             sizes="800px"
