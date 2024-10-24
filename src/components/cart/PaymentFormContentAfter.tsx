@@ -1,6 +1,6 @@
 import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import { PersonalInfoData, ShippingFormData } from '@/lib/definitions';
-import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import ActionButton from '../common/ActionButton';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -68,7 +68,7 @@ export default function PaymentFormContentAfter({
       <form onSubmit={handleSubmit}>
         {error && <p>{error}</p>}
         <ActionButton
-          text={!loading ? `Generate Invoice` : 'Processing...'}
+          text={!loading ? 'Generate Invoice' : 'Processing...'}
           isLoading={loading || !isFormValid}
         />
       </form>

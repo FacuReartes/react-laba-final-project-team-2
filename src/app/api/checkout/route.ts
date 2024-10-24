@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       });
     }
 
-    let productsIds = [];
+    const productsIds = [];
     for (const product of products) {
       const subcurrencyPrice = convertToSubcurrency(product.price);
       try {

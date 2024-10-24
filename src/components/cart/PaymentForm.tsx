@@ -2,7 +2,7 @@
 import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { PaymentFormContent } from './PaymentFormContent';
 import { PersonalInfoData, ShippingFormData } from '@/lib/definitions';
 import { useState } from 'react';

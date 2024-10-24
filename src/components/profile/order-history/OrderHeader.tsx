@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function OrderHeader({ order }: Props) {
-  let status =
+  const status =
     order.status.toLocaleLowerCase() === 'succeeded'
       ? order.delivery.status.toLocaleLowerCase() === 'shipped'
         ? { icon: '/shipped.svg', label: 'Shipped', color: '#8C9196' }

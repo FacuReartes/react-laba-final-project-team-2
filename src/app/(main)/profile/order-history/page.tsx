@@ -1,5 +1,5 @@
 import OrderHistoryForm from '@/components/profile/order-history/OrderHistoryForm';
-import useGetProductDetail from '@/hooks/products/useGetProductDetail';
+import { env } from '../../../../../env';
 import {
   dehydrate,
   HydrationBoundary,
@@ -36,14 +36,22 @@ export default async function Page() {
   ).then(res => res.json());
 
   const uniqueProductIds = new Set<number>();
-  orders.map((order: any, index: number) => {
+  orders.map((order: any) => {
     order.products.forEach((product: any) => {
       uniqueProductIds.add(product.id);
     });
   });
 
   const prefetchPromises = Array.from(uniqueProductIds).map(productId => {
-    const { queryKey, queryFn } = useGetProductDetail(productId);
+    const queryKey = [`product-${productId}`];
+
+    const queryFn = async () => {
+      const req = await fetch(
+        `${env.BASE_URL}/products/${productId}?populate=*`
+      );
+      const res = await req.json();
+      return res.data;
+    };
     return queryClient.prefetchQuery({ queryKey, queryFn });
   });
 
