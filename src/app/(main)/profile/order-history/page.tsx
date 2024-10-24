@@ -26,7 +26,7 @@ export default async function Page() {
   const userId = session.user.user.id;
 
   const orders = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/order-history?userId=${userId}`,
+    `${window.location.origin}/api/order-history?userId=${userId}`,
     {
       method: 'GET',
       headers: {
