@@ -95,6 +95,8 @@ export default function Page({ searchParams }: Props) {
           amount={amount}
           userId={Number(userId)}
           isFormValid={isFormValid}
+          personalInfo={personalInfo}
+          shippingInfo={shippingInfo}
         />
       </Box>
       <Box sx={{ mt: { xs: '0px', md: '50px' } }}>

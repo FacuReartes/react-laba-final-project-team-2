@@ -80,7 +80,7 @@ export default function Page({ searchParams }: Props) {
             width: '100%',
           }}
         >
-          <ActionButton text="View Order" />
+          <ActionButton text="View Order" goto="/profile/order-history" />
           <ActionButton text="Continue Shopping" goto="/" />
         </Box>
       </Box>

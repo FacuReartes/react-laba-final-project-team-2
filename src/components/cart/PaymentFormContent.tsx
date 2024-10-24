@@ -8,35 +8,54 @@ import { FormEvent, useContext, useEffect, useState } from 'react';
 import Loading from '../common/Loading';
 import convertToSubcurrency from '@/lib/convertToSubcurrency';
 import { CartContext, ICartContext } from '@/context/cart/CartContext';
+import { PersonalInfoData, ShippingFormData } from '@/lib/definitions';
+import { Box } from '@mui/material';
 
 type Props = {
   amount: number;
   userId: number | undefined;
   isFormValid: boolean;
+  personalInfo: PersonalInfoData;
+  shippingInfo: ShippingFormData;
 };
 
-export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
+export const PaymentFormContent = ({
+  amount,
+  userId,
+  isFormValid,
+  personalInfo,
+  shippingInfo,
+}: Props) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { setCartList } = useContext(CartContext) as ICartContext;
+
+  const { cartList, setCartList } = useContext(CartContext) as ICartContext;
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ amount: convertToSubcurrency(amount), userId }),
-    })
-      .then(res => {
-        return res.json();
+    if (amount > 0 && userId) {
+      fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: convertToSubcurrency(amount),
+          userId,
+          personalInfo,
+          products: cartList,
+          shippingInfo,
+        }),
       })
-      .then(data => {
-        setClientSecret(data.clientSecret);
-      });
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          setClientSecret(data.clientSecret);
+        });
+    }
   }, [amount, userId]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -82,10 +101,12 @@ export const PaymentFormContent = ({ amount, userId, isFormValid }: Props) => {
       {clientSecret && <PaymentElement />}
 
       {error && <p>{error}</p>}
-      <ActionButton
-        text={!loading ? `Confirm & Pay $ ${amount}` : 'Processing...'}
-        isLoading={!stripe || loading || !isFormValid}
-      />
+      <Box sx={{ margin: '40px 0' }}>
+        <ActionButton
+          text={!loading ? `Confirm & Pay $ ${amount}` : 'Processing...'}
+          isLoading={!stripe || loading || !isFormValid}
+        />
+      </Box>
     </form>
   );
 };

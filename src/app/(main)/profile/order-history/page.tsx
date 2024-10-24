@@ -1,114 +1,13 @@
 import OrderHistoryForm from '@/components/profile/order-history/OrderHistoryForm';
-import useGetProductDetail from '@/hooks/useGetProductDetail';
+import useGetProductDetail from '@/hooks/products/useGetProductDetail';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
 import { Metadata } from 'next';
-
-const mockOrders = [
-  {
-    id: 1,
-    date: '01.12.2023',
-    status: 'Shipped',
-    products: [
-      { id: 1279, size: { id: 13, value: 45 }, quantity: 2 },
-      { id: 1444, size: { id: 14, value: 46 }, quantity: 1 },
-    ],
-    summary: 192.34,
-    discont: 18,
-    delivery: {
-      id: 233,
-      company_name: 'Meest',
-      company_address: 'London',
-      company_contact: '999999999',
-    },
-    customer: {
-      id: 231,
-      name: 'Angelina Jones',
-      email: 'angelina@gmail.com',
-      phone: '+38 (095) 1234567',
-      address: 'Baker Street 221b, London',
-    },
-    payment: 'After payment',
-  },
-  {
-    id: 1,
-    date: '01.12.2023',
-    status: 'Shipped',
-    products: [
-      { id: 1279, size: { id: 13, value: 45 }, quantity: 2 },
-      { id: 1444, size: { id: 14, value: 46 }, quantity: 1 },
-    ],
-    summary: 192.34,
-    discont: 18,
-    delivery: {
-      id: 233,
-      company_name: 'Meest',
-      company_address: 'London',
-      company_contact: '999999999',
-    },
-    customer: {
-      id: 231,
-      name: 'Angelina Jones',
-      email: 'angelina@gmail.com',
-      phone: '+38 (095) 1234567',
-      address: 'Baker Street 221b, London',
-    },
-    payment: 'After payment',
-  },
-  {
-    id: 2,
-    date: '01.12.2023',
-    status: 'Received',
-    products: [
-      { id: 1767, size: { id: 13, value: 45 }, quantity: 2 },
-      { id: 1589, size: { id: 14, value: 46 }, quantity: 1 },
-    ],
-    summary: 192.34,
-    discont: 18,
-    delivery: {
-      id: 233,
-      company_name: 'Meest',
-      company_address: 'London',
-      company_contact: '999999999',
-    },
-    customer: {
-      id: 231,
-      name: 'Angelina Jones',
-      email: 'angelina@gmail.com',
-      phone: '+38 (095) 1234567',
-      address: 'Baker Street 221b, London',
-    },
-    payment: 'After payment',
-  },
-  {
-    id: 3,
-    date: '01.12.2023',
-    status: 'Canceled',
-    products: [
-      { id: 1803, size: { id: 13, value: 45 }, quantity: 2 },
-      { id: 1722, size: { id: 14, value: 46 }, quantity: 1 },
-    ],
-    summary: 192.34,
-    discont: 18,
-    delivery: {
-      id: 233,
-      company_name: 'Meest',
-      company_address: 'London',
-      company_contact: '999999999',
-    },
-    customer: {
-      id: 231,
-      name: 'Angelina Jones',
-      email: 'angelina@gmail.com',
-      phone: '+38 (095) 1234567',
-      address: 'Baker Street 221b, London',
-    },
-    payment: 'After payment',
-  },
-];
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 
 export const metadata: Metadata = {
   title: 'Order History',
@@ -118,15 +17,27 @@ export const metadata: Metadata = {
 export default async function Page() {
   const queryClient = new QueryClient();
 
-  // for (const order of mockOrders) {
-  //   for (const product of order.products) {
-  //     const { queryKey, queryFn } = useGetProductDetail(product.id);
-  //     await queryClient.prefetchQuery({ queryKey, queryFn });
-  //   }
-  // }
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return <div>Please log in to view your order history.</div>;
+  }
+
+  const userId = session.user.user.id;
+
+  const orders = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/order-history?userId=${userId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then(res => res.json());
+
   const uniqueProductIds = new Set<number>();
-  mockOrders.forEach(order => {
-    order.products.forEach(product => {
+  orders.map((order: any, index: number) => {
+    order.products.forEach((product: any) => {
       uniqueProductIds.add(product.id);
     });
   });
@@ -140,7 +51,7 @@ export default async function Page() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <OrderHistoryForm orders={mockOrders} />
+      <OrderHistoryForm orders={orders} />
     </HydrationBoundary>
   );
 }
