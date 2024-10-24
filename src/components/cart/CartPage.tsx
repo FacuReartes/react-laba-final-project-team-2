@@ -17,6 +17,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import Loading from '../common/Loading';
+import ProductsEmptyState from '../common/ProductsEmptyState';
 
 export default function Page() {
   const { cartList, loading, handleQuantity, handleDelete } = useContext(
@@ -92,37 +93,11 @@ export default function Page() {
               {cartList.length > 0 ? (
                 renderList
               ) : (
-                <Box
-                  sx={{
-                    my: '50px',
-                    textAlign: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 2,
-                    px: { xs: '20px', sm: '0px' },
-                  }}
-                >
-                  <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
-                    You don&apos;t have any products in the cart.
-                  </Typography>
-                  <Button
-                    onClick={() => router.push('/')}
-                    variant="contained"
-                    disableElevation
-                    size="large"
-                    sx={{
-                      bgcolor: 'secondary.light',
-                      color: 'common.white',
-                      height: '40px',
-                      transition: 'opacity .2s ease',
-                      ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
-                      borderRadius: 2,
-                    }}
-                  >
-                    Continue Shopping
-                  </Button>
-                </Box>
+                <ProductsEmptyState
+                  path="/"
+                  buttonText="Continue Shopping"
+                  text="You don't have any products in the cart."
+                />
               )}
             </List>
             {cartList.length > 0 && (

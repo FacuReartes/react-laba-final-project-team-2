@@ -72,7 +72,6 @@ export default function RejectFilesDialog(props: RejectFilesDialogProps) {
       </DialogContent>
       <DialogActions sx={{ p: 0, height: '60px', gap: '30px' }}>
         <Button
-          data-testid='close-reject'
           variant="outlined"
           onClick={() => handleDeleteButtonClick(false)}
           sx={{
