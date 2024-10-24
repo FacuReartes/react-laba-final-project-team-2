@@ -48,7 +48,7 @@ export default function PersonalInfo({
   };
 
   return (
-    <Box>
+    <Box sx={{ mt: '30px' }}>
       <Typography mt={'15px'} mb={'5px'} variant="h3">
         Personal Info
       </Typography>

@@ -107,6 +107,45 @@ const ProfileSidebar = () => {
           </ListItem>
 
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
+            <ListItemButton
+              onClick={() => router.push('/profile/order-history')}
+            >
+              <ListItemIcon sx={{ my: '0px' }}>
+                {pathName === '/profile/order-history' ? (
+                  <Image
+                    src="/sidebar-icons/order-history-red.svg"
+                    alt="order-history-red"
+                    width={20}
+                    height={21}
+                  />
+                ) : (
+                  <Image
+                    src="/sidebar-icons/order-history.svg"
+                    alt="order-history"
+                    width={20}
+                    height={21}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                sx={{
+                  my: '0px',
+                  color:
+                    pathName === '/profile/order-history'
+                      ? 'secondary.light'
+                      : '',
+                }}
+                primaryTypographyProps={{
+                  fontSize: '16px',
+                  lineHeight: '18.77px',
+                  fontWeight: 500,
+                }}
+                primary="Order History"
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
             <ListItemButton onClick={() => router.push('/profile/wishlist')}>
               <ListItemIcon sx={{ my: '0px' }}>
                 {pathName === '/profile/wishlist' ? (
@@ -125,6 +164,7 @@ const ProfileSidebar = () => {
                   />
                 )}
               </ListItemIcon>
+
               <ListItemText
                 sx={{
                   my: '0px',
@@ -137,10 +177,9 @@ const ProfileSidebar = () => {
                   fontWeight: 500,
                 }}
                 primary="My Wishlist"
-              />
+              ></ListItemText>
             </ListItemButton>
           </ListItem>
-
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton onClick={() => router.push('/profile/recently-viewed')}>
               <ListItemIcon sx={{ my: '0px' }}>

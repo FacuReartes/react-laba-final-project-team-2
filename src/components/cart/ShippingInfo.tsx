@@ -65,7 +65,7 @@ export default function ShippingInfo({
   };
 
   return (
-    <Box>
+    <Box sx={{ mt: '30px' }}>
       <Typography mt={'15px'} mb={'5px'} variant="h3">
         Shipping Info
       </Typography>

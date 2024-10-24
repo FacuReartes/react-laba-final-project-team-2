@@ -127,7 +127,40 @@ const HeaderMenu = (props: { showInputSearch: boolean }) => {
                 My products
               </Typography>
             </MenuItem>
-
+            <MenuItem
+              onClick={() => handleItemClick('order-history')}
+              sx={{ py: '18px' }}
+            >
+              {pathName === '/profile/order-history' ? (
+                <Image
+                  src="/sidebar-icons/order-history-red.svg"
+                  alt="order-history-red"
+                  width={20}
+                  height={21}
+                />
+              ) : (
+                <Image
+                  src="/sidebar-icons/order-history.svg"
+                  alt="order-history"
+                  width={20}
+                  height={21}
+                />
+              )}
+              <Typography
+                sx={{
+                  pl: '15px',
+                  fontSize: '16px',
+                  lineHeight: '18.77px',
+                  fontWeight: 500,
+                  color:
+                    pathName === '/profile/order-history'
+                      ? 'secondary.light'
+                      : '',
+                }}
+              >
+                Order history
+              </Typography>
+            </MenuItem>
             <MenuItem
               onClick={() => handleItemClick('settings')}
               sx={{ py: '18px' }}
