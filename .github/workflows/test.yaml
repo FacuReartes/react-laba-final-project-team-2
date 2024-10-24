@@ -21,12 +21,12 @@ jobs:
         run: npm install
 
       - name: Run Tests with Coverage
-        run: npm test -- --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'
+        run: npm test -- --coverage --collectCoverageFrom='src/**/*.{ts,tsx} --coverageDirectory=coverage'
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: test-coverage-report
-          path: output/**
+          path: coverage/**
 
       
