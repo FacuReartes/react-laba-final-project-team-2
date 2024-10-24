@@ -19,6 +19,7 @@ const config: Config = {
     "remark-gfm": "<rootDir>/src/mock/ReactMarkdownMock.tsx",
   },
   collectCoverage: true,
+  coverageReporters: ["json", "html"],
   coverageThreshold: {
     global: {
       statements: 35,
