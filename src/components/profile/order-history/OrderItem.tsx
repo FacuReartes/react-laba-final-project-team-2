@@ -3,33 +3,8 @@ import React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OrderHeader from './OrderHeader';
 import OrderBody from './OrderBody';
+import { OrderType } from '@/lib/definitions';
 
-export type OrderType = {
-  id: number;
-  date: string;
-  status: string;
-  products: {
-    id: number;
-    size: { id: number; value: number };
-    quantity: number;
-  }[];
-  summary: number;
-  discont: number;
-  delivery: {
-    id: number;
-    company_name: string;
-    company_address: string;
-    company_contact: string;
-  };
-  customer: {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-  };
-  payment: string;
-};
 interface Props {
   order: OrderType;
 }

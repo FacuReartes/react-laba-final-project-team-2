@@ -2,15 +2,15 @@ import { Box } from '@mui/material';
 import React from 'react';
 import OrderProductsItem from './OrderProductsItem';
 
-export default function OrderProductsList({
-  products,
-}: {
+interface Props {
   products: {
     id: number;
-    size: { id: number; value: number };
+    size: string;
     quantity: number;
+    gender: string;
   }[];
-}) {
+}
+export default function OrderProductsList({ products }: Props) {
   return (
     <Box
       sx={{

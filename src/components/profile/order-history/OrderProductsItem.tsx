@@ -1,18 +1,18 @@
-import useGetProductDetail from '@/hooks/useGetProductDetail';
+import useGetProductDetail from '@/hooks/products/useGetProductDetail';
 import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import React from 'react';
 
-export default function OrderProductsItem({
-  product,
-}: {
+interface Props {
   product: {
     id: number;
-    size: { id: number; value: number };
+    size: string;
     quantity: number;
+    gender: string;
   };
-}) {
+}
+export default function OrderProductsItem({ product }: Props) {
   const { data, isLoading } = useQuery(useGetProductDetail(product.id));
   if (isLoading) {
     return <p>Loading product details...</p>;
@@ -62,7 +62,7 @@ export default function OrderProductsItem({
               : "Women's Shoes"}
           </Typography>
           <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>
-            Size: {product.size.value} EU
+            Size: {product.size} EU
           </Typography>
         </Box>
       </Box>

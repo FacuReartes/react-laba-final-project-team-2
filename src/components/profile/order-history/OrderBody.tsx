@@ -1,7 +1,8 @@
 import React from 'react';
-import { OrderType } from './OrderItem';
 import { Box, Typography } from '@mui/material';
+import { OrderType } from '@/lib/definitions';
 import OrderProductsList from './OrderProductsList';
+import InvoiceDownload from './InvoiceDownload';
 
 interface Props {
   order: OrderType;
@@ -26,7 +27,7 @@ export default function OrderBody({ order }: Props) {
             Delivery:
           </Typography>
           <Typography sx={{ fontWeight: 600, fontSize: '14px' }}>
-            {`${order.delivery.company_name},${order.delivery.company_address}`}
+            {`${order.delivery.address.line1},${order.delivery.address.city},${order.delivery.address.state}`}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -36,7 +37,7 @@ export default function OrderBody({ order }: Props) {
             Contacts:
           </Typography>
           <Typography sx={{ fontWeight: 600, fontSize: '14px' }}>
-            {`${order.customer.name}, ${order.customer.phone}, ${order.customer.email}`}
+            {`${order.delivery.name}, ${order.customer.phone}, ${order.customer.email}`}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -51,8 +52,15 @@ export default function OrderBody({ order }: Props) {
         </Box>
       </Box>
       <OrderProductsList products={order.products} />
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', p: '16px' }}>
-        <Box>PDF</Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          p: '16px',
+          flexDirection: order.invoicePDF ? 'row' : 'row-reverse',
+        }}
+      >
+        {order.invoicePDF && <InvoiceDownload href={order.invoicePDF} />}
         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <Typography
             sx={{ fontWeight: 600, fontSize: '14px', color: '#8C9196' }}

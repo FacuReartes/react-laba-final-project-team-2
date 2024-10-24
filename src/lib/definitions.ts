@@ -148,3 +148,38 @@ export type PersonalInfoData = {
   email: string;
   phoneNumber: string;
 };
+
+export type OrderType = {
+  id: string;
+  date: string;
+  status: string;
+  products: {
+    id: number;
+    size: string;
+    quantity: number;
+    gender: string;
+  }[];
+  summary: number;
+  discont: number;
+  delivery: {
+    name: string;
+    address: {
+      line1: string;
+      line2?: string;
+      city: string;
+      country: string;
+      postal_code: string;
+      state: string;
+    };
+    status: string;
+  };
+  customer: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  payment: string;
+  invoicePDF?: string;
+};

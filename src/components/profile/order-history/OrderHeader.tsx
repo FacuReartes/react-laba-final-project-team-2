@@ -1,13 +1,28 @@
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import { OrderType } from './OrderItem';
+import { OrderType } from '@/lib/definitions';
 
 interface Props {
   order: OrderType;
 }
 
 export default function OrderHeader({ order }: Props) {
+  let status =
+    order.status.toLocaleLowerCase() === 'succeeded'
+      ? order.delivery.status.toLocaleLowerCase() === 'shipped'
+        ? { icon: '/shipped.svg', label: 'Shipped', color: '#8C9196' }
+        : order.delivery.status.toLocaleLowerCase() === 'received'
+          ? { icon: '/received.svg', label: 'Received', color: '#3D9D41' }
+          : order.delivery.status.toLocaleLowerCase() === 'canceled'
+            ? { icon: '/canceled.svg', label: 'Canceled', color: '#CD3C37' }
+            : {
+                icon: '/waiting-payment.svg',
+                label: 'Waiting',
+                color: '#8C9196',
+              }
+      : { icon: '/waiting-payment.svg', label: 'Waiting', color: '#8C9196' };
+
   return (
     <Box
       sx={{
@@ -28,7 +43,7 @@ export default function OrderHeader({ order }: Props) {
       >
         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <Typography sx={{ fontWeight: 600, fontSize: '14px' }}>
-            Nº{order.id}
+            Nº {order.id.slice(15)}
           </Typography>
           <Typography
             sx={{ fontWeight: 600, fontSize: '14px', color: '#8C9196' }}
@@ -43,7 +58,10 @@ export default function OrderHeader({ order }: Props) {
             Products:
           </Typography>
           <Typography sx={{ fontWeight: 600, fontSize: '14px' }}>
-            {order.products.reduce((acc, product) => acc + product.quantity, 0)}
+            {order.products.reduce(
+              (acc: number, product: any) => acc + product.quantity,
+              0
+            )}
           </Typography>
         </Box>
       </Box>
@@ -76,15 +94,7 @@ export default function OrderHeader({ order }: Props) {
         >
           {order.status !== '' && (
             <Image
-              src={
-                order.status.toLocaleLowerCase() === 'shipped'
-                  ? '/shipped.svg'
-                  : order.status.toLocaleLowerCase() === 'received'
-                    ? '/received.svg'
-                    : order.status.toLocaleLowerCase() === 'canceled'
-                      ? '/canceled.svg'
-                      : ''
-              }
+              src={status.icon}
               alt={`order-${order.status}`}
               width={20}
               height={20}
@@ -94,15 +104,10 @@ export default function OrderHeader({ order }: Props) {
             sx={{
               fontWeight: 600,
               fontSize: '14px',
-              color:
-                order.status.toLocaleLowerCase() === 'received'
-                  ? '#3D9D41'
-                  : order.status.toLocaleLowerCase() === 'canceled'
-                    ? '#CD3C37'
-                    : '#8C9196',
+              color: status.color,
             }}
           >
-            {order.status}
+            {status.label}
           </Typography>
         </Box>
       </Box>

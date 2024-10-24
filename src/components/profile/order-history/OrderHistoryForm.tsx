@@ -1,7 +1,8 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import OrderItem, { OrderType } from './OrderItem';
+import OrderItem from './OrderItem';
+import { OrderType } from '@/lib/definitions';
 
 const OrderHistoryForm = ({ orders }: { orders: OrderType[] }) => {
   return (
