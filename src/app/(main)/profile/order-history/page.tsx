@@ -8,6 +8,7 @@ import {
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
+import { headers } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Order History',
@@ -25,8 +26,12 @@ export default async function Page() {
 
   const userId = session.user.user.id;
 
+  const heads = headers()
+
+  const host = (heads.get('referer')?.split("/").slice(0, 3).join("/"))
+
   const orders = await fetch(
-    `${window.location.origin}/api/order-history?userId=${userId}`,
+    `${host}/api/order-history?userId=${userId}`,
     {
       method: 'GET',
       headers: {
