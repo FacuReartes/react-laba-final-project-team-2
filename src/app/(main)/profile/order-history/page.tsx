@@ -28,7 +28,7 @@ export default async function Page() {
 
   const heads = headers()
 
-  const host = (heads.get('referer')?.split("/").slice(0, 3).join("/"))
+  const host = (heads.get('referer')?.split('/').slice(0, 3).join('/'))
 
   const orders = await fetch(
     `${host}/api/order-history?userId=${userId}`,
