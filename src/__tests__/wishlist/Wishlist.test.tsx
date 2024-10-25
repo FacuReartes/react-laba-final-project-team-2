@@ -70,7 +70,7 @@ const mockWishList: APIProductsType[] = [
           {
             id: 1,
             attributes: {
-              url: '',
+              url: '/no-img.webp',
               width: 200,
               height: 200,
               formats: {
