@@ -44,6 +44,7 @@ const AIButton: FC<AIButtonProps> = ({ onClick, disabled }) => {
       onClick={onClick}
       variant="contained"
       disabled={disabled}
+      role='ai-button'
     >
       {disabled ? (
         <Loading size={20} circularColor="#ee635e" message="" />
