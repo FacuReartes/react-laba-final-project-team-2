@@ -136,7 +136,7 @@ describe('Recently Viewed Tests', () => {
 
     expect(screen.queryAllByRole('product')).toHaveLength(0);
     expect(
-      screen.queryByText(/You havent watched any products recently./i)
+      screen.queryByText(/You haven't watched any products recently./i)
     ).toBeInTheDocument();
   });
 

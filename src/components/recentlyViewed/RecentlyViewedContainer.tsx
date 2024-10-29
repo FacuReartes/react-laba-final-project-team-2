@@ -68,7 +68,7 @@ const RecentlyViewedContainer: React.FC = () => {
         <ProductsEmptyState
           buttonText="Continue Shopping"
           path="/"
-          text="You havent watched any products recently."
+          text="You haven't watched any products recently."
         />
       )}
     </Box>
