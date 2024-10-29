@@ -34,7 +34,7 @@ export default function ProductsWishList() {
         ))
       ) : (
         <ProductsEmptyState
-          text="You dont have any products in your wishlist yet."
+          text="You don't have any products in your wishlist yet."
           path="/"
           buttonText="Add Products to Wishlist"
         />
