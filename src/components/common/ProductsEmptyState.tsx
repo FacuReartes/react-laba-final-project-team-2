@@ -23,7 +23,11 @@ export default function ProductsEmptyState({
       }}
     >
       <Typography
-        sx={{ fontWeight: '500', fontSize: '20px', textAlign: 'center' }}
+        sx={{
+          fontWeight: '500',
+          fontSize: { xs: '15px', md: '20px' },
+          textAlign: 'center',
+        }}
       >
         {text}
       </Typography>
@@ -35,7 +39,7 @@ export default function ProductsEmptyState({
         sx={{
           bgcolor: 'secondary.light',
           color: 'common.white',
-          height: '40px',
+          minHeight: '40px',
           transition: 'opacity .2s ease',
           ':hover': { bgcolor: 'secondary.light', opacity: '.9' },
           borderRadius: 2,
