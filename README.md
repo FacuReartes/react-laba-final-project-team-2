@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Solvd Final Project Team 2
 
-## Getting Started
+## Description
+The Solvd Laba Final Project Shop Page is a dynamic and responsive e-commerce platform designed to showcase and sell unique clothing items. The page is built with a focus on providing a seamless shopping experience, incorporating modern design principles and user-friendly navigation.
 
-First, run the development server:
+## Features
+- Sign-in: This page allows users to log in to their accounts. It should include email and password input fields with validation, a "forgot password" link to redirect to the Forgot Password page, a "sign up" link to redirect to the Sign Up page, and a "remember me" checkbox for user convenience. Possible error states include when a user registers but doesn't confirm their email and when the entered email or password is incorrect.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Sign up: This page allows new users to create an account. It should include input fields for name, email, password, and a confirmation field for password with validation. Possible error states include when the email already exists in the database. This page should also include a "log in" link to redirect to the Sign-in page.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Forgot password: This page allows users to reset their password if they have forgotten it. It should include an email input field with validation and a "back to log in" link to redirect to the Sign-in page.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Reset password: This page allows users to reset their password after clicking on a reset password link in their email. It should include input fields for a new password and a confirmation field for the password with validation. It should also include a "back to log in" link to redirect to the Sign-in page.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Error 404: This page should display when the user tries to access a page that doesn't exist.
 
-## Learn More
+- Error 500: This page should display when there is an error with the server.
 
-To learn more about Next.js, take a look at the following resources:
+- My products: This page allows users to view and manage their own products. It should display all products associated with the user's account and allow for editing and deleting of products.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Settings: This page lets users view and edit their account settings. It should include input fields for name, email, phone number, and avatar. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Add product: This page allows users to add a new product to their account. It should include input fields for product name, description, price, and an upload field for an image.
 
-## Deploy on Vercel
+- Products page: This page displays all available products. It should include search functionality. Clicking on a product should redirect to a product detail page.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Single Product page: The Single Product page is a detailed view of a specific product in the shoe shop. It provides comprehensive information about the product, allowing users to make an informed decision. (NOT FINISHED BY DESIGNER).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Bag: This page displays the user's shopping bag and allows for updating quantities and removing products. It should also display the total price of all items in the bag.
+
+## Installation instrucctions
+1- Clone this repo:
+   ```sh
+   git clone https://github.com/FacuReartes/react-laba-final-project-team-2.git
+   ```
+
+2- Open the terminal and run the command:
+  ```sh
+  cd react-laba-final-project-team-2/
+  ```
+3- Finally run:
+  ```sh
+  npm install
+  npm run dev
+  ```
+
+O simply click the link below to visit the app:
+<a href="" target="_blank">Visit app</a>
+
+## Technologies
+- NextJS - App router
+- Typescript
+- MUI
+- React Query
+- NextAuth
+
+## Team
+- Lucas Montecino
+- Facundo Reartes
+- Marcos Cirilo Abreu Da Silva
+- Emilio Pino
+- Daniel Gonzalez
+
+
+

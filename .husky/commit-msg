@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+commit_message=$(cat "$1")
+pattern="^\[SPT2-\d+\] (feat|fix|docs|style|refactor|perf|test|chore|build|ci)(\(\w+\))?: .+$"
+
+if ! echo "$commit_message" | grep -Eq "$pattern"; then
+  echo "⛔ Commit message does not follow the format '[SPT2-<number>] <type>(<scope>): <message>'"
+  exit 1
+fi
