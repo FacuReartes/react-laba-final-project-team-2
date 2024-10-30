@@ -1,4 +1,5 @@
 'use client';
+import WishlistPopup from '@/components/wishList/WishlistPopup';
 import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import {
   IWishListContext,
@@ -12,6 +13,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useContext, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -26,6 +28,8 @@ export default function ProductDetailsView({
     WishListContext
   ) as IWishListContext;
   const [selectedSize, setSelectedSize] = useState<number | string>('');
+  const [openWishDialog, setOpenWishDialog] = useState(false);
+  const { data: session } = useSession();
 
   function handleChangeSize(
     event: React.MouseEvent<HTMLElement>,
@@ -46,6 +50,10 @@ export default function ProductDetailsView({
   const isInWishlist = wishList?.some(wish => wish.id === id);
 
   function handleAddToWish() {
+    if (session === undefined || session === null) {
+      setOpenWishDialog(true);
+      return;
+    }
     if (isInWishlist) {
       removeWish(id);
     } else {
@@ -194,6 +202,11 @@ export default function ProductDetailsView({
       <Box sx={{ width: { xs: 1, lg: '522px' }, mt: 1 }}>
         <ReactMarkdown>{attributes?.description}</ReactMarkdown>
       </Box>
+
+      <WishlistPopup
+        handleClose={() => setOpenWishDialog(false)}
+        open={openWishDialog}
+      />
     </Box>
   );
 }
