@@ -33,6 +33,7 @@ export default function ProductsContainer({ data }: Props) {
         columnGap: { xs: '16px', md: '50px' },
         rowGap: { xs: '16px', md: '40px' },
         height: '100%',
+        maxHeight: '400px',
       }}
     >
       {data && allProducts.length > 0 ? (

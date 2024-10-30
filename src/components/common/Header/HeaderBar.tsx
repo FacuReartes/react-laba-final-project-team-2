@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { searchSchema } from '@/lib/schemas/commonSchemas';
 import { useSession } from 'next-auth/react';
@@ -21,6 +20,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { CartContext, ICartContext } from '@/context/cart/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import useUserQuery from '@/hooks/useUserQuery';
+import Link from 'next/link';
 
 interface Props {
   search?: string;
@@ -108,9 +108,12 @@ const HeaderBar = ({
         }}
       >
         <Box sx={{ ml: '12px', mr: '-4px' }}>
-          <Link href="/" style={{ display: 'block', padding: '4px' }}>
+          <a
+            href="/"
+            style={{ display: 'block', padding: '4px', cursor: 'pointer' }}
+          >
             <Box component="img" alt="logo" src="/logo.svg" />
-          </Link>
+          </a>
         </Box>
 
         <Typography

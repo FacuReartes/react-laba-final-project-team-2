@@ -161,6 +161,75 @@ const HeaderMenu = (props: { showInputSearch: boolean }) => {
                 Order history
               </Typography>
             </MenuItem>
+
+            <MenuItem
+              onClick={() => handleItemClick('wishlist')}
+              sx={{ py: '18px' }}
+            >
+              {pathName === '/profile/wishlist' ? (
+                <Image
+                  src="/sidebar-icons/wishlist-red.svg"
+                  alt="wishlist-red"
+                  width={20}
+                  height={21}
+                />
+              ) : (
+                <Image
+                  src="/sidebar-icons/wishlist.svg"
+                  alt="wishlist"
+                  width={20}
+                  height={21}
+                />
+              )}
+              <Typography
+                sx={{
+                  pl: '15px',
+                  fontSize: '16px',
+                  lineHeight: '18.77px',
+                  fontWeight: 500,
+                  color:
+                    pathName === '/profile/wishlist' ? 'secondary.light' : '',
+                }}
+              >
+                My Wishlist
+              </Typography>
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => handleItemClick('recently-viewed')}
+              sx={{ py: '18px' }}
+            >
+              {pathName === '/profile/recently-viewed' ? (
+                <Image
+                  src="/sidebar-icons/recently-viewed-red.svg"
+                  alt="recently-viewed-red"
+                  width={20}
+                  height={21}
+                />
+              ) : (
+                <Image
+                  src="/sidebar-icons/recently-viewed.svg"
+                  alt="recently-viewed"
+                  width={20}
+                  height={21}
+                />
+              )}
+              <Typography
+                sx={{
+                  pl: '15px',
+                  fontSize: '16px',
+                  lineHeight: '18.77px',
+                  fontWeight: 500,
+                  color:
+                    pathName === '/profile/recently-viewed'
+                      ? 'secondary.light'
+                      : '',
+                }}
+              >
+                Recently Viewed
+              </Typography>
+            </MenuItem>
+
             <MenuItem
               onClick={() => handleItemClick('settings')}
               sx={{ py: '18px' }}
