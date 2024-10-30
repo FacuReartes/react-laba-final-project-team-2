@@ -19,9 +19,12 @@ export default function ProductsEmptyState({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 2,
+        mt: 2,
       }}
     >
-      <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
+      <Typography
+        sx={{ fontWeight: '500', fontSize: '20px', textAlign: 'center' }}
+      >
         {text}
       </Typography>
       <Button
