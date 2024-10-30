@@ -9,6 +9,14 @@ import {
 } from '@/context/wishlist/WishListContext';
 import { ReactNode } from 'react';
 
+jest.mock('next-auth/react', () => ({
+  useSession() {
+    return {
+      data: { user: { jwt: 'token', user: { id: 'userId' } } },
+    };
+  },
+}));
+
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
   useRouter: jest.fn(),
