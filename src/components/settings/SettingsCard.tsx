@@ -98,7 +98,9 @@ const SettingsCard: React.FC<SettingsCardProps> = ({
             height: { xs: '31px', md: '40px' },
             fontSize: { xs: '12px', md: '16px' },
           }}
-          onClick={deleteAvatar}
+          onClick={() => {
+            deleteAvatar();
+            setAvatar(null)}}
           disabled={deleteIsPending}
         >
           Delete
