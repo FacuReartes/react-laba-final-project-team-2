@@ -130,7 +130,7 @@ describe('Products Wishlist', () => {
   it('should render empty state when wishlist is empty', () => {
     renderWithMockWishList(<ProductsWishList />, []);
     const emptyState = screen.getByText(
-      /You dont have any products in your wishlist yet./i
+      /You don't have any products in your wishlist yet./i
     );
     expect(emptyState).toBeInTheDocument();
   });
