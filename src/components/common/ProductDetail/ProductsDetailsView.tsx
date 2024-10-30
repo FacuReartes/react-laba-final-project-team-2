@@ -130,6 +130,7 @@ export default function ProductDetailsView({
         exclusive
         sx={{
           display: 'flex',
+          justifyContent: { xs: 'center', md: 'normal' },
           flexWrap: 'wrap',
           gap: '24px',
         }}
@@ -156,8 +157,10 @@ export default function ProductDetailsView({
       <Box
         sx={{
           display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
           mt: 4,
           justifyContent: { xs: 'center' },
+          alignItems: { xs: 'center', md: 'normal' },
           gap: 2,
         }}
       >
