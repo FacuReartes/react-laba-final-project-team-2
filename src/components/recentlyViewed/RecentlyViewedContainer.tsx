@@ -33,23 +33,23 @@ const RecentlyViewedContainer: React.FC = () => {
       {isLoading ? (
         <Loading />
       ) : productList.length > 0 ? (
-        productList.map((product: APIProductsType) => (
-          <List
-            key={product.id}
-            sx={{
-              my: { xs: '20px', sm: '40.8px' },
-              p: 0,
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'repeat(2, 1fr)',
-                lg: 'repeat(3, 1fr)',
-                xl: 'repeat(4, 1fr)',
-              },
-              columnGap: { xs: '16px', md: '45px', xl: '60px' },
-              rowGap: { xs: '16px', md: '40px' },
-            }}
-          >
+        <List
+          sx={{
+            my: { xs: '20px', sm: '40.8px' },
+            p: 0,
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: 'repeat(2, 1fr)',
+              lg: 'repeat(3, 1fr)',
+              xl: 'repeat(4, 1fr)',
+            },
+            columnGap: { xs: '16px', md: '45px', xl: '60px' },
+            rowGap: { xs: '16px', md: '40px' },
+          }}
+        >
+          {productList.map((product: APIProductsType) => (
             <ListItem
+              key={product.id}
               sx={{
                 p: 0,
                 display: 'list-item',
@@ -62,8 +62,8 @@ const RecentlyViewedContainer: React.FC = () => {
                 upperHeight="338px"
               />
             </ListItem>
-          </List>
-        ))
+          ))}
+        </List>
       ) : (
         <ProductsEmptyState
           buttonText="Continue Shopping"
