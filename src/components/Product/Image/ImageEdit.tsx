@@ -34,7 +34,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
 
   return (
     <Box
-      sx={{ width: { xs: '280px', sm: width }, height, position: 'relative' }}
+      sx={{ width: { xs: '240px', sm: width }, height, position: 'relative' }}
       role='product-image'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
