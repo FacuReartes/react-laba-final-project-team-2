@@ -26,7 +26,8 @@ interface IProduct {
 }
 
 const Product: FC<IProduct> = props => {
-  const totalPrice: number | string = `${Number(props.price) * props.quantity}`;
+  const totalPrice: number | string =
+    `${(Number(props.price) * props.quantity).toFixed(2)}`;
   return (
     <Box
       sx={{
@@ -49,7 +50,7 @@ const Product: FC<IProduct> = props => {
           fill
           priority
           style={{ objectFit: 'contain' }}
-          sizes='100%'
+          sizes="100%"
         />
       </Box>
 

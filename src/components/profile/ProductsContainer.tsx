@@ -9,7 +9,9 @@ interface ProductsContainerProps {
   products: ProductType[];
 }
 
-export default function ProductsContainer({ products }: ProductsContainerProps) {
+export default function ProductsContainer({
+  products,
+}: ProductsContainerProps) {
   return (
     <Box
       sx={{
@@ -32,7 +34,7 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
           ))
         ) : (
           <ProductsEmptyState
-            text="You dont have any products yet."
+            text="You don't have any products yet."
             path="/profile/products/add-product"
             buttonText="Add Product"
           />

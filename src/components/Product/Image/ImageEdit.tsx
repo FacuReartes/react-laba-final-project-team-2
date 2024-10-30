@@ -35,11 +35,20 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
   return (
     <Box
       sx={{ width: { xs: '280px', sm: width }, height, position: 'relative' }}
-      role='product-image'
+      role="product-image"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Image src={src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='} alt={alt} fill sizes='100%' role='product-img' />
+      <Image
+        src={
+          src ?? 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+        }
+        alt={alt}
+        fill
+        sizes="100%"
+        role="product-img"
+        style={{ objectFit: 'contain' }}
+      />
       {isHover && (
         <Box
           sx={{
@@ -54,7 +63,7 @@ const ImageEdit = ({ src, alt, width, height, onDelete }: Props) => {
           }}
         >
           <IconButton
-            role='image-delete'
+            role="image-delete"
             onClick={handleDeleteImage}
             size="large"
             sx={{
