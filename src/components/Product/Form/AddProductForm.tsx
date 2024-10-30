@@ -159,7 +159,7 @@ const AddProductForm = () => {
 
             <Box
               sx={{
-                width: { lg: '100%', xs: 'calc(100% - 40px)' },
+                width: '100%',
               }}
             >
               <Box>

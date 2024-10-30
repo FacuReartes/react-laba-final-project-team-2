@@ -19,7 +19,7 @@ export default function ProductCategorySelect() {
   } = useFormContext();
 
   return (
-    <Box sx={{ width: '50%' }}>
+    <Box sx={{ width: {xs: '100%', sm: '50%'} }}>
       <Typography variant="h4" sx={{ mb: 1 }}>
         Categories
       </Typography>

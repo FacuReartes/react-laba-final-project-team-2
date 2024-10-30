@@ -64,7 +64,7 @@ function PreviewImages({
             />
           </Grid>
         ))}
-        <Grid item>
+        <Grid item sx={{ width: { xs: '240px', sm: 'unset' } }}>
           <ImageDropzone
             onFileAccepted={onFileAccepted}
             onFileRejected={onFileRejected}

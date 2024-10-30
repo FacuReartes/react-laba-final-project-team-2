@@ -114,7 +114,7 @@ export default function ProductUpdateForm({
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <DialogTitle
               variant="h1"
-              sx={{ p: 0, mb: '35px', fontSize: { lg: '45px', xs: '30px' } }}
+              sx={{ p: 0, mb: '35px', fontSize: { lg: '45px', xs: '30px' }, width: '80%' }}
             >
               { title }
             </DialogTitle>
@@ -160,6 +160,7 @@ export default function ProductUpdateForm({
               display: 'flex',
               flexDirection: { lg: 'row', xs: 'column' },
               justifyContent: 'space-between',
+              alignItems: { xs: 'center', lg: 'start'}
             }}
           >
             <Box
@@ -225,12 +226,12 @@ export default function ProductUpdateForm({
                 )}
               />
 
-              <Box sx={{ display: 'flex', gap: '24px' }}>
+              <Box sx={{ display: 'flex', gap: '24px', flexDirection: { xs: 'column', sm: 'row' }}}>
                 <ProductCategorySelect />
                 <ProductSelect queryObj={useGetColors()} />
               </Box>
 
-              <Box sx={{ display: 'flex', gap: '24px' }}>
+              <Box sx={{ display: 'flex', gap: '24px', flexDirection: { xs: 'column', sm: 'row' } }}>
                 <ProductSelect queryObj={useGetGenders()} />
                 <ProductSelect queryObj={useGetBrands()} />
               </Box>

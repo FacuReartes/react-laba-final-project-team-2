@@ -145,7 +145,7 @@ const ProfileSidebar = () => {
             </ListItemButton>
           </ListItem>
 
-          <ListItem>
+          <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton onClick={() => router.push('/profile/wishlist')}>
               <ListItemIcon sx={{ my: '0px' }}>
                 {pathName === '/profile/wishlist' ? (
@@ -180,6 +180,7 @@ const ProfileSidebar = () => {
               ></ListItemText>
             </ListItemButton>
           </ListItem>
+
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton onClick={() => router.push('/profile/recently-viewed')}>
               <ListItemIcon sx={{ my: '0px' }}>

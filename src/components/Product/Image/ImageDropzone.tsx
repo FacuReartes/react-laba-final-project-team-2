@@ -44,7 +44,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
             <Box
               {...getRootProps()}
               sx={{
-                width: { lg: '238px', xs: '240px' },
+                width: { lg: '238px', xs: 'none', sm: '240px' },
                 height: '298px',
                 padding: '40px',
                 border: '1px dashed',
