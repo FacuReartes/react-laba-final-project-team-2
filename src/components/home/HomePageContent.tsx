@@ -10,6 +10,7 @@ interface Props {
   setShowFilters: () => void;
   data: InfiniteData<any, unknown> | undefined;
   isPending: boolean;
+  spanRef: React.Ref<HTMLSpanElement>;
 }
 
 export default function HomePageContent({
@@ -17,6 +18,7 @@ export default function HomePageContent({
   showFilters,
   setShowFilters,
   isPending,
+  spanRef,
 }: Props) {
   const searchTerm = useSearchParams().get('search');
   const allProducts = data?.pages.flatMap(page => page.data) || [];
@@ -100,7 +102,11 @@ export default function HomePageContent({
           </Button>
         </Box>
       </Box>
-      {isPending ? <Loading /> : <ProductsContainer data={data} />}
+      {isPending ? (
+        <Loading />
+      ) : (
+        <ProductsContainer data={data} spanRef={spanRef} />
+      )}
     </Box>
   );
 }
