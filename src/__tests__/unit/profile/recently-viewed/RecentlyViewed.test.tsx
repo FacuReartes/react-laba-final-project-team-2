@@ -5,6 +5,13 @@ import { WishListContext } from '@/context/wishlist/WishListContext';
 import { render, screen } from '@testing-library/react';
 import { ReactNode } from 'react';
 
+jest.mock('next-auth/react', () => ({
+  useSession() {
+    return {
+      data: { user: { jwt: 'token', user: { id: 'userId' } } },
+    };
+  },
+}));
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {

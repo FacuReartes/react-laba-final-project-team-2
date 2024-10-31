@@ -65,7 +65,7 @@ export default function PaymentFormContentAfter({
 
   return (
     <Box sx={{ margin: '40px 0' }}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="payment-form">
         {error && <p>{error}</p>}
         <ActionButton
           text={!loading ? 'Generate Invoice' : 'Processing...'}

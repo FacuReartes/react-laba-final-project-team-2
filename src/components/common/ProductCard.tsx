@@ -24,6 +24,8 @@ import {
   IWishListContext,
   WishListContext,
 } from '@/context/wishlist/WishListContext';
+import { useSession } from 'next-auth/react';
+import WishlistPopup from '../wishList/WishlistPopup';
 
 interface PProps {
   product: APIProductsType;
@@ -43,15 +45,22 @@ export default function ProductCard({
     WishListContext
   ) as IWishListContext;
 
+  const { data: session } = useSession();
+
   const router = useRouter();
   const [onHover, setOnHover] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const [openWishDialog, setOpenWishDialog] = useState(false);
   const [selectedSize, setSelectedSize] = useState<number | string>('');
 
   const isInWishlist = wishList?.some(item => item.id === product.id);
 
   const handleWishListToggle = () => {
+    if (session === undefined || session === null) {
+      setOpenWishDialog(true);
+      return;
+    }
     if (isInWishlist) {
       removeWish(product.id);
     } else {
@@ -84,6 +93,7 @@ export default function ProductCard({
     product.attributes?.images.data && (
       <Box
         sx={{
+          maxHeight: '484px',
           boxSizing: 'border-box',
           p: 2,
           borderRadius: '12px',
@@ -96,7 +106,7 @@ export default function ProductCard({
             : '0 0 8px rgba(0,0,0,0.1)',
           transform: onHover ? 'scale(1.03)' : 'scale(1)',
         }}
-        role='product'
+        role="product"
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
@@ -279,6 +289,11 @@ export default function ProductCard({
             </Select>
           </FormControl>
         </Popup>
+
+        <WishlistPopup
+          handleClose={() => setOpenWishDialog(false)}
+          open={openWishDialog}
+        />
       </Box>
     )
   );

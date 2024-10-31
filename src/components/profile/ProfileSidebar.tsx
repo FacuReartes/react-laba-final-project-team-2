@@ -109,6 +109,7 @@ const ProfileSidebar = () => {
           <ListItem sx={{ mb: '4px', pl: { xs: '0px', lg: '16px' } }}>
             <ListItemButton
               onClick={() => router.push('/profile/order-history')}
+              role='order-history-button'
             >
               <ListItemIcon sx={{ my: '0px' }}>
                 {pathName === '/profile/order-history' ? (
@@ -151,14 +152,14 @@ const ProfileSidebar = () => {
                 {pathName === '/profile/wishlist' ? (
                   <Image
                     src="/sidebar-icons/wishlist-red.svg"
-                    alt="settings-red"
+                    alt="wishlist-red"
                     width={20}
                     height={21}
                   />
                 ) : (
                   <Image
                     src="/sidebar-icons/wishlist.svg"
-                    alt="settings"
+                    alt="wishlist"
                     width={20}
                     height={21}
                   />

@@ -7,6 +7,7 @@ export default function GoBackButton({ text }: { text: string }) {
   const router = useRouter();
   return (
     <Button
+      role="button"
       variant="outlined"
       sx={{
         borderColor: 'secondary.light',
