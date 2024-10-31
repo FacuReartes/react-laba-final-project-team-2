@@ -46,7 +46,7 @@ test('renders Order History page with orders', () => {
 
   expect(screen.getByText(/Order history/i)).toBeInTheDocument();
 
-  const orderElement = screen.queryByText((content, element) =>
+  const orderElement = screen.queryByText(content =>
     content.includes('order123')
   );
 
