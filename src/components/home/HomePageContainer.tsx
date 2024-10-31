@@ -127,14 +127,9 @@ export default function HomePageContainer({ filterOptions }: Props) {
             showFilters={showFilters}
             setShowFilters={() => setShowFilters(!showFilters)}
             isPending={isPending}
+            spanRef={ref}
           />
         </Box>
-        <span
-          style={{
-            bottom: 0,
-          }}
-          ref={ref}
-        />
       </Box>
     )
   );

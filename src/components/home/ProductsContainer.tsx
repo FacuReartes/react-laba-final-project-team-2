@@ -13,9 +13,10 @@ import {
 
 interface Props {
   data: InfiniteData<any, unknown> | undefined;
+  spanRef: React.Ref<HTMLSpanElement>;
 }
 
-export default function ProductsContainer({ data }: Props) {
+export default function ProductsContainer({ data, spanRef }: Props) {
   const { handleAddToCart } = useContext(CartContext) as ICartContext;
   const { isSuccess, handleClose, message } = useContext(
     WishListContext
@@ -33,7 +34,6 @@ export default function ProductsContainer({ data }: Props) {
         columnGap: { xs: '16px', md: '50px' },
         rowGap: { xs: '16px', md: '40px' },
         height: '100%',
-        maxHeight: '400px',
       }}
     >
       {data && allProducts.length > 0 ? (
@@ -66,6 +66,13 @@ export default function ProductsContainer({ data }: Props) {
         message={message}
         type={'success'}
         open={isSuccess}
+      />
+      <span
+        style={{
+          position: 'absolute',
+          bottom: 0,
+        }}
+        ref={spanRef}
       />
     </Box>
   );

@@ -93,6 +93,7 @@ export default function ProductCard({
     product.attributes?.images.data && (
       <Box
         sx={{
+          maxHeight: '484px',
           boxSizing: 'border-box',
           p: 2,
           borderRadius: '12px',
