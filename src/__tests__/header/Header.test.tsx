@@ -1,9 +1,8 @@
-import HeaderBar from "@/components/common/Header/HeaderBar"
-import { CartContext } from "@/context/cart/CartContext";
-import { fireEvent, render, screen } from "@testing-library/react"
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import HeaderBar from '@/components/common/Header/HeaderBar'
+import { CartContext } from '@/context/cart/CartContext';
+import { render, screen } from '@testing-library/react'
+import { useSession } from 'next-auth/react';
+import { ReactNode } from 'react';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),

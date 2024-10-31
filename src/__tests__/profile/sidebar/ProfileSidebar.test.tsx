@@ -1,8 +1,7 @@
-import Layout from "@/app/(main)/profile/layout"
-import ProfileSidebar from "@/components/profile/ProfileSidebar"
-import { queryByText, screen, render, fireEvent } from "@testing-library/react"
-import { Qahiri } from "next/font/google"
-import { useRouter } from "next/navigation";
+/* eslint-disable @typescript-eslint/no-require-imports */
+import ProfileSidebar from '@/components/profile/ProfileSidebar'
+import { screen, render, fireEvent } from '@testing-library/react'
+import { useRouter } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -44,8 +43,6 @@ jest.mock('@tanstack/react-query', () => {
     }),
   };
 });
-
-
 
 describe('Profile Sidebar tests', () => {
 
